@@ -1,34 +1,33 @@
 import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import { SlashedEye } from './components/svg/auth/AuthIcons';
+import { Email, Padlock, SlashedEye } from './components/svg/auth/AuthIcons';
+import { Input, InputState } from './components/input';
 
 function App() {
   const [count, setCount] = useState(0);
+  const [hasError, setHasError] = useState(false);
 
   return (
     <div className='grid p-10 border-2 place-items-center rounded-xl bg-light-primary-transparent'>
-      <div>
-        <a href='https://vitejs.dev' target='_blank'>
-          <img src={viteLogo} className='logo' alt='Vite logo' />
-        </a>
-        <a href='https://react.dev' target='_blank'>
-          <img src={reactLogo} className='logo react' alt='React logo' />
-        </a>
-      </div>
-      <h1 className='text-primary-white'>AP + React</h1>
-      <div className='card'>
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-          <SlashedEye />
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className='read-the-docs'>
-        Click on the Vite and React logos to learn more
-      </p>
+      <Input
+        state={hasError ? InputState.ERROR : InputState.Success}
+        label='Email'
+        placeHolder='Email Address'
+        inputSize='large'
+        leadingIcon={<Email />}
+        isCurved
+        helper={'Enter the correct email address.'}
+      />
+
+      <Input
+        state={InputState.NORMAL}
+        label='Email'
+        placeHolder='Password'
+        inputSize='large'
+        leadingIcon={<Padlock />}
+        trailingIcon={<SlashedEye />}
+        isCurved
+        type='password'
+      />
     </div>
   );
 }

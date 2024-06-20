@@ -41,9 +41,11 @@ const config: Config = {
             light_blue: '#BBCAE1',
             dark_blue: '#23539F',
           },
+          success: {
+            100:'#1EB564',
+          },
           secondary: {
             black: '23272E',
-            green: '#1EB564',
             red: '#BD3826',
             light_blue: '#E9EEF5',
             bright_blue: '#357AF6',
@@ -62,6 +64,7 @@ const config: Config = {
             500: '#555555',
             600: '#595959',
             700: '#4B4B4B',
+            800: '#3F3F3F1A' 
           },
         },
         dark: {
