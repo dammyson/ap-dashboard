@@ -1,12 +1,14 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AuthPage from './pages/authPage/AuthPage';
+import LoginPage from './pages/authPage/LoginPage';
+import ForgotPassword from './pages/authPage/ForgotPassword';
 
 const App = () => {
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<AuthPage />} />
+          <Route path='/' element={<LoginPage />} />
+          <Route path='/forgotPassword' element={<ForgotPassword />} />
         </Routes>
       </BrowserRouter>
     </div>
