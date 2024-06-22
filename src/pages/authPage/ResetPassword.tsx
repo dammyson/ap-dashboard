@@ -1,17 +1,9 @@
 import { BorderRadius, Button, ButtonSize } from '../../components/button';
 import { Input, InputState } from '../../components/input';
-import {
-  Email,
-  Padlock,
-  SlashedEye,
-} from '../../components/svg/auth/AuthIcons';
-import { useState } from 'react';
+import { Padlock, SlashedEye } from '../../components/svg/auth/AuthIcons';
 import mainLogo from '../../assets/logos/main_logo.png';
-import { NavLink } from 'react-router-dom';
-import clsx from 'clsx';
 
 function ResetPassword() {
-  const [hasError, setHasError] = useState(false);
   return (
     <div className='flex justify-center h-lvh bg-auth-bg bg-no-repeat bg-center bg-cover'>
       <div className='grid pt-8 pb-16 px-20 my-32 mx-auto fixed border-none shadow-2xl place-items-center rounded-3xl max-w-[816px] backdrop-blur-md'>
