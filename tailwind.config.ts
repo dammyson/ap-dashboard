@@ -38,8 +38,12 @@ const config: Config = {
         light: {
           primary: {
             black: '#010101',
-            light_blue: '#BBCAE1',
-            dark_blue: '#23539F',
+          },
+          blue: {
+            50: '#BBCAE1',
+            100: '#BBCAE6',
+            main: '#23539F',
+            900: '#23537B',
           },
           success: {
             100: '#1EB564',

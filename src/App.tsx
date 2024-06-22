@@ -9,8 +9,8 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<LoginPage />} />
-          <Route path='/forgotPassword' element={<ForgotPassword />} />
-          <Route path='/resetPassword' element={<ResetPassword />} />
+          <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
         </Routes>
       </BrowserRouter>
     </div>

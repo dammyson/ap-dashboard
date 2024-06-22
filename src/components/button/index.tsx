@@ -17,27 +17,28 @@ export enum ButtonSize {
 interface ButtonProps {
   leadingIcon?: ReactNode;
   trailingIcon?: ReactNode;
-  icon?: ReactNode;
   mode?: 'solid' | 'outlined' | 'text';
   radius?: BorderRadius;
   buttonText: string;
   size?: ButtonSize;
   className?: string;
+  onClick: () => void;
 }
 
 export function Button({
   leadingIcon,
   trailingIcon,
-  icon,
   mode = 'solid',
   radius,
   className,
   buttonText,
   size,
+  onClick,
 }: ButtonProps) {
   return (
     <div className='relative'>
       <HeadlessButton
+        onClick={onClick}
         className={clsx(
           radius === BorderRadius.Large
             ? 'rounded-[50px]'
@@ -45,47 +46,22 @@ export function Button({
               ? 'rounded-[20px]'
               : 'rounded-[10px]',
           size === ButtonSize.Large
-            ? 'w-full min-h-[66px] text-lg'
+            ? 'w-full min-h-[55px] text-base 768:min-h-[66px] 768:text-lg'
             : size === ButtonSize.Medium
               ? 'w-full min-h-[44px] text-base'
               : 'w-full min-[30px] text-sm',
           mode === 'solid'
-            ? 'bg-light-primary-light_blue border-none text-light-primary-dark_blue'
+            ? 'bg-light-blue-50 border-none text-light-blue-main hover:bg-light-blue-100'
             : mode === 'outlined'
-              ? 'border-2 border-light-primary-light_blue bg-transparent text-light-primary-dark_blue'
+              ? 'border-2 border-light-blue-50 bg-transparent text-light-blue-main'
               : 'border-none text-primary-black',
-          'cursor-pointer flex justify-center items-center gap-4 py-2 px-4',
+          'cursor-pointer flex justify-center items-center gap-2 py-2 px-4 focus:outline-none',
           className,
         )}
       >
-        {leadingIcon && (
-          <span
-            className={clsx(
-              size === ButtonSize.Large
-                ? 'transform top-1/2 -translate-y-2.5 absolute right-44'
-                : '',
-              'absolute left-6',
-            )}
-          >
-            {leadingIcon}
-          </span>
-        )}
-
+        {leadingIcon}
         <p>{buttonText}</p>
-
-        {icon}
-        {trailingIcon && (
-          <span
-            className={clsx(
-              size === ButtonSize.Large
-                ? 'transform top-1/2 -translate-y-2.5 absolute right-44'
-                : '',
-              'absolute right-44',
-            )}
-          >
-            {trailingIcon}
-          </span>
-        )}
+        {trailingIcon}
       </HeadlessButton>
     </div>
   );

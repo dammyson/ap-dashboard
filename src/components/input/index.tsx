@@ -52,8 +52,8 @@ export function Input({
                 : state === InputState.READ_ONLY
                   ? '!border-light-grey-200 hover:border-light-grey-200'
                   : '',
-            'drop-shadow-md w-[474px] h-12 text-light-grey-200 font-medium py-3 text-base focus:border-light-primary-light_blue focus:ring-0 focus:outline-none hover:border-light-primary-light_blue caret-light-secondary-purple',
-            inputSize === 'small' ? 'h-11' : 'h-[70px]',
+            'drop-shadow-md w-full h-12 text-light-grey-200 font-medium py-3 text-base focus:border-light-blue-50 focus:ring-0 focus:outline-none hover:border-light-blue-50 caret-light-secondary-purple',
+            inputSize === 'small' ? 'h-11' : 'h-[55px] 768:h-[70px]',
             leadingIcon ? 'px-14' : 'px-4',
             isCurved ? 'rounded-[50px]' : 'rounded-[8px]',
             hasBorder ? 'border-light-grey-800' : 'border-transparent',
@@ -62,15 +62,7 @@ export function Input({
         />
         {leadingIcon && (
           <span
-            className={clsx(
-              inputSize === 'small'
-                ? 'transform top-1/2 -translate-y-3'
-                : 'transform top-9 -translate-y-3.5',
-              state === InputState.ERROR
-                ? 'transform top-9 -translate-y-4 fill-currentColor text-light-secondary-red'
-                : 'text-light-grey-100',
-              'absolute left-6',
-            )}
+            className={clsx('absolute left-6 transform top-1/2 -translate-y-3')}
           >
             {leadingIcon}
           </span>
@@ -78,13 +70,7 @@ export function Input({
         {trailingIcon && (
           <span
             className={clsx(
-              inputSize === 'small'
-                ? 'transform top-1/2 -translate-y-3'
-                : 'transform top-9 -translate-y-3',
-              state === InputState.ERROR
-                ? 'transform top-9 -translate-y-3'
-                : '',
-              'absolute right-4 cursor-pointer',
+              'absolute right-6 cursor-pointer top-1/2 -translate-y-3',
             )}
           >
             {trailingIcon}
@@ -99,7 +85,7 @@ export function Input({
               : state === InputState.Success
                 ? 'text-light-success-100'
                 : 'text-light-grey-500',
-            'block mt-2',
+            'absolute mt-2 text-xs 480:text-sm 768:text-base',
           )}
         >
           {helper}
