@@ -29,7 +29,6 @@ function ForgotPassword() {
             leadingIcon={<Email />}
             isCurved
           />
-
           <Button
             buttonText='Send Link'
             radius={BorderRadius.Large}
