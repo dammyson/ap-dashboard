@@ -42,7 +42,7 @@ const config: Config = {
             dark_blue: '#23539F',
           },
           success: {
-            100:'#1EB564',
+            100: '#1EB564',
           },
           secondary: {
             black: '23272E',
@@ -64,7 +64,7 @@ const config: Config = {
             500: '#555555',
             600: '#595959',
             700: '#4B4B4B',
-            800: '#3F3F3F1A' 
+            800: '#3F3F3F1A',
           },
         },
         dark: {
@@ -120,6 +120,9 @@ const config: Config = {
           },
         },
       },
+    },
+    backgroundImage: {
+      'auth-bg': "url('/src/assets/auth/dash_auth_bg.png')",
     },
   },
   plugins: [require('@tailwindcss/forms')],

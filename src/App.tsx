@@ -1,45 +1,20 @@
-import { useState } from 'react';
-import { Email, Padlock, SlashedEye } from './components/svg/auth/AuthIcons';
-import { Input, InputState } from './components/input';
-import { BorderRadius, Button, ButtonSize } from './components/button';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import LoginPage from './pages/authPage/LoginPage';
+import ForgotPassword from './pages/authPage/ForgotPassword';
+import ResetPassword from './pages/authPage/ResetPassword';
 
-function App() {
-  const [count, setCount] = useState(0);
-  const [hasError, setHasError] = useState(false);
-
+const App = () => {
   return (
-    <div className='grid p-10 border-2 place-items-center rounded-xl bg-light-primary-transparent'>
-      <div className='max-w-[700px] mx-auto'>
-        <Input
-          state={hasError ? InputState.ERROR : InputState.Success}
-          label='Email'
-          placeHolder='Email Address'
-          inputSize='large'
-          leadingIcon={<Email />}
-          isCurved
-          helper={'Enter the correct email address.'}
-        />
-
-        <Input
-          state={InputState.NORMAL}
-          label='Email'
-          placeHolder='Password'
-          inputSize='large'
-          leadingIcon={<Padlock />}
-          trailingIcon={<SlashedEye />}
-          isCurved
-          type='password'
-        />
-        <Button
-          buttonText='Log in'
-          radius={BorderRadius.Large}
-          className='mt-8 font-bold'
-          size={ButtonSize.Large}
-          mode='solid'
-        />
-      </div>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<LoginPage />} />
+          <Route path='/forgotPassword' element={<ForgotPassword />} />
+          <Route path='/resetPassword' element={<ResetPassword />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App;

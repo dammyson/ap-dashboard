@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Field, Input as HeadlessInput, Label } from '@headlessui/react';
 import clsx from 'clsx';
 
@@ -57,6 +57,7 @@ export function Input({
             leadingIcon ? 'px-14' : 'px-4',
             isCurved ? 'rounded-[50px]' : 'rounded-[8px]',
             hasBorder ? 'border-light-grey-800' : 'border-transparent',
+            className,
           )}
         />
         {leadingIcon && (
@@ -64,7 +65,10 @@ export function Input({
             className={clsx(
               inputSize === 'small'
                 ? 'transform top-1/2 -translate-y-3'
-                : 'transform top-1/2 -translate-y-3',
+                : 'transform top-9 -translate-y-3.5',
+              state === InputState.ERROR
+                ? 'transform top-9 -translate-y-4 fill-currentColor text-light-secondary-red'
+                : 'text-light-grey-100',
               'absolute left-6',
             )}
           >
@@ -76,8 +80,11 @@ export function Input({
             className={clsx(
               inputSize === 'small'
                 ? 'transform top-1/2 -translate-y-3'
-                : 'transform top-1/2 -translate-y-3',
-              'absolute right-4',
+                : 'transform top-9 -translate-y-3',
+              state === InputState.ERROR
+                ? 'transform top-9 -translate-y-3'
+                : '',
+              'absolute right-4 cursor-pointer',
             )}
           >
             {trailingIcon}
