@@ -1,15 +1,15 @@
-import { BorderRadius, Button, ButtonSize } from '../../components/button';
-import { Input, InputState } from '../../components/input';
+import { BorderRadius, Button, ButtonSize } from '../../../components/button';
+import { Input, InputState } from '../../../components/input';
 import {
   Email,
   Padlock,
   SlashedEye,
-} from '../../components/svg/auth/AuthIcons';
+} from '../../../components/svg/auth/AuthIcons';
 import { useState } from 'react';
-import mainLogo from '../../assets/logos/main_logo.png';
+import mainLogo from '../../../assets/logos/main_logo.png';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-function ResetPassword() {
+function Login() {
   const [hasError, setHasError] = useState(false);
 
   const navigate = useNavigate();
@@ -24,20 +24,18 @@ function ResetPassword() {
             <Input
               state={hasError ? InputState.ERROR : InputState.NORMAL}
               label=''
-              placeHolder='New Password'
+              placeHolder='Email Address'
               inputSize='large'
-              leadingIcon={<Padlock />}
-              trailingIcon={<SlashedEye />}
+              leadingIcon={<Email />}
               isCurved
-              type='password'
-              helper={hasError ? 'Wrong Password' : ''}
+              helper={hasError ? 'Enter the correct email address.' : ''}
             />
           </div>
           <div className='mb-2'>
             <Input
               state={hasError ? InputState.ERROR : InputState.NORMAL}
               label=''
-              placeHolder='Confirm Password'
+              placeHolder='Password'
               inputSize='large'
               leadingIcon={<Padlock />}
               trailingIcon={<SlashedEye />}
@@ -46,9 +44,17 @@ function ResetPassword() {
               helper={hasError ? 'Wrong Password' : ''}
             />
           </div>
+          <NavLink
+            className={
+              'float-right text-light-blue-main text-xs 480:text-sm 768:text-base hover:text-light-blue-900'
+            }
+            to={'/forgot-password'}
+          >
+            Forgot password?
+          </NavLink>
           <Button
             onClick={() => {}}
-            buttonText='Reset password'
+            buttonText='Log in'
             radius={BorderRadius.Large}
             className='mt-14 768:mt-20 font-bold'
             size={ButtonSize.Large}
@@ -60,4 +66,4 @@ function ResetPassword() {
   );
 }
 
-export default ResetPassword;
+export default Login;

@@ -1,11 +1,11 @@
-import { BorderRadius, Button, ButtonSize } from '../../components/button';
-import { Input, InputState } from '../../components/input';
-import { Email } from '../../components/svg/auth/AuthIcons';
+import { BorderRadius, Button, ButtonSize } from '../../../components/button';
+import { Input, InputState } from '../../../components/input';
+import { Padlock, SlashedEye } from '../../../components/svg/auth/AuthIcons';
 import { useState } from 'react';
-import mainLogo from '../../assets/logos/main_logo.png';
+import mainLogo from '../../../assets/logos/main_logo.png';
 import { useNavigate } from 'react-router-dom';
 
-function ForgotPassword() {
+function ResetPassword() {
   const [hasError, setHasError] = useState(false);
   const navigate = useNavigate();
 
@@ -16,33 +16,39 @@ function ForgotPassword() {
           <div className='max-w-[204px] flex justify-center mb-10 768:mb-12 mx-auto'>
             <img src={mainLogo} alt='AirPeace Logo' />
           </div>
-          <div className='grid place-items-center max-w-[474px]'>
-            <h2 className='text-2xl text-light-blue-main font-semibold '>
-              Forgot Password?
-            </h2>
-            <p className='text-base text-light-grey-600 text-center font-medium my-7'>
-              Enter the email associated with your account to receive an OTP to
-              recover your password.
-            </p>
-          </div>
           <div className='mb-10'>
             <Input
               state={hasError ? InputState.ERROR : InputState.NORMAL}
               label=''
-              placeHolder='Email Address'
+              placeHolder='New Password'
               inputSize='large'
-              leadingIcon={<Email />}
+              leadingIcon={<Padlock />}
+              trailingIcon={<SlashedEye />}
               isCurved
-              helper={hasError ? 'Enter the correct email address.' : ''}
+              type='password'
+              helper={hasError ? 'Wrong Password' : ''}
+            />
+          </div>
+          <div className='mb-2'>
+            <Input
+              state={hasError ? InputState.ERROR : InputState.NORMAL}
+              label=''
+              placeHolder='Confirm Password'
+              inputSize='large'
+              leadingIcon={<Padlock />}
+              trailingIcon={<SlashedEye />}
+              isCurved
+              type='password'
+              helper={hasError ? 'Wrong Password' : ''}
             />
           </div>
           <Button
-            buttonText='Send link'
+            onClick={() => {}}
+            buttonText='Reset password'
             radius={BorderRadius.Large}
             className='mt-14 768:mt-20 font-bold'
             size={ButtonSize.Large}
             mode='solid'
-            onClick={() => navigate('/reset-password')}
           />
         </div>
       </div>
@@ -50,4 +56,4 @@ function ForgotPassword() {
   );
 }
 
-export default ForgotPassword;
+export default ResetPassword;
