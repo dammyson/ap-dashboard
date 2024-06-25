@@ -27,16 +27,16 @@ export const Bell = () => {
       <path
         d='M1.37204 18.6937C1.08804 20.5523 2.35604 21.8417 3.90804 22.4843C9.8587 24.951 18.1387 24.951 24.0894 22.4843C25.6414 21.8417 26.9094 20.551 26.6254 18.6937C26.452 17.551 25.5894 16.6003 24.9507 15.671C24.1147 14.439 24.032 13.0963 24.0307 11.667C24.032 6.14433 19.5414 1.66699 13.9987 1.66699C8.45604 1.66699 3.96537 6.14433 3.96537 11.667C3.96537 13.0963 3.8827 14.4403 3.04537 15.671C2.40804 16.6003 1.5467 17.551 1.37204 18.6937Z'
         stroke='black'
-        stroke-width='1.5'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='1.5'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
       <path
         d='M8.66406 24.334C9.27473 26.634 11.4321 28.334 13.9974 28.334C16.5641 28.334 18.7187 26.634 19.3307 24.334'
         stroke='black'
-        stroke-width='1.5'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='1.5'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </svg>
   );
@@ -54,7 +54,7 @@ export const ArrowRight = () => {
       <path
         d='M2 12H22M22 12L13 3M22 12L13 21'
         stroke='url(#paint0_linear_3168_18332)'
-        stroke-width='2'
+        strokeWidth='2'
       />
       <defs>
         <linearGradient
@@ -119,22 +119,22 @@ export const Slider = () => {
       <path
         d='M5 12V4M19 20V17M5 20V16M19 13V4M12 7V4M12 20V11'
         stroke='#23539F'
-        stroke-linecap='round'
+        strokeLinecap='round'
       />
       <path
         d='M5 16C6.10457 16 7 15.1046 7 14C7 12.8954 6.10457 12 5 12C3.89543 12 3 12.8954 3 14C3 15.1046 3.89543 16 5 16Z'
         stroke='#23539F'
-        stroke-linecap='round'
+        strokeLinecap='round'
       />
       <path
         d='M12 11C13.1046 11 14 10.1046 14 9C14 7.89543 13.1046 7 12 7C10.8954 7 10 7.89543 10 9C10 10.1046 10.8954 11 12 11Z'
         stroke='#23539F'
-        stroke-linecap='round'
+        strokeLinecap='round'
       />
       <path
         d='M19 17C20.1046 17 21 16.1046 21 15C21 13.8954 20.1046 13 19 13C17.8954 13 17 13.8954 17 15C17 16.1046 17.8954 17 19 17Z'
         stroke='#23539F'
-        stroke-linecap='round'
+        strokeLinecap='round'
       />
     </svg>
   );
