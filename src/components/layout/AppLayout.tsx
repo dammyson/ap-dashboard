@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import { SideNavigation } from '../sideNav';
+import { SideNavigationContent } from '../sideNav';
 
 interface LayoutProps {
   logo: string;
@@ -11,7 +11,7 @@ export const AppLayout = ({
 }: PropsWithChildren<LayoutProps>) => {
   return (
     <div className='flex'>
-      <SideNavigation logo={logo} />
+      <SideNavigationContent />
       {children}
     </div>
   );

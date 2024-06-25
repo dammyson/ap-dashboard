@@ -53,7 +53,9 @@ function Login() {
             Forgot password?
           </NavLink>
           <Button
-            onClick={() => {}}
+            onClick={() => {
+              navigate('/overview');
+            }}
             buttonText='Log in'
             radius={BorderRadius.Large}
             className='mt-14 768:mt-20 font-bold'
