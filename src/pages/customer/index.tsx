@@ -1,11 +1,11 @@
 import { AppLayout } from '../../components/layout/AppLayout';
 
-function Overview() {
+function Customer() {
   return (
     <AppLayout logo=''>
-      <div>Overview</div>
+      <div>Customer</div>
     </AppLayout>
   );
 }
 
-export default Overview;
+export default Customer;

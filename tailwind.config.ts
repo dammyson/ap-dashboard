@@ -28,9 +28,6 @@ const config: Config = {
         1600: '1600px',
       },
       colors: {
-        colors: {
-          customPurple: '#490D34',
-        },
         primary: {
           white: '#fff',
           black: '#000',

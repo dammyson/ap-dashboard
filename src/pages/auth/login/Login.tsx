@@ -54,7 +54,7 @@ function Login() {
           </NavLink>
           <Button
             onClick={() => {
-              navigate('/overview');
+              navigate('/dashboard');
             }}
             buttonText='Log in'
             radius={BorderRadius.Large}
