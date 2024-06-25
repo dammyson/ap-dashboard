@@ -1,8 +1,8 @@
 export const Home = () => {
   return (
     <svg
-      width='32'
-      height='32'
+      width='26'
+      height='26'
       viewBox='0 0 32 32'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
@@ -18,8 +18,8 @@ export const Home = () => {
 export const People = () => {
   return (
     <svg
-      width='32'
-      height='32'
+      width='26'
+      height='26'
       viewBox='0 0 32 32'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
@@ -38,8 +38,8 @@ export const People = () => {
 export const HeartBeatLine = () => {
   return (
     <svg
-      width='32'
-      height='32'
+      width='26'
+      height='26'
       viewBox='0 0 32 32'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
@@ -57,8 +57,8 @@ export const HeartBeatLine = () => {
 export const TodoList = () => {
   return (
     <svg
-      width='32'
-      height='32'
+      width='26'
+      height='26'
       viewBox='0 0 32 32'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
@@ -74,8 +74,8 @@ export const TodoList = () => {
 export const Settings = () => {
   return (
     <svg
-      width='32'
-      height='32'
+      width='26'
+      height='26'
       viewBox='0 0 32 32'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
@@ -98,8 +98,8 @@ export const Settings = () => {
 export const Exit = () => {
   return (
     <svg
-      width='32'
-      height='32'
+      width='26'
+      height='26'
       viewBox='0 0 32 32'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
