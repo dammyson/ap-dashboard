@@ -1,9 +1,10 @@
+import { Header } from '../../components/header';
 import { AppLayout } from '../../components/layout/AppLayout';
 
 function Surveys() {
   return (
     <AppLayout logo=''>
-      <div>Surveys</div>
+      <Header />
     </AppLayout>
   );
 }

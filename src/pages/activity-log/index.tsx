@@ -1,9 +1,10 @@
 import { AppLayout } from '../../components/layout/AppLayout';
+import { Header } from '../../components/header';
 
 function ActivityLog() {
   return (
     <AppLayout logo=''>
-      <div>ActivityLog</div>
+      <Header />
     </AppLayout>
   );
 }
