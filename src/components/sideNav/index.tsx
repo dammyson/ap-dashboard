@@ -86,9 +86,9 @@ export const SideNavigationItems = () => {
                   to={route}
                   className={clsx(
                     isActive
-                      ? 'bg-light-blue-main border-r-4 border-r-light-blue-100 rounded-tl-md rounded-bl-md'
+                      ? 'bg-light-blue-main border-r-[7px] border-r-light-blue-100 rounded-tl-md rounded-bl-md'
                       : '',
-                    'hover:text-light-grey-300 cursor-pointer text-white no-underline relative flex text-sm font-normal transition-colors duration-200 px-4 py-3 font-inter mb-1 ',
+                    'hover:text-light-grey-300 cursor-pointer text-white no-underline relative flex text-sm font-normal transition-colors duration-200 px-4 py-3  mb-1 ',
                   )}
                 >
                   <div className='flex gap-8 items-center'>
@@ -96,7 +96,7 @@ export const SideNavigationItems = () => {
                     <span className='hidden 768:block'>{title}</span>
                   </div>
                   {countId && (
-                    <div className='absolute top-15 right-10 text-xs font-light bg-gray-200 rounded-full px-2 py-1 text-gray-700 font-inter shadow-sm'>
+                    <div className='absolute top-15 right-10 text-xs font-light bg-gray-200 rounded-full px-2 py-1 text-gray-700 shadow-sm'>
                       {countId}
                     </div>
                   )}
@@ -123,7 +123,7 @@ export const SideNavigationItems = () => {
                     isActive
                       ? 'bg-light-blue-main border-r-4 border-r-light-blue-100 rounded-tl-md rounded-bl-md'
                       : '',
-                    'hover:text-light-grey-300 cursor-pointer text-white no-underline relative flex text-sm font-normal transition-colors duration-200 font-inter mb-1 px-4 py-3',
+                    'hover:text-light-grey-300 cursor-pointer text-white no-underline relative flex text-sm font-normal transition-colors duration-200  mb-1 px-4 py-3',
                   )}
                 >
                   <div className='flex gap-8 items-center'>
@@ -131,7 +131,7 @@ export const SideNavigationItems = () => {
                     <span className='hidden 768:block'>{title}</span>
                   </div>
                   {countId && (
-                    <div className='absolute top-15 right-10 text-xs font-light bg-gray-200 rounded-full px-2 py-1 text-gray-700 font-inter shadow-sm'>
+                    <div className='absolute top-15 right-10 text-xs font-light bg-gray-200 rounded-full px-2 py-1 text-gray-700  shadow-sm'>
                       {countId}
                     </div>
                   )}
