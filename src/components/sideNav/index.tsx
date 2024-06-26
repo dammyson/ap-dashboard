@@ -93,7 +93,7 @@ export const SideNavigationItems = () => {
                 >
                   <div className='flex gap-8 items-center'>
                     <span>{icon}</span>
-                    <span className='hidden 768:block'>{title}</span>
+                    <span>{title}</span>
                   </div>
                   {countId && (
                     <div className='absolute top-15 right-10 text-xs font-light bg-gray-200 rounded-full px-2 py-1 text-gray-700 shadow-sm'>
@@ -128,7 +128,7 @@ export const SideNavigationItems = () => {
                 >
                   <div className='flex gap-8 items-center'>
                     <span>{icon}</span>
-                    <span className='hidden 768:block'>{title}</span>
+                    <span>{title}</span>
                   </div>
                   {countId && (
                     <div className='absolute top-15 right-10 text-xs font-light bg-gray-200 rounded-full px-2 py-1 text-gray-700  shadow-sm'>
