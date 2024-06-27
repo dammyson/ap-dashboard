@@ -5,7 +5,7 @@ import { ProfileData } from '../profileData';
 
 export const Header = () => {
   return (
-    <div className='flex w-full h-20 gap-10  items-center justify-between px-2 768:px-4'>
+    <div className='flex w-full h-20 gap-10 items-center justify-between px-2 mb-6 768:px-4'>
       <div className='flex-grow max-w-[480px] min-w-[255px]'>
         <Input
           placeHolder='Search'
@@ -17,7 +17,7 @@ export const Header = () => {
       </div>
       <div className='flex items-center gap-7'>
         <ProfileData src={profileImage} imageSize='small' />
-        <NotificationBell notification={1} />
+        <NotificationBell notification={1} isUnreadMessage={true} />
       </div>
     </div>
   );
@@ -25,16 +25,20 @@ export const Header = () => {
 
 interface NotificationBellProps {
   notification?: number;
+  isUnreadMessage: boolean;
 }
 
-export const NotificationBell = ({ notification }: NotificationBellProps) => {
+export const NotificationBell = ({
+  notification,
+  isUnreadMessage,
+}: NotificationBellProps) => {
   return (
     <div className='relative cursor-pointer'>
-      {notification && (
-        <span className='bg-light-secondary-red text-primary-white text-[10px] text-center rounded-full w-3 h-3 absolute top-[-3px] right-0'>
-          {notification}
+      {notification && isUnreadMessage ? (
+        <span className='bg-light-secondary-red text-primary-white text-[10px] flex items-center justify-center rounded-full w-3 h-3 absolute top-[-3px] right-0'>
+          <span className='h-[13px]'>{notification}</span>
         </span>
-      )}
+      ) : null}
       <Bell />
     </div>
   );
