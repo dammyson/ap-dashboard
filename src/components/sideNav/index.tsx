@@ -61,7 +61,7 @@ export const SideNavigationItems = () => {
   ] as NavigationItems;
 
   return (
-    <div className='relative py-[15px] h-lvh '>
+    <div className='relative py-[15px] h-lvh w-[15vw]'>
       <div className='max-w-[256px] flex justify-center items-center py-10 pr-[4.6rem] pl-8'>
         <img src={whiteLogo} alt='' />
       </div>
@@ -106,7 +106,7 @@ export const SideNavigationItems = () => {
           })}
       </div>
 
-      <div className='fixed bottom-12 grid gap-6 pl-6 py-15 w-[256px]'>
+      <div className='fixed bottom-12 grid gap-6 pl-6 py-15 w-[15vw]'>
         {navigationItems
           ?.slice(-2)
           .map(({ icon, title, countId, id }, index) => {
@@ -121,7 +121,7 @@ export const SideNavigationItems = () => {
                   href={title === 'Settings' ? route : '/'}
                   className={clsx(
                     isActive
-                      ? 'bg-light-blue-main border-r-4 border-r-light-blue-100 rounded-tl-md rounded-bl-md'
+                      ? 'bg-light-blue-main border-r-[7px] border-r-light-blue-100 rounded-tl-md rounded-bl-md'
                       : '',
                     'hover:text-light-grey-300 cursor-pointer text-white no-underline relative flex text-sm font-normal transition-colors duration-200  mb-1 px-4 py-3',
                   )}

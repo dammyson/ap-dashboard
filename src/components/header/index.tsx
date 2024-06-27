@@ -5,13 +5,14 @@ import { ProfileData } from '../profileData';
 
 export const Header = () => {
   return (
-    <div className='flex w-[calc(100vw-256px)]  h-20 gap-10  items-center justify-between'>
-      <div className=' flex-grow max-w-[480px] min-w-[255px]'>
+    <div className='flex w-full h-20 gap-10  items-center justify-between px-2 768:px-4'>
+      <div className='flex-grow max-w-[480px] min-w-[255px]'>
         <Input
           placeHolder='Search'
           inputSize='small'
           trailingIcon={<Search />}
-          className='placeholder:text-light-grey-800/[28%]'
+          className='placeholder:text-light-grey-900'
+          hasBorder
         />
       </div>
       <div className='flex items-center gap-7'>

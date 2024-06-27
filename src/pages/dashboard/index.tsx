@@ -5,12 +5,14 @@ import { AppLayout } from '../../components/layout/AppLayout';
 function Dashboard() {
   return (
     <AppLayout logo=''>
-      <Header />
-      <div className='py-2 px-10'>
-        <WelcomeMessage
-          username='Ayo'
-          description='Let’s review today’s insights'
-        />
+      <div className='app-container py-2 px-10'>
+        <Header />
+        <div>
+          <WelcomeMessage
+            username='Ayo'
+            description="Let's review today's insights"
+          />
+        </div>
       </div>
     </AppLayout>
   );
