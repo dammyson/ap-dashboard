@@ -52,9 +52,10 @@ export function Input({
                 : state === InputState.READ_ONLY
                   ? '!border-light-grey-200 hover:border-light-grey-200'
                   : '',
-            'drop-shadow-md w-full h-12 text-light-grey-200 font-medium py-3 text-base focus:border-light-blue-50 focus:ring-0 focus:outline-none hover:border-light-blue-50 caret-light-secondary-purple',
+            'drop-shadow-md w-full text-light-grey-200 font-medium py-3 text-base focus:border-light-blue-50 focus:ring-0 focus:outline-none hover:border-light-blue-50 caret-light-secondary-purple',
             inputSize === 'small' ? 'h-11' : 'h-[55px] 768:h-[70px]',
             leadingIcon ? 'px-14' : 'px-4',
+            trailingIcon ? 'pr-14' : '',
             isCurved ? 'rounded-[50px]' : 'rounded-[8px]',
             hasBorder ? 'border-light-grey-800' : 'border-transparent',
             className,
