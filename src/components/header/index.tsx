@@ -2,8 +2,10 @@ import { Input } from '../input';
 import { Bell, Search } from '../svg/dashboard/Dashboard';
 import profileImage from '../../assets/profileImage/profile-img.png';
 import { ProfileData } from '../profileData';
+import { useNavigate } from 'react-router';
 
 export const Header = () => {
+  const navigate = useNavigate();
   return (
     <div className='flex w-full h-20 gap-10 items-center justify-between px-2 mb-6 768:px-4'>
       <div className='flex-grow max-w-[480px] min-w-[255px]'>
@@ -16,7 +18,13 @@ export const Header = () => {
         />
       </div>
       <div className='flex items-center gap-7'>
-        <ProfileData src={profileImage} imageSize='small' />
+        <ProfileData
+          src={profileImage}
+          isName={false}
+          onClick={() => {
+            navigate('/settings');
+          }}
+        />
         <NotificationBell notification={1} isUnreadMessage={true} />
       </div>
     </div>

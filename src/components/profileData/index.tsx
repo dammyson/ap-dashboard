@@ -4,27 +4,25 @@ interface ProfileDataProps {
   src: string;
   name?: string;
   role?: string;
-  imageSize: 'small' | 'large';
+  isName: boolean;
+  onClick?: () => void;
 }
 
 export const ProfileData = ({
   src,
   name,
   role,
-  imageSize,
+  isName,
+  onClick,
 }: ProfileDataProps) => {
   return (
-    <div
-      className={clsx(
-        imageSize === 'small' ? '' : 'flex gap-4 items-center',
-        'w-max',
-      )}
-    >
+    <div className={clsx(isName ? 'flex gap-4 items-center' : '', 'w-max')}>
       <img
+        onClick={onClick}
         src={src}
         alt='profile image'
         className={clsx(
-          imageSize === 'small' ? 'w-12 h-12' : 'w-[120px] h-[120px]',
+          isName ? 'w-[120px] h-[120px]' : 'w-12 h-12',
           'rounded-full cursor-pointer',
         )}
       />
