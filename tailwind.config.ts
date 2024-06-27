@@ -49,7 +49,7 @@ const config: Config = {
             100: '#1EB564',
           },
           secondary: {
-            black: '23272E',
+            black: '#23272E',
             red: '#BD3826',
             light_blue: '#E9EEF5',
             bright_blue: '#357AF6',
@@ -58,7 +58,7 @@ const config: Config = {
             indigo: '#5856D6',
             purple: '#AF52DE',
             dark_pink: '#EA3354',
-            custom_gradient: 'linear-gradient(to right, ##2B539F, ##BD3826)',
+            custom_gradient: 'linear-gradient(to right, #2B539F, #BD3826)',
           },
           grey: {
             100: '#989898',
@@ -69,6 +69,7 @@ const config: Config = {
             600: '#595959',
             700: '#4B4B4B',
             800: '#3F3F3F1A',
+            900: '#38383847',
           },
         },
         dark: {

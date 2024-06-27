@@ -1,9 +1,11 @@
 import { AppLayout } from '../../components/layout/AppLayout';
+import { Header } from '../../components/header';
 import WelcomeMessage from '../../components/welcomeMessage';
 
 function ActivityLog() {
   return (
     <AppLayout logo=''>
+      <Header />
       <div className='py-2 px-10'>
         <WelcomeMessage
           username='Ayo'
