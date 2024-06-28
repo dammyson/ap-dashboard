@@ -20,33 +20,30 @@ export const Header = () => {
       <div className='flex items-center gap-7'>
         <ProfileData
           src={profileImage}
-          isName={false}
           onClick={() => {
             navigate('/settings');
           }}
         />
-        <NotificationBell notification={1} isUnreadMessage={true} />
+        <NotificationBell notification={1} />
       </div>
     </div>
   );
 };
 
 interface NotificationBellProps {
-  notification?: number;
-  isUnreadMessage: boolean;
+  notification: number;
 }
 
-export const NotificationBell = ({
-  notification,
-  isUnreadMessage,
-}: NotificationBellProps) => {
+export const NotificationBell = ({ notification }: NotificationBellProps) => {
   return (
     <div className='relative cursor-pointer'>
-      {notification && isUnreadMessage ? (
+      {notification > 0 ? (
         <span className='bg-light-secondary-red text-primary-white text-[10px] flex items-center justify-center rounded-full w-3 h-3 absolute top-[-3px] right-0'>
           <span className='h-[13px]'>{notification}</span>
         </span>
-      ) : null}
+      ) : (
+        <></>
+      )}
       <Bell />
     </div>
   );
