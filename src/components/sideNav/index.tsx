@@ -61,7 +61,7 @@ export const SideNavigationItems = () => {
   ] as NavigationItems;
 
   return (
-    <div className='relative py-[15px] h-lvh w-[15vw]'>
+    <div className='relative py-[15px] h-lvh w-[270px]'>
       <div className='max-w-[256px] flex justify-center items-center py-10 pr-[4.6rem] pl-8'>
         <img src={whiteLogo} alt='' />
       </div>
@@ -106,7 +106,7 @@ export const SideNavigationItems = () => {
           })}
       </div>
 
-      <div className='fixed bottom-12 grid gap-6 pl-6 py-15 w-[15vw]'>
+      <div className='fixed bottom-12 grid gap-6 pl-6 py-15 w-[270px]'>
         {navigationItems
           ?.slice(-2)
           .map(({ icon, title, countId, id }, index) => {

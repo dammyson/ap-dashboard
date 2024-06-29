@@ -79,6 +79,6 @@ button:focus-visible {
   }
 
   .app-container {
-    @apply w-full max-w-[calc(100vw-15vw)] py-2 px-10;
+    @apply w-full max-w-[calc(100vw-270px)] py-2 px-10;
   }
 }
