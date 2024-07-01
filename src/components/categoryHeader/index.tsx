@@ -1,12 +1,12 @@
 import { ReactNode } from 'react';
 
-interface CatergoryHeaderProps {
+interface CategoryHeaderProps {
   title: string;
   description?: string;
   button?: ReactNode;
 }
 
-function CatergoryHeader({ title, description, button }: CatergoryHeaderProps) {
+function CategoryHeader({ title, description, button }: CategoryHeaderProps) {
   return (
     <div className='w-full h-14 bg-light-blue-main flex items-center justify-between px-6'>
       <p className='text-primary-white font-medium text-[18px]'> {title}</p>
@@ -20,4 +20,4 @@ function CatergoryHeader({ title, description, button }: CatergoryHeaderProps) {
   );
 }
 
-export default CatergoryHeader;
+export default CategoryHeader;

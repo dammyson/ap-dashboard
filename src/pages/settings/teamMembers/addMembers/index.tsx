@@ -1,11 +1,11 @@
+import CategoryHeader from '../../../../components/categoryHeader';
 import { Button, ButtonSize } from '../../../../components/button';
 import { Upload } from '../../../../components/svg/settings/Settings';
-import CatergoryHeader from '../../../../components/settings-catergory-header';
 
 function AddMembers() {
   return (
     <div className='mt-10'>
-      <CatergoryHeader
+      <CategoryHeader
         title='Personal Information'
         button={
           <Button

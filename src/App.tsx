@@ -7,9 +7,6 @@ import Customer from './pages/customer';
 import ActivityLog from './pages/activity-log';
 import Surveys from './pages/surveys';
 import Settings from './pages/settings';
-import Profile from './pages/settings/profile';
-import TeamMembers from './pages/settings/teamMembers';
-import ChangePassword from './pages/settings/changePassword';
 
 const App = () => {
   return (
@@ -23,15 +20,7 @@ const App = () => {
           <Route path='/customer' element={<Customer />} />
           <Route path='/activity-log' element={<ActivityLog />} />
           <Route path='/surveys' element={<Surveys />} />
-          <Route path='/settings' element={<Settings />}>
-            {/* Nested Routes */}
-            <Route path='/settings/profile' element={<Profile />} />
-            <Route path='/settings/team-members' element={<TeamMembers />} />
-            <Route
-              path='/settings/change-password'
-              element={<ChangePassword />}
-            />
-          </Route>
+          <Route path='/settings' element={<Settings />} />
         </Routes>
       </BrowserRouter>
     </div>

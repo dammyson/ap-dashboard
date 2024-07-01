@@ -31,19 +31,13 @@ export const SettingsPanelItems = () => {
   ] as PanelNavigationItems;
 
   const [currentTab, setCurrentTab] = useState(navigationItems[0]);
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    navigate(`/settings/${convertToUrlString(currentTab.id)}`);
-  }, [currentTab.id]);
+  useEffect(() => {});
 
   return (
     <div>
       <div className='flex p-[10px] 768:gap-6'>
         {navigationItems.map((item) => {
-          const route = `/settings/${convertToUrlString(item.id)}`;
-          const isActive = pathname.includes(route) ? true : false;
-
           return (
             <div key={item.id}>
               <p
@@ -51,7 +45,7 @@ export const SettingsPanelItems = () => {
                   setCurrentTab(item);
                 }}
                 className={clsx(
-                  isActive
+                  currentTab.id === item.id
                     ? 'text-light-blue-main hover:text-light-blue-main'
                     : 'hover:text-[rgb(151,150,150)]',
                   'cursor-pointer font-medium text-[#C7C7CC] p-[10px] text-center w-max 960:text-2xl 1300:text-[28px]',
@@ -59,7 +53,7 @@ export const SettingsPanelItems = () => {
               >
                 <span>{item.title}</span>
               </p>
-              {isActive && (
+              {currentTab.id === item.id && (
                 <div className='w-full h-2 bg-light-blue-main rounded-lg'></div>
               )}
             </div>
@@ -79,7 +73,7 @@ export const SettingsPanelItems = () => {
   );
 };
 
-export const SettingsPanelContent = () => {
+export const SettingsPanel = () => {
   return (
     <div>
       <SettingsPanelItems />

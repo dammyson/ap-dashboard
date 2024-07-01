@@ -1,8 +1,8 @@
 import { Add } from '../../../components/svg/settings/Settings';
 import { Button, ButtonSize } from '../../../components/button';
-import CatergoryHeader from '../../../components/settings-catergory-header';
 import { useState } from 'react';
 import AddMembers from './addMembers';
+import CategoryHeader from '../../../components/categoryHeader';
 
 function TeamMembers() {
   const [addMembers, setAddMembers] = useState(false);
@@ -12,7 +12,7 @@ function TeamMembers() {
       {addMembers ? (
         <AddMembers />
       ) : (
-        <CatergoryHeader
+        <CategoryHeader
           title='Team Members'
           button={
             <Button

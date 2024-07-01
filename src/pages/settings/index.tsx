@@ -1,4 +1,4 @@
-import { SettingsPanelContent } from '../../components/settingsPanel';
+import { SettingsPanel } from '../../components/settingsPanel';
 import { Header } from '../../components/header';
 import { AppLayout } from '../../components/layout/AppLayout';
 
@@ -7,7 +7,7 @@ function Settings() {
     <AppLayout logo=''>
       <div className='app-container py-2 px-10'>
         <Header />
-        <SettingsPanelContent />
+        <SettingsPanel />
       </div>
     </AppLayout>
   );
