@@ -1,8 +1,9 @@
-import CatergoryHeader from '../../../components/settings-catergory-header';
+import CategoryHeader from '../../../components/categoryHeader';
+
 function ChangePassword() {
   return (
     <div>
-      <CatergoryHeader
+      <CategoryHeader
         title='Change Passowrd'
         description='Please, fill in the information below.'
       />

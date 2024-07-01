@@ -1,9 +1,9 @@
-import CatergoryHeader from '../../../components/settings-catergory-header';
+import CategoryHeader from '../../../components/categoryHeader';
 
 function Profile() {
   return (
     <div>
-      <CatergoryHeader title='Profile' />
+      <CategoryHeader title='Profile' />
     </div>
   );
 }
