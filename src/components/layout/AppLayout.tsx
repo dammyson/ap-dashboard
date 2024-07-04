@@ -10,7 +10,7 @@ export const AppLayout = ({
   children,
 }: PropsWithChildren<LayoutProps>) => {
   return (
-    <div className='flex'>
+    <div className='flex bg-[#00000003] '>
       <SideNavigationContent />
       {children}
     </div>
