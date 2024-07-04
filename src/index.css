@@ -82,3 +82,14 @@ button:focus-visible {
     @apply w-full max-w-[calc(100vw-270px)] py-2 px-10;
   }
 }
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
