@@ -74,7 +74,7 @@ export function Comboselect({
                   hasBorder ? 'border-light-blue-50' : 'border-transparent',
                   isCurved ? 'rounded-[50px]' : 'rounded-[8px]',
                   className,
-                  'relative w-full h-[65px] px-4 py-3 cursor-pointer border-[1px] border-[#BBCAE2] hover:border-[#96a3b7] shadow-md flex items-center',
+                  'bg-primary-white relative w-full h-[65px] px-4 py-3 cursor-pointer border-[1px] !border-light-blue-50 hover:!border-[#acbbd0] shadow-md flex items-center',
                 )}
               >
                 {selectedRole}

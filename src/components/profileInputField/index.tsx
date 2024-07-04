@@ -72,7 +72,7 @@ export const ProfileInputField = () => {
               label={item.label}
               isCurved
               hasBorder
-              className='drop-shadow-none text-xl border-[#BBCAE3] hover:border-[#8793a4] h-[65px]'
+              className='drop-shadow-none text-xl !border-light-blue-50 hover:!border-[#acbbd0] h-[65px]'
             />
           </div>
         );
