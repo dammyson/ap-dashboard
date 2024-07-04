@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Comboselect as RoleSelect, SelectType } from '../comboSelect';
+import { Comboselect as RoleSelect, SelectType } from '../customSelect';
 import { Input } from '../input';
 import clsx from 'clsx';
 import { DropDownArrow } from '../svg/settings/Settings';
