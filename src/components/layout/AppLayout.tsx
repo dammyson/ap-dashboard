@@ -12,7 +12,7 @@ export const AppLayout = ({
   return (
     <div className='flex bg-[#00000003] '>
       <SideNavigationContent />
-      {children}
+      <div className='ml-[270px] w-full'>{children}</div>
     </div>
   );
 };
