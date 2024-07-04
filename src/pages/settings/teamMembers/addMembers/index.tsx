@@ -23,14 +23,14 @@ function AddMembers() {
           />
         }
       />
-      <AddMembersInputField />
+      <AddMembersInputForm />
       <div className='w-full max-w-[447px] grid items-center gap-9 mt-28 mb-[80px]'>
         <Button
           onClick={() => {}}
           buttonText='Generate OTP'
           size={ButtonSize.Large}
           radius={BorderRadius.Large}
-          className='text-light-blue-main text-[24px] font-semibold'
+          className='text-light-blue-main !text-[24px] font-semibold'
         />
         <Button
           onClick={() => {}}
@@ -39,7 +39,7 @@ function AddMembers() {
           mode='outlined'
           size={ButtonSize.Large}
           radius={BorderRadius.Large}
-          className='text-light-blue-main hover:border-light-blue-100'
+          className='text-light-blue-main hover:border-light-blue-100 !text-[24px]'
         />
       </div>
     </div>
@@ -55,7 +55,7 @@ interface AddMembersInput {
 
 type AddMembersInputs = AddMembersInput[];
 
-export const AddMembersInputField = () => {
+export const AddMembersInputForm = () => {
   const AddMembersInputs = [
     { label: 'First Name', id: 'first name' },
     { label: 'Last Name', id: 'last name' },
@@ -70,13 +70,13 @@ export const AddMembersInputField = () => {
           return (
             <div
               key={item.id}
-              className='text-light-grey-200 font-medium text-[16px] max-w-[569px]'
+              className='text-light-grey-200 font-medium text-[16px] max-w-[569px] '
             >
               <Input
                 label={item.label}
                 isCurved
                 hasBorder
-                className='drop-shadow-none text-lg border-[#BBCAE1] hover:border-[#a1afc4] h-[65px]'
+                className='drop-shadow-none text-lg !border-[#BBCAE1]   h-[65px]'
               />
             </div>
           );
