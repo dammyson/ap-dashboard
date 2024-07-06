@@ -9,7 +9,6 @@ function Settings() {
         <Header />
         <SettingsPanel />
       </div>
-      l
     </AppLayout>
   );
 }
