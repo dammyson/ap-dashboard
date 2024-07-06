@@ -3,7 +3,7 @@ import { ProfileData } from '../../../components/profileData';
 import profileImage from '../../../assets/profileImage/profile-img.png';
 import { Button } from '../../../components/button';
 import { Edit, Upload } from '../../../components/svg/settings/Settings';
-import { ProfileInputField } from '../../../components/profileInputField';
+import { ProfileInputForm } from '../../../components/profileInputForm';
 
 function Profile() {
   return (
@@ -30,7 +30,7 @@ function Profile() {
             className='!bg-[#E9EEF5] text-light-primary-black border-[1px] rounded-[20px] border-light-blue-50 hover:border-[#9daabe] py-[11px] px-[12px]'
           />
         </div>
-        <ProfileInputField />
+        <ProfileInputForm />
       </div>
     </div>
   );

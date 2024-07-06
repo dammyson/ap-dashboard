@@ -1,11 +1,4 @@
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxOption,
-  ComboboxOptions,
-  Field,
-  Label,
-} from '@headlessui/react';
+import { Field, Label } from '@headlessui/react';
 import clsx from 'clsx';
 import React, {
   PropsWithChildren,
@@ -14,10 +7,11 @@ import React, {
   useState,
   useRef,
 } from 'react';
+import { SearchSelect } from '../searchSelect';
 
 export enum SelectType {
   SELECT = 'select',
-  COMOB_SELECT = 'combo_select',
+  SEARCH_SELECT = 'search_select',
 }
 
 interface SelectProps {
@@ -25,12 +19,12 @@ interface SelectProps {
   label: string;
   className?: string;
   hasBorder?: Boolean;
-  traillingIcon?: ReactNode;
+  trailingIcon?: ReactNode;
   isCurved?: Boolean;
   selectedRole: string;
 }
 
-export function Comboselect({
+export function CustomSelect({
   selectType,
   label,
   children,
@@ -38,7 +32,7 @@ export function Comboselect({
   hasBorder,
   isCurved,
   selectedRole = 'Role..',
-  traillingIcon,
+  trailingIcon,
 }: PropsWithChildren<SelectProps>) {
   const [isActive, setIsActive] = useState<boolean>(false);
 
@@ -57,50 +51,51 @@ export function Comboselect({
     };
   });
 
+  const handleClick = () => {
+    setIsActive(!isActive);
+  };
   return (
     <Field className='relative'>
       {label && <Label className={'mb-1 inline-block'}>{label}</Label>}
       <div className='relative'>
         {selectType === SelectType.SELECT ? (
           <>
-            <div>
-              <div
-                ref={divRef}
-                onClick={() => {
-                  setIsActive(!isActive);
-                }}
-                className={clsx(
-                  traillingIcon ? 'p4-4' : '',
-                  hasBorder ? 'border-light-blue-50' : 'border-transparent',
-                  isCurved ? 'rounded-[50px]' : 'rounded-[8px]',
-                  className,
-                  'bg-primary-white relative w-full h-[65px] px-4 py-3 cursor-pointer border-[1px] !border-light-blue-50 hover:!border-[#acbbd0] shadow-md flex items-center',
-                )}
-              >
-                {selectedRole}
-                {traillingIcon && (
-                  <span className='absolute right-6 cursor-pointer top-1/2 -translate-y-3'>
-                    {traillingIcon}
-                  </span>
-                )}
-              </div>
-
-              {isActive && (
-                <div className='max-h-40 overflow-auto no-scrollbar bg-primary-white rounded-2xl p-4-600 mt-2 py-2 border-[1px] border-[#BBCAE2]  shadow-xl'>
-                  {React.Children.map(children, (child) =>
-                    React.cloneElement(child as React.ReactElement<any>, {
-                      className: clsx(
-                        'text-xl cursor-pointer px-4 py-2 hover:bg-[#f4f4f4]',
-                        (child as React.ReactElement<any>).props.className,
-                      ),
-                    }),
-                  )}
-                </div>
+            <div
+              ref={divRef}
+              onClick={handleClick}
+              className={clsx(
+                trailingIcon ? 'p4-4' : '',
+                hasBorder ? 'border-light-blue-50' : 'border-transparent',
+                isCurved ? 'rounded-[50px]' : 'rounded-[8px]',
+                className,
+                'bg-primary-white relative w-full h-[65px] px-4 py-3 cursor-pointer border-[1px] !border-light-blue-50 hover:!border-[#acbbd0] shadow-md flex items-center',
+              )}
+            >
+              {selectedRole}
+              {trailingIcon && (
+                <span className='absolute right-6 cursor-pointer top-1/2 -translate-y-3'>
+                  {trailingIcon}
+                </span>
               )}
             </div>
+
+            {isActive && (
+              <div className=' absolute w-full max-h-40 overflow-auto no-scrollbar bg-primary-white rounded-2xl p-4-600 mt-2 py-2 border-[1px] border-[#BBCAE2]  shadow-xl'>
+                {React.Children.map(children, (child) =>
+                  React.cloneElement(child as React.ReactElement<any>, {
+                    className: clsx(
+                      'text-xl cursor-pointer px-4 py-2 hover:bg-[#f4f4f4]',
+                      (child as React.ReactElement<any>).props.className,
+                    ),
+                  }),
+                )}
+              </div>
+            )}
           </>
         ) : (
-          <Combobox></Combobox>
+          <>
+            <SearchSelect />
+          </>
         )}
       </div>
     </Field>

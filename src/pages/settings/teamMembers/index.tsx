@@ -4,6 +4,7 @@ import { useState } from 'react';
 import AddMembers from './addMembers';
 import CategoryHeader from '../../../components/categoryHeader';
 import { Table } from 'antd';
+import { useTeamMembersColumn } from '../../../components/modules/teamMembers/tableColumns';
 
 function TeamMembers() {
   const [addMembers, setAddMembers] = useState(false);
@@ -25,6 +26,8 @@ function TeamMembers() {
       key: 'amount',
     },
   ];
+
+  const { tableColumns } = useTeamMembersColumn();
 
   return (
     <div>

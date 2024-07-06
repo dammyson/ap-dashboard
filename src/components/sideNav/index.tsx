@@ -61,11 +61,11 @@ export const SideNavigationItems = () => {
   ] as NavigationItems;
 
   return (
-    <div className='relative py-[15px] h-lvh w-[270px]'>
-      <div className='max-w-[256px] flex justify-center items-center py-10 pr-[4.6rem] pl-8'>
+    <div>
+      <div className='flex justify-center items-center pt-10 pr-[4.6rem] pl-8'>
         <img src={whiteLogo} alt='' />
       </div>
-      <div className='grid gap-6 pl-6'>
+      <div className='grid gap-6 pl-6 mt-[85px]'>
         {navigationItems
           ?.slice(0, -2)
           .map(({ icon, title, countId, id }, index) => {
@@ -147,10 +147,8 @@ export const SideNavigationItems = () => {
 export const SideNavigationContent = () => {
   return (
     <div>
-      <div className='h-full w-full bg-black '>
-        <div className='h-calcvh-minus-92'>
-          <SideNavigationItems />
-        </div>
+      <div className='h-lvh w-[270px] bg-black fixed top-0 left-0 py-[15px]  '>
+        <SideNavigationItems />
       </div>
     </div>
   );

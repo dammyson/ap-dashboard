@@ -1,8 +1,8 @@
 import { ColumnType } from 'antd/es/table';
 import { useMemo } from 'react';
 import { ITeamMembers } from '@/types/types';
-import { Button } from '@/components/button';
-import { Remove } from '@/components/svg/settings/Settings';
+import { Button } from '../../../components/button';
+import { Remove } from '../../../components/svg/settings/Settings';
 
 export const useTeamMembersColumn = () => {
   const tableColumns = useMemo(() => {

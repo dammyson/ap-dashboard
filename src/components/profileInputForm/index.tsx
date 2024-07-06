@@ -1,14 +1,15 @@
 import { useState } from 'react';
-import { Comboselect as RoleSelect, SelectType } from '../customSelect';
+import { CustomSelect as RoleSelect, SelectType } from '../customSelect';
 import { Input } from '../input';
 import clsx from 'clsx';
 import { DropDownArrow } from '../svg/settings/Settings';
+import { SearchSelect } from '../searchSelect';
 
-interface ProfileInput {
+interface ProfileLabel {
   label: string;
   id: string;
 }
-type ProfileInputs = ProfileInput[];
+type ProfileLabels = ProfileLabel[];
 
 interface RoleOption {
   title: string;
@@ -16,14 +17,14 @@ interface RoleOption {
 }
 type RoleOptions = RoleOption[];
 
-export const ProfileInputField = () => {
-  const profileInputs = [
+export const ProfileInputForm = () => {
+  const profileLabels = [
     { label: 'First Name', id: 'first name' },
     { label: 'Last Name', id: 'last name' },
     { label: 'Email Address', id: 'email address' },
     { label: 'Phone Number', id: 'phone number' },
     { label: 'Role', id: 'role' },
-  ] as ProfileInputs;
+  ] as ProfileLabels;
 
   const roleOptions = [
     { title: 'Admin', id: 'admin' },
@@ -34,18 +35,18 @@ export const ProfileInputField = () => {
   const [selectedRole, setSelectedRole] = useState<string>('' || 'Role');
   return (
     <div className='grid grid-cols-[minmax(250px,569px)_minmax(250px,569px)] gap-y-10 gap-32 justify-between py-6'>
-      {profileInputs.map((item) => {
-        return item.label === 'Role' ? (
+      {profileLabels.map((label) => {
+        return label.label === 'Role' ? (
           <div
-            key={item.id}
-            className='text-light-grey-200 font-medium text-xl max-w-[569px] pr-8'
+            key={label.id}
+            className='text-light-grey-200 font-medium text-xl max-w-[569px]'
           >
             <RoleSelect
               label='Role'
               selectType={SelectType.SELECT}
               hasBorder
               isCurved
-              traillingIcon={<DropDownArrow />}
+              trailingIcon={<DropDownArrow />}
               selectedRole={selectedRole}
             >
               {roleOptions.map((option) => (
@@ -65,11 +66,11 @@ export const ProfileInputField = () => {
           </div>
         ) : (
           <div
-            key={item.id}
+            key={label.id}
             className='text-light-grey-200 font-medium text-xl max-w-[569px]'
           >
             <Input
-              label={item.label}
+              label={label.label}
               isCurved
               hasBorder
               className='drop-shadow-none text-xl !border-light-blue-50 hover:!border-[#acbbd0] h-[65px]'
