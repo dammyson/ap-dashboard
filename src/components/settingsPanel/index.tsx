@@ -60,7 +60,7 @@ export const SettingsPanelItems = () => {
           );
         })}
       </div>
-      <div className='mt-10'>
+      <div className='mt-10 pr-12'>
         {currentTab.id === 'profile' ? (
           <Profile />
         ) : currentTab.id === 'team members' ? (

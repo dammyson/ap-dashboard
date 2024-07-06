@@ -5,7 +5,7 @@ import { AppLayout } from '../../components/layout/AppLayout';
 function Settings() {
   return (
     <AppLayout logo=''>
-      <div className='app-container py-2 px-10'>
+      <div className='app-container py-2 pl-14 pr-10'>
         <Header />
         <SettingsPanel />
       </div>
