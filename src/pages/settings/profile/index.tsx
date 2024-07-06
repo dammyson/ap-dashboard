@@ -3,7 +3,7 @@ import { ProfileData } from '../../../components/profileData';
 import profileImage from '../../../assets/profileImage/profile-img.png';
 import { Button } from '../../../components/button';
 import { Edit, Upload } from '../../../components/svg/settings/Settings';
-import { ProfileInputForm } from '../../../components/profileInputForm';
+import { ProfileForm } from '../../../components/profileForm';
 
 function Profile() {
   return (
@@ -21,7 +21,9 @@ function Profile() {
       </div>
       <div className='bg-[#00000003] w-full border-[1px] border-light-blue-50 rounded-[20px] py-6 px-8'>
         <div className='flex items-center justify-between'>
-          <p className='text-2xl font-medium'>Personal Information</p>
+          <p className='text-2xl font-medium text-primary-black'>
+            Personal Information
+          </p>
           <Button
             onClick={() => {}}
             buttonText='Edit'
@@ -30,7 +32,7 @@ function Profile() {
             className='!bg-[#E9EEF5] text-light-primary-black border-[1px] rounded-[20px] border-light-blue-50 hover:border-[#9daabe] py-[11px] px-[12px]'
           />
         </div>
-        <ProfileInputForm />
+        <ProfileForm />
       </div>
     </div>
   );

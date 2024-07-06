@@ -75,7 +75,7 @@ export const SettingsPanelItems = () => {
 
 export const SettingsPanel = () => {
   return (
-    <div>
+    <div className='pb-20'>
       <SettingsPanelItems />
     </div>
   );

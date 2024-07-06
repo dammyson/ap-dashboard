@@ -25,7 +25,9 @@ export const ProfileData = ({ src, name, role, onClick }: ProfileDataProps) => {
             {name}
           </div>
         )}
-        {role && <span className='font-normal text-xl'>{role}</span>}
+        {role && (
+          <span className='font-normal text-primary-black text-xl'>{role}</span>
+        )}
       </div>
     </div>
   );

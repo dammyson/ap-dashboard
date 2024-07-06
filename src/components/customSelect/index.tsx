@@ -1,13 +1,8 @@
 import { Field, Label } from '@headlessui/react';
 import clsx from 'clsx';
-import React, {
-  PropsWithChildren,
-  ReactNode,
-  useEffect,
-  useState,
-  useRef,
-} from 'react';
+import { ReactNode, useEffect, useState, useRef } from 'react';
 import { SearchSelect } from '../searchSelect';
+import { RoleOption } from '../profileForm';
 
 export enum SelectType {
   SELECT = 'select',
@@ -22,18 +17,21 @@ interface SelectProps {
   trailingIcon?: ReactNode;
   isCurved?: Boolean;
   selectedRole: string;
+  options: RoleOption[];
+  onSelect?: (info: string) => void;
 }
 
 export function CustomSelect({
   selectType,
   label,
-  children,
   className,
   hasBorder,
   isCurved,
-  selectedRole = 'Role..',
+  selectedRole,
   trailingIcon,
-}: PropsWithChildren<SelectProps>) {
+  options,
+  onSelect,
+}: SelectProps) {
   const [isActive, setIsActive] = useState<boolean>(false);
 
   let divRef = useRef<HTMLDivElement>(null);
@@ -54,6 +52,8 @@ export function CustomSelect({
   const handleClick = () => {
     setIsActive(!isActive);
   };
+
+  console.log(options);
   return (
     <Field className='relative'>
       {label && <Label className={'mb-1 inline-block'}>{label}</Label>}
@@ -64,7 +64,7 @@ export function CustomSelect({
               ref={divRef}
               onClick={handleClick}
               className={clsx(
-                trailingIcon ? 'p4-4' : '',
+                trailingIcon ? 'px-4' : '',
                 hasBorder ? 'border-light-blue-50' : 'border-transparent',
                 isCurved ? 'rounded-[50px]' : 'rounded-[8px]',
                 className,
@@ -78,23 +78,27 @@ export function CustomSelect({
                 </span>
               )}
             </div>
-
             {isActive && (
               <div className=' absolute w-full max-h-40 overflow-auto no-scrollbar bg-primary-white rounded-2xl p-4-600 mt-2 py-2 border-[1px] border-[#BBCAE2]  shadow-xl'>
-                {React.Children.map(children, (child) =>
-                  React.cloneElement(child as React.ReactElement<any>, {
-                    className: clsx(
-                      'text-xl cursor-pointer px-4 py-2 hover:bg-[#f4f4f4]',
-                      (child as React.ReactElement<any>).props.className,
-                    ),
-                  }),
-                )}
+                {options.map((option) => (
+                  <div
+                    className={clsx(
+                      selectedRole === option.label
+                        ? 'bg-[#e0e0e0] cursor-pointer px-4 text-xl py-2'
+                        : 'px-4 py-2 text-xl hover:bg-[#f4f4f4]',
+                    )}
+                    key={option.value}
+                    onClick={() => (onSelect ? onSelect(option.label) : null)}
+                  >
+                    {option.label}
+                  </div>
+                ))}
               </div>
             )}
           </>
         ) : (
           <>
-            <SearchSelect />
+            <SearchSelect options={options} />
           </>
         )}
       </div>
