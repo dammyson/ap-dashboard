@@ -9,7 +9,7 @@ import { Input } from '../../../../components/input';
 
 function AddMembers() {
   return (
-    <div className='mt-8 bg-primary-white shadow-[0px_0px_15px_4px_rgba(0,0,0,0.1)] rounded-[20px] p-10 flex items-center justify-center flex-col'>
+    <div className=' flex items-center justify-center flex-col'>
       <CategoryHeader
         title='Personal Information'
         button={

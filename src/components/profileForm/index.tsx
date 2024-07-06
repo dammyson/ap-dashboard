@@ -1,38 +1,35 @@
 import { useState } from 'react';
-import { CustomSelect as RoleSelect, SelectType } from '../customSelect';
+import { CustomSelect, SelectType } from '../customSelect';
 import { Input } from '../input';
-import clsx from 'clsx';
 import { DropDownArrow } from '../svg/settings/Settings';
-import { SearchSelect } from '../searchSelect';
 
-interface ProfileLabel {
+export interface ProfileLabel {
   label: string;
   id: string;
 }
-type ProfileLabels = ProfileLabel[];
 
-interface RoleOption {
-  title: string;
-  id: string;
+export interface RoleOption {
+  label: string;
+  value: string;
 }
-type RoleOptions = RoleOption[];
 
-export const ProfileInputForm = () => {
-  const profileLabels = [
+export const ProfileForm = () => {
+  const profileLabels: ProfileLabel[] = [
     { label: 'First Name', id: 'first name' },
     { label: 'Last Name', id: 'last name' },
     { label: 'Email Address', id: 'email address' },
     { label: 'Phone Number', id: 'phone number' },
     { label: 'Role', id: 'role' },
-  ] as ProfileLabels;
+  ];
 
-  const roleOptions = [
-    { title: 'Admin', id: 'admin' },
-    { title: 'HR', id: 'hr' },
-    { title: 'Trainer', id: 'trainer' },
-  ] as RoleOptions;
+  const roleOptions: RoleOption[] = [
+    { label: 'Admin', value: 'admin' },
+    { label: 'HR', value: 'hr' },
+    { label: 'Trainer', value: 'trainer' },
+  ];
 
-  const [selectedRole, setSelectedRole] = useState<string>('' || 'Role');
+  const [selectedRole, setSelectedRole] = useState<string>('');
+
   return (
     <div className='grid grid-cols-[minmax(250px,569px)_minmax(250px,569px)] gap-y-10 gap-32 justify-between py-6'>
       {profileLabels.map((label) => {
@@ -41,28 +38,16 @@ export const ProfileInputForm = () => {
             key={label.id}
             className='text-light-grey-200 font-medium text-xl max-w-[569px]'
           >
-            <RoleSelect
+            <CustomSelect
               label='Role'
-              selectType={SelectType.SELECT}
+              selectType={SelectType.SEARCH_SELECT}
               hasBorder
               isCurved
               trailingIcon={<DropDownArrow />}
               selectedRole={selectedRole}
-            >
-              {roleOptions.map((option) => (
-                <div
-                  className={clsx(
-                    selectedRole === option.title
-                      ? 'bg-[#e0e0e0] hover:bg-[#e0e0e0]'
-                      : '',
-                  )}
-                  key={option.id}
-                  onClick={() => setSelectedRole(option.title)}
-                >
-                  {option.title}
-                </div>
-              ))}
-            </RoleSelect>
+              options={roleOptions}
+              onSelect={(info) => setSelectedRole(info)}
+            />
           </div>
         ) : (
           <div

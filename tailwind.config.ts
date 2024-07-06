@@ -27,6 +27,9 @@ const config: Config = {
         1400: '1400px',
         1600: '1600px',
       },
+      boxShadow: {
+        default: '0px 0px 15px 4px rgba(0,0,0,0.1)' 
+      },
       colors: {
         primary: {
           white: '#fff',
@@ -100,6 +103,9 @@ const config: Config = {
             1000: '#1A1D1F',
           },
         },
+      },
+      fontFamily: {
+        primary: ['Outfit','Inter', 'Sans-Serif'],
       },
       gridTemplateColumns: {
         16: 'repeat(16, minmax(0, 1fr))',

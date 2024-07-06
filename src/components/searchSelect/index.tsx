@@ -1,9 +1,11 @@
 import ReactSelect, { components, DropdownIndicatorProps } from 'react-select';
 import '../../index.css';
 import { DropDownArrow } from '../svg/settings/Settings';
+import { RoleOption } from '../profileForm';
 
 interface SearchSelectProps {
   className?: string;
+  options: RoleOption[];
 }
 
 const DropdownIndicator = (props: DropdownIndicatorProps) => {
@@ -14,26 +16,15 @@ const DropdownIndicator = (props: DropdownIndicatorProps) => {
   );
 };
 
-export function SearchSelect({}: SearchSelectProps) {
-  const roleOptions = [
-    { title: 'Admin', id: 'admin' },
-    { title: 'HR', id: 'hr' },
-    { title: 'Trainer', id: 'trainer' },
-    { title: 'Hee', id: 'hee' },
-  ];
-
-  const mappedOptions = roleOptions.map((option) => ({
-    label: option.title,
-    value: option.id,
-  }));
-
+export function SearchSelect({ className, options }: SearchSelectProps) {
   return (
     <div>
       <ReactSelect
-        options={mappedOptions}
+        options={options}
         classNamePrefix='react-select'
         placeholder='Enter or select'
         components={{ DropdownIndicator }}
+        className={className}
       />
     </div>
   );

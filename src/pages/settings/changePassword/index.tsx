@@ -5,7 +5,7 @@ import { SlashedEye } from '../../../components/svg/auth/AuthIcons';
 
 function ChangePassword() {
   return (
-    <div className='mt-8 bg-primary-white shadow-[0px_0px_15px_4px_rgba(0,0,0,0.1)] rounded-[20px] p-10 flex items-center justify-center flex-col'>
+    <div className='mt-8 bg-primary-white shadow-default rounded-[20px] p-10 flex items-center justify-center flex-col'>
       <CategoryHeader
         title='Change Passowrd'
         description='Please, fill in the information below.'
