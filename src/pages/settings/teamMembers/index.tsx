@@ -5,32 +5,46 @@ import AddMembers from './addMembers';
 import CategoryHeader from '../../../components/categoryHeader';
 import { Table } from 'antd';
 import { useTeamMembersColumn } from '../../../components/modules/teamMembers/tableColumns';
+import profileImage from '../../../assets/profileImage/profile-img.png';
 
 function TeamMembers() {
   const [addMembers, setAddMembers] = useState(false);
 
   const list = [
-    { category: 'credit', amount: 200 },
-    { category: 'debit', amount: 100 },
-    { category: 'debit', amount: 100 },
-  ];
-  const columns = [
     {
-      title: 'Category',
-      dataIndex: 'category',
-      key: 'category',
+      avatar: profileImage,
+      firstName: 'Corlet',
+      lastName: 'Jasper',
+      role: 'Admin',
+      email: 'corletjasper@gmail.com',
     },
     {
-      title: 'Amount',
-      dataIndex: 'amount',
-      key: 'amount',
+      avatar: profileImage,
+      firstName: 'Corlet',
+      lastName: 'Jasper',
+      role: 'Admin',
+      email: 'corletjasper@gmail.com',
+    },
+    {
+      avatar: profileImage,
+      firstName: 'Corlet',
+      lastName: 'Jasper',
+      role: 'Admin',
+      email: 'corletjasper@gmail.com',
+    },
+    {
+      avatar: profileImage,
+      firstName: 'Corlet',
+      lastName: 'Jasper',
+      role: 'Admin',
+      email: 'corletjasper@gmail.com',
     },
   ];
 
   const { tableColumns } = useTeamMembersColumn();
 
   return (
-    <div>
+    <div className='mt-8 bg-primary-white shadow-default rounded-[20px] p-10'>
       {addMembers ? (
         <AddMembers />
       ) : (
@@ -50,13 +64,14 @@ function TeamMembers() {
           />
           <Table
             pagination={false}
-            columns={columns}
+            columns={tableColumns}
             className='table'
             dataSource={list}
             scroll={{
               y: 506,
             }}
-            rootClassName='min-h-[566px] w-full'
+            rootClassName='w-full'
+            showHeader={false}
           />
         </div>
       )}
