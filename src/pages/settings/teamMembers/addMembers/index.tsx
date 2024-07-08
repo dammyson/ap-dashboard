@@ -4,8 +4,15 @@ import {
   Button,
   ButtonSize,
 } from '../../../../components/button';
-import { Copy, Upload } from '../../../../components/svg/settings/Settings';
+import {
+  Copy,
+  DropDownArrow,
+  Upload,
+} from '../../../../components/svg/settings/Settings';
 import { Input } from '../../../../components/input';
+import { CustomSelect, SelectType } from '../../../../components/customSelect';
+import { useState } from 'react';
+import { RoleOption } from '../../../../components/profileForm';
 
 function AddMembers() {
   return (
@@ -48,26 +55,47 @@ function AddMembers() {
 
 export default AddMembers;
 
-interface AddMembersInput {
+interface AddMembersLabels {
   label: string;
   id: string;
 }
-
-type AddMembersInputs = AddMembersInput[];
-
 export const AddMembersInputForm = () => {
-  const AddMembersInputs = [
+  const AddMembersInputs: AddMembersLabels[] = [
     { label: 'First Name', id: 'first name' },
     { label: 'Last Name', id: 'last name' },
     { label: 'Email Address', id: 'email address' },
     { label: 'Role', id: 'role' },
-  ] as AddMembersInputs;
+  ];
+
+  const roleOptions: RoleOption[] = [
+    { label: 'Admin', value: 'admin' },
+    { label: 'HR', value: 'hr' },
+    { label: 'Trainer', value: 'trainer' },
+  ];
+
+  const [selectedRole, setSelectedRole] = useState<string>('');
 
   return (
     <div className='w-full'>
       <div className='grid grid-cols-[minmax(250px,569px)_minmax(250px,569px)] gap-y-10 gap-32 justify-between py-6 mt-8'>
         {AddMembersInputs.map((item) => {
-          return (
+          return item.label === 'Role' ? (
+            <div
+              key={item.id}
+              className='text-light-grey-200 font-medium text-xl max-w-[569px]'
+            >
+              <CustomSelect
+                label='Role'
+                selectType={SelectType.SELECT}
+                hasBorder
+                isCurved
+                trailingIcon={<DropDownArrow />}
+                selectedRole={selectedRole}
+                options={roleOptions}
+                onSelect={(info) => setSelectedRole(info)}
+              />
+            </div>
+          ) : (
             <div
               key={item.id}
               className='text-light-grey-200 font-medium text-[16px] max-w-[569px] '
