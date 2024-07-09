@@ -1,6 +1,6 @@
 import { ColumnType } from 'antd/es/table';
 import { useMemo } from 'react';
-import { ITeamMembers } from '@/types/types';
+import { ITeamMembers } from '../../../types/types';
 import { Button } from '../../../components/button';
 import {
   CircularArrow,
@@ -24,12 +24,12 @@ export const useTeamMembersColumn = () => {
         ),
       },
       {
-        dataIndex: 'firstName',
-        key: 'firstName',
+        dataIndex: 'name',
+        key: 'name',
       },
       {
-        dataIndex: 'lastName',
-        key: 'lastName',
+        dataIndex: 'role',
+        key: 'role',
       },
       {
         dataIndex: 'email',
