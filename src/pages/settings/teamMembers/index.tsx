@@ -2,10 +2,10 @@ import { Add } from '../../../components/svg/settings/Settings';
 import { Button, ButtonSize } from '../../../components/button';
 import { useState } from 'react';
 import AddMembers from './addMembers';
-import CategoryHeader from '../../../components/categoryHeader';
 import { Table } from 'antd';
 import { useTeamMembersColumn } from '../../../components/modules/teamMembers/tableColumns';
 import profileImage from '../../../assets/profileImage/profile-img.png';
+import CategoryHeader from '@/components/categoryHeader';
 
 function TeamMembers() {
   const [addMembers, setAddMembers] = useState(false);
