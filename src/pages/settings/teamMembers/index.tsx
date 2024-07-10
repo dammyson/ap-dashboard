@@ -5,11 +5,8 @@ import AddMembers from './addMembers';
 import { Table } from 'antd';
 import { useTeamMembersColumn } from '../../../components/modules/teamMembers/tableColumns';
 import profileImage from '../../../assets/profileImage/profile-img.png';
-<<<<<<< HEAD
 import { SizeType, Modal } from '../../../components/modal';
-=======
 import CategoryHeader from '@/components/categoryHeader';
->>>>>>> main
 
 function TeamMembers() {
   const [addMembers, setAddMembers] = useState(false);
