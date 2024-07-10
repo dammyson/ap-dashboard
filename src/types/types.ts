@@ -1,7 +1,6 @@
 export interface ITeamMembers {
-avatar: string,
-firstName: string,
-lastName: string,
-role: string,
-email: string,
+  avatar: string;
+  name: string;
+  role: string;
+  email: string;
 }

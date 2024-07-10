@@ -167,3 +167,11 @@ button:focus-visible {
 .react-select__option.react-select__option--is-focused {
   background-color: #f9f9f9 !important;
 }
+
+/* TEAM MEMBERS TABLE */
+
+.ant-table-cell,
+.ant-table-cell button p {
+  color: #727272;
+  font-weight: 400;
+}

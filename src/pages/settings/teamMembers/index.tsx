@@ -19,29 +19,25 @@ function TeamMembers() {
   const list = [
     {
       avatar: profileImage,
-      firstName: 'Corlet',
-      lastName: 'Jasper',
+      name: 'Corlet Jasper',
       role: 'Admin',
       email: 'corletjasper@gmail.com',
     },
     {
       avatar: profileImage,
-      firstName: 'Corlet',
-      lastName: 'Jasper',
+      name: 'Corlet Jasper',
       role: 'Admin',
       email: 'corletjasper@gmail.com',
     },
     {
       avatar: profileImage,
-      firstName: 'Corlet',
-      lastName: 'Jasper',
+      name: 'Corlet Jasper',
       role: 'Admin',
       email: 'corletjasper@gmail.com',
     },
     {
       avatar: profileImage,
-      firstName: 'Corlet',
-      lastName: 'Jasper',
+      name: 'Corlet Jasper',
       role: 'Admin',
       email: 'corletjasper@gmail.com',
     },
