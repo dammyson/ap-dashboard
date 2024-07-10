@@ -6,9 +6,15 @@ import CategoryHeader from '../../../components/categoryHeader';
 import { Table } from 'antd';
 import { useTeamMembersColumn } from '../../../components/modules/teamMembers/tableColumns';
 import profileImage from '../../../assets/profileImage/profile-img.png';
+import {
+  SizeType,
+  SettingsModal,
+} from '../../../components/modals/settingsModal';
+import { Cancel, AccessLock } from '../../../components/svg/modal';
 
 function TeamMembers() {
   const [addMembers, setAddMembers] = useState(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(true);
 
   const list = [
     {
@@ -73,6 +79,18 @@ function TeamMembers() {
             rootClassName='w-full'
             showHeader={false}
           />
+
+          {modalOpen && (
+            <SettingsModal
+              isBackground
+              size={SizeType.LARGE}
+              cancelIcon={<Cancel />}
+              startingIcon={<AccessLock />}
+              topic='Access Denied'
+              description='You do not have permission to view team members. Please contact your system administrator if you believe this is an error.'
+              onClick={() => setModalOpen(false)}
+            />
+          )}
         </div>
       )}
     </div>
