@@ -1,4 +1,4 @@
-import { Add } from '../../../components/svg/settings/Settings';
+import { Add, CircleCancel } from '../../../components/svg/settings/Settings';
 import { Button, ButtonSize } from '../../../components/button';
 import { useState } from 'react';
 import AddMembers from './addMembers';
@@ -6,15 +6,11 @@ import CategoryHeader from '../../../components/categoryHeader';
 import { Table } from 'antd';
 import { useTeamMembersColumn } from '../../../components/modules/teamMembers/tableColumns';
 import profileImage from '../../../assets/profileImage/profile-img.png';
-import {
-  SizeType,
-  SettingsModal,
-} from '../../../components/modals/settingsModal';
-import { Cancel, AccessLock } from '../../../components/svg/modal';
+import { SizeType, Modal } from '../../../components/modal';
 
 function TeamMembers() {
   const [addMembers, setAddMembers] = useState(false);
-  const [modalOpen, setModalOpen] = useState<boolean>(true);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const list = [
     {
@@ -77,15 +73,14 @@ function TeamMembers() {
           />
 
           {modalOpen && (
-            <SettingsModal
+            <Modal
+              isCentered
               isBackground
-              size={SizeType.LARGE}
-              cancelIcon={<Cancel />}
-              startingIcon={<AccessLock />}
-              topic='Access Denied'
-              description='You do not have permission to view team members. Please contact your system administrator if you believe this is an error.'
+              size={SizeType.MEDIUM}
+              cancelIcon={<CircleCancel />}
+              cancelType='filled'
               onClick={() => setModalOpen(false)}
-            />
+            ></Modal>
           )}
         </div>
       )}
