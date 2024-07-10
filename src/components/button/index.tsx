@@ -53,7 +53,7 @@ export function Button({
           mode === 'solid'
             ? 'bg-light-blue-50 border-none text-light-blue-main hover:bg-light-blue-100'
             : mode === 'outlined'
-              ? 'border-2 border-light-blue-50 bg-transparent text-light-blue-main'
+              ? 'border-2 border-light-blue-50 hover:border-[#acbbd0] bg-transparent text-light-blue-main'
               : 'border-none text-primary-black bg-transparent',
           'cursor-pointer flex justify-center items-center gap-2 py-2 px-4 focus:outline-none',
           className,
