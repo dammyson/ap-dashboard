@@ -2,11 +2,14 @@ import { Add, CircleCancel } from '../../../components/svg/settings/Settings';
 import { Button, ButtonSize } from '../../../components/button';
 import { useState } from 'react';
 import AddMembers from './addMembers';
-import CategoryHeader from '../../../components/categoryHeader';
 import { Table } from 'antd';
 import { useTeamMembersColumn } from '../../../components/modules/teamMembers/tableColumns';
 import profileImage from '../../../assets/profileImage/profile-img.png';
+<<<<<<< HEAD
 import { SizeType, Modal } from '../../../components/modal';
+=======
+import CategoryHeader from '@/components/categoryHeader';
+>>>>>>> main
 
 function TeamMembers() {
   const [addMembers, setAddMembers] = useState(false);
