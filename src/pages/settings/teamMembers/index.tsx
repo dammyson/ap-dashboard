@@ -1,16 +1,14 @@
-import { Add, CircleCancel } from '../../../components/svg/settings/Settings';
+import { Add } from '../../../components/svg/settings/Settings';
 import { Button, ButtonSize } from '../../../components/button';
 import { useState } from 'react';
 import AddMembers from './addMembers';
 import { Table } from 'antd';
 import { useTeamMembersColumn } from '../../../components/modules/teamMembers/tableColumns';
 import profileImage from '../../../assets/profileImage/profile-img.png';
-import { SizeType, Modal } from '../../../components/modal';
 import CategoryHeader from '@/components/categoryHeader';
 
 function TeamMembers() {
   const [addMembers, setAddMembers] = useState(false);
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const list = [
     {
@@ -71,17 +69,6 @@ function TeamMembers() {
             rootClassName='w-full'
             showHeader={false}
           />
-
-          {modalOpen && (
-            <Modal
-              isCentered
-              isBackground
-              size={SizeType.MEDIUM}
-              cancelIcon={<CircleCancel />}
-              cancelType='filled'
-              onClick={() => setModalOpen(false)}
-            ></Modal>
-          )}
         </div>
       )}
     </div>

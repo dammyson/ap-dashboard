@@ -79,7 +79,7 @@ export function CustomSelect({
               )}
             </div>
             {isActive && (
-              <div className=' absolute w-full max-h-40 overflow-auto no-scrollbar bg-primary-white rounded-2xl p-4-600 mt-2 py-2 border-[1px] border-[#BBCAE2]  shadow-xl'>
+              <div className=' absolute z-50 w-full max-h-40 overflow-auto no-scrollbar bg-primary-white rounded-2xl p-4-600 mt-2 py-2 border-[1px] border-[#BBCAE2]  shadow-xl'>
                 {options.map((option) => (
                   <div
                     className={clsx(
