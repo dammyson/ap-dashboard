@@ -11,8 +11,12 @@ export const AppLayout = ({
 }: PropsWithChildren<LayoutProps>) => {
   return (
     <div className='flex bg-[#00000003] '>
-      <SideNavigationContent />
-      <div className='ml-[270px] w-full'>{children}</div>
+      <div className='relative w-[270px]'>
+        <SideNavigationContent />
+      </div>
+      <div className='w-[calc(100%-270px)] overflow-y-auto h-lvh'>
+        {children}
+      </div>
     </div>
   );
 };
