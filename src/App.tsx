@@ -7,6 +7,7 @@ import Customer from './pages/customer';
 import ActivityLog from './pages/activity-log';
 import Surveys from './pages/surveys';
 import Settings from './pages/settings';
+import CustomerFeedback from './pages/surveys/customerFeedback';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path='/customer' element={<Customer />} />
           <Route path='/activity-log' element={<ActivityLog />} />
           <Route path='/surveys' element={<Surveys />} />
+          <Route path='/surveys-feedback/:id' element={<CustomerFeedback />} />
           <Route path='/settings' element={<Settings />} />
         </Routes>
       </BrowserRouter>
