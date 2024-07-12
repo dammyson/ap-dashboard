@@ -49,3 +49,92 @@ export const Filter = () => {
     </svg>
   );
 };
+
+export const Photo = () => {
+  return (
+    <svg
+      width='80'
+      height='80'
+      viewBox='0 0 80 80'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <path
+        d='M6.67188 19.9993C6.67188 16.4631 8.07663 13.0717 10.5771 10.5713C13.0776 8.07077 16.469 6.66602 20.0052 6.66602H60.0052C63.5414 6.66602 66.9328 8.07077 69.4333 10.5713C71.9338 13.0717 73.3385 16.4631 73.3385 19.9993V59.9994C73.3385 63.5356 71.9338 66.927 69.4333 69.4274C66.9328 71.9279 63.5414 73.3327 60.0052 73.3327H20.0052C16.469 73.3327 13.0776 71.9279 10.5771 69.4274C8.07663 66.927 6.67188 63.5356 6.67188 59.9994V19.9993Z'
+        stroke='#BBCAE1'
+        stroke-width='6.4'
+        stroke-linecap='round'
+        stroke-linejoin='round'
+      />
+      <path
+        d='M28.3411 36.6647C32.9435 36.6647 36.6745 32.9338 36.6745 28.3314C36.6745 23.729 32.9435 19.998 28.3411 19.998C23.7388 19.998 20.0078 23.729 20.0078 28.3314C20.0078 32.9338 23.7388 36.6647 28.3411 36.6647Z'
+        stroke='#BBCAE1'
+        stroke-width='6.4'
+        stroke-linecap='round'
+        stroke-linejoin='round'
+      />
+      <path
+        d='M48.4278 42.0703L20.0078 73.3337H60.4511C63.8698 73.3337 67.1484 71.9756 69.5658 69.5583C71.9831 67.1409 73.3411 63.8623 73.3411 60.4437V60.0003C73.3411 58.447 72.7578 57.8503 71.7078 56.7003L58.2745 42.0503C57.6484 41.3674 56.8868 40.8224 56.0384 40.4502C55.1899 40.0781 54.2732 39.8868 53.3467 39.8887C52.4202 39.8906 51.5043 40.0855 50.6574 40.4612C49.8105 40.8368 49.0511 41.3849 48.4278 42.0703Z'
+        stroke='#BBCAE1'
+        stroke-width='6.4'
+        stroke-linecap='round'
+        stroke-linejoin='round'
+      />
+    </svg>
+  );
+};
+
+interface CircledPlusProps {
+  color?: string;
+}
+
+export const CircledPlus = ({ color = '#23539F' }: CircledPlusProps) => {
+  return (
+    <svg
+      width='32'
+      height='32'
+      viewBox='0 0 32 32'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <path
+        d='M16 30C23.732 30 30 23.732 30 16C30 8.26801 23.732 2 16 2C8.26801 2 2 8.26801 2 16C2 23.732 8.26801 30 16 30Z'
+        stroke={color}
+        stroke-width='2'
+        stroke-linecap='round'
+        stroke-linejoin='round'
+      />
+      <path
+        d='M10 16H22'
+        stroke={color}
+        stroke-width='2'
+        stroke-linecap='round'
+        stroke-linejoin='round'
+      />
+      <path
+        d='M16 9.99999V22'
+        stroke={color}
+        stroke-width='2'
+        stroke-linecap='round'
+        stroke-linejoin='round'
+      />
+    </svg>
+  );
+};
+
+export const SmallBin = () => {
+  return (
+    <svg
+      width='32'
+      height='32'
+      viewBox='0 0 32 32'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <path
+        d='M9.33398 28C8.60065 28 7.9731 27.7391 7.45132 27.2173C6.92954 26.6956 6.66821 26.0676 6.66732 25.3333V8H5.33398V5.33333H12.0007V4H20.0007V5.33333H26.6673V8H25.334V25.3333C25.334 26.0667 25.0731 26.6947 24.5513 27.2173C24.0295 27.74 23.4015 28.0009 22.6673 28H9.33398ZM22.6673 8H9.33398V25.3333H22.6673V8ZM12.0007 22.6667H14.6673V10.6667H12.0007V22.6667ZM17.334 22.6667H20.0007V10.6667H17.334V22.6667Z'
+        fill='#23539F'
+      />
+    </svg>
+  );
+};

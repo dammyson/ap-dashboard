@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { PropsWithChildren, ReactNode } from 'react';
 
 export enum CardType {
@@ -13,6 +14,8 @@ interface CardProps {
   hasButton?: ReactNode;
   trailingIcon1?: ReactNode;
   trailingIcon2?: ReactNode;
+  hasBorder?: boolean;
+  className?: string;
 }
 
 export const Card = ({
@@ -22,13 +25,21 @@ export const Card = ({
   hasButton,
   trailingIcon1,
   trailingIcon2,
+  hasBorder,
+  className,
   children,
 }: PropsWithChildren<CardProps>) => {
   return (
     <div className='mt-8 bg-primary-white shadow-default rounded-[20px] p-9'>
       {hasHeader && (
         <>
-          <div className='flex items-start justify-between mb-3'>
+          <div
+            className={clsx(
+              hasBorder ? 'border-b border-b-light-blue-50' : '',
+              'flex items-start justify-between pb-3',
+              className,
+            )}
+          >
             <div className='flex items-center'>
               {hasBadge && (
                 <span className='w-3 h-3 rounded-full bg-light-blue-main mr-4'></span>

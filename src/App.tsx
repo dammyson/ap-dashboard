@@ -8,6 +8,7 @@ import ActivityLog from './pages/activity-log';
 import Surveys from './pages/surveys';
 import Settings from './pages/settings';
 import CustomerFeedback from './pages/surveys/customerFeedback';
+import EditSurvey from './pages/surveys/editSurvey';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path='/activity-log' element={<ActivityLog />} />
           <Route path='/surveys' element={<Surveys />} />
           <Route path='/surveys-feedback/:id' element={<CustomerFeedback />} />
+          <Route path='/surveys/edit-survey/:id' element={<EditSurvey />} />
           <Route path='/settings' element={<Settings />} />
         </Routes>
       </BrowserRouter>
