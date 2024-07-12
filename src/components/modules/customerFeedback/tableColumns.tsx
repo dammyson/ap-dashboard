@@ -9,7 +9,18 @@ export const useCustomerFeedbackColumn = () => {
       { title: 'TITLE', dataIndex: 'title', key: 'title' },
       { title: 'NAME', dataIndex: 'name', key: 'name' },
       { title: 'EMAIL', dataIndex: 'email', key: 'email' },
-      { title: 'AIRPEACE ID', dataIndex: 'airpeaceID', key: 'airpeaceID' },
+      {
+        title: 'AIRPEACE ID',
+        dataIndex: 'airpeaceID',
+        key: 'airpeaceID',
+        render: (_, { airpeaceID }) => {
+          return (
+            <span className='text-light-blue-main font-semibold'>
+              {airpeaceID}
+            </span>
+          );
+        },
+      },
       { title: 'GENDER', dataIndex: 'gender', key: 'gender' },
       { title: 'NATIONALITY', dataIndex: 'nationality', key: 'nationality' },
       {

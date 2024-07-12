@@ -5,6 +5,7 @@ import { Surveys } from '@/types/types';
 import clsx from 'clsx';
 import { Space } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { convertToUrlString } from '@/utils';
 
 export const useSurveyColumn = () => {
   const navigate = useNavigate();
@@ -31,19 +32,21 @@ export const useSurveyColumn = () => {
           const [firstStatus, secondStatus] = status;
           return (
             <div>
-              <span>{firstStatus}</span>
-              <span
-                className={clsx(
-                  secondStatus === 'Active'
-                    ? 'text-light-blue-main'
-                    : secondStatus === 'Completed'
-                      ? 'text-light-secondary-mint_green'
-                      : '',
-                  'ml-3',
-                )}
-              >
-                {secondStatus ? secondStatus : ''}
-              </span>
+              {firstStatus && <span>{firstStatus}</span>}
+              {secondStatus && (
+                <span
+                  className={clsx(
+                    secondStatus === 'Active'
+                      ? 'text-light-blue-main'
+                      : secondStatus === 'Completed'
+                        ? 'text-light-secondary-mint_green'
+                        : '',
+                    'ml-3',
+                  )}
+                >
+                  {secondStatus}
+                </span>
+              )}
             </div>
           );
         },
@@ -57,22 +60,28 @@ export const useSurveyColumn = () => {
           <Space size='middle'>
             <>
               <Button
-                buttonText='View Result'
+                buttonText={
+                  record.status.includes('Draft') ? 'Edit' : 'View Result'
+                }
                 onClick={() => {
-                  navigate(`/surveys-feedback/${record.title}`);
+                  navigate(
+                    `/surveys-feedback/${convertToUrlString(record.value)}`,
+                  );
                 }}
-                className='!bg-[#C7C7CC] hover:!bg-[#bababe]'
+                className='!bg-[#C7C7CC] min-w-[108px] hover:!bg-[#bababe]'
               />
 
               <Button
-                buttonText='Publish'
+                buttonText={
+                  record.status.includes('Active') ? 'Unpublish' : 'Publish'
+                }
                 onClick={() => console.warn('published', record)}
-                className='!bg-[#C7C7CC] hover:!bg-[#bababe]'
+                className='!bg-[#C7C7CC] min-w-[108px] hover:!bg-[#bababe]'
               />
               <Button
                 buttonText='Delete'
                 onClick={() => console.warn('deleted', record)}
-                className='!bg-[#C7C7CC] hover:!bg-[#bababe]'
+                className='!bg-[#C7C7CC] min-w-[108px] hover:!bg-[#bababe]'
               />
             </>
           </Space>

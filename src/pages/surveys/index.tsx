@@ -13,26 +13,31 @@ function Surveys() {
       title: 'Customer feedback',
       dateCreated: '2024-05-23',
       status: ['Published', 'Active'],
+      value: 'feedback',
     },
     {
       title: 'In-flight experience',
       dateCreated: '2024-05-23',
       status: ['Draft'],
+      value: 'experience',
     },
     {
       title: 'New route survey',
       dateCreated: '2024-05-23',
       status: ['Draft'],
+      value: 'new route survey',
     },
     {
       title: 'Customer feedback',
       dateCreated: '2024-05-23',
       status: ['Published', 'Completed'],
+      value: 'feedback',
     },
     {
       title: 'Customer feedback',
       dateCreated: '2024-05-23',
       status: ['Published', 'Completed'],
+      value: 'feedback',
     },
   ];
 
