@@ -8,6 +8,7 @@ import { useCustomerFeedbackColumn } from '@/components/modules/customerFeedback
 import { Panel, PanelNavigationItem } from '@/components/Panel';
 import { useState } from 'react';
 import { useParams } from 'react-router';
+import { SurveyResults } from '@/components/modules/surveys/SurveyResults';
 
 function CustomerFeedback() {
   const { id } = useParams();
@@ -108,7 +109,7 @@ function CustomerFeedback() {
             setCurrentTab={setCurrentTab}
             className='pb-0'
           >
-            <div className='mt-8 pr-12'>
+            <div className='mt-8'>
               {currentTab.id === 'Survey participants' ? (
                 <Table
                   pagination={false}
@@ -116,7 +117,7 @@ function CustomerFeedback() {
                   dataSource={list}
                 />
               ) : (
-                <></>
+                <SurveyResults />
               )}
             </div>
           </Panel>

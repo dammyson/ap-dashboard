@@ -9,6 +9,7 @@ export interface Surveys {
   title: string;
   dateCreated: string;
   status: string[];
+  value: string
 }
 
 export interface CustomerFeedback {
