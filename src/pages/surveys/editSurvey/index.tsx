@@ -5,10 +5,8 @@ import { PanelNavigationItem } from '@/components/Panel';
 import { RoleOption } from '@/components/profileForm';
 import { SearchSelect } from '@/components/searchSelect';
 import { CircledPlus, Photo, SmallBin } from '@/components/svg/surveys/Surveys';
-import { useParams } from 'react-router';
 
 function EditSurvey({}) {
-  const { id } = useParams();
   const SurveyQuestions: PanelNavigationItem[] = [
     { title: 'Question', id: 'question ' },
     { title: 'Option format', id: 'option format' },
@@ -38,7 +36,7 @@ function EditSurvey({}) {
         hasBadge
         hasBorder
         className='!border-b-light-secondary-light_blue'
-        title={`Edit survey: ${id}`}
+        title='Edit survey: In-flight experience'
       >
         <>
           <div className='max-w-[620px] mt-10 mb-2'>
