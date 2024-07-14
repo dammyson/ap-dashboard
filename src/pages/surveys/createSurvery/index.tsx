@@ -3,8 +3,17 @@ import { Card } from '@/components/card';
 import { Input } from '@/components/input';
 import { PanelNavigationItem } from '@/components/Panel';
 import { RoleOption } from '@/components/profileForm';
-import { SearchSelect } from '@/components/searchSelect';
-import { CircledPlus, Photo, SmallBin } from '@/components/svg/surveys/Surveys';
+import { ReactCustomSelect } from '@/components/searchSelect';
+import { DropDownArrow } from '@/components/svg/settings/Settings';
+import {
+  CheckBoxSelect,
+  CircledPlus,
+  Photo,
+  RadioFilled,
+  RadioSelect,
+  SmallBin,
+} from '@/components/svg/surveys/Surveys';
+import { ChangeEvent, useState } from 'react';
 
 function CreateSurvey({}) {
   const SurveyQuestions: PanelNavigationItem[] = [
@@ -22,6 +31,14 @@ function CreateSurvey({}) {
     { label: '10 Minutes', value: '10 Minutes' },
     { label: '15 Minutes', value: '15 Minutes' },
   ];
+  const formats: RoleOption[] = [
+    {
+      label: 'Multiple choice',
+      value: 'multiple choice',
+      icon: <RadioSelect />,
+    },
+    { label: 'Check boxes', value: 'check boxes', icon: <CheckBoxSelect /> },
+  ];
 
   const AwardOptions: RoleOption[] = [
     { label: '20 Points', value: '20 points' },
@@ -29,6 +46,10 @@ function CreateSurvey({}) {
     { label: '40 Points', value: '40 points' },
   ];
 
+  const [selectedOption, setSelectedOption] = useState<string>('');
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setSelectedOption(e.target.value);
+  };
   return (
     <div className='grid'>
       <Card
@@ -68,11 +89,11 @@ function CreateSurvey({}) {
                   {item.title}
                 </p>
                 {item.id === 'option format' ? (
-                  <Input
-                    placeHolder='Multiple Select'
-                    isCurved
-                    hasBorder
-                    className='!border-light-blue-50 !drop-shadow-none placeholder:text-[#1C1C1E]'
+                  <ReactCustomSelect
+                    options={formats}
+                    isSearchable={false}
+                    placeholder=''
+                    className=' placeholder:text-[#1C1C1E] placeholder:text-xl font-medium'
                   />
                 ) : (
                   <Input
@@ -87,19 +108,37 @@ function CreateSurvey({}) {
           ))}
           <div className='font-normal text-xl text-[#1C1C1E]'>
             <div className='flex items-center gap-3 pt-3 '>
-              <input
-                type='radio'
-                className='w-8 h-8 border-[#8E8E93] border-2'
-              />
+              <div>
+                <input
+                  type='radio'
+                  value='Option 1'
+                  checked={selectedOption === 'Option 1'}
+                  onChange={handleChange}
+                  name='option format'
+                  className='w-8  h-8 absolute opacity-0 cursor-pointer'
+                />
+                <div className='flex items-center justify-center w-8 h-8 border-[#8E8E93] border-2 rounded-full'>
+                  {selectedOption === 'Option 1' && <RadioFilled />}
+                </div>
+              </div>
               <span className=' w-full py-3 border-b border-b-[#C7C7CC] font-normal'>
                 Option 1
               </span>
             </div>
             <div className='flex items-center gap-3 pt-3'>
-              <input
-                type='radio'
-                className='w-8 h-8 border-[#8E8E93] border-2'
-              />
+              <div>
+                <input
+                  type='radio'
+                  value='Option 2'
+                  checked={selectedOption === 'Option 2'}
+                  onChange={handleChange}
+                  name='option format'
+                  className='w-8  h-8 absolute opacity-0 cursor-pointer'
+                />
+                <div className=' flex items-center justify-center w-8 h-8 border-[#8E8E93] border-2 rounded-full'>
+                  {selectedOption === 'Option 2' && <RadioFilled />}
+                </div>
+              </div>
               <span className=' w-full py-3 border-b border-b-[#C7C7CC]'>
                 Option 2
               </span>
@@ -116,14 +155,13 @@ function CreateSurvey({}) {
               <span>Remove option</span>
             </div>
           </div>
-
-          <div
-            className=' absolute bottom-0 right-0
-          flex gap-2 items-center justify-start font-semibold text-light-blue-main'
-          >
-            <CircledPlus />
-            <span>Add option</span>
-          </div>
+        </div>
+        <div
+          className='
+          flex gap-2 items-center justify-end t font-semibold text-light-blue-main'
+        >
+          <CircledPlus />
+          <span>Add option</span>
         </div>
       </Card>
 
@@ -143,9 +181,21 @@ function CreateSurvey({}) {
                     {item.title}
                   </p>
                   {item.id === 'points awarded (optional)' ? (
-                    <SearchSelect options={AwardOptions} />
+                    <ReactCustomSelect
+                      options={AwardOptions}
+                      isClearable
+                      isSearchable
+                      placeholder='Enter or select'
+                      className='!placeholder:text-[#1C1C1E] placeholder:text-xl font-medium'
+                    />
                   ) : (
-                    <SearchSelect options={Options} />
+                    <ReactCustomSelect
+                      options={Options}
+                      isClearable
+                      isSearchable
+                      placeholder='Enter or select'
+                      className='!placeholder:text-[#1C1C1E] placeholder:text-xl font-medium'
+                    />
                   )}
                 </div>
               </>
@@ -179,6 +229,7 @@ function CreateSurvey({}) {
             <div className='grid w-full max-w-[400px] gap-4 '>
               <Button
                 size={ButtonSize.Large}
+                trailingIcon={<DropDownArrow color='#23539F' />}
                 radius={BorderRadius.Large}
                 buttonText='Schedule for later'
                 onClick={() => {}}

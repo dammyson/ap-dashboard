@@ -1,7 +1,7 @@
 import { Field, Label } from '@headlessui/react';
 import clsx from 'clsx';
 import { ReactNode, useEffect, useState, useRef } from 'react';
-import { SearchSelect } from '../searchSelect';
+import { ReactCustomSelect } from '../searchSelect';
 import { RoleOption } from '../profileForm';
 
 export enum SelectType {
@@ -98,7 +98,13 @@ export function CustomSelect({
           </>
         ) : (
           <>
-            <SearchSelect options={options} />
+            <ReactCustomSelect
+              isClearable
+              placeholder='Enter or select'
+              options={options}
+              isSearchable
+              className={className}
+            />
           </>
         )}
       </div>

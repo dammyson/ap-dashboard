@@ -3,8 +3,17 @@ import { Card } from '@/components/card';
 import { Input } from '@/components/input';
 import { PanelNavigationItem } from '@/components/Panel';
 import { RoleOption } from '@/components/profileForm';
-import { SearchSelect } from '@/components/searchSelect';
-import { CircledPlus, Photo, SmallBin } from '@/components/svg/surveys/Surveys';
+import { ReactCustomSelect } from '@/components/searchSelect';
+import { DropDownArrow } from '@/components/svg/settings/Settings';
+import {
+  CheckBoxSelect,
+  CircledPlus,
+  Photo,
+  RadioSelect,
+  SmallBin,
+  XSCheckMark,
+} from '@/components/svg/surveys/Surveys';
+import { ChangeEvent, useState } from 'react';
 
 function EditSurvey({}) {
   const SurveyQuestions: PanelNavigationItem[] = [
@@ -23,12 +32,29 @@ function EditSurvey({}) {
     { label: '15 Minutes', value: '15 Minutes' },
   ];
 
+  const formats: RoleOption[] = [
+    {
+      label: 'Multiple choice',
+      value: 'multiple choice',
+      icon: <RadioSelect />,
+    },
+    { label: 'Check boxes', value: 'check boxes', icon: <CheckBoxSelect /> },
+  ];
   const AwardOptions: RoleOption[] = [
     { label: '20 Points', value: '20 points' },
     { label: '30 Points', value: '30 points' },
     { label: '40 Points', value: '40 points' },
   ];
 
+  const [checkedOPtion, setCheckedOption] = useState<string[]>([]);
+  const handleOnchange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCheckedOption((prev: string[]) =>
+      prev.includes(value)
+        ? prev.filter((option: string) => option !== value)
+        : [...prev, value],
+    );
+  };
   return (
     <div className='grid'>
       <Card
@@ -68,11 +94,11 @@ function EditSurvey({}) {
                   {item.title}
                 </p>
                 {item.id === 'option format' ? (
-                  <Input
-                    placeHolder='Check boxes'
-                    isCurved
-                    hasBorder
-                    className='!border-light-blue-50 !drop-shadow-none placeholder:text-[#1C1C1E]'
+                  <ReactCustomSelect
+                    options={formats}
+                    placeholder=''
+                    isSearchable={false}
+                    className='!placeholder:text-[#1C1C1E] placeholder:text-xl  font-medium'
                   />
                 ) : (
                   <Input
@@ -88,19 +114,35 @@ function EditSurvey({}) {
 
           <div className='font-normal text-xl text-[#1C1C1E]'>
             <div className='flex items-center gap-3 pt-3 '>
-              <input
-                type='checkbox'
-                className='w-8 h-8 border-2 border-[#C7C7CC] rounded-[4px]'
-              />
+              <div>
+                <input
+                  type='checkbox'
+                  value='Excellent'
+                  checked={checkedOPtion.includes('Excellent')}
+                  onChange={handleOnchange}
+                  className='w-8 h-8  absolute opacity-0 cursor-pointer rounded-[4px]'
+                />
+                <div className=' flex items-center justify-center w-8 h-8 border-[#8E8E93] border-2 rounded-[4px]'>
+                  {checkedOPtion.includes('Excellent') && <XSCheckMark />}
+                </div>
+              </div>
               <span className=' w-full py-3 border-b border-b-[#C7C7CC] font-normal '>
                 Excellent
               </span>
             </div>
             <div className='flex items-center gap-3 pt-3'>
-              <input
-                type='checkbox'
-                className='w-8 h-8 border-2 border-[#C7C7CC] rounded-[4px]'
-              />
+              <div>
+                <input
+                  type='checkbox'
+                  value='Option 2'
+                  checked={checkedOPtion.includes('Option 2')}
+                  onChange={handleOnchange}
+                  className='w-8 h-8  absolute opacity-0 cursor-pointer rounded-[4px]'
+                />
+                <div className=' flex items-center justify-center w-8 h-8 border-[#8E8E93] border-2 rounded-[4px]'>
+                  {checkedOPtion.includes('Option 2') && <XSCheckMark />}
+                </div>
+              </div>
               <span className=' w-full py-3 border-b border-b-[#C7C7CC]'>
                 Option 2
               </span>
@@ -117,14 +159,13 @@ function EditSurvey({}) {
               <span>Remove option</span>
             </div>
           </div>
-
-          <div
-            className=' absolute bottom-0 right-0
-          flex gap-2 items-center justify-start font-semibold text-[#B0B0B0]'
-          >
-            <CircledPlus color='#B0B0B0' />
-            <span>Add option</span>
-          </div>
+        </div>
+        <div
+          className='
+          flex gap-2 items-center justify-end font-semibold text-[#B0B0B0]'
+        >
+          <CircledPlus color='#B0B0B0' />
+          <span>Add option</span>
         </div>
       </Card>
 
@@ -144,9 +185,21 @@ function EditSurvey({}) {
                     {item.title}
                   </p>
                   {item.id === 'points awarded (optional)' ? (
-                    <SearchSelect options={AwardOptions} />
+                    <ReactCustomSelect
+                      options={AwardOptions}
+                      isClearable
+                      isSearchable
+                      placeholder='Enter or select'
+                      className='!placeholder:text-[#1C1C1E] placeholder:text-xl font-medium'
+                    />
                   ) : (
-                    <SearchSelect options={Options} />
+                    <ReactCustomSelect
+                      options={Options}
+                      isClearable
+                      isSearchable
+                      placeholder='Enter or select'
+                      className='!placeholder:text-[#1C1C1E] placeholder:text-xl  font-medium'
+                    />
                   )}
                 </div>
               </>
@@ -181,6 +234,7 @@ function EditSurvey({}) {
               <Button
                 size={ButtonSize.Large}
                 radius={BorderRadius.Large}
+                trailingIcon={<DropDownArrow color='#23539F' />}
                 buttonText='Schedule for later'
                 onClick={() => {}}
               />

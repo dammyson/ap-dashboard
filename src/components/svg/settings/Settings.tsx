@@ -220,7 +220,11 @@ export const LargeCheckmark = () => {
   );
 };
 
-export const DropDownArrow = () => {
+interface DropDownArrowProps {
+  color?: string;
+}
+
+export const DropDownArrow = ({ color = '#1C1C1E' }: DropDownArrowProps) => {
   return (
     <svg
       width='24'
@@ -231,7 +235,7 @@ export const DropDownArrow = () => {
     >
       <path
         d='M20 9L12.5 16.5L5 9'
-        stroke='#1C1C1E'
+        stroke={color}
         stroke-width='1.5'
         stroke-linecap='round'
         stroke-linejoin='round'
