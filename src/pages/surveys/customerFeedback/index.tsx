@@ -91,6 +91,8 @@ function CustomerFeedback() {
           hasHeader
           hasBadge
           title={`Survey:${id}`}
+          hasBorder
+          className='!pb-2'
           hasButton={
             <Button
               buttonText='Back to survey'
@@ -101,8 +103,6 @@ function CustomerFeedback() {
             />
           }
         >
-          <hr className='bg-light-blue-50 mt-1' />
-
           <Panel
             navigationItems={navigationItems}
             currentTab={currentTab}

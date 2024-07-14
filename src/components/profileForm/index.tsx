@@ -11,6 +11,7 @@ export interface ProfileLabel {
 export interface RoleOption {
   label: string;
   value: string;
+  icon?: React.ReactNode;
 }
 
 export const ProfileForm = () => {

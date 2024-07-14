@@ -7,8 +7,12 @@ import {
   Remove,
 } from '../../../components/svg/settings/Settings';
 import clsx from 'clsx';
+import { ModalStateSetter } from '../surveys/tableColumns';
 
-export const useTeamMembersColumn = () => {
+export const useTeamMembersColumn = (
+  setRemoveTeamMember: ModalStateSetter,
+  setUpdateTeamMember: ModalStateSetter,
+) => {
   const tableColumns = useMemo(() => {
     return [
       {
@@ -41,7 +45,10 @@ export const useTeamMembersColumn = () => {
         render: (_, record) => (
           <Button
             buttonText='Remove'
-            onClick={() => console.warn('removed', record)}
+            onClick={() => {
+              setRemoveTeamMember(true);
+              console.warn('removed', record);
+            }}
             mode='text'
             trailingIcon={<Remove />}
           />
@@ -53,7 +60,10 @@ export const useTeamMembersColumn = () => {
         render: (_, record) => (
           <Button
             buttonText='Update'
-            onClick={() => console.warn('removed', record)}
+            onClick={() => {
+              setUpdateTeamMember(true);
+              console.warn('Update', record);
+            }}
             mode='text'
             trailingIcon={<CircularArrow />}
           />

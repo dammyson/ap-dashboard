@@ -7,7 +7,14 @@ import { Space } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { convertToUrlString } from '@/utils';
 
-export const useSurveyColumn = () => {
+export type ModalStateSetter = (value: boolean) => void;
+
+export const useSurveyColumn = (
+  setEditSurvey: ModalStateSetter,
+  setPublishSurvey: ModalStateSetter,
+  setUnpublishSurvey: ModalStateSetter,
+  setDeleteSurvey: ModalStateSetter,
+) => {
   const navigate = useNavigate();
   const tableColumns = useMemo(() => {
     return [
@@ -57,34 +64,57 @@ export const useSurveyColumn = () => {
         key: 'action',
         className: 'action-column',
         render: (_, record) => (
-          <Space size='middle'>
-            <>
-              <Button
-                buttonText={
-                  record.status.includes('Draft') ? 'Edit' : 'View Result'
-                }
-                onClick={() => {
-                  navigate(
-                    `/surveys-feedback/${convertToUrlString(record.value)}`,
-                  );
-                }}
-                className='!bg-[#C7C7CC] min-w-[108px] hover:!bg-[#bababe]'
-              />
+          <div className='overflow-x-auto no-scrollbar'>
+            <Space size='middle'>
+              <>
+                <Button
+                  buttonText={
+                    record.status.includes('Draft') ? 'Edit' : 'View Result'
+                  }
+                  onClick={() => {
+                    if (record.status.includes('Draft')) {
+                      setEditSurvey(true);
+                    } else {
+                      navigate(
+                        `/surveys-feedback/${convertToUrlString(record.value)}`,
+                      );
+                    }
+                  }}
+                  className='!bg-[#C7C7CC] min-w-[108px] hover:!bg-[#bababe]'
+                />
 
-              <Button
-                buttonText={
-                  record.status.includes('Active') ? 'Unpublish' : 'Publish'
-                }
-                onClick={() => console.warn('published', record)}
-                className='!bg-[#C7C7CC] min-w-[108px] hover:!bg-[#bababe]'
-              />
-              <Button
-                buttonText='Delete'
-                onClick={() => console.warn('deleted', record)}
-                className='!bg-[#C7C7CC] min-w-[108px] hover:!bg-[#bababe]'
-              />
-            </>
-          </Space>
+                <Button
+                  buttonText={
+                    record.status.includes('Active') ||
+                    record.status.includes('Completed')
+                      ? 'Unpublish'
+                      : 'Publish'
+                  }
+                  onClick={() => {
+                    if (
+                      record.status.includes('Active') ||
+                      record.status.includes('Completed')
+                    ) {
+                      setUnpublishSurvey(true);
+                      console.warn(record, 'about to be unpublished');
+                    } else {
+                      setPublishSurvey(true);
+                      console.warn(record, 'about to be published');
+                    }
+                  }}
+                  className='!bg-[#C7C7CC] min-w-[108px] hover:!bg-[#bababe]'
+                />
+                <Button
+                  buttonText='Delete'
+                  onClick={() => {
+                    setDeleteSurvey(true);
+                    console.warn(record, 'about to be deleted');
+                  }}
+                  className='!bg-[#C7C7CC] min-w-[108px] hover:!bg-[#bababe]'
+                />
+              </>
+            </Space>
+          </div>
         ),
       },
     ] as ColumnType<Surveys>[];

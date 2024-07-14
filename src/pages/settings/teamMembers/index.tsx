@@ -1,14 +1,22 @@
-import { Add } from '../../../components/svg/settings/Settings';
-import { Button, ButtonSize } from '../../../components/button';
+import { Add, SmallCheckmark } from '../../../components/svg/settings/Settings';
+import { BorderRadius, Button, ButtonSize } from '../../../components/button';
 import { useState } from 'react';
 import AddMembers from './addMembers';
 import { Table } from 'antd';
 import { useTeamMembersColumn } from '../../../components/modules/teamMembers/tableColumns';
 import profileImage from '../../../assets/profileImage/profile-img.png';
 import CategoryHeader from '@/components/categoryHeader';
+import { Modal, SizeType } from '@/components/modal';
+import { Bin, Cancel } from '@/components/svg/modal/Modal';
 
 function TeamMembers() {
-  const [addMembers, setAddMembers] = useState(false);
+  const [addMembers, setAddMembers] = useState<boolean>(false);
+  const [removeTeamMember, setRemoveTeamMember] = useState<boolean>(false);
+  const [updateTeamMember, setUpdateTeamMember] = useState<boolean>(false);
+  const { tableColumns } = useTeamMembersColumn(
+    setRemoveTeamMember,
+    setUpdateTeamMember,
+  );
 
   const list = [
     {
@@ -36,8 +44,6 @@ function TeamMembers() {
       email: 'corletjasper@gmail.com',
     },
   ];
-
-  const { tableColumns } = useTeamMembersColumn();
 
   return (
     <div className='mt-8 bg-primary-white shadow-default rounded-[20px] p-10'>
@@ -70,6 +76,53 @@ function TeamMembers() {
             showHeader={false}
           />
         </div>
+      )}
+      {removeTeamMember ? (
+        <Modal
+          isCentered
+          cancelIcon={<Cancel />}
+          isBackground
+          size={SizeType.SMALL}
+          onClick={() => setRemoveTeamMember(false)}
+        >
+          <Bin />
+          <div className='font-normal text-[22px]  mt-4 mb-9 text-[#1C1C1E]'>
+            This team member will no longer have access to the portal.
+          </div>
+          <div className='w-full max-w-[340px]'>
+            <Button
+              size={ButtonSize.Large}
+              radius={BorderRadius.Large}
+              buttonText='Delete'
+              onClick={() => {}}
+              className='!font-semibold !text-xl'
+            />
+          </div>
+        </Modal>
+      ) : updateTeamMember ? (
+        <Modal
+          isCentered
+          cancelIcon={<Cancel />}
+          isBackground
+          size={SizeType.SMALL}
+          onClick={() => setUpdateTeamMember(false)}
+        >
+          <SmallCheckmark />
+          <div className='font-normal text-[22px] mt-4 mb-9 text-[#1C1C1E]'>
+            This team member’s role will be updated to admin.
+          </div>
+          <div className='w-full max-w-[340px]'>
+            <Button
+              size={ButtonSize.Large}
+              radius={BorderRadius.Large}
+              buttonText='Update'
+              onClick={() => {}}
+              className='!font-semibold !text-xl '
+            />
+          </div>
+        </Modal>
+      ) : (
+        <></>
       )}
     </div>
   );

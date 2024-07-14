@@ -93,15 +93,23 @@ button:focus-visible {
   }
 }
 
-/* SEARCH SELECT STYLES */
+/* REACT SELECT STYLES */
 .react-select__control {
   border: 1px solid #bbcae1 !important;
   border-radius: 50px !important;
   background-color: #fff;
-  height: 65px;
+  height: 70px;
   padding: 4px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.react-select__control--searchable {
   cursor: text !important;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.react-select__control--non-searchable {
+  cursor: pointer !important;
 }
 
 .react-select__control:hover {
@@ -120,7 +128,6 @@ button:focus-visible {
 
 .react-select__dropdown-indicator {
   cursor: pointer;
-  /* padding: 8px 13px 8px 8px !important; */
   margin-right: 10px !important ;
 }
 
@@ -133,11 +140,15 @@ button:focus-visible {
   margin-top: 2px;
   padding-top: 8px;
   border: 1px solid #bbcae2;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .react-select__menu::-webkit-scrollbar {
   display: none;
+}
+
+.react-select__placeholder {
+  color: #1c1c1e !important ;
 }
 
 .react-select__input {
@@ -191,4 +202,14 @@ button:focus-visible {
 .ant-table-cell.dateCreated-column,
 .ant-table-cell.action-column {
   max-width: 200px !important;
+}
+
+.ant-table-content {
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.ant-table-contentr::-webkit-scrollbar {
+  display: none;
 }
