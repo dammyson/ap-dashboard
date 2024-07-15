@@ -189,9 +189,28 @@ button:focus-visible {
   font-weight: 400;
 }
 
+.ant-table-cell.action-column button p {
+  color: #f2f2f7;
+}
+
 /* SURVERY STYLES */
+/* SURVEYS */
 .ant-table-cell.title-column,
 .ant-table-cell.dateCreated-column,
 .ant-table-cell.action-column {
-  max-width: 200px !important;
+  min-width: 300px !important;
+}
+
+@media (max-width: 1589px) {
+  .ant-table-cell.title-column,
+  .ant-table-cell.dateCreated-column,
+  .ant-table-cell.action-column {
+    min-width: 220px !important;
+  }
+}
+
+/* CUSTOMER-FEEDBCK */
+
+.ant-table-cell.name-column {
+  min-width: 187px !important;
 }

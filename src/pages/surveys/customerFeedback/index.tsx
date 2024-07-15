@@ -115,6 +115,7 @@ function CustomerFeedback() {
                   pagination={false}
                   columns={tableColumns}
                   dataSource={list}
+                  rootClassName='overflow-x-scroll'
                 />
               ) : (
                 <SurveyResults />
