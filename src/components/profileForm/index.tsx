@@ -41,7 +41,7 @@ export const ProfileForm = () => {
           >
             <CustomSelect
               label='Role'
-              selectType={SelectType.SEARCH_SELECT}
+              selectType={SelectType.SELECT}
               hasBorder
               isCurved
               trailingIcon={<DropDownArrow />}

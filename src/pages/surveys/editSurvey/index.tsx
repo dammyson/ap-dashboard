@@ -70,7 +70,7 @@ function EditSurvey({}) {
               Title of the survey
             </p>
             <Input
-              placeHolder='Enter title of the survey'
+              placeHolder='In-flight experience'
               isCurved
               hasBorder
               className='!border-light-blue-50 !drop-shadow-none placeholder:text-[#1C1C1E]'
@@ -102,7 +102,7 @@ function EditSurvey({}) {
                   />
                 ) : (
                   <Input
-                    placeHolder='Enter title of the survey'
+                    placeHolder='How was your flight experience?'
                     isCurved
                     hasBorder
                     className='!border-light-blue-50 !drop-shadow-none placeholder:text-[#1C1C1E]'
