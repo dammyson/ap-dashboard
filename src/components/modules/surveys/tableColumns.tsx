@@ -64,57 +64,55 @@ export const useSurveyColumn = (
         key: 'action',
         className: 'action-column',
         render: (_, record) => (
-          <div className='overflow-x-auto no-scrollbar'>
-            <Space size='middle'>
-              <>
-                <Button
-                  buttonText={
-                    record.status.includes('Draft') ? 'Edit' : 'View Result'
+          <Space size='middle'>
+            <>
+              <Button
+                buttonText={
+                  record.status.includes('Draft') ? 'Edit' : 'View Result'
+                }
+                onClick={() => {
+                  if (record.status.includes('Draft')) {
+                    setEditSurvey(true);
+                  } else {
+                    navigate(
+                      `/surveys-feedback/${convertToUrlString(record.value)}`,
+                    );
                   }
-                  onClick={() => {
-                    if (record.status.includes('Draft')) {
-                      setEditSurvey(true);
-                    } else {
-                      navigate(
-                        `/surveys-feedback/${convertToUrlString(record.value)}`,
-                      );
-                    }
-                  }}
-                  className='!bg-[#C7C7CC] min-w-[108px] hover:!bg-[#bababe]'
-                />
+                }}
+                className='!bg-[#C7C7CC] min-w-[108px] hover:!bg-[#bababe]'
+              />
 
-                <Button
-                  buttonText={
+              <Button
+                buttonText={
+                  record.status.includes('Active') ||
+                  record.status.includes('Completed')
+                    ? 'Unpublish'
+                    : 'Publish'
+                }
+                onClick={() => {
+                  if (
                     record.status.includes('Active') ||
                     record.status.includes('Completed')
-                      ? 'Unpublish'
-                      : 'Publish'
+                  ) {
+                    setUnpublishSurvey(true);
+                    console.warn(record, 'about to be unpublished');
+                  } else {
+                    setPublishSurvey(true);
+                    console.warn(record, 'about to be published');
                   }
-                  onClick={() => {
-                    if (
-                      record.status.includes('Active') ||
-                      record.status.includes('Completed')
-                    ) {
-                      setUnpublishSurvey(true);
-                      console.warn(record, 'about to be unpublished');
-                    } else {
-                      setPublishSurvey(true);
-                      console.warn(record, 'about to be published');
-                    }
-                  }}
-                  className='!bg-[#C7C7CC] min-w-[108px] hover:!bg-[#bababe]'
-                />
-                <Button
-                  buttonText='Delete'
-                  onClick={() => {
-                    setDeleteSurvey(true);
-                    console.warn(record, 'about to be deleted');
-                  }}
-                  className='!bg-[#C7C7CC] min-w-[108px] hover:!bg-[#bababe]'
-                />
-              </>
-            </Space>
-          </div>
+                }}
+                className='!bg-[#C7C7CC] min-w-[108px] hover:!bg-[#bababe]'
+              />
+              <Button
+                buttonText='Delete'
+                onClick={() => {
+                  setDeleteSurvey(true);
+                  console.warn(record, 'about to be deleted');
+                }}
+                className='!bg-[#C7C7CC] min-w-[108px] hover:!bg-[#bababe]'
+              />
+            </>
+          </Space>
         ),
       },
     ] as ColumnType<Surveys>[];

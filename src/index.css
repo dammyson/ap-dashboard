@@ -104,14 +104,6 @@ button:focus-visible {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.react-select__control--searchable {
-  cursor: text !important;
-}
-
-.react-select__control--non-searchable {
-  cursor: pointer !important;
-}
-
 .react-select__control:hover {
   border-color: #acbbd0 !important;
 }
@@ -202,14 +194,4 @@ button:focus-visible {
 .ant-table-cell.dateCreated-column,
 .ant-table-cell.action-column {
   max-width: 200px !important;
-}
-
-.ant-table-content {
-  overflow-x: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.ant-table-contentr::-webkit-scrollbar {
-  display: none;
 }

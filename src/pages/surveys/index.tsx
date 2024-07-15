@@ -114,10 +114,10 @@ function Surveys() {
           size={SizeType.MEDIUM}
           onClick={() => setPublishSurvey(false)}
         >
-          <p className='font-semibold text-[22px] mb-4 mt-8'>
+          <p className='font-semibold text-[22px] mb-4 mt-8 text-[#1C1C1E]'>
             Are you sure you want to publish this survey?
           </p>
-          <p className='pb-11 text-[17px]'>
+          <p className='pb-11 text-[17px] text-[#1C1C1E]'>
             This will make the survey available for participants
           </p>
           <div className='w-full max-w-[380px]'>
@@ -145,10 +145,10 @@ function Surveys() {
           size={SizeType.MEDIUM}
           onClick={() => setUnpublishSurvey(false)}
         >
-          <p className='font-semibold text-[22px] mb-4 mt-8'>
+          <p className='font-semibold text-[22px] mb-4 mt-8 text-[#1C1C1E]'>
             Are you sure you want to unpublish this survey?
           </p>
-          <p className='pb-11 text-[17px]'>
+          <p className='pb-11 text-[17px] text-[#1C1C1E]'>
             This will make the survey unavailable for participants
           </p>
           <div className='w-full max-w-[380px]'>
@@ -176,10 +176,12 @@ function Surveys() {
           size={SizeType.MEDIUM}
           onClick={() => setDeleteSurvey(false)}
         >
-          <p className='font-semibold text-[22px] mb-4 mt-8'>
+          <p className='font-semibold text-[22px] mb-4 mt-8 text-[#1C1C1E]'>
             Are you sure you want to delete this survey?
           </p>
-          <p className='pb-11 text-[17px]'>This action cannot be undone</p>
+          <p className='pb-11 text-[17px] text-[#1C1C1E]'>
+            This action cannot be undone
+          </p>
           <div className='w-full max-w-[380px]'>
             <Button
               size={ButtonSize.Medium}
