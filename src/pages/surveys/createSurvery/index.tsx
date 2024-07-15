@@ -92,8 +92,7 @@ function CreateSurvey({}) {
                   <ReactCustomSelect
                     options={formats}
                     isSearchable={false}
-                    placeholder=''
-                    className=' placeholder:text-[#1C1C1E] placeholder:text-xl font-medium'
+                    className=' placeholder:text-[#1C1C1E] placeholder:text-xl font-medium text-[#1C1C1E]'
                   />
                 ) : (
                   <Input
@@ -186,7 +185,7 @@ function CreateSurvey({}) {
                       isClearable
                       isSearchable
                       placeholder='Enter or select'
-                      className='!placeholder:text-[#1C1C1E] placeholder:text-xl font-medium'
+                      className='!placeholder:text-[#1C1C1E] text-[#1C1C1E] placeholder:text-xl font-medium'
                     />
                   ) : (
                     <ReactCustomSelect
@@ -194,7 +193,7 @@ function CreateSurvey({}) {
                       isClearable
                       isSearchable
                       placeholder='Enter or select'
-                      className='!placeholder:text-[#1C1C1E] placeholder:text-xl font-medium'
+                      className='!placeholder:text-[#1C1C1E] placeholder:text-xl font-medium text-[#1C1C1E]'
                     />
                   )}
                 </div>
