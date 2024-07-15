@@ -7,7 +7,12 @@ export const useCustomerFeedbackColumn = () => {
   const tableColumns = useMemo(() => {
     return [
       { title: 'TITLE', dataIndex: 'title', key: 'title' },
-      { title: 'NAME', dataIndex: 'name', key: 'name' },
+      {
+        title: 'NAME',
+        dataIndex: 'name',
+        key: 'name',
+        className: 'name-column',
+      },
       { title: 'EMAIL', dataIndex: 'email', key: 'email' },
       {
         title: 'AIRPEACE ID',
