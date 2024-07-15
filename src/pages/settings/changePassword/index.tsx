@@ -47,7 +47,7 @@ function ChangePassword() {
           <div className='mb-8 mt-9'>
             <LargeCheckmark />
           </div>
-          <p className='font-medium text-[26px] [#010101] pb-8'>
+          <p className='font-medium text-[26px] text-[#010101] pb-8'>
             Your password has been updated. Remember to use the new password on
             your next log in.
           </p>
