@@ -96,9 +96,8 @@ function EditSurvey({}) {
                 {item.id === 'option format' ? (
                   <ReactCustomSelect
                     options={formats}
-                    placeholder=''
                     isSearchable={false}
-                    className='!placeholder:text-[#1C1C1E] placeholder:text-xl  font-medium'
+                    className='!placeholder:text-[#1C1C1E] placeholder:text-xl text-[#1C1C1E] font-medium'
                   />
                 ) : (
                   <Input
@@ -190,7 +189,7 @@ function EditSurvey({}) {
                       isClearable
                       isSearchable
                       placeholder='Enter or select'
-                      className='!placeholder:text-[#1C1C1E] placeholder:text-xl font-medium'
+                      className='!placeholder:text-[#1C1C1E] placeholder:text-xl font-medium text-[#1C1C1E]'
                     />
                   ) : (
                     <ReactCustomSelect
@@ -198,7 +197,7 @@ function EditSurvey({}) {
                       isClearable
                       isSearchable
                       placeholder='Enter or select'
-                      className='!placeholder:text-[#1C1C1E] placeholder:text-xl  font-medium'
+                      className='!placeholder:text-[#1C1C1E] placeholder:text-xl  font-medium text-[#1C1C1E]'
                     />
                   )}
                 </div>

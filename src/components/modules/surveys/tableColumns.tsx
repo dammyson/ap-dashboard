@@ -79,7 +79,7 @@ export const useSurveyColumn = (
                     );
                   }
                 }}
-                className='!bg-[#C7C7CC] min-w-[105px] px-0 hover:!bg-[#bababe]'
+                className='!bg-[#C7C7CC] min-w-[105px] !px-0 hover:!bg-[#bababe]'
               />
 
               <Button
@@ -101,7 +101,7 @@ export const useSurveyColumn = (
                     console.warn(record, 'about to be published');
                   }
                 }}
-                className='!bg-[#C7C7CC] min-w-[105px] px-0 hover:!bg-[#bababe]'
+                className='!bg-[#C7C7CC] min-w-[105px] !px-0 hover:!bg-[#bababe]'
               />
               <Button
                 buttonText='Delete'
@@ -109,7 +109,7 @@ export const useSurveyColumn = (
                   setDeleteSurvey(true);
                   console.warn(record, 'about to be deleted');
                 }}
-                className='!bg-[#C7C7CC] min-w-[105px] px-0 hover:!bg-[#bababe]'
+                className='!bg-[#C7C7CC] min-w-[105px] !px-0 hover:!bg-[#bababe]'
               />
             </>
           </Space>

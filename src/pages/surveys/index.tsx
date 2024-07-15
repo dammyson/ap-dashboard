@@ -70,7 +70,7 @@ function Surveys() {
               buttonText='Back to survey'
               radius={BorderRadius.Large}
               size={ButtonSize.Small}
-              onClick={() => window.history.back()}
+              onClick={() => setEditSurvey(false)}
             />
           ) : (
             <></>
