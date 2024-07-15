@@ -7,18 +7,17 @@ import { Table } from 'antd';
 import { useSurveyColumn } from '@/components/modules/surveys/tableColumns';
 import { Filter } from '@/components/svg/surveys/Surveys';
 import { useState } from 'react';
-import CreateSurvey from './createSurvery';
+
 import { Modal, SizeType } from '@/components/modal';
-import EditSurvey from './editSurvey';
+
+import { useNavigate } from 'react-router';
 
 function Surveys() {
-  const [createNewSurvey, setCreateNewSurvey] = useState<boolean>(false);
-  const [editSurvey, setEditSurvey] = useState<boolean>(false);
+  const navigate = useNavigate();
   const [publishSurvey, setPublishSurvey] = useState<boolean>(false);
   const [unpublishSurvey, setUnpublishSurvey] = useState<boolean>(false);
   const [deleteSurvey, setDeleteSurvey] = useState<boolean>(false);
   const { tableColumns } = useSurveyColumn(
-    setEditSurvey,
     setPublishSurvey,
     setUnpublishSurvey,
     setDeleteSurvey,
@@ -65,48 +64,32 @@ function Surveys() {
             username='Ayo'
             description="Let's review today's insights"
           />
-          {createNewSurvey || editSurvey ? (
-            <Button
-              buttonText='Back to survey'
-              radius={BorderRadius.Large}
-              size={ButtonSize.Small}
-              onClick={() => setEditSurvey(false)}
-            />
-          ) : (
-            <></>
-          )}
         </div>
-        {createNewSurvey ? (
-          <CreateSurvey />
-        ) : editSurvey ? (
-          <EditSurvey />
-        ) : (
-          <Card
-            hasHeader
-            hasBadge
-            title='Survey'
-            trailingIcon1={<Filter />}
-            hasButton={
-              <Button
-                buttonText='Create new survey'
-                size={ButtonSize.Small}
-                radius={BorderRadius.Large}
-                className='font-semibold'
-                onClick={() => {
-                  setCreateNewSurvey(true);
-                }}
-              />
-            }
-          >
-            <Table
-              pagination={false}
-              columns={tableColumns}
-              dataSource={list}
-              className='custom-survey-table'
-              rootClassName='overflow-x-scroll'
+        <Card
+          hasHeader
+          hasBadge
+          title='Survey'
+          trailingIcon1={<Filter />}
+          hasButton={
+            <Button
+              buttonText='Create new survey'
+              size={ButtonSize.Small}
+              radius={BorderRadius.Large}
+              className='font-semibold'
+              onClick={() => {
+                navigate(`/surveys-create/create-new-survey`);
+              }}
             />
-          </Card>
-        )}
+          }
+        >
+          <Table
+            pagination={false}
+            columns={tableColumns}
+            dataSource={list}
+            className='custom-survey-table'
+            rootClassName='overflow-x-scroll'
+          />
+        </Card>
       </div>
       {publishSurvey ? (
         <Modal
