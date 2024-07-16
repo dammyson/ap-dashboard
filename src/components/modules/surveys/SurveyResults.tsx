@@ -59,14 +59,17 @@ export const SurveyResults = () => {
           </div>
           <div>
             <PieChart
-              lineWidth={53}
+              lineWidth={60}
               radius={40}
               segmentsShift={0.2}
               data={secondOptions}
-              segmentsStyle={{ cursor: 'pointer' }}
+              segmentsStyle={(index) => ({
+                strokeWidth: index == 1 ? '28' : '',
+                cursor: 'pointer',
+              })}
               animate
-              startAngle={90}
-              labelStyle={{ fontSize: 5, fill: '#fff', fontWeight: 600 }}
+              startAngle={77}
+              labelStyle={{ fontSize: 8, fill: '#fff', fontWeight: 600 }}
               labelPosition={70}
               totalValue={100}
               label={({ dataEntry }) => `${dataEntry.value}%`}
@@ -82,25 +85,41 @@ export const SurveyResults = () => {
           <div className='w-1/2 pl-6'>
             {thirdOptions.map((option, index) => {
               return (
-                <div className='flex text-primary-black items-center justify-between my-5 pb-2.5 border-b border-b-light-secondary-light_blue'>
-                  <p>
-                    Option {index + 1} - {option.label}
+                <>
+                  <div className='flex text-primary-black items-center justify-between my-5 pb-2.5 border-b border-b-light-secondary-light_blue'>
+                    <p className='font-semibold'>{option.label}</p>
+                    <p className='font-semibold'>{option.value}%</p>
+                  </div>
+                  <p className='font-semibold pb-2.5 text-primary-black'>
+                    {option.age.label}
                   </p>
-                  <p className='font-semibold'>{option.value}%</p>
-                </div>
+                  <div>
+                    {option.age.ranges.map((range) => (
+                      <div className='flex items-center text-[#8E8E93] justify-between pb-2.5 border-b border-b-light-secondary-light_blue'>
+                        <p>{range.label}</p>
+                        <p className='font-semibold text-primary-black'>
+                          {range.value}%
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </>
               );
             })}
           </div>
           <div>
             <PieChart
-              lineWidth={53}
+              lineWidth={60}
               radius={40}
               segmentsShift={0.2}
               data={thirdOptions}
-              segmentsStyle={{ cursor: 'pointer' }}
+              segmentsStyle={(index) => ({
+                strokeWidth: index == 1 ? '28' : '',
+                cursor: 'pointer',
+              })}
               animate
-              startAngle={90}
-              labelStyle={{ fontSize: 5, fill: '#fff', fontWeight: 600 }}
+              startAngle={77}
+              labelStyle={{ fontSize: 8, fill: '#fff', fontWeight: 600 }}
               labelPosition={70}
               totalValue={100}
               label={({ dataEntry }) => `${dataEntry.value}%`}
