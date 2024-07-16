@@ -33,7 +33,7 @@ export const useCustomerFeedbackColumn = () => {
         dataIndex: '',
         key: '',
         render: (_, record) => (
-          <span onClick={() => console.warn('removed', record)}>
+          <span onClick={() => console.warn(record, 'awarded')}>
             {<Trophy />}
           </span>
         ),
