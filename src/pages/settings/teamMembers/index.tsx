@@ -86,7 +86,7 @@ function TeamMembers() {
           onClick={() => setRemoveTeamMember(false)}
         >
           <Bin />
-          <div className='font-normal text-[22px]  mt-4 mb-9 text-[#1C1C1E]'>
+          <div className='font-normal text-[22px]  mt-4 mb-9 text-light-primary-deep_black'>
             This team member will no longer have access to the portal.
           </div>
           <div className='w-full max-w-[340px]'>
@@ -108,7 +108,7 @@ function TeamMembers() {
           onClick={() => setUpdateTeamMember(false)}
         >
           <SmallCheckmark />
-          <div className='font-normal text-[22px] mt-4 mb-9 text-[#1C1C1E]'>
+          <div className='font-normal text-[22px] mt-4 mb-9 text-light-primary-deep_black'>
             This team member’s role will be updated to admin.
           </div>
           <div className='w-full max-w-[340px]'>

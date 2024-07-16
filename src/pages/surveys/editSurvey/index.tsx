@@ -95,7 +95,7 @@ function EditSurvey({}) {
                   placeHolder='In-flight experience'
                   isCurved
                   hasBorder
-                  className='!border-light-blue-50 !drop-shadow-none placeholder:text-[#1C1C1E]'
+                  className='!border-light-blue-50 !drop-shadow-none placeholder:text-light-primary-deep_black'
                 />
               </div>
             </>
@@ -119,21 +119,21 @@ function EditSurvey({}) {
                       <ReactCustomSelect
                         options={formats}
                         isSearchable={false}
-                        className='!placeholder:text-[#1C1C1E] placeholder:text-xl text-[#1C1C1E] font-medium'
+                        className='!placeholder:text-light-primary-deep_black placeholder:text-xl text-light-primary-deep_black font-medium'
                       />
                     ) : (
                       <Input
                         placeHolder='How was your flight experience?'
                         isCurved
                         hasBorder
-                        className='!border-light-blue-50 !drop-shadow-none placeholder:text-[#1C1C1E]'
+                        className='!border-light-blue-50 !drop-shadow-none placeholder:text-light-primary-deep_black'
                       />
                     )}
                   </div>
                 </>
               ))}
 
-              <div className='font-normal text-xl text-[#1C1C1E]'>
+              <div className='font-normal text-xl text-light-primary-deep_black'>
                 <div className='flex items-center gap-3 pt-3 '>
                   <div>
                     <input
@@ -211,7 +211,7 @@ function EditSurvey({}) {
                           isClearable
                           isSearchable
                           placeholder='Enter or select'
-                          className='!placeholder:text-[#1C1C1E] placeholder:text-xl font-medium text-[#1C1C1E]'
+                          className='!placeholder:text-light-primary-deep_black placeholder:text-xl font-medium text-light-primary-deep_black'
                         />
                       ) : (
                         <ReactCustomSelect
@@ -219,7 +219,7 @@ function EditSurvey({}) {
                           isClearable
                           isSearchable
                           placeholder='Enter or select'
-                          className='!placeholder:text-[#1C1C1E] placeholder:text-xl  font-medium text-[#1C1C1E]'
+                          className='!placeholder:text-light-primary-deep_black placeholder:text-xl  font-medium text-light-primary-deep_black'
                         />
                       )}
                     </div>
@@ -245,7 +245,7 @@ function EditSurvey({}) {
                   <p className='text-[#8E8E93] text-xl font-normal'>
                     Drag and drop a file here
                   </p>
-                  <p className='text-[#1C1C1E] text-xl font-medium'>
+                  <p className='text-light-primary-deep_black text-xl font-medium'>
                     File supported .png, .jpg & .webp
                   </p>
                 </div>
