@@ -171,22 +171,40 @@ function EditSurvey({}) {
               </div>
 
               <div className='flex items-start gap-3 font-semibold text-light-blue-main'>
-                <div className='flex gap-2 items-center justify-start'>
-                  <CircledPlus />
-                  <span>Add option</span>
+                <div className='flex items-center justify-start'>
+                  <Button
+                    mode='text'
+                    size={ButtonSize.Small}
+                    leadingIcon={<CircledPlus />}
+                    buttonText='Add option'
+                    onClick={() => {}}
+                    className='!font-semibold !text-light-blue-main !text-[18px]'
+                  />
                 </div>
-                <div className='flex gap-2 items-center justify-start'>
-                  <SmallBin />
-                  <span>Remove option</span>
+                <div className='flex items-center justify-start'>
+                  <Button
+                    mode='text'
+                    size={ButtonSize.Small}
+                    leadingIcon={<SmallBin />}
+                    buttonText='Remove option'
+                    onClick={() => {}}
+                    className='!font-semibold !text-light-blue-main !text-[18px]'
+                  />
                 </div>
               </div>
             </div>
             <div
               className='
-          flex gap-2 items-center justify-end font-semibold text-[#B0B0B0]'
+          flex  items-center justify-end '
             >
-              <CircledPlus color='#B0B0B0' />
-              <span>Add option</span>
+              <Button
+                mode='text'
+                size={ButtonSize.Small}
+                leadingIcon={<CircledPlus color='#B0B0B0' />}
+                buttonText='Add option'
+                onClick={() => {}}
+                className='!font-semibold !text-[#B0B0B0] !text-[18px]'
+              />
             </div>
           </Card>
 
