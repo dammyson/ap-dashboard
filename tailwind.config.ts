@@ -42,6 +42,7 @@ const config: Config = {
         light: {
           primary: {
             black: '#010101',
+            deep_black: '#1C1C1E',
           },
           blue: {
             50: '#BBCAE1',

@@ -10,7 +10,6 @@ import { convertToUrlString } from '@/utils';
 export type ModalStateSetter = (value: boolean) => void;
 
 export const useSurveyColumn = (
-  setEditSurvey: ModalStateSetter,
   setPublishSurvey: ModalStateSetter,
   setUnpublishSurvey: ModalStateSetter,
   setDeleteSurvey: ModalStateSetter,
@@ -72,7 +71,9 @@ export const useSurveyColumn = (
                 }
                 onClick={() => {
                   if (record.status.includes('Draft')) {
-                    setEditSurvey(true);
+                    navigate(
+                      `/surveys-edit/${convertToUrlString(record.value)}`,
+                    );
                   } else {
                     navigate(
                       `/surveys-feedback/${convertToUrlString(record.value)}`,
