@@ -30,7 +30,7 @@ export interface TotalUsersRegistered {
   status: string;
   lastLogin: string;
   totalBookedFlights: number;
-  milesAccumulated: number;
+  milesAccumulated: string;
 }
 
 export interface TicketsPurchasedViaApp {
@@ -63,16 +63,16 @@ interface CountryPopulation {
 }
 interface DeviceType {
   deviceType: string;
-  deviceDistrubuted: number;
+  count: number;
 }
 export interface ActiveUsers {
-  month_year: string;
+  monthYear: string;
   totalActiveUsers: number;
   newRegistration: number;
   returningUsers: number;
   churnRate: number;
   totalSessions: number;
   averageSessionDuration: string;
-  geographicalDistrubution: CountryPopulation[];
+  geographicalDistribution: CountryPopulation[];
   deviceDistribution: DeviceType[];
 }
