@@ -6,7 +6,6 @@ import { TicketsPurchased } from '@/components/dashboardTables/ticketsPurchased'
 import { TotalRevenue } from '@/components/dashboardTables/totalRevenue';
 import { ActiveUsers } from '@/components/dashboardTables/activeUsers';
 import { useState } from 'react';
-import { chartData, devices, stats } from './constants';
 import { formatToDollar, numberShortener } from '@/utils';
 import {
   ArrowDown,
@@ -20,6 +19,7 @@ import clsx from 'clsx';
 import { Card } from '@/components/card';
 import { Filter } from '@/components/svg/surveys/Surveys';
 import { PieChart } from 'react-minimal-pie-chart';
+import { chartData, devices, stats } from './constants';
 import { Chart } from '@/components/chart/Chart';
 
 const tabs = [
@@ -59,7 +59,7 @@ function Dashboard() {
                     className={clsx(
                       isLast && 'mr-6',
                       'min-h-[200px] py-5 px-4 cursor-pointer w-[410px] shadow-sm bg-primary-white rounded-[20px] flex flex-col justify-between',
-                      activeStat === stat.state && 'bg-[#E9EEF5]',
+                      activeStat === stat.state && '!bg-[#E9EEF5]',
                     )}
                   >
                     <div>
