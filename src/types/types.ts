@@ -76,3 +76,14 @@ export interface ActiveUsers {
   geographicalDistribution: CountryPopulation[];
   deviceDistribution: DeviceType[];
 }
+export interface Args<T> {
+    data?: T[]
+    sortBy?: keyof T
+    direction?: 'asc' | 'desc'
+    disabled?: boolean
+}
+
+export interface GraphValues {
+    name: string
+    value: number
+}
