@@ -42,7 +42,7 @@ export const Bell = () => {
   );
 };
 
-export const ArrowRight = () => {
+export const ArrowRight = ({ className }: { className?: string }) => {
   return (
     <svg
       width='24'
@@ -50,6 +50,7 @@ export const ArrowRight = () => {
       viewBox='0 0 24 24'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
+      className={className}
     >
       <path
         d='M2 12H22M22 12L13 3M22 12L13 21'
@@ -221,6 +222,122 @@ export const BarChart = () => {
           />
         </filter>
       </defs>
+    </svg>
+  );
+};
+
+export const Fall = () => {
+  return (
+    <svg
+      width='160'
+      height='77'
+      viewBox='0 0 160 77'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <path
+        d='M92.5113 31.0938C126.574 11.0348 152.566 32.5237 159 55.0441V76.4253H1V1C7.79185 11.0757 21.3756 72.984 92.5113 31.0938Z'
+        fill='url(#paint0_linear_4727_3201)'
+      />
+      <path
+        d='M159 55.0441C152.566 32.5237 126.574 11.0348 92.5113 31.0938C21.3756 72.984 7.79185 11.0757 0.999996 1'
+        stroke='#D02626'
+        stroke-width='1.42986'
+        stroke-linecap='round'
+      />
+      <defs>
+        <linearGradient
+          id='paint0_linear_4727_3201'
+          x1='80'
+          y1='1'
+          x2='80'
+          y2='76.4253'
+          gradientUnits='userSpaceOnUse'
+        >
+          <stop stop-color='#D02626' stop-opacity='0.08' />
+          <stop offset='1' stop-color='#D02626' stop-opacity='0' />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+};
+
+export const Rise = () => {
+  return (
+    <svg
+      width='157'
+      height='111'
+      viewBox='0 0 157 111'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <path
+        d='M67.2262 47.2928C33.8099 19.1026 8.31222 49.3022 2 80.9515V111H157V5C150.337 19.1601 137.011 106.164 67.2262 47.2928Z'
+        fill='url(#paint0_linear_4727_18063)'
+      />
+      <path
+        d='M1 76.9515C7.31222 45.3022 32.8099 15.1026 66.2262 43.2928C136.011 102.164 149.337 15.1601 156 1'
+        stroke='#1EB564'
+        stroke-width='2'
+        stroke-linecap='round'
+      />
+      <defs>
+        <linearGradient
+          id='paint0_linear_4727_18063'
+          x1='79.5'
+          y1='5'
+          x2='79.5'
+          y2='111'
+          gradientUnits='userSpaceOnUse'
+        >
+          <stop stop-color='#1EB564' stop-opacity='0.08' />
+          <stop offset='1' stop-color='#1EB564' stop-opacity='0' />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+};
+
+export const Dot = ({ className }: { className?: string }) => {
+  return (
+    <svg
+      width='12'
+      height='12'
+      viewBox='0 0 12 12'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+      className={className}
+    >
+      <circle cx='6' cy='6' r='6' fill='currentColor' />
+    </svg>
+  );
+};
+
+export const Bar = () => {
+  return (
+    <svg
+      width='9'
+      height='11'
+      viewBox='0 0 9 11'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <path
+        d='M0.949219 7.99922C0.949219 7.69546 1.19546 7.44922 1.49922 7.44922C1.80298 7.44922 2.04922 7.69546 2.04922 7.99922V10.7492H0.949219V7.99922Z'
+        fill='#DEE5F1'
+      />
+      <path
+        d='M3.14844 1.39961C3.14844 1.09585 3.39468 0.849609 3.69844 0.849609C4.00219 0.849609 4.24844 1.09585 4.24844 1.39961V10.7496H3.14844V1.39961Z'
+        fill='#DEE5F1'
+      />
+      <path
+        d='M5.34766 6.34883C5.34766 6.04507 5.5939 5.79883 5.89766 5.79883C6.20141 5.79883 6.44766 6.04507 6.44766 6.34883V10.7488H5.34766V6.34883Z'
+        fill='#DEE5F1'
+      />
+      <path
+        d='M7.55078 4.14961C7.55078 3.84585 7.79702 3.59961 8.10078 3.59961C8.40454 3.59961 8.65078 3.84585 8.65078 4.14961V10.7496H7.55078V4.14961Z'
+        fill='#DEE5F1'
+      />
     </svg>
   );
 };

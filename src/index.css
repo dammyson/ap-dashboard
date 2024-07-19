@@ -214,3 +214,32 @@ button:focus-visible {
 .ant-table-cell.name-column {
   min-width: 187px !important;
 }
+
+/*HIDDEN SCROLLBAR */
+.hidden-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.hidden-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow: -moz-scrollbars-none;
+}
+
+.text-gradient {
+  background: -webkit-linear-gradient(40deg, #2B539F 6%, #BD3826 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+    padding-right: 0.2rem;
+    padding-bottom: 0.2rem;
+}
+
+.sky-blue-gradient-bg {
+  background: linear-gradient(
+    180deg,
+    #23539F00,
+    #23539F0A
+  );
+}

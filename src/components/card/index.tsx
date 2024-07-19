@@ -16,6 +16,7 @@ interface CardProps {
   trailingIcon2?: ReactNode;
   hasBorder?: boolean;
   className?: string;
+  mainClass?: string;
 }
 
 export const Card = ({
@@ -28,15 +29,21 @@ export const Card = ({
   hasBorder,
   className,
   children,
+  mainClass,
 }: PropsWithChildren<CardProps>) => {
   return (
-    <div className='mt-8 bg-primary-white shadow-default rounded-[20px] p-9'>
+    <div
+      className={clsx(
+        'mt-8 bg-primary-white shadow-default rounded-[20px] p-9',
+        mainClass,
+      )}
+    >
       {hasHeader && (
         <>
           <div
             className={clsx(
               hasBorder ? 'border-b border-b-light-blue-50' : '',
-              'flex items-start justify-between pb-3',
+              'flex items-center justify-between pb-3',
               className,
             )}
           >
@@ -50,7 +57,7 @@ export const Card = ({
                 </span>
               )}
             </div>
-            <div className='flex items-center pt-3'>
+            <div className='flex items-center'>
               {hasButton && <span>{hasButton}</span>}
               {trailingIcon1 && (
                 <span className=' cursor-pointer ml-3 w-8 h-8 rounded-full shadow-100 grid place-content-center'>

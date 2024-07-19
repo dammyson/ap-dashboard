@@ -53,6 +53,9 @@ const config: Config = {
           success: {
             100: '#1EB564',
           },
+          error: {
+            800: '#D02626'
+          },
           secondary: {
             black: '#23272E',
             red: '#BD3826',
