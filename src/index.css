@@ -140,7 +140,7 @@ button:focus-visible {
 }
 
 .react-select__placeholder {
-  color: #1c1c1e !important ;
+  color: #1c1c1e !important;
 }
 
 .react-select__input {
@@ -229,17 +229,13 @@ button:focus-visible {
 }
 
 .text-gradient {
-  background: -webkit-linear-gradient(40deg, #2B539F 6%, #BD3826 100%);
+  background: -webkit-linear-gradient(40deg, #2b539f 6%, #bd3826 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-    padding-right: 0.2rem;
-    padding-bottom: 0.2rem;
+  padding-right: 0.2rem;
+  padding-bottom: 0.2rem;
 }
 
 .sky-blue-gradient-bg {
-  background: linear-gradient(
-    180deg,
-    #23539F00,
-    #23539F0A
-  );
+  background: linear-gradient(180deg, #23539f00, #23539f0a);
 }
