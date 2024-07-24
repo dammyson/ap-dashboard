@@ -13,14 +13,16 @@ import {
   ArrowUp,
   Dot,
   Fall,
+  OptionsVertical,
   Rise,
 } from '@/components/svg/dashboard/Dashboard';
 import clsx from 'clsx';
 import { Card } from '@/components/card';
 import { Filter } from '@/components/svg/surveys/Surveys';
 import { PieChart } from 'react-minimal-pie-chart';
-import { chartData, devices, stats } from './constants';
+import { chartData, devices, RecentActivities, stats } from './constants';
 import { Chart } from '@/components/chart/Chart';
+import { HorizontalBarChart } from '@/components/chart/HorizontalBarChart';
 
 const tabs = [
   { name: 'Ticket sales', value: 2000 },
@@ -204,7 +206,47 @@ function Dashboard() {
         ) : activeStat === 'active' ? (
           <ActiveUsers />
         ) : (
-          <></>
+          <>
+            <div className='mt-2 grid grid-cols-12 gap-10 pb-2'>
+              <div className='col-span-8 relative'>
+                <Card
+                  hasHeader
+                  hasBadge
+                  title='Users by screen resolution'
+                  trailingIcon1={<Filter />}
+                >
+                  <HorizontalBarChart />
+                </Card>
+              </div>
+              <div className='col-span-4 '>
+                <Card hasHeader title='Recent activities'>
+                  <div className='flex flex-col gap-3 pb-6'>
+                    {RecentActivities.map((activity, index) => (
+                      <div
+                        key={index}
+                        className=' bg-[#E9EEF5] flex justify-between items-center rounded-tr-[10px] rounded-tl-[10px] rounded-bl-[10px] p-4 gap-3'
+                      >
+                        <div>
+                          <p className='text-[16px] text-light-blue-main font-medium'>
+                            {activity.label}
+                          </p>
+                          <p className='text-[14px] text-light-grey-600 truncate max-w-[221px]'>
+                            {activity.description}
+                          </p>
+                        </div>
+                        <div className='flex flex-col items-end justify-between'>
+                          <OptionsVertical className='cursor-pointer' />
+                          <span className='text-light-grey-600 text-[10px] pt-4'>
+                            12 mins ago
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+              </div>
+            </div>
+          </>
         )}
       </div>
     </AppLayout>

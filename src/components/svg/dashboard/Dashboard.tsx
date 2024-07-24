@@ -141,7 +141,7 @@ export const Slider = () => {
   );
 };
 
-export const OptionsVertical = () => {
+export const OptionsVertical = ({ className }: { className?: string }) => {
   return (
     <svg
       width='3'
@@ -149,6 +149,7 @@ export const OptionsVertical = () => {
       viewBox='0 0 3 11'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
+      className={className}
     >
       <circle cx='1.375' cy='1.375' r='1.375' fill='#23539F' />
       <circle cx='1.375' cy='5.5' r='1.375' fill='#23539F' />
