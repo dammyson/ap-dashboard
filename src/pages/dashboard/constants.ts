@@ -23,7 +23,7 @@ export const stats = [
   {
     title: 'Active users',
     period: 'Last 7 days',
-    value: 16500,
+    value: 1200,
     variance: 6,
     state: 'active',
   },

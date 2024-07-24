@@ -107,38 +107,36 @@ export const SideNavigationItems = () => {
       </div>
 
       <div className='fixed bottom-12 grid gap-6 pl-6 py-15 w-[270px]'>
-        {navigationItems
-          ?.slice(-2)
-          .map(({ icon, title, countId, id }, index) => {
-            const route = `/${convertToUrlString(id ?? title)}`;
-            const isActive = pathname.includes(convertToUrlString(id ?? title))
-              ? true
-              : false;
+        {navigationItems?.slice(-2).map(({ icon, title, countId, id }) => {
+          const route = `/${convertToUrlString(id ?? title)}`;
+          const isActive = pathname.includes(convertToUrlString(id ?? title))
+            ? true
+            : false;
 
-            return (
-              <div key={title}>
-                <a
-                  href={title === 'Settings' ? route : '/'}
-                  className={clsx(
-                    isActive
-                      ? 'bg-light-blue-main border-r-[7px] border-r-light-blue-100 rounded-tl-md rounded-bl-md'
-                      : '',
-                    'hover:text-light-grey-300 cursor-pointer text-white no-underline relative flex text-sm font-normal transition-colors duration-200  mb-1 px-4 py-3',
-                  )}
-                >
-                  <div className='flex gap-8 items-center'>
-                    <span>{icon}</span>
-                    <span>{title}</span>
+          return (
+            <div key={title}>
+              <a
+                href={title === 'Settings' ? route : '/'}
+                className={clsx(
+                  isActive
+                    ? 'bg-light-blue-main border-r-[7px] border-r-light-blue-100 rounded-tl-md rounded-bl-md'
+                    : '',
+                  'hover:text-light-grey-300 cursor-pointer text-white no-underline relative flex text-sm font-normal transition-colors duration-200  mb-1 px-4 py-3',
+                )}
+              >
+                <div className='flex gap-8 items-center'>
+                  <span>{icon}</span>
+                  <span>{title}</span>
+                </div>
+                {countId && (
+                  <div className='absolute top-15 right-10 text-xs font-light bg-gray-200 rounded-full px-2 py-1 text-gray-700  shadow-sm'>
+                    {countId}
                   </div>
-                  {countId && (
-                    <div className='absolute top-15 right-10 text-xs font-light bg-gray-200 rounded-full px-2 py-1 text-gray-700  shadow-sm'>
-                      {countId}
-                    </div>
-                  )}
-                </a>
-              </div>
-            );
-          })}
+                )}
+              </a>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

@@ -5,13 +5,10 @@ import {
   Padlock,
   SlashedEye,
 } from '../../../components/svg/auth/AuthIcons';
-import { useState } from 'react';
 import mainLogo from '../../../assets/logos/main_logo.png';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 function Login() {
-  const [hasError, setHasError] = useState(false);
-
   const navigate = useNavigate();
   return (
     <div className='mobile-container flex justify-center items-center h-lvh bg-auth-bg bg-no-repeat bg-center bg-cover'>
@@ -22,18 +19,17 @@ function Login() {
           </div>
           <div className='mb-10'>
             <Input
-              state={hasError ? InputState.ERROR : InputState.NORMAL}
+              state={InputState.NORMAL}
               label=''
               placeHolder='Email Address'
               inputSize='large'
               leadingIcon={<Email />}
               isCurved
-              helper={hasError ? 'Enter the correct email address.' : ''}
             />
           </div>
           <div className='mb-2'>
             <Input
-              state={hasError ? InputState.ERROR : InputState.NORMAL}
+              state={InputState.NORMAL}
               label=''
               placeHolder='Password'
               inputSize='large'
@@ -41,7 +37,6 @@ function Login() {
               trailingIcon={<SlashedEye />}
               isCurved
               type='password'
-              helper={hasError ? 'Wrong Password' : ''}
             />
           </div>
           <NavLink
