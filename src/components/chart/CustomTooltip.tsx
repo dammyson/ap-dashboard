@@ -19,7 +19,6 @@ export const CustomTooltip = ({
   payload,
   formatter,
   yAxisAccessor,
-  label,
 }: Props) => {
   if (!active) return null;
 

@@ -5,10 +5,7 @@ interface LayoutProps {
   logo: string;
 }
 
-export const AppLayout = ({
-  logo,
-  children,
-}: PropsWithChildren<LayoutProps>) => {
+export const AppLayout = ({ children }: PropsWithChildren<LayoutProps>) => {
   return (
     <div className='flex bg-[#00000003] '>
       <div className='relative w-[270px]'>

@@ -1,10 +1,7 @@
 import { PieChart } from 'react-minimal-pie-chart';
-import { useNavigate } from 'react-router';
 import { firstOptions, secondOptions, thirdOptions } from './constants';
 
 export const SurveyResults = () => {
-  const navigate = useNavigate();
-
   return (
     <div>
       <div className='mt-8'>
@@ -83,7 +80,7 @@ export const SurveyResults = () => {
         </h3>
         <div className='flex items-center justify-between pb-10'>
           <div className='w-1/2 pl-6'>
-            {thirdOptions.map((option, index) => {
+            {thirdOptions.map((option) => {
               return (
                 <>
                   <div className='flex text-primary-black items-center justify-between my-5 pb-2.5 border-b border-b-light-secondary-light_blue'>

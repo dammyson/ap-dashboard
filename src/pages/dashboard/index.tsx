@@ -224,19 +224,19 @@ function Dashboard() {
                     {RecentActivities.map((activity, index) => (
                       <div
                         key={index}
-                        className=' bg-[#E9EEF5] flex justify-between items-center rounded-tr-[10px] rounded-tl-[10px] rounded-bl-[10px] p-4 gap-3'
+                        className=' bg-[#E9EEF5] rounded-tr-[10px] rounded-tl-[10px] rounded-bl-[10px] px-4 py-3'
                       >
-                        <div>
+                        <div className='flex items-center gap-2 justify-between'>
                           <p className='text-[16px] text-light-blue-main font-medium'>
                             {activity.label}
                           </p>
-                          <p className='text-[14px] text-light-grey-600 truncate max-w-[221px]'>
+                          <OptionsVertical className='cursor-pointer' />
+                        </div>
+                        <div className='flex items-center justify-between gap-6'>
+                          <p className='text-[13px] text-light-grey-600 truncate max-w-[221px]'>
                             {activity.description}
                           </p>
-                        </div>
-                        <div className='flex flex-col items-end justify-between'>
-                          <OptionsVertical className='cursor-pointer' />
-                          <span className='text-light-grey-600 text-[10px] pt-4'>
+                          <span className='text-light-grey-600 text-[10px] min-w-[60px]'>
                             12 mins ago
                           </span>
                         </div>

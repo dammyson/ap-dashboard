@@ -1,13 +1,20 @@
 import { BorderRadius, Button, ButtonSize } from '../../../components/button';
 import { Input, InputState } from '../../../components/input';
 import { Email } from '../../../components/svg/auth/AuthIcons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import mainLogo from '../../../assets/logos/main_logo.png';
 import { useNavigate } from 'react-router-dom';
 
 function ForgotPassword() {
   const [hasError, setHasError] = useState(false);
+  const [email, setEmail] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (email) {
+      setHasError(true);
+    }
+  });
 
   return (
     <div className='mobile-container flex justify-center items-center h-lvh bg-auth-bg bg-no-repeat bg-center bg-cover'>
@@ -33,6 +40,7 @@ function ForgotPassword() {
               inputSize='large'
               leadingIcon={<Email />}
               isCurved
+              onChange={(e) => setEmail(e.target.value)}
               helper={hasError ? 'Enter the correct email address.' : ''}
             />
           </div>
