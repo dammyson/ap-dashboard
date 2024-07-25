@@ -1,13 +1,10 @@
 import { ColumnType } from 'antd/es/table';
 import { useMemo } from 'react';
-import { ITeamMembers } from '../../../types/types';
-import { Button } from '../../../components/button';
-import {
-  CircularArrow,
-  Remove,
-} from '../../../components/svg/settings/Settings';
+import { ITeamMembers } from '@/types/types';
+import { Button } from '@/components/button';
+import { CircularArrow, Remove } from '@/components/svg/settings/Settings';
 import clsx from 'clsx';
-import { ModalStateSetter } from '../surveys/tableColumns';
+import { ModalStateSetter } from '@/components/modules/surveys/tableColumns';
 
 export const useTeamMembersColumn = (
   setRemoveTeamMember: ModalStateSetter,

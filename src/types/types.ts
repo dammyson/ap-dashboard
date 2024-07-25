@@ -77,13 +77,22 @@ export interface ActiveUsers {
   deviceDistribution: DeviceType[];
 }
 export interface Args<T> {
-    data?: T[]
-    sortBy?: keyof T
-    direction?: 'asc' | 'desc'
-    disabled?: boolean
+  data?: T[];
+  sortBy?: keyof T;
+  direction?: 'asc' | 'desc';
+  disabled?: boolean;
 }
 
 export interface GraphValues {
-    name: string
-    value: number
+  name: string;
+  value: number;
+}
+
+export interface CustomerInfomation {
+  avatar: string;
+  title: string;
+  name: string;
+  email: string;
+  nationality: string;
+  airpeaceID: number;
 }
