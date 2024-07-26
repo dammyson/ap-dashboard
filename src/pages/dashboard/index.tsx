@@ -218,9 +218,9 @@ function Dashboard() {
                   <HorizontalBarChart />
                 </Card>
               </div>
-              <div className='col-span-4 '>
+              <div className='col-span-4'>
                 <Card hasHeader title='Recent activities'>
-                  <div className='flex flex-col gap-3 pb-6'>
+                  <div className='flex flex-col gap-3 pb-12'>
                     {RecentActivities.map((activity, index) => (
                       <div
                         key={index}
