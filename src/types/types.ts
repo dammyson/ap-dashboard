@@ -96,3 +96,9 @@ export interface CustomerInfomation {
   nationality: string;
   airpeaceID: number;
 }
+
+export interface Activitylog {
+  date: string;
+  activityType: string;
+  description: string;
+}

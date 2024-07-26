@@ -16,6 +16,7 @@ interface CardProps {
   trailingIcon2?: ReactNode;
   hasBorder?: boolean;
   className?: string;
+  titleClass?: string;
   mainClass?: string;
 }
 
@@ -29,6 +30,7 @@ export const Card = ({
   hasBorder,
   className,
   children,
+  titleClass,
   mainClass,
 }: PropsWithChildren<CardProps>) => {
   return (
@@ -52,7 +54,12 @@ export const Card = ({
                 <span className='w-3 h-3 rounded-full bg-light-blue-main mr-4'></span>
               )}
               {title && (
-                <span className='font-medium text-xl text-light-grey-700 '>
+                <span
+                  className={clsx(
+                    'font-medium text-xl text-light-grey-700 ',
+                    titleClass,
+                  )}
+                >
                   {title}
                 </span>
               )}

@@ -59,7 +59,10 @@ export const useCustomerInformation = (setAwardPoints: ModalStateSetter) => {
           <div className='flex gap-2 items-center'>
             <span
               className='cursor-pointer'
-              onClick={() => (navigate('...'), console.warn(record, 'viewed'))}
+              onClick={() => (
+                navigate(`/customer-view/${record.title}/${record.name}`),
+                console.warn(record, 'viewed')
+              )}
             >
               {<Eye />}
             </span>
