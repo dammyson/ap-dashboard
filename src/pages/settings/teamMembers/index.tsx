@@ -67,12 +67,12 @@ function TeamMembers() {
           <Table
             pagination={false}
             columns={tableColumns}
-            className='table'
+            // className='table'
             dataSource={list}
             scroll={{
               y: 506,
             }}
-            rootClassName='w-full'
+            rootClassName='w-full overflow-x-scroll'
             showHeader={false}
           />
         </div>

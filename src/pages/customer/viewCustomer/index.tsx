@@ -228,6 +228,7 @@ function ViewCustomer() {
               pagination={false}
               dataSource={ActivityList}
               columns={tableColumns}
+              rootClassName='w-full overflow-x-scroll'
             />
           </Card>
         </div>

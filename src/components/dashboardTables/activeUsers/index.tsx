@@ -12,6 +12,7 @@ export const ActiveUsers = () => {
         pagination={false}
         columns={tableColumns}
         dataSource={ActiveUsersData}
+        rootClassName='w-full overflow-x-scroll'
       />
     </Card>
   );
