@@ -50,7 +50,7 @@ export const Modal = ({
       <div
         className={clsx(
           size === SizeType.LARGE
-            ? 'max-w-[817px] '
+            ? 'max-w-[980px] '
             : size === SizeType.MEDIUM
               ? 'max-w-[717px]'
               : size === SizeType.SMALL

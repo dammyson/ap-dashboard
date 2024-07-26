@@ -10,6 +10,7 @@ import Settings from './pages/settings';
 import CustomerFeedback from './pages/surveys/customerFeedback';
 import EditSurvey from './pages/surveys/editSurvey';
 import CreateSurvey from './pages/surveys/createSurvery';
+import ViewCustomer from './pages/customer/viewCustomer';
 
 const App = () => {
   return (
@@ -21,6 +22,10 @@ const App = () => {
           <Route path='/reset-password' element={<ResetPassword />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/customer' element={<Customer />} />
+          <Route
+            path='/customer-view/:titleId/:nameId'
+            element={<ViewCustomer />}
+          />
           <Route path='/activity-log' element={<ActivityLog />} />
           <Route path='/surveys' element={<Surveys />} />
           <Route path='/surveys-feedback/:id' element={<CustomerFeedback />} />

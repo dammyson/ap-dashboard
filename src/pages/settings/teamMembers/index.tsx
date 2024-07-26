@@ -1,9 +1,9 @@
-import { Add, SmallCheckmark } from '../../../components/svg/settings/Settings';
-import { BorderRadius, Button, ButtonSize } from '../../../components/button';
+import { Add, SmallCheckmark } from '@/components/svg/settings/Settings';
+import { BorderRadius, Button, ButtonSize } from '@/components/button';
 import { useState } from 'react';
 import AddMembers from './addMembers';
 import { Table } from 'antd';
-import { useTeamMembersColumn } from '../../../components/modules/teamMembers/tableColumns';
+import { useTeamMembersColumn } from '@/components/modules/surveys/teamMembers/tableColumns';
 import profileImage from '../../../assets/profileImage/profile-img.png';
 import CategoryHeader from '@/components/categoryHeader';
 import { Modal, SizeType } from '@/components/modal';

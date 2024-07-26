@@ -4,7 +4,7 @@ import { AppLayout } from '@/components/layout/AppLayout';
 import WelcomeMessage from '@/components/welcomeMessage';
 import { BorderRadius, Button, ButtonSize } from '@/components/button';
 import { Table } from 'antd';
-import { useCustomerFeedbackColumn } from '@/components/modules/customerFeedback/tableColumns';
+import { useCustomerFeedbackColumn } from '@/components/modules/surveys/customerFeedback/tableColumns';
 import { Panel, PanelNavigationItem } from '@/components/Panel';
 import { useState } from 'react';
 import { useParams } from 'react-router';
