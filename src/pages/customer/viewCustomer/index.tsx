@@ -93,7 +93,7 @@ function ViewCustomer() {
           </div>
           <div className='flex items-center gap-4'>
             {userStats.map((stats, index) => (
-              <Card key={index} mainClass='max-w-[247px] w-full !p-7'>
+              <Card key={index} mainClass='max-w-[247px] w-full !p-6'>
                 <div
                   className={clsx(
                     stats.iconName === 'trophy'
@@ -219,7 +219,7 @@ function ViewCustomer() {
                 mode='text'
                 buttonText='View more'
                 trailingIcon={<SmallDropDown />}
-                className='text-[#979797] font-medium text-xs !items-end'
+                className='!text-[#979797] font-medium text-xs !items-end'
                 onClick={() => {}}
               />
             }
