@@ -65,8 +65,8 @@ function Customer() {
                 Manually award points to user
               </h3>
               <div className='w-11/12'>
-                <div className='mb-10'>
-                  <p className='text-left text-xl text-light-grey-600 font-medium pb-4'>
+                <div className='mb-10 text-light-grey-600'>
+                  <p className='text-left text-xl font-medium pb-4'>
                     Points to award
                   </p>
                   <CustomSelect
@@ -80,8 +80,8 @@ function Customer() {
                     onSelect={(option) => setSelectedPointOption(option)}
                   />
                 </div>
-                <div className='mb-5'>
-                  <p className='text-left text-xl text-light-grey-600 font-medium pb-4'>
+                <div className='mb-5 text-light-grey-600'>
+                  <p className='text-left text-xl  font-medium pb-4'>
                     Reason for awarding points
                   </p>
                   <CustomSelect
