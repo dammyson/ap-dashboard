@@ -220,7 +220,7 @@ function Dashboard() {
               </div>
               <div className='col-span-4'>
                 <Card hasHeader title='Recent activities'>
-                  <div className='flex flex-col gap-3 pb-12'>
+                  <div className='flex flex-col gap-3 h-[390px] overflow-y-auto no-scrollbar mb-12'>
                     {RecentActivities.map((activity, index) => (
                       <div
                         key={index}
