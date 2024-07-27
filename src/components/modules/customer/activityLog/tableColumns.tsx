@@ -1,8 +1,8 @@
-import { Activitylog } from '@/types/types';
+import { CustomerActivityLog } from '@/types/types';
 import { ColumnType } from 'antd/es/table';
 import { useMemo } from 'react';
 
-export const useActivityLog = () => {
+export const useCustomerActivityLog = () => {
   const tableColumns = useMemo(() => {
     return [
       {
@@ -44,7 +44,7 @@ export const useActivityLog = () => {
           );
         },
       },
-    ] as ColumnType<Activitylog>[];
+    ] as ColumnType<CustomerActivityLog>[];
   }, []);
   return { tableColumns };
 };

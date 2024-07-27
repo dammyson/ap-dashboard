@@ -1,7 +1,7 @@
 import { Card } from '@/components/card';
 import { Header } from '@/components/header';
 import { AppLayout } from '@/components/layout/AppLayout';
-import { useActivityLog } from '@/components/modules/customer/activityLog/tableColumns';
+import { useCustomerActivityLog } from '@/components/modules/customer/activityLog/tableColumns';
 import {
   Flight,
   GoldTrophy,
@@ -54,7 +54,7 @@ function ViewCustomer() {
   ];
 
   const { titleId, nameId } = useParams();
-  const { tableColumns } = useActivityLog();
+  const { tableColumns } = useCustomerActivityLog();
   const navigate = useNavigate();
   return (
     <AppLayout logo=''>
