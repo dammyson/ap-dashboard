@@ -40,7 +40,7 @@ export const Chart = ({ chartData, transactionType }: Props) => {
   }, [chartData]);
 
   return (
-    <ResponsiveContainer width='100%' height={250}>
+    <ResponsiveContainer width='100%' height={291}>
       <AreaChart
         height={300}
         data={data}
