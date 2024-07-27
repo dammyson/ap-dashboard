@@ -193,6 +193,10 @@ button:focus-visible {
   color: #f2f2f7;
 }
 
+.ant-table-container {
+  min-width: 1000px !important;
+}
+
 /* SURVERY STYLES */
 /* SURVEYS */
 .ant-table-cell.title-column,

@@ -12,14 +12,29 @@ import {
   UserReferral,
 } from '@/components/svg/customer/Customer';
 import { Filter } from '@/components/svg/surveys/Surveys';
-import { formatNumber } from '@/utils';
+import { formatNumber, numberShortener } from '@/utils';
 import { Table } from 'antd';
 import clsx from 'clsx';
 import { useNavigate, useParams } from 'react-router';
 import { ActivityList, usageStats, UserFlightDetails } from './constants';
 import { Button } from '@/components/button';
+import { useState } from 'react';
+import { Chart } from '@/components/chart/Chart';
+import { chartData } from '@/pages/dashboard/constants';
 
 function ViewCustomer() {
+  const { titleId, nameId } = useParams();
+  const { tableColumns } = useCustomerActivityLog();
+  const navigate = useNavigate();
+
+  const tabs = [
+    { name: 'Flight bookings', value: 10000 },
+    { name: 'In-app purchases', value: 1000 },
+    { name: 'Gamification', value: 1500 },
+    { name: 'Total revenue', value: 250000 },
+  ];
+  const currentTab = tabs[0];
+  const [activeTab, setActiveTab] = useState(currentTab);
   const userStats = [
     {
       title: 'Active loyal points',
@@ -53,9 +68,6 @@ function ViewCustomer() {
     },
   ];
 
-  const { titleId, nameId } = useParams();
-  const { tableColumns } = useCustomerActivityLog();
-  const navigate = useNavigate();
   return (
     <AppLayout logo=''>
       <div className='app-container py-2 pl-14 pr-10'>
@@ -126,35 +138,67 @@ function ViewCustomer() {
                 hasHeader
                 title='Revenue sources'
                 trailingIcon1={<Filter />}
-              ></Card>
+              >
+                <div className='flex items-center gap-5 mb-12'>
+                  {tabs.map((tab, index) => (
+                    <div
+                      onClick={() => setActiveTab(tab)}
+                      key={index}
+                      className={clsx(
+                        activeTab === tab
+                          ? 'border-b-4 border-b-light-blue-main sky-blue-gradient-bg'
+                          : 'border-b border-b-[#E9E7FD]',
+                        'p-2 pb-3.5 cursor-pointer',
+                      )}
+                    >
+                      <h3
+                        className={clsx(
+                          tab.name === 'Total revenue'
+                            ? 'text-light-secondary-mint_green'
+                            : 'text-primary-black',
+                          'text-xl font-bold mb-2',
+                        )}
+                      >
+                        ${numberShortener(tab.value)}
+                      </h3>
+                      <p className='text-sm font-medium text-light-grey-400'>
+                        {tab.name}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <Chart chartData={chartData} transactionType='all' />
+              </Card>
             </div>
             <div className='col-span-4 relative'>
               <Card hasHeader title='App usage time'>
-                <UsageTime />
-                <div className='text-[16px]'>
-                  <p className='font-medium text-light-primary-deep_black'>
-                    Average duration:{' '}
-                    <span className='text-light-secondary-mint_green'>
-                      12mins 45secs
-                    </span>
-                  </p>
+                <div className='flex flex-col items-center'>
+                  <UsageTime />
+                  <div className='text-[16px]'>
+                    <p className='font-medium text-light-primary-deep_black'>
+                      Average duration:{' '}
+                      <span className='text-light-secondary-mint_green'>
+                        12mins 45secs
+                      </span>
+                    </p>
 
-                  {usageStats.map((stats, index) => (
-                    <div key={index} className='flex items-center mt-4'>
-                      <span className='w-3 h-3 rounded-full bg-light-blue-50 mr-3'></span>
-                      <div>
-                        <p className='text-light-grey-300'>
-                          {stats.timeOfDay} {`(${stats.time}): `}
-                          <span className='text-light-secondary-mint_green font-medium'>
-                            {stats.usagePercentage}% of usage
-                          </span>
-                        </p>
-                        <p className='text-light-grey-300'>
-                          Peak usage: {stats.usageTime}
-                        </p>
+                    {usageStats.map((stats, index) => (
+                      <div key={index} className='flex items-center mt-2'>
+                        <span className='w-3 h-3 rounded-full bg-light-blue-50 mr-3'></span>
+                        <div>
+                          <p className='text-light-grey-300'>
+                            {stats.timeOfDay} {`(${stats.time}): `}
+                            <span className='text-light-secondary-mint_green font-medium'>
+                              {stats.usagePercentage}% of usage
+                            </span>
+                          </p>
+                          <p className='text-light-grey-300'>
+                            Peak usage: {stats.usageTime}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </Card>
             </div>
@@ -228,6 +272,7 @@ function ViewCustomer() {
               pagination={false}
               dataSource={ActivityList}
               columns={tableColumns}
+              rootClassName='w-full overflow-x-scroll'
             />
           </Card>
         </div>
