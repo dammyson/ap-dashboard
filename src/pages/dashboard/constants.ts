@@ -95,4 +95,24 @@ export const RecentActivities = [
     label: 'Performance trend',
     description: 'Revenue growth: +10% compared to something',
   },
+  {
+    label: 'Performance trend',
+    description: 'Revenue growth: +10% compared to something',
+  },
+  {
+    label: 'Performance trend',
+    description: 'Revenue growth: +10% compared to something',
+  },
+  {
+    label: 'Performance trend',
+    description: 'Revenue growth: +10% compared to something',
+  },
+  {
+    label: 'Performance trend',
+    description: 'Revenue growth: +10% compared to something',
+  },
+  {
+    label: 'Performance trend',
+    description: 'Revenue growth: +10% compared to something',
+  },
 ];

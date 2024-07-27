@@ -202,9 +202,9 @@ export const Miles = () => {
 export const UsageTime = () => {
   return (
     <svg
-      width='252'
-      height='253'
-      viewBox='0 0 252 253'
+      width='230'
+      height='230'
+      viewBox='0 0 230 230'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
     >
