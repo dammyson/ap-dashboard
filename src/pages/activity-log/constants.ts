@@ -1,4 +1,4 @@
-export const acvtivityData = [
+export const activityData = [
   {
     timeStamp: '2024-05-28 10:32am',
     user: 'Ayomide Amaka',

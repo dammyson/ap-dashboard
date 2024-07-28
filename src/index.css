@@ -219,6 +219,18 @@ button:focus-visible {
   min-width: 187px !important;
 }
 
+/* ACTIVITY-LOG */
+.ant-table-cell.timeStamp-column,
+.ant-table-cell.user-column,
+.ant-table-cell.activityType-column,
+.ant-table-cell.ipaddress-column {
+  min-width: 190px !important;
+}
+
+.ant-table-cell.description-column {
+  min-width: 250px !important;
+}
+
 /*HIDDEN SCROLLBAR */
 .hidden-scrollbar::-webkit-scrollbar {
   display: none !important;
