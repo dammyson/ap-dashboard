@@ -122,24 +122,10 @@ function ActivityLog() {
                 </p>
                 <div className='flex items-center justify-between gap-8 mt-2.5 '>
                   <div className='max-w-[420px] w-full'>
-                    {/* <Input
-                      isCurved
-                      hasBorder
-                      inputSize='small'
-                      className='!drop-shadow-none'
-                      trailingIcon={<Calender />}
-                    /> */}
                     <CustomDatePicker type={PickerType.START} />
                   </div>
                   <div className='max-w-[420px] w-full'>
                     <CustomDatePicker type={PickerType.END} />
-                    {/* <Input
-                      isCurved
-                      hasBorder
-                      inputSize='small'
-                      className='!drop-shadow-none'
-                      trailingIcon={<Calender />}
-                    /> */}
                   </div>
                 </div>
               </div>
@@ -160,13 +146,19 @@ function ActivityLog() {
                           name='option format'
                           className='w-8  h-8 inset-0 absolute opacity-0 cursor-pointer'
                         />
-                        <div className='flex items-center justify-center w-8 h-8 border-light-blue-50 border-2 rounded-full'>
+                        <div className='flex items-center justify-center w-7 h-7 border-light-blue-50 border-2 rounded-full'>
                           {selectedOption === format.key && (
-                            <RadioFilled color='#23539F' />
+                            <RadioFilled
+                              color='#23539F'
+                              width='16'
+                              height='16'
+                            />
                           )}
                         </div>
                       </div>
-                      <span className=' font-normal'>{format.title}</span>
+                      <span className='text-light-grey-500 text-[16px] font-medium'>
+                        {format.title}
+                      </span>
                     </div>
                   ))}
                 </div>
