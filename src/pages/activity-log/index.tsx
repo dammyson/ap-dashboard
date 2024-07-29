@@ -13,6 +13,7 @@ import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import { Input } from '@/components/input';
 import clsx from 'clsx';
+import { CustomDatePicker, PickerType } from '@/components/datePicker';
 
 type ActivityRecord = {
   timeStamp: string;
@@ -66,6 +67,7 @@ function ActivityLog() {
       setSelectedOption(selectedFormat.key);
     }
   };
+
   return (
     <AppLayout logo=''>
       <div className='app-container py-2 pl-14 pr-10'>
@@ -121,22 +123,24 @@ function ActivityLog() {
                 </p>
                 <div className='flex items-center justify-between gap-8 mt-2.5 '>
                   <div className='max-w-[420px] w-full'>
-                    <Input
+                    {/* <Input
                       isCurved
                       hasBorder
                       inputSize='small'
                       className='!drop-shadow-none'
                       trailingIcon={<Calender />}
-                    />
+                    /> */}
+                    <CustomDatePicker type={PickerType.START} />
                   </div>
                   <div className='max-w-[420px] w-full'>
-                    <Input
+                    <CustomDatePicker type={PickerType.END} />
+                    {/* <Input
                       isCurved
                       hasBorder
                       inputSize='small'
                       className='!drop-shadow-none'
                       trailingIcon={<Calender />}
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>

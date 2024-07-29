@@ -255,3 +255,7 @@ button:focus-visible {
 .sky-blue-gradient-bg {
   background: linear-gradient(180deg, #23539f00, #23539f0a);
 }
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
