@@ -33,7 +33,7 @@ function Customer() {
     <AppLayout logo=''>
       <div className='app-container py-2 pl-14 pr-10'>
         <Header />
-        <div className='pr-20'>
+        <div className='pr-12'>
           <div>
             <WelcomeMessage
               username='Ayo'
