@@ -27,21 +27,23 @@ function Settings() {
     <AppLayout logo=''>
       <div className='app-container py-2 pl-14 pr-10'>
         <Header />
-        <Panel
-          navigationItems={navigationItems}
-          currentTab={currentTab}
-          setCurrentTab={setCurrentTab}
-        >
-          <div className='mt-10 pr-12'>
-            {currentTab.id === 'profile' ? (
-              <Profile />
-            ) : currentTab.id === 'team members' ? (
-              <TeamMembers />
-            ) : (
-              <ChangePassword />
-            )}
-          </div>
-        </Panel>
+        <div className='pr-20'>
+          <Panel
+            navigationItems={navigationItems}
+            currentTab={currentTab}
+            setCurrentTab={setCurrentTab}
+          >
+            <div className='mt-10'>
+              {currentTab.id === 'profile' ? (
+                <Profile />
+              ) : currentTab.id === 'team members' ? (
+                <TeamMembers />
+              ) : (
+                <ChangePassword />
+              )}
+            </div>
+          </Panel>
+        </div>
       </div>
     </AppLayout>
   );

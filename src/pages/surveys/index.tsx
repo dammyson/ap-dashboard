@@ -59,37 +59,39 @@ function Surveys() {
     <AppLayout logo=''>
       <div className='app-container py-2 pl-14 pr-10'>
         <Header />
-        <div className='flex justify-between items-center'>
-          <WelcomeMessage
-            username='Ayo'
-            description="Let's review today's insights"
-          />
-        </div>
-        <Card
-          hasHeader
-          hasBadge
-          title='Survey'
-          trailingIcon1={<Filter />}
-          hasButton={
-            <Button
-              buttonText='Create new survey'
-              size={ButtonSize.Small}
-              radius={BorderRadius.Large}
-              className='font-semibold'
-              onClick={() => {
-                navigate(`/surveys-create/create-new-survey`);
-              }}
+        <div className='pr-20'>
+          <div className='flex justify-between items-center'>
+            <WelcomeMessage
+              username='Ayo'
+              description="Let's review today's insights"
             />
-          }
-        >
-          <Table
-            pagination={false}
-            columns={tableColumns}
-            dataSource={list}
-            className='custom-survey-table'
-            rootClassName='overflow-x-scroll'
-          />
-        </Card>
+          </div>
+          <Card
+            hasHeader
+            hasBadge
+            title='Survey'
+            trailingIcon1={<Filter />}
+            hasButton={
+              <Button
+                buttonText='Create new survey'
+                size={ButtonSize.Small}
+                radius={BorderRadius.Large}
+                className='font-semibold'
+                onClick={() => {
+                  navigate(`/surveys-create/create-new-survey`);
+                }}
+              />
+            }
+          >
+            <Table
+              pagination={false}
+              columns={tableColumns}
+              dataSource={list}
+              className='custom-survey-table'
+              rootClassName='overflow-x-scroll'
+            />
+          </Card>
+        </div>
       </div>
       {publishSurvey ? (
         <Modal
