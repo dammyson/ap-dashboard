@@ -79,50 +79,52 @@ function CustomerFeedback() {
   return (
     <AppLayout logo=''>
       <div className='app-container py-2 pl-14 pr-10'>
-        <Header />
-        <div>
-          <WelcomeMessage
-            username='Ayo'
-            description="Let's review today's insights"
-          />
-        </div>
-
-        <Card
-          hasHeader
-          hasBadge
-          title={`Survey:${id}`}
-          hasBorder
-          className='!pb-2'
-          hasButton={
-            <Button
-              buttonText='Back to survey'
-              size={ButtonSize.Small}
-              radius={BorderRadius.Large}
-              className='font-semibold'
-              onClick={() => window.history.back()}
+        <div className='pr-20'>
+          <Header />
+          <div>
+            <WelcomeMessage
+              username='Ayo'
+              description="Let's review today's insights"
             />
-          }
-        >
-          <Panel
-            navigationItems={navigationItems}
-            currentTab={currentTab}
-            setCurrentTab={setCurrentTab}
-            className='pb-0'
+          </div>
+
+          <Card
+            hasHeader
+            hasBadge
+            title={`Survey:${id}`}
+            hasBorder
+            className='!pb-2'
+            hasButton={
+              <Button
+                buttonText='Back to survey'
+                size={ButtonSize.Small}
+                radius={BorderRadius.Large}
+                className='font-semibold'
+                onClick={() => window.history.back()}
+              />
+            }
           >
-            <div className='mt-8'>
-              {currentTab.id === 'Survey participants' ? (
-                <Table
-                  pagination={false}
-                  columns={tableColumns}
-                  dataSource={list}
-                  rootClassName='overflow-x-scroll'
-                />
-              ) : (
-                <SurveyResults />
-              )}
-            </div>
-          </Panel>
-        </Card>
+            <Panel
+              navigationItems={navigationItems}
+              currentTab={currentTab}
+              setCurrentTab={setCurrentTab}
+              className='pb-0'
+            >
+              <div className='mt-8'>
+                {currentTab.id === 'Survey participants' ? (
+                  <Table
+                    pagination={false}
+                    columns={tableColumns}
+                    dataSource={list}
+                    rootClassName='overflow-x-scroll'
+                  />
+                ) : (
+                  <SurveyResults />
+                )}
+              </div>
+            </Panel>
+          </Card>
+        </div>
       </div>
     </AppLayout>
   );
