@@ -39,7 +39,7 @@ function Dashboard() {
     <AppLayout logo=''>
       <div className='app-container pl-14 pr-10 mb-5'>
         <Header />
-        <div className='pr-20'>
+        <div className='pr-12'>
           <div>
             <WelcomeMessage
               username='Ayo'

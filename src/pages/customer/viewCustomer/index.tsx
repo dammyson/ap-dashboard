@@ -76,7 +76,7 @@ function ViewCustomer() {
       <div className='app-container py-2 pl-14 pr-10'>
         <Header />
 
-        <div className='mt-10 pr-20'>
+        <div className='mt-10 pr-12'>
           <div className='flex justify-between items-center gap-4 pb-4 border-b border-b-light-blue-50'>
             <div>
               <div className='font-medium text-3xl flex items-center justify-center gap-4'>

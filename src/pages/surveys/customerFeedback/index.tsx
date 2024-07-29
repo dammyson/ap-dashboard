@@ -96,7 +96,7 @@ function CustomerFeedback() {
   return (
     <AppLayout logo=''>
       <div className='app-container py-2 pl-14 pr-10'>
-        <div className='pr-20'>
+        <div className='pr-12'>
           <Header />
           <div>
             <WelcomeMessage

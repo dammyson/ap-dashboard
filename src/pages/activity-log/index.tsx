@@ -77,7 +77,7 @@ function ActivityLog() {
             description="Let's review today's insights"
           />
         </div>
-        <div className='mt-10 pr-20'>
+        <div className='mt-10 pr-12'>
           <Card
             hasHeader
             hasBadge
