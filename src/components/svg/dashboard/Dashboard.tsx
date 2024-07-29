@@ -244,7 +244,7 @@ export const Fall = () => {
         d='M159 55.0441C152.566 32.5237 126.574 11.0348 92.5113 31.0938C21.3756 72.984 7.79185 11.0757 0.999996 1'
         stroke='#D02626'
         stroke-width='1.42986'
-        stroke-linecap='round'
+        strokeLinecap='round'
       />
       <defs>
         <linearGradient
@@ -280,7 +280,7 @@ export const Rise = () => {
         d='M1 76.9515C7.31222 45.3022 32.8099 15.1026 66.2262 43.2928C136.011 102.164 149.337 15.1601 156 1'
         stroke='#1EB564'
         stroke-width='2'
-        stroke-linecap='round'
+        strokeLinecap='round'
       />
       <defs>
         <linearGradient

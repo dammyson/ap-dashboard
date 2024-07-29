@@ -97,8 +97,17 @@ export interface CustomerInfomation {
   airpeaceID: number;
 }
 
-export interface Activitylog {
+export interface CustomerActivityLog {
   date: string;
   activityType: string;
   description: string;
+}
+
+export interface ActivityLog {
+  timeStamp: string;
+  user: string;
+  role: string;
+  activityType: string;
+  description: string;
+  ipaddress: string;
 }
