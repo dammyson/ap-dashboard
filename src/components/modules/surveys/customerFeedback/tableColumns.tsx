@@ -2,8 +2,9 @@ import { ColumnType } from 'antd/es/table';
 import { useMemo } from 'react';
 import { CustomerFeedback } from '@/types/types';
 import { Trophy } from '@/components/svg/surveys/Surveys';
+import { ModalStateSetter } from '../tableColumns';
 
-export const useCustomerFeedbackColumn = () => {
+export const useCustomerFeedbackColumn = (setAwardPoints: ModalStateSetter) => {
   const tableColumns = useMemo(() => {
     return [
       { title: 'TITLE', dataIndex: 'title', key: 'title' },
@@ -33,7 +34,12 @@ export const useCustomerFeedbackColumn = () => {
         dataIndex: '',
         key: '',
         render: (_, record) => (
-          <span onClick={() => console.warn(record, 'awarded')}>
+          <span
+            className='cursor-pointer'
+            onClick={() => (
+              setAwardPoints(true), console.warn(record, 'awarded')
+            )}
+          >
             {<Trophy />}
           </span>
         ),

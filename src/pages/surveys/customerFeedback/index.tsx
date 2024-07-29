@@ -9,6 +9,10 @@ import { Panel, PanelNavigationItem } from '@/components/Panel';
 import { useState } from 'react';
 import { useParams } from 'react-router';
 import { SurveyResults } from '@/components/modules/surveys/SurveyResults';
+import { DropDownArrow } from '@/components/svg/settings/Settings';
+import { CustomSelect, SelectType } from '@/components/customSelect';
+import { Modal, SizeType } from '@/components/modal';
+import { Cancel } from '@/components/svg/modal/Modal';
 
 function CustomerFeedback() {
   const { id } = useParams();
@@ -73,9 +77,22 @@ function CustomerFeedback() {
       id: 'Survey results',
     },
   ];
+  const pointOptions = [
+    { label: '2000', value: '2000' },
+    { label: '3000', value: '3000' },
+  ];
+  const reasonOptions = [
+    {
+      label: 'Loyalty and repeat business',
+      value: 'loyalty and repeat business',
+    },
+  ];
+  const [awardPoints, setAwardPoints] = useState<boolean>(false);
+  const [selectedPointOption, setSelectedPointOption] = useState<string>('');
+  const [selectedReason, setSelectedReason] = useState<string>('');
   const [currentTab, setCurrentTab] = useState(navigationItems[0]);
 
-  const { tableColumns } = useCustomerFeedbackColumn();
+  const { tableColumns } = useCustomerFeedbackColumn(setAwardPoints);
   return (
     <AppLayout logo=''>
       <div className='app-container py-2 pl-14 pr-10'>
@@ -125,6 +142,82 @@ function CustomerFeedback() {
             </Panel>
           </Card>
         </div>
+        {awardPoints && (
+          <Modal
+            isBackground
+            isCentered
+            size={SizeType.LARGE}
+            cancelIcon={<Cancel />}
+            onClick={() => setAwardPoints(false)}
+          >
+            <div className='flex  flex-col items-center justify-center max-w-[633px] w-full py-5'>
+              <h3 className='text-light-primary-deep_black text-[32px] font-medium mb-10'>
+                Manually award points to user
+              </h3>
+              <div className='w-11/12'>
+                <div className='mb-10 text-light-grey-600'>
+                  <p className='text-left text-xl font-medium pb-4'>
+                    Points to award
+                  </p>
+                  <CustomSelect
+                    label=''
+                    options={pointOptions}
+                    selectType={SelectType.SELECT}
+                    hasBorder
+                    isCurved
+                    trailingIcon={<DropDownArrow />}
+                    selectedRole={selectedPointOption}
+                    onSelect={(option) => setSelectedPointOption(option)}
+                  />
+                </div>
+                <div className='mb-5 text-light-grey-600'>
+                  <p className='text-left text-xl  font-medium pb-4'>
+                    Reason for awarding points
+                  </p>
+                  <CustomSelect
+                    label=''
+                    options={reasonOptions}
+                    selectType={SelectType.SELECT}
+                    hasBorder
+                    isCurved
+                    trailingIcon={<DropDownArrow />}
+                    selectedRole={selectedReason}
+                    onSelect={(option) => setSelectedReason(option)}
+                  />
+                </div>
+              </div>
+
+              <ul className='w-full list-disc list-inside text-left pt-2 pb-20'>
+                <li className='text-[16px] text-light-grey-600'>
+                  <span className='font-medium'>Note:</span> Manually awarded
+                  points will be reflected in the user's account immediately.
+                </li>
+                <li className='text-[16px] text-light-grey-600'>
+                  Please ensure the points amount is accurate and the reason is
+                  clear.
+                </li>
+              </ul>
+
+              <div className='grid gap-4 w-11/12'>
+                <Button
+                  size={ButtonSize.Large}
+                  radius={BorderRadius.Large}
+                  buttonText='Award points'
+                  onClick={() => {}}
+                  className='!font-semibold !text-2xl'
+                />
+                <Button
+                  size={ButtonSize.Large}
+                  radius={BorderRadius.Large}
+                  mode='outlined'
+                  buttonText='Cancel'
+                  onClick={() => setAwardPoints(false)}
+                  className='!font-semibold !text-2xl'
+                />
+              </div>
+            </div>
+          </Modal>
+        )}
       </div>
     </AppLayout>
   );
