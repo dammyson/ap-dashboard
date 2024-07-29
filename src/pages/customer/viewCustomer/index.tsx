@@ -22,17 +22,18 @@ import { useState } from 'react';
 import { Chart } from '@/components/chart/Chart';
 import { chartData } from '@/pages/dashboard/constants';
 
+const tabs = [
+  { name: 'Flight bookings', value: 10000 },
+  { name: 'In-app purchases', value: 1000 },
+  { name: 'Gamification', value: 1500 },
+  { name: 'Total revenue', value: 250000 },
+];
+
 function ViewCustomer() {
   const { titleId, nameId } = useParams();
   const { tableColumns } = useCustomerActivityLog();
   const navigate = useNavigate();
 
-  const tabs = [
-    { name: 'Flight bookings', value: 10000 },
-    { name: 'In-app purchases', value: 1000 },
-    { name: 'Gamification', value: 1500 },
-    { name: 'Total revenue', value: 250000 },
-  ];
   const currentTab = tabs[0];
   const [activeTab, setActiveTab] = useState(currentTab);
   const userStats = [
@@ -67,6 +68,8 @@ function ViewCustomer() {
       iconName: 'miles',
     },
   ];
+
+  console.log(activeTab);
 
   return (
     <AppLayout logo=''>

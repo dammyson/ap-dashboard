@@ -7,11 +7,10 @@ import { BorderRadius, Button, ButtonSize } from '@/components/button';
 import { Table } from 'antd';
 import { UseActivivtyLog } from '@/components/modules/activityLog/tableColumns';
 import { activityData } from './constants';
-import { Calender, Update } from '@/components/svg/activityLog/ActivityLog';
+import { Update } from '@/components/svg/activityLog/ActivityLog';
 import { ChangeEvent, useState } from 'react';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
-import { Input } from '@/components/input';
 import clsx from 'clsx';
 import { CustomDatePicker, PickerType } from '@/components/datePicker';
 

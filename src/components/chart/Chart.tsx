@@ -64,8 +64,14 @@ export const Chart = ({ chartData, transactionType }: Props) => {
         />
         <defs>
           <linearGradient id='colorGradient' x1='0' y1='0' x2='1' y2='0'>
-            <stop offset='0%' stopColor='#23539F' />
-            <stop offset='100%' stopColor='#23539F' />
+            <stop offset='0%' stopColor='#2D59A0' stopOpacity={0.3} />
+            <stop offset='100%' stopColor='#28324000' />
+          </linearGradient>
+        </defs>
+        <defs>
+          <linearGradient id='colorPv' x1='0' y1='0' x2='0' y2='1'>
+            <stop offset='5%' stopColor='#2D59A0' stopOpacity={0.3} />
+            <stop offset='95%' stopColor='#28324000' stopOpacity={0} />
           </linearGradient>
         </defs>
 
@@ -85,16 +91,11 @@ export const Chart = ({ chartData, transactionType }: Props) => {
           <Area
             type='monotone'
             dataKey='value'
-            strokeWidth={4}
+            strokeWidth={1}
             stroke='url(#colorGradient)'
             fillOpacity={1}
             fill='url(#colorPv)'
-          >
-            <linearGradient id='colorPv' x1='0' y1='0' x2='0' y2='1'>
-              <stop offset='5%' stopColor='#BA1A1A1A' stopOpacity={0.8} />
-              <stop offset='95%' stopColor='#2954CC' stopOpacity={0} />
-            </linearGradient>
-          </Area>
+          ></Area>
         ) : null}
 
         <CartesianGrid strokeOpacity={0} strokeDasharray='3 3' />
