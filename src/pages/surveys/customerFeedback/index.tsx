@@ -13,6 +13,8 @@ import { DropDownArrow } from '@/components/svg/settings/Settings';
 import { CustomSelect, SelectType } from '@/components/customSelect';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
+import clsx from 'clsx';
+import { useWindowSize } from '@/components/hooks/useWindowSize';
 
 function CustomerFeedback() {
   const { id } = useParams();
@@ -95,7 +97,12 @@ function CustomerFeedback() {
   const { tableColumns } = useCustomerFeedbackColumn(setAwardPoints);
   return (
     <AppLayout logo=''>
-      <div className='app-container py-2 pl-14 pr-10'>
+      <div
+        className={clsx(
+          useWindowSize(1240) ? 'w-full' : 'app-container',
+          'py-2 pl-14 pr-10 ',
+        )}
+      >
         <div className='pr-12'>
           <Header />
           <div>

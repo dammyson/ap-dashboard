@@ -11,6 +11,8 @@ import { useState } from 'react';
 import { Modal, SizeType } from '@/components/modal';
 
 import { useNavigate } from 'react-router';
+import { useWindowSize } from '@/components/hooks/useWindowSize';
+import clsx from 'clsx';
 
 function Surveys() {
   const navigate = useNavigate();
@@ -57,7 +59,12 @@ function Surveys() {
 
   return (
     <AppLayout logo=''>
-      <div className='app-container py-2 pl-14 pr-10'>
+      <div
+        className={clsx(
+          useWindowSize(1240) ? 'w-full' : 'app-container',
+          'py-2 pl-14 pr-10 ',
+        )}
+      >
         <Header />
         <div className='pr-12'>
           <div className='flex justify-between items-center'>

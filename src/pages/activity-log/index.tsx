@@ -13,6 +13,7 @@ import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import clsx from 'clsx';
 import { CustomDatePicker, PickerType } from '@/components/datePicker';
+import { useWindowSize } from '@/components/hooks/useWindowSize';
 
 type ActivityRecord = {
   timeStamp: string;
@@ -69,7 +70,12 @@ function ActivityLog() {
 
   return (
     <AppLayout logo=''>
-      <div className='app-container py-2 pl-14 pr-10'>
+      <div
+        className={clsx(
+          useWindowSize(1240) ? 'w-full' : 'app-container',
+          'py-2 pl-14 pr-10 ',
+        )}
+      >
         <Header />
         <div>
           <WelcomeMessage

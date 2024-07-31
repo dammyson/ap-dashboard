@@ -5,6 +5,8 @@ import { useState } from 'react';
 import Profile from './profile';
 import TeamMembers from './teamMembers';
 import ChangePassword from './changePassword';
+import { useWindowSize } from '@/components/hooks/useWindowSize';
+import clsx from 'clsx';
 
 function Settings() {
   const navigationItems: PanelNavigationItem[] = [
@@ -25,7 +27,12 @@ function Settings() {
   const [currentTab, setCurrentTab] = useState(navigationItems[0]);
   return (
     <AppLayout logo=''>
-      <div className='app-container py-2 pl-14 pr-10'>
+      <div
+        className={clsx(
+          useWindowSize(1240) ? 'w-full' : 'app-container',
+          'py-2 pl-14 pr-10 ',
+        )}
+      >
         <Header />
         <div className='pr-12'>
           <Panel

@@ -21,6 +21,7 @@ import { Button } from '@/components/button';
 import { useState } from 'react';
 import { Chart } from '@/components/chart/Chart';
 import { chartData } from '@/pages/dashboard/constants';
+import { useWindowSize } from '@/components/hooks/useWindowSize';
 
 const tabs = [
   { name: 'Flight bookings', value: 10000 },
@@ -73,7 +74,12 @@ function ViewCustomer() {
 
   return (
     <AppLayout logo=''>
-      <div className='app-container py-2 pl-14 pr-10'>
+      <div
+        className={clsx(
+          useWindowSize(1240) ? 'w-full' : 'app-container',
+          'py-2 pl-14 pr-10',
+        )}
+      >
         <Header />
 
         <div className='mt-10 pr-12'>
