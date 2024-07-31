@@ -23,6 +23,7 @@ import { PieChart } from 'react-minimal-pie-chart';
 import { chartData, devices, RecentActivities, stats } from './constants';
 import { Chart } from '@/components/chart/Chart';
 import { HorizontalBarChart } from '@/components/chart/HorizontalBarChart';
+import { useWindowSize } from '@/components/hooks/useWindowSize';
 
 const tabs = [
   { name: 'Ticket sales', value: 2000 },
@@ -37,7 +38,12 @@ function Dashboard() {
 
   return (
     <AppLayout logo=''>
-      <div className='app-container pl-14 pr-10 mb-5'>
+      <div
+        className={clsx(
+          useWindowSize(1240) ? 'w-full' : 'app-container',
+          ' pl-14 pr-10 mb-5',
+        )}
+      >
         <Header />
         <div className='pr-12'>
           <div>
