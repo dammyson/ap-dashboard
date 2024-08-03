@@ -11,6 +11,8 @@ import {
 import clsx from 'clsx';
 import { convertToUrlString } from '../../utils';
 import whiteLogo from '../../assets/logos/white_logo.png';
+import birdLogo from '../../assets/logos/Bird Logo White.png';
+import { useWindowSize } from '../hooks/useWindowSize';
 
 interface NavigationItem {
   icon: ReactNode;
@@ -62,9 +64,15 @@ export const SideNavigationItems = () => {
 
   return (
     <div>
-      <div className='flex justify-center items-center pt-10 pr-[4.6rem] pl-8'>
-        <img src={whiteLogo} alt='' />
-      </div>
+      {useWindowSize(1240) ? (
+        <div className='flex justify-center items-center pt-10 pl-3 pr-3'>
+          <img src={birdLogo} alt='' />
+        </div>
+      ) : (
+        <div className='flex justify-center items-center pt-10 pr-[4.6rem] pl-8'>
+          <img src={whiteLogo} alt='' />
+        </div>
+      )}
       <div className='grid gap-6 pl-6 mt-[85px]'>
         {navigationItems
           ?.slice(0, -2)
@@ -93,7 +101,7 @@ export const SideNavigationItems = () => {
                 >
                   <div className='flex gap-8 items-center'>
                     <span>{icon}</span>
-                    <span>{title}</span>
+                    {useWindowSize(1240) ? <></> : <span>{title}</span>}
                   </div>
                   {countId && (
                     <div className='absolute top-15 right-10 text-xs font-light bg-gray-200 rounded-full px-2 py-1 text-gray-700 shadow-sm'>
@@ -106,7 +114,12 @@ export const SideNavigationItems = () => {
           })}
       </div>
 
-      <div className='fixed bottom-12 grid gap-6 pl-6 py-15 w-[270px]'>
+      <div
+        className={clsx(
+          useWindowSize(1240) ? 'w-24' : 'w-[270px]',
+          'fixed bottom-12 grid gap-6 pl-6 py-15',
+        )}
+      >
         {navigationItems?.slice(-2).map(({ icon, title, countId, id }) => {
           const route = `/${convertToUrlString(id ?? title)}`;
           const isActive = pathname.includes(convertToUrlString(id ?? title))
@@ -126,7 +139,7 @@ export const SideNavigationItems = () => {
               >
                 <div className='flex gap-8 items-center'>
                   <span>{icon}</span>
-                  <span>{title}</span>
+                  {useWindowSize(1240) ? <></> : <span>{title}</span>}
                 </div>
                 {countId && (
                   <div className='absolute top-15 right-10 text-xs font-light bg-gray-200 rounded-full px-2 py-1 text-gray-700  shadow-sm'>
@@ -145,7 +158,12 @@ export const SideNavigationItems = () => {
 export const SideNavigationContent = () => {
   return (
     <div>
-      <div className='h-lvh w-[270px] bg-black fixed top-0 left-0 py-[15px]  '>
+      <div
+        className={clsx(
+          useWindowSize(1240) ? 'w-24' : 'w-[270px]',
+          'h-lvh  bg-black fixed top-0 left-0 py-[15px]',
+        )}
+      >
         <SideNavigationItems />
       </div>
     </div>

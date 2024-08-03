@@ -1,6 +1,7 @@
 import { BorderRadius, Button, ButtonSize } from '@/components/button';
 import { Card } from '@/components/card';
 import { Header } from '@/components/header';
+import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { Input } from '@/components/input';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { PanelNavigationItem } from '@/components/Panel';
@@ -16,6 +17,7 @@ import {
   SmallBin,
 } from '@/components/svg/surveys/Surveys';
 import WelcomeMessage from '@/components/welcomeMessage';
+import clsx from 'clsx';
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router';
 
@@ -57,7 +59,12 @@ function CreateSurvey() {
   };
   return (
     <AppLayout logo=''>
-      <div className='app-container py-2 pl-14 pr-10'>
+      <div
+        className={clsx(
+          useWindowSize(1240) ? 'w-full' : 'app-container',
+          'py-2 pl-14 pr-10 ',
+        )}
+      >
         <Header />
         <div className='pr-12'>
           <div className='flex justify-between items-center'>

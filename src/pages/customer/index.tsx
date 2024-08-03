@@ -12,6 +12,8 @@ import { Cancel } from '@/components/svg/modal/Modal';
 import { BorderRadius, Button, ButtonSize } from '@/components/button';
 import { CustomSelect, SelectType } from '@/components/customSelect';
 import { DropDownArrow } from '@/components/svg/settings/Settings';
+import { useWindowSize } from '@/components/hooks/useWindowSize';
+import clsx from 'clsx';
 
 function Customer() {
   const [awardPoints, setAwardPoints] = useState<boolean>(false);
@@ -31,7 +33,12 @@ function Customer() {
   ];
   return (
     <AppLayout logo=''>
-      <div className='app-container py-2 pl-14 pr-10'>
+      <div
+        className={clsx(
+          useWindowSize(1240) ? 'w-full' : 'app-container',
+          ' pl-14 pr-10',
+        )}
+      >
         <Header />
         <div className='pr-12'>
           <div>
