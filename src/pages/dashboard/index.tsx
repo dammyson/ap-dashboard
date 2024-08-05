@@ -41,11 +41,11 @@ function Dashboard() {
       <div
         className={clsx(
           useWindowSize(1240) ? 'w-full' : 'app-container',
-          ' pl-14 pr-10 mb-5',
+          'p-7 1240:pl-14 1240:pr-10 mb-5',
         )}
       >
         <Header />
-        <div className='pr-12'>
+        <div className='1240:pr-12'>
           <div>
             <WelcomeMessage
               username='Ayo'
@@ -114,8 +114,8 @@ function Dashboard() {
             </div>
           </div>
           {activeStat !== 'active' && (
-            <div className='mt-2 grid grid-cols-12 gap-10 pb-2'>
-              <div className='col-span-8 relative'>
+            <div className='mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>
+              <div className='col-span-12 1240:col-span-8 relative'>
                 <Card
                   hasBadge
                   hasHeader
@@ -149,7 +149,7 @@ function Dashboard() {
                   <Chart chartData={chartData} transactionType='all' />
                 </Card>
               </div>
-              <div className='col-span-4 '>
+              <div className='col-span-12 1240:col-span-4 '>
                 <Card
                   hasHeader
                   trailingIcon1={<Filter />}
@@ -177,6 +177,7 @@ function Dashboard() {
                         fontWeight: 600,
                       }}
                       labelPosition={70}
+                      className='max-h-[300px] 1240:max-h-inherit'
                       totalValue={100}
                       label={({ dataEntry }) => `${dataEntry.value}%`}
                     />
@@ -219,8 +220,8 @@ function Dashboard() {
             <ActiveUsers />
           ) : (
             <>
-              <div className='mt-2 grid grid-cols-12 gap-10 pb-2'>
-                <div className='col-span-8 relative'>
+              <div className='mt-8 1240:mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>
+                <div className='col-span-12 1240:col-span-8 relative'>
                   <Card
                     hasHeader
                     hasBadge
@@ -230,7 +231,7 @@ function Dashboard() {
                     <HorizontalBarChart />
                   </Card>
                 </div>
-                <div className='col-span-4'>
+                <div className='col-span-12 1240:col-span-4'>
                   <Card hasHeader title='Recent activities'>
                     <div className='flex flex-col gap-3 h-[390px] overflow-y-auto no-scrollbar mb-12'>
                       {RecentActivities.map((activity, index) => (

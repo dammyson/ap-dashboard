@@ -5,11 +5,24 @@ interface ProfileDataProps {
   name?: string;
   role?: string;
   onClick?: () => void;
+  className?: string;
 }
 
-export const ProfileData = ({ src, name, role, onClick }: ProfileDataProps) => {
+export const ProfileData = ({
+  src,
+  name,
+  role,
+  className,
+  onClick,
+}: ProfileDataProps) => {
   return (
-    <div className={clsx(name ? 'flex gap-4 items-center' : '', 'w-max')}>
+    <div
+      className={clsx(
+        name ? 'flex gap-4 items-center' : '',
+        'w-max',
+        className,
+      )}
+    >
       <img
         onClick={onClick}
         src={src}
