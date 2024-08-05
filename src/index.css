@@ -259,3 +259,11 @@ button:focus-visible {
 .react-datepicker-wrapper {
   width: 100%;
 }
+/* RECHARTS GRAPH */
+
+@media (max-width: 560px) {
+  .recharts-legend-wrapper {
+    left: 0 !important;
+    width: 100% !important;
+  }
+}

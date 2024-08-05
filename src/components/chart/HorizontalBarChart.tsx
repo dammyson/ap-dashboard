@@ -35,12 +35,15 @@ export const HorizontalBarChart = () => {
   };
   const customLegend = () => {
     return (
-      <div className='w-[450px] grid gap-3 items-start grid-cols-3 mt-5'>
+      <div className='w-full max-w-[395px] 1240:max-w-[450px] grid gap-1.5 1024:gap-3 items-start grid-cols-2 425:grid-cols-3 mt-5'>
         {barChartData.map((entry, index) => (
-          <div key={index} className='flex gap-3 items-center justify-start'>
+          <div
+            key={index}
+            className='w-full 640:min-w-[86px] flex flex-row 425:flex-col 640:flex-row gap-1.5 1240:gap-3 items-start 640:items-center justify-start'
+          >
             <div
               style={{ backgroundColor: entry.colors }}
-              className=' w-[30px] h-[30px]'
+              className='w-[15px] h-[15px] 1240:w-[30px] 1240:h-[30px]'
             ></div>
             <span className='font-medium text-[14px] text-light-grey-600'>
               {entry.resolution}
@@ -64,6 +67,7 @@ export const HorizontalBarChart = () => {
           left: 70,
           bottom: 5,
         }}
+        className='max-h-[430px] max-w-[518px]'
       >
         <CartesianGrid
           horizontal={false}
