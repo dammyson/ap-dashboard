@@ -261,9 +261,13 @@ button:focus-visible {
 }
 /* RECHARTS GRAPH */
 
-@media (max-width: 560px) {
+@media (max-width: 640px) {
   .recharts-legend-wrapper {
     left: 0 !important;
     width: 100% !important;
   }
+}
+
+.graph.recharts-responsive-container {
+  min-width: 260px !important;
 }
