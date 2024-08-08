@@ -54,8 +54,10 @@ function Dashboard() {
           </div>
 
           <div className='flex items-center justify-end gap-1'>
-            <p className='text-gradient text-lg font-medium'>Swipe</p>
-            <ArrowRight className='w-4 h-4' />
+            <p className='text-gradient text-[16px] 560:text-lg font-medium'>
+              Swipe
+            </p>
+            <ArrowRight className='w-3 h-3 560:w-4 560:h-4' />
           </div>
           <div className='hidden-scrollbar overflow-x-auto'>
             <div className='min-w-fit'>
@@ -82,7 +84,7 @@ function Dashboard() {
                       </div>
                       <div className='flex items-center gap-3 justify-between'>
                         <div>
-                          <h3 className='text-primary-black font-bold text-2xl mb-4'>
+                          <h3 className='text-primary-black font-bold text-xl 560:text-2xl mb-4'>
                             {numberShortener(stat.value)}
                           </h3>
                           <div className='flex items-center gap-1'>
@@ -122,8 +124,9 @@ function Dashboard() {
                   trailingIcon1={<Filter />}
                   title='Revenue via app'
                   mainClass='relative grid justify-items-between h-[513px]'
+                  titleClass='text-lg'
                 >
-                  <div className='flex items-center gap-5 mb-12'>
+                  <div className='flex items-center gap-1.5 480:gap-5 mb-6 560:mb-12'>
                     {tabs.map((tab, index) => {
                       return (
                         <div
@@ -136,7 +139,7 @@ function Dashboard() {
                             'p-2 pb-3.5 cursor-pointer',
                           )}
                         >
-                          <h3 className='text-primary-black text-xl font-bold mb-2'>
+                          <h3 className='text-primary-black text-lg 560:text-xl font-bold mb-2'>
                             {numberShortener(tab.value)}
                           </h3>
                           <p className='text-sm font-medium text-light-grey-400'>
@@ -155,7 +158,8 @@ function Dashboard() {
                   trailingIcon1={<Filter />}
                   title='Users by devices'
                   className='!pb-0.5'
-                  mainClass='h-[513px]'
+                  mainClass='h-full max-h-[513px]'
+                  titleClass='text-lg'
                 >
                   <p className='text-light-grey-700 text-sm font-normal'>
                     Last 7 days
@@ -227,12 +231,17 @@ function Dashboard() {
                     hasBadge
                     title='Users by screen resolution'
                     trailingIcon1={<Filter />}
+                    titleClass='text-lg'
                   >
                     <HorizontalBarChart />
                   </Card>
                 </div>
                 <div className='col-span-12 1240:col-span-4'>
-                  <Card hasHeader title='Recent activities'>
+                  <Card
+                    hasHeader
+                    title='Recent activities'
+                    titleClass='text-lg'
+                  >
                     <div className='flex flex-col gap-3 h-[390px] overflow-y-auto no-scrollbar mb-12'>
                       {RecentActivities.map((activity, index) => (
                         <div

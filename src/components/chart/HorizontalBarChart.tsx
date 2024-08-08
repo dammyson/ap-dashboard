@@ -35,14 +35,17 @@ export const HorizontalBarChart = () => {
   };
   const customLegend = () => {
     return (
-      <div className='w-[450px] grid gap-3 items-start grid-cols-3 mt-5'>
+      <div className='w-full max-w-[210px] 480:max-w-[395px] 1240:max-w-[450px] grid gap-1.5 1024:gap-3 items-start grid-cols-2 480:grid-cols-3 mt-5'>
         {barChartData.map((entry, index) => (
-          <div key={index} className='flex gap-3 items-center justify-start'>
+          <div
+            key={index}
+            className='w-full 640:min-w-[107px] flex flex-row gap-1.5 1240:gap-3 items-start 640:items-center justify-start'
+          >
             <div
               style={{ backgroundColor: entry.colors }}
-              className=' w-[30px] h-[30px]'
+              className='w-[15px] h-[15px] 1240:w-[30px] 1240:h-[30px]'
             ></div>
-            <span className='font-medium text-[14px] text-light-grey-600'>
+            <span className='font-medium text-xs 768:text-[14px] text-light-grey-600'>
               {entry.resolution}
             </span>
           </div>
@@ -52,7 +55,7 @@ export const HorizontalBarChart = () => {
   };
 
   return (
-    <ResponsiveContainer width='100%' height={430}>
+    <ResponsiveContainer width='100%' height={430} className='graph'>
       <BarChart
         width={400}
         height={400}
@@ -60,10 +63,11 @@ export const HorizontalBarChart = () => {
         layout='vertical'
         margin={{
           top: 20,
-          right: 80,
-          left: 70,
+          right: 20,
+          left: 25,
           bottom: 5,
         }}
+        className='graph'
       >
         <CartesianGrid
           horizontal={false}
@@ -76,6 +80,7 @@ export const HorizontalBarChart = () => {
           ticks={[0, 20, 40, 60, 80, 100]}
           axisLine={false}
           tickLine={false}
+          width={20}
         />
         <YAxis
           dataKey='resolution'

@@ -259,3 +259,21 @@ button:focus-visible {
 .react-datepicker-wrapper {
   width: 100%;
 }
+/* RECHARTS GRAPH */
+
+@media (max-width: 640px) {
+  .recharts-legend-wrapper {
+    left: 0 !important;
+    width: 100% !important;
+  }
+}
+
+.graph.recharts-responsive-container {
+  min-width: 200px !important;
+}
+
+@media (min-width: 1240px) {
+  .graph > .recharts-surface {
+    padding: 0 25px !important;
+  }
+}
