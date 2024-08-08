@@ -41,7 +41,7 @@ function Dashboard() {
       <div
         className={clsx(
           useWindowSize(1240) ? 'w-full' : 'app-container',
-          'p-7 1240:pl-14 1240:pr-10 mb-5',
+          'py-7 px-5 1240:pl-14 1240:pr-10',
         )}
       >
         <Header />
@@ -53,7 +53,7 @@ function Dashboard() {
             />
           </div>
 
-          <div className='flex items-center justify-end gap-1'>
+          <div className='flex items-center justify-end gap-1 mt-5 480:mt-0'>
             <p className='text-gradient text-[16px] 560:text-lg font-medium'>
               Swipe
             </p>
@@ -139,7 +139,7 @@ function Dashboard() {
                             'p-2 pb-3.5 cursor-pointer',
                           )}
                         >
-                          <h3 className='text-primary-black text-lg 560:text-xl font-bold mb-2'>
+                          <h3 className='text-primary-black text-[16px] 480:text-lg 560:text-xl font-bold mb-2'>
                             {numberShortener(tab.value)}
                           </h3>
                           <p className='text-sm font-medium text-light-grey-400'>
