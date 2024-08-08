@@ -126,7 +126,7 @@ function Dashboard() {
                   mainClass='relative grid justify-items-between h-[513px]'
                   titleClass='text-lg'
                 >
-                  <div className='flex items-center gap-5 mb-12'>
+                  <div className='flex items-center gap-1.5 480:gap-5 mb-6 560:mb-12'>
                     {tabs.map((tab, index) => {
                       return (
                         <div

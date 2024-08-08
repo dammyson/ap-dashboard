@@ -269,12 +269,11 @@ button:focus-visible {
 }
 
 .graph.recharts-responsive-container {
-  min-width: 260px !important;
+  min-width: 200px !important;
 }
 
-@media (max-width: 1240px) {
-  .recharts-surface {
-    position: absolute !important;
-    right: 48px !important;
+@media (min-width: 1240px) {
+  .graph > .recharts-surface {
+    padding: 0 25px !important;
   }
 }

@@ -63,10 +63,11 @@ export const HorizontalBarChart = () => {
         layout='vertical'
         margin={{
           top: 20,
-          right: 80,
-          left: 70,
+          right: 20,
+          left: 25,
           bottom: 5,
         }}
+        className='graph'
       >
         <CartesianGrid
           horizontal={false}
