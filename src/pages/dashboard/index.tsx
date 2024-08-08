@@ -158,7 +158,7 @@ function Dashboard() {
                   trailingIcon1={<Filter />}
                   title='Users by devices'
                   className='!pb-0.5'
-                  mainClass='h-full max-h-[513px]'
+                  mainClass='1240:h-full max-h-[513px]'
                   titleClass='text-lg'
                 >
                   <p className='text-light-grey-700 text-sm font-normal'>
