@@ -196,6 +196,20 @@ button:focus-visible {
 .ant-table-container {
   min-width: 1000px !important;
 }
+/* CUSTOMER PAGE */
+.customer .date,
+.customer .activityType,
+.customer .description {
+  max-width: 392px;
+}
+
+@media (min-width: 1240px) {
+  .customer .date,
+  .customer .activityType,
+  .customer .description {
+    width: 392px;
+  }
+}
 
 /* SURVERY STYLES */
 /* SURVEYS */
