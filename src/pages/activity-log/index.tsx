@@ -73,29 +73,39 @@ function ActivityLog() {
       <div
         className={clsx(
           useWindowSize(1240) ? 'w-full' : 'app-container',
-          'py-2 pl-14 pr-10 ',
+          'py-7 px-5 1240:pl-14 1240:pr-10',
         )}
       >
         <Header />
-        <div>
+        <div className='flex flex-col gap-2  560:block'>
           <WelcomeMessage
             username='Ayo'
             description="Let's review today's insights"
           />
+          <div>
+            <Button
+              buttonText='Export log'
+              radius={BorderRadius.Large}
+              size={ButtonSize.Medium}
+              className='text-light-blue-main !font-semibold w-fit float-right 560:hidden'
+              onClick={() => setExportLog(true)}
+            />
+          </div>
         </div>
-        <div className='mt-10 pr-12'>
+        <div className='1240:pr-12'>
           <Card
             hasHeader
             hasBadge
             title='Activity log'
             trailingIcon1={<Filter />}
             trailingIcon2={<Update />}
+            mainClass='!mt-4 560:!mt-8'
             hasButton={
               <Button
                 buttonText='Export log'
                 radius={BorderRadius.Large}
                 size={ButtonSize.Medium}
-                className='text-light-blue-main !font-semibold'
+                className='text-light-blue-main !font-semibold hidden 560:block'
                 onClick={() => setExportLog(true)}
               />
             }
