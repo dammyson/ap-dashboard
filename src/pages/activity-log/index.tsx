@@ -77,7 +77,7 @@ function ActivityLog() {
         )}
       >
         <Header />
-        <div className='flex flex-col gap-2  560:block'>
+        <div className='flex flex-col gap-2 560:block'>
           <WelcomeMessage
             username='Ayo'
             description="Let's review today's insights"
@@ -87,7 +87,7 @@ function ActivityLog() {
               buttonText='Export log'
               radius={BorderRadius.Large}
               size={ButtonSize.Medium}
-              className='text-light-blue-main !font-semibold w-fit float-right 560:hidden'
+              className='text-light-blue-main !font-semibold !w-fit float-right 560:hidden'
               onClick={() => setExportLog(true)}
             />
           </div>
