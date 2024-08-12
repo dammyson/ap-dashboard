@@ -199,13 +199,20 @@ button:focus-visible {
 
 /* SURVERY STYLES */
 /* SURVEYS */
-.ant-table-cell.title-column,
-.ant-table-cell.dateCreated-column,
-.ant-table-cell.action-column {
-  min-width: 300px !important;
+
+.ant-table-cell.dateCreated-column {
+  min-width: 140px !important;
 }
 
-@media (max-width: 1589px) {
+@media (min-width: 1589px) {
+  .ant-table-cell.title-column,
+  .ant-table-cell.dateCreated-column,
+  .ant-table-cell.action-column {
+    min-width: 300px !important;
+  }
+}
+
+@media (min-width: 1241px) {
   .ant-table-cell.title-column,
   .ant-table-cell.dateCreated-column,
   .ant-table-cell.action-column {

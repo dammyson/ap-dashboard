@@ -62,28 +62,40 @@ function Surveys() {
       <div
         className={clsx(
           useWindowSize(1240) ? 'w-full' : 'app-container',
-          'py-2 pl-14 pr-10 ',
+          'py-7 px-5 1240:pl-14 1240:pr-10',
         )}
       >
         <Header />
-        <div className='pr-12'>
-          <div className='flex justify-between items-center'>
+        <div className='1240:pr-12'>
+          <div className='flex flex-col gap-2 560:block'>
             <WelcomeMessage
               username='Ayo'
               description="Let's review today's insights"
             />
+            <div>
+              <Button
+                buttonText='Create new survey'
+                size={ButtonSize.Small}
+                radius={BorderRadius.Large}
+                className='font-semibold !w-fit float-right 560:hidden'
+                onClick={() => {
+                  navigate(`/surveys-create/create-new-survey`);
+                }}
+              />
+            </div>
           </div>
           <Card
             hasHeader
             hasBadge
             title='Survey'
             trailingIcon1={<Filter />}
+            mainClass='!mt-4 560:!mt-8'
             hasButton={
               <Button
                 buttonText='Create new survey'
                 size={ButtonSize.Small}
                 radius={BorderRadius.Large}
-                className='font-semibold'
+                className='font-semibold hidden 560:block'
                 onClick={() => {
                   navigate(`/surveys-create/create-new-survey`);
                 }}
