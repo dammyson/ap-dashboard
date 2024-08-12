@@ -36,11 +36,11 @@ function Customer() {
       <div
         className={clsx(
           useWindowSize(1240) ? 'w-full' : 'app-container',
-          ' pl-14 pr-10',
+          'py-7 px-5 1240:pl-14 1240:pr-10',
         )}
       >
         <Header />
-        <div className='pr-12'>
+        <div className='1240:pr-12'>
           <div>
             <WelcomeMessage
               username='Ayo'
