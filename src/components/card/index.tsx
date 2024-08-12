@@ -51,7 +51,7 @@ export const Card = ({
           >
             <div className='flex items-center'>
               {hasBadge && (
-                <span className='w-3 h-3 rounded-full bg-light-blue-main mr-4'></span>
+                <span className='min-w-[10px] min-h-[10px] 560:w-3 560:h-3  rounded-full bg-light-blue-main mr-4'></span>
               )}
               {title && (
                 <span

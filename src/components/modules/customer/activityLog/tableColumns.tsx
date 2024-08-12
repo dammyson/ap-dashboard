@@ -9,7 +9,7 @@ export const useCustomerActivityLog = () => {
         title: 'DATE',
         dataIndex: 'date',
         key: 'date',
-        width: 392,
+        className: 'date',
         render: (_, { date }) => {
           return (
             <div className='font-semibold text-light-primary-deep_black'>
@@ -22,7 +22,7 @@ export const useCustomerActivityLog = () => {
         title: 'ACTIVITY TYPE',
         dataIndex: 'activityType',
         key: 'activityType',
-        width: 392,
+        className: 'activityType',
         render: (_, { activityType }) => {
           return (
             <div className='font-semibold text-light-primary-deep_black'>
@@ -35,7 +35,7 @@ export const useCustomerActivityLog = () => {
         title: 'DESCRIPTION',
         dataIndex: 'description',
         key: 'description',
-        width: 392,
+        className: 'description',
         render: (_, { description }) => {
           return (
             <div className='font-semibold text-light-primary-deep_black'>

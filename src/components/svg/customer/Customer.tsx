@@ -199,14 +199,13 @@ export const Miles = () => {
   );
 };
 
-export const UsageTime = () => {
+export const UsageTime = ({ className }: { className?: string }) => {
   return (
     <svg
-      width='230'
-      height='230'
       viewBox='0 0 230 230'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
+      className={className}
     >
       <g filter='url(#filter0_bd_3168_17998)'>
         <ellipse
@@ -317,14 +316,19 @@ export const UsageTime = () => {
   );
 };
 
-export const Flight = ({ color }: { color?: string }) => {
+export const Flight = ({
+  color,
+  className,
+}: {
+  color?: string;
+  className?: string;
+}) => {
   return (
     <svg
-      width='130'
-      height='34'
       viewBox='0 0 130 34'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
+      className={className}
     >
       <path
         d='M77.7414 17.3029C77.7414 18.1373 77.0696 18.809 76.2423 18.8019L70.741 18.8019L65.7418 26.7993L63.7407 26.8064L66.2509 18.809L60.7355 18.809L59.2435 20.8101L57.7373 20.803L58.7414 17.3099L57.7373 13.8027L59.2506 13.7885L60.7567 15.8179L66.2297 15.8179L63.7407 7.79936L65.7418 7.80643L70.741 15.8038L76.2423 15.8038C77.0484 15.7897 77.7555 16.4968 77.7414 17.3029Z'
