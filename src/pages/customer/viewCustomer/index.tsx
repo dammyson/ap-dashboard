@@ -230,14 +230,14 @@ function ViewCustomer() {
             </div>
           </div>
           <Card>
-            <div className=' grid grid-cols-1 768:grid-cols-2 1024:flex 1024:items-start justify-items-center 1024:justify-between gap-3'>
+            <div className='grid grid-cols-1 768:grid-cols-2 1024:flex 1024:items-start justify-items-center 1024:justify-between gap-3'>
               {UserFlightDetails.map((user, index) => (
                 <div key={index}>
                   <div className='text-center 1024:text-start'>
-                    <p className='text-light-grey-700 text-[16px] 480:text-xl 1240:text-lg 1400:text-x 1024:h-[56px] font-medium'>
+                    <p className='text-light-grey-700 text-[16px] 768:text-xl 1240:text-lg 1400:text-x 1024:h-[56px] font-medium'>
                       {user.title}
                     </p>
-                    <p className='text-light-primary-black font-bold text-xl 360:text-2xl 480:text-[26px] 1240:text-[28px] 1400:text-[30px]'>
+                    <p className='text-light-primary-black font-bold text-xl 768:text-2xl 880:text-[26px] 1240:text-[28px] 1400:text-[30px]'>
                       {user.detail}
                     </p>
                   </div>
@@ -291,7 +291,7 @@ function ViewCustomer() {
             hasHeader
             hasBorder
             title='Activity log'
-            titleClass='!text-light-blue-main !text-lg 480:!text-2xl 560:!text-[32px]'
+            titleClass='!text-light-blue-main 1300:!text-[32px]'
             className=' pb-5 mb-5'
             hasButton={
               <Button
