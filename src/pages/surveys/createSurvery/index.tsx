@@ -62,11 +62,11 @@ function CreateSurvey() {
       <div
         className={clsx(
           useWindowSize(1240) ? 'w-full' : 'app-container',
-          'py-2 pl-14 pr-10 ',
+          'py-7 px-5 1240:pl-14 1240:pr-10',
         )}
       >
         <Header />
-        <div className='pr-12'>
+        <div className='1240:pr-12'>
           <div className='flex justify-between items-center'>
             <WelcomeMessage
               username='Ayo'
@@ -90,14 +90,14 @@ function CreateSurvey() {
             >
               <>
                 <div className='max-w-[620px] mt-10 mb-2'>
-                  <p className='font-medium text-3xl text-light-grey-200 pb-2'>
+                  <p className='font-medium text-2xl 960:text-3xl text-light-grey-200 pb-2'>
                     Title of the survey
                   </p>
                   <Input
                     placeHolder='Enter title of the survey'
                     isCurved
                     hasBorder
-                    className='!border-light-blue-50 !drop-shadow-none placeholder:text-light-primary-deep_black'
+                    className='!border-light-blue-50 !drop-shadow-none placeholder:text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'
                   />
                 </div>
               </>
@@ -114,21 +114,21 @@ function CreateSurvey() {
                 {SurveyQuestions.map((item) => (
                   <>
                     <div className='max-w-[620px] mt-10 mb-2'>
-                      <p className='font-medium text-3xl text-light-grey-200 pb-2'>
+                      <p className='font-medium text-2xl 960:text-3xl text-light-grey-200 pb-2'>
                         {item.title}
                       </p>
                       {item.id === 'option format' ? (
                         <ReactCustomSelect
                           options={formats}
                           isSearchable={false}
-                          className=' placeholder:text-light-primary-deep_black placeholder:text-xl font-medium text-light-primary-deep_black'
+                          className=' placeholder:text-light-primary-deep_black placeholder:text-xl font-medium text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'
                         />
                       ) : (
                         <Input
                           placeHolder='Enter title of the survey'
                           isCurved
                           hasBorder
-                          className='!border-light-blue-50 !drop-shadow-none placeholder:text-light-primary-deep_black'
+                          className='!border-light-blue-50 !drop-shadow-none placeholder:text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'
                         />
                       )}
                     </div>
@@ -178,20 +178,24 @@ function CreateSurvey() {
                     <Button
                       mode='text'
                       size={ButtonSize.Small}
-                      leadingIcon={<CircledPlus />}
+                      leadingIcon={
+                        <CircledPlus className='min-w-6 min-h-6 max-w-8 max-h-8' />
+                      }
                       buttonText='Add option'
                       onClick={() => {}}
-                      className='!font-semibold !text-light-blue-main !text-[18px]'
+                      className='!font-semibold !text-light-blue-main !text-[17px] 1300:!text-[18px]'
                     />
                   </div>
                   <div className='flex items-center justify-start'>
                     <Button
                       mode='text'
                       size={ButtonSize.Small}
-                      leadingIcon={<SmallBin />}
+                      leadingIcon={
+                        <SmallBin className='min-w-6 min-h-6 max-w-8 max-h-8' />
+                      }
                       buttonText='Remove option'
                       onClick={() => {}}
-                      className='!font-semibold !text-light-blue-main !text-[18px]'
+                      className='!font-semibold !text-light-blue-main !h-12 !text-[17px] 1300:!text-[18px]'
                     />
                   </div>
                 </div>
@@ -203,10 +207,12 @@ function CreateSurvey() {
                 <Button
                   mode='text'
                   size={ButtonSize.Small}
-                  leadingIcon={<CircledPlus />}
+                  leadingIcon={
+                    <CircledPlus className='min-w-6 min-h-6 max-w-8 max-h-8' />
+                  }
                   buttonText='Add option'
                   onClick={() => {}}
-                  className='!font-semibold !text-light-blue-main !text-[18px]'
+                  className='!font-semibold !text-light-blue-main !text-[17px] 1300:!text-[18px]'
                 />
               </div>
             </Card>
@@ -223,7 +229,7 @@ function CreateSurvey() {
                   {OtherList.map((item) => (
                     <>
                       <div className='max-w-[620px] mt-10 mb-2'>
-                        <p className='font-medium text-3xl text-light-grey-200 pb-2'>
+                        <p className='font-medium text-2xl 960:text-3xl text-light-grey-200 pb-2'>
                           {item.title}
                         </p>
                         {item.id === 'points awarded (optional)' ? (
@@ -232,7 +238,7 @@ function CreateSurvey() {
                             isClearable
                             isSearchable
                             placeholder='Enter or select'
-                            className='!placeholder:text-light-primary-deep_black text-light-primary-deep_black placeholder:text-xl font-medium'
+                            className='!placeholder:text-light-primary-deep_black text-light-primary-deep_black placeholder:text-xl font-medium !h-[55px] 960:!min-h-[70px]'
                           />
                         ) : (
                           <ReactCustomSelect
@@ -240,7 +246,7 @@ function CreateSurvey() {
                             isClearable
                             isSearchable
                             placeholder='Enter or select'
-                            className='!placeholder:text-light-primary-deep_black placeholder:text-xl font-medium text-light-primary-deep_black'
+                            className='!placeholder:text-light-primary-deep_black placeholder:text-xl font-medium text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'
                           />
                         )}
                       </div>
@@ -249,7 +255,7 @@ function CreateSurvey() {
                 </div>
                 <div className='w-full'>
                   <div className='max-w-[620px] mt-10 mb-2'>
-                    <p className='font-medium text-3xl text-light-grey-200 pb-2'>
+                    <p className='font-medium text-2xl 960:text-3xl text-light-grey-200 pb-2'>
                       Add image/banner
                     </p>
                   </div>
@@ -279,6 +285,7 @@ function CreateSurvey() {
                       radius={BorderRadius.Large}
                       buttonText='Schedule for later'
                       onClick={() => {}}
+                      className='!min-h-[55px] 960:!min-h-[66px]'
                     />
                     <Button
                       size={ButtonSize.Large}
@@ -286,6 +293,7 @@ function CreateSurvey() {
                       mode='outlined'
                       buttonText='Save and publish'
                       onClick={() => {}}
+                      className='!min-h-[55px] 960:!min-h-[66px]'
                     />
                   </div>
                 </div>
