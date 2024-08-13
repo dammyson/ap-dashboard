@@ -198,11 +198,10 @@ export const CheckBoxSelect = () => {
   );
 };
 
-export const XSCheckMark = () => {
+export const XSCheckMark = ({ className }: { className?: string }) => {
   return (
     <svg
-      width='13'
-      height='10'
+      className={className}
       viewBox='0 0 13 10'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'

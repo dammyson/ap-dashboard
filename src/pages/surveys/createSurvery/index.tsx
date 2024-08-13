@@ -100,7 +100,7 @@ function CreateSurvey() {
                     placeHolder='Enter title of the survey'
                     isCurved
                     hasBorder
-                    className='!border-light-blue-50 !drop-shadow-none placeholder:text-light-primary-deep_black placeholder:text-sm 560:placeholder:text-base  !h-[55px] 960:!min-h-[70px]'
+                    className='!border-light-blue-50 !drop-shadow-none placeholder:text-light-primary-deep_black placeholder:text-sm 560:placeholder:text-base !h-[55px] 960:!min-h-[70px]'
                   />
                 </div>
               </>
@@ -190,7 +190,7 @@ function CreateSurvey() {
                       }
                       buttonText='Add option'
                       onClick={() => {}}
-                      className='!font-semibold !text-light-blue-main text-base 480:!text-[17px] 1300:!text-[18px] !px-2 768:!px-0 880:!px-4 text-nowrap !gap-1 880:!gap-2'
+                      className='!font-semibold !text-light-blue-main text-base 480:!text-[17px] 1300:!text-[18px] pl-0 pr-2 768:!px-0 880:!px-4 text-nowrap !gap-1 880:!gap-2'
                     />
                   </div>
                   <div className='flex items-center justify-start'>
