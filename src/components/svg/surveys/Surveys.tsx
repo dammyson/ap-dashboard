@@ -50,11 +50,10 @@ export const Filter = () => {
   );
 };
 
-export const Photo = () => {
+export const Photo = ({ className }: { className?: string }) => {
   return (
     <svg
-      width='80'
-      height='80'
+      className={className}
       viewBox='0 0 80 80'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
@@ -156,20 +155,17 @@ export const RadioSelect = () => {
 
 export const RadioFilled = ({
   color = '#D9D9D9',
-  width = '20',
-  height = '20',
+  className,
 }: {
   color?: string;
-  height?: string;
-  width?: string;
+  className?: string;
 }) => {
   return (
     <svg
-      width={width}
-      height={height}
       viewBox='0 0 20 20'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
+      className={className}
     >
       <circle cx='10' cy='10' r='10' fill={color} />
     </svg>

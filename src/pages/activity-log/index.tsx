@@ -164,11 +164,7 @@ function ActivityLog() {
                         />
                         <div className='flex items-center justify-center w-7 h-7 border-light-blue-50 border-2 rounded-full'>
                           {selectedOption === format.key && (
-                            <RadioFilled
-                              color='#23539F'
-                              width='16'
-                              height='16'
-                            />
+                            <RadioFilled color='#23539F' className='w-4 h-4' />
                           )}
                         </div>
                       </div>
