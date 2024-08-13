@@ -227,6 +227,13 @@ button:focus-visible {
   }
 }
 
+/* SURVEY PARTICIPANTS */
+@media (max-width: 1180px) {
+  .survey-participants .table-name-column {
+    max-width: 150px !important;
+  }
+}
+
 /* CUSTOMER-FEEDBCK */
 
 .ant-table-cell.name-column {
