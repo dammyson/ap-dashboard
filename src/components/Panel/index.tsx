@@ -23,7 +23,7 @@ export const Panel = ({
   return (
     <div className={clsx('pb-20', className)}>
       <div>
-        <div className='flex p-[10px] 768:gap-6'>
+        <div className='flex 560:p-[10px] 768:gap-6'>
           {navigationItems.map((item) => {
             return (
               <div key={item.id}>
@@ -35,7 +35,7 @@ export const Panel = ({
                     currentTab.id === item.id
                       ? 'text-light-blue-main hover:text-light-blue-main'
                       : 'hover:text-[rgb(151,150,150)]',
-                    'cursor-pointer font-medium text-[#C7C7CC] p-[10px] text-center w-max text-base 560:text-lg 880:text-xl 960:text-2xl 1300:text-[28px]',
+                    'cursor-pointer font-medium text-[#C7C7CC] p-[10px] text-center w-max text-base 560:text-[19px] 880:text-xl 960:text-2xl 1300:text-[28px]',
                   )}
                 >
                   <span>{item.title}</span>
