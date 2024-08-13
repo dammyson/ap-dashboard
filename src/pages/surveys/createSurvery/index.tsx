@@ -93,7 +93,7 @@ function CreateSurvey() {
             >
               <>
                 <div className='max-w-[620px] mt-10 mb-2'>
-                  <p className='font-medium text-xl 960:text-[26px] 1024:text-3xl text-light-grey-200 pb-2'>
+                  <p className='font-medium text-lg 768:text-xl 880:text-2xl 1024:text-3xl text-light-grey-200 pb-2'>
                     Title of the survey
                   </p>
                   <Input
@@ -117,7 +117,7 @@ function CreateSurvey() {
                 {SurveyQuestions.map((item) => (
                   <>
                     <div className='max-w-[620px] 768:mt-10 mb-2'>
-                      <p className='font-medium text-xl 960:text-[26px] 1024:text-3xl text-light-grey-200 pb-2'>
+                      <p className='font-medium text-lg 768:text-xl 880:text-2xl 1024:text-3xl text-light-grey-200 pb-2'>
                         {item.title}
                       </p>
                       {item.id === 'option format' ? (
@@ -236,7 +236,7 @@ function CreateSurvey() {
                   {OtherList.map((item) => (
                     <>
                       <div className='max-w-[620px] 768:mt-10 mb-2'>
-                        <p className='font-medium text-xl 960:text-[26px] 1024:text-3xl text-light-grey-200 pb-2'>
+                        <p className='font-medium text-lg 768:text-xl 880:text-2xl 1024:text-3xl text-light-grey-200 pb-2'>
                           {item.title}
                         </p>
                         {item.id === 'points awarded (optional)' ? (
