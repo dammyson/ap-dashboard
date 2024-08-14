@@ -98,7 +98,8 @@ button:focus-visible {
   border: 1px solid #bbcae1 !important;
   border-radius: 50px !important;
   background-color: #fff;
-  height: 70px;
+  height: inherit;
+  min-height: inherit !important;
   padding: 4px;
   cursor: pointer;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -213,13 +214,20 @@ button:focus-visible {
 
 /* SURVERY STYLES */
 /* SURVEYS */
-.ant-table-cell.title-column,
-.ant-table-cell.dateCreated-column,
-.ant-table-cell.action-column {
-  min-width: 300px !important;
+
+.ant-table-cell.dateCreated-column {
+  min-width: 140px !important;
 }
 
-@media (max-width: 1589px) {
+@media (min-width: 1589px) {
+  .ant-table-cell.title-column,
+  .ant-table-cell.dateCreated-column,
+  .ant-table-cell.action-column {
+    min-width: 300px !important;
+  }
+}
+
+@media (min-width: 1241px) {
   .ant-table-cell.title-column,
   .ant-table-cell.dateCreated-column,
   .ant-table-cell.action-column {

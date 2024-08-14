@@ -50,11 +50,10 @@ export const Filter = () => {
   );
 };
 
-export const Photo = () => {
+export const Photo = ({ className }: { className?: string }) => {
   return (
     <svg
-      width='80'
-      height='80'
+      className={className}
       viewBox='0 0 80 80'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
@@ -84,18 +83,19 @@ export const Photo = () => {
   );
 };
 
-interface CircledPlusProps {
+export const CircledPlus = ({
+  color = '#23539F',
+  className,
+}: {
   color?: string;
-}
-
-export const CircledPlus = ({ color = '#23539F' }: CircledPlusProps) => {
+  className?: string;
+}) => {
   return (
     <svg
-      width='32'
-      height='32'
       viewBox='0 0 32 32'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
+      className={className}
     >
       <path
         d='M16 30C23.732 30 30 23.732 30 16C30 8.26801 23.732 2 16 2C8.26801 2 2 8.26801 2 16C2 23.732 8.26801 30 16 30Z'
@@ -122,14 +122,13 @@ export const CircledPlus = ({ color = '#23539F' }: CircledPlusProps) => {
   );
 };
 
-export const SmallBin = () => {
+export const SmallBin = ({ className }: { className?: string }) => {
   return (
     <svg
-      width='32'
-      height='32'
       viewBox='0 0 32 32'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
+      className={className}
     >
       <path
         d='M9.33398 28C8.60065 28 7.9731 27.7391 7.45132 27.2173C6.92954 26.6956 6.66821 26.0676 6.66732 25.3333V8H5.33398V5.33333H12.0007V4H20.0007V5.33333H26.6673V8H25.334V25.3333C25.334 26.0667 25.0731 26.6947 24.5513 27.2173C24.0295 27.74 23.4015 28.0009 22.6673 28H9.33398ZM22.6673 8H9.33398V25.3333H22.6673V8ZM12.0007 22.6667H14.6673V10.6667H12.0007V22.6667ZM17.334 22.6667H20.0007V10.6667H17.334V22.6667Z'
@@ -156,20 +155,17 @@ export const RadioSelect = () => {
 
 export const RadioFilled = ({
   color = '#D9D9D9',
-  width = '20',
-  height = '20',
+  className,
 }: {
   color?: string;
-  height?: string;
-  width?: string;
+  className?: string;
 }) => {
   return (
     <svg
-      width={width}
-      height={height}
       viewBox='0 0 20 20'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
+      className={className}
     >
       <circle cx='10' cy='10' r='10' fill={color} />
     </svg>
@@ -202,11 +198,10 @@ export const CheckBoxSelect = () => {
   );
 };
 
-export const XSCheckMark = () => {
+export const XSCheckMark = ({ className }: { className?: string }) => {
   return (
     <svg
-      width='13'
-      height='10'
+      className={className}
       viewBox='0 0 13 10'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
