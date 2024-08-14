@@ -73,7 +73,7 @@ export const SideNavigationItems = () => {
           <img src={whiteLogo} alt='airpeace logo' />
         </div>
       )}
-      <div className='grid gap-6 pl-6 mt-[60px] 1240:mt-[85px]'>
+      <div className='grid gap-6 pl-[14px] 560:pl-6 mt-[60px] 1240:mt-[85px]'>
         {navigationItems
           ?.slice(0, -2)
           .map(({ icon, title, countId, id }, index) => {
@@ -94,9 +94,9 @@ export const SideNavigationItems = () => {
                   to={route}
                   className={clsx(
                     isActive
-                      ? 'bg-light-blue-main border-r-[7px] border-r-light-blue-100 rounded-tl-md rounded-bl-md'
+                      ? 'bg-light-blue-main border-r-[5px] 560:border-r-[7px] border-r-light-blue-100 rounded-tl-md rounded-bl-md'
                       : '',
-                    'hover:text-light-grey-300 cursor-pointer text-white no-underline relative flex text-sm font-normal transition-colors duration-200 px-4 py-3  mb-1 ',
+                    'hover:text-light-grey-300 cursor-pointer text-white no-underline relative flex text-sm font-normal transition-colors duration-200 px-[12px] 560:px-4 py-3 mb-1',
                   )}
                 >
                   <div className='flex gap-8 items-center'>
@@ -116,8 +116,7 @@ export const SideNavigationItems = () => {
 
       <div
         className={clsx(
-          useWindowSize(1240) ? 'w-24' : 'w-[270px]',
-          'fixed bottom-12 grid gap-6 pl-6 py-15',
+          'w-[70px] 560:w-24 1240:w-[270px] fixed bottom-12 grid gap-6 pl-[12px] 560:pl-6 py-15',
         )}
       >
         {navigationItems?.slice(-2).map(({ icon, title, countId, id }) => {
@@ -132,9 +131,9 @@ export const SideNavigationItems = () => {
                 href={title === 'Settings' ? route : '/'}
                 className={clsx(
                   isActive
-                    ? 'bg-light-blue-main border-r-[7px] border-r-light-blue-100 rounded-tl-md rounded-bl-md'
+                    ? 'bg-light-blue-main border-r-[5px] 560:border-r-[7px] border-r-light-blue-100 rounded-tl-md rounded-bl-md'
                     : '',
-                  'hover:text-light-grey-300 cursor-pointer text-white no-underline relative flex text-sm font-normal transition-colors duration-200  mb-1 px-4 py-3',
+                  'hover:text-light-grey-300 cursor-pointer text-white no-underline relative flex text-sm font-normal transition-colors duration-200  mb-1 px-[14px] 560:px-4 py-3',
                 )}
               >
                 <div className='flex gap-8 items-center'>
@@ -160,8 +159,7 @@ export const SideNavigationContent = () => {
     <div>
       <div
         className={clsx(
-          useWindowSize(1240) ? 'w-24' : 'w-[270px]',
-          'h-lvh bg-black fixed top-0 left-0 py-[15px]',
+          'w-[70px] 560:w-24 1240:w-[270px] h-lvh bg-black fixed top-0 left-0 py-[15px]',
         )}
       >
         <SideNavigationItems />
