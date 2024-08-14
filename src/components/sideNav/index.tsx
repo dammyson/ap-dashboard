@@ -65,15 +65,15 @@ export const SideNavigationItems = () => {
   return (
     <div>
       {useWindowSize(1240) ? (
-        <div className='flex justify-center items-center pt-10 pl-3 pr-3'>
-          <img src={birdLogo} alt='' />
+        <div className='flex justify-center items-center pt-6 1240:pt-10 pl-3 pr-3'>
+          <img src={birdLogo} alt='airpeace-bird logo' />
         </div>
       ) : (
         <div className='flex justify-center items-center pt-10 pr-[4.6rem] pl-8'>
-          <img src={whiteLogo} alt='' />
+          <img src={whiteLogo} alt='airpeace logo' />
         </div>
       )}
-      <div className='grid gap-6 pl-6 mt-[85px]'>
+      <div className='grid gap-6 pl-6 mt-[60px] 1240:mt-[85px]'>
         {navigationItems
           ?.slice(0, -2)
           .map(({ icon, title, countId, id }, index) => {
@@ -161,7 +161,7 @@ export const SideNavigationContent = () => {
       <div
         className={clsx(
           useWindowSize(1240) ? 'w-24' : 'w-[270px]',
-          'h-lvh  bg-black fixed top-0 left-0 py-[15px]',
+          'h-lvh bg-black fixed top-0 left-0 py-[15px]',
         )}
       >
         <SideNavigationItems />
