@@ -64,7 +64,7 @@ export const HorizontalBarChart = () => {
         margin={{
           top: 20,
           right: 20,
-          left: 25,
+          left: 30,
           bottom: 5,
         }}
         className='graph'
