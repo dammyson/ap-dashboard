@@ -21,7 +21,7 @@ export const Panel = ({
   children,
 }: PropsWithChildren<PanelProps>) => {
   return (
-    <div className={clsx('pb-20', className)}>
+    <div className={clsx('pb-10', className)}>
       <div>
         <div className='flex 560:p-[10px] 768:gap-6'>
           {navigationItems.map((item) => {
