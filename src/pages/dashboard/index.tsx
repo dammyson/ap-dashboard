@@ -186,7 +186,7 @@ function Dashboard() {
                       label={({ dataEntry }) => `${dataEntry.value}%`}
                     />
                   </div>
-                  <div className='grid gap-2'>
+                  <div className='grid gap-2 pb-2 560:pb-0'>
                     {devices.map((device, index) => {
                       return (
                         <div key={index} className='flex items-center gap-2'>
@@ -224,7 +224,7 @@ function Dashboard() {
             <ActiveUsers />
           ) : (
             <>
-              <div className='mt-8 1240:mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>
+              <div className='mt-2 560:mt-8 1240:mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>
                 <div className='col-span-12 1240:col-span-8 relative'>
                   <Card
                     hasHeader
@@ -242,7 +242,7 @@ function Dashboard() {
                     title='Recent activities'
                     titleClass='text-lg'
                   >
-                    <div className='flex flex-col gap-3 h-[390px] overflow-y-auto no-scrollbar mb-12'>
+                    <div className='flex flex-col gap-3 h-[390px] overflow-y-auto no-scrollbar mb-4 560:mb-12'>
                       {RecentActivities.map((activity, index) => (
                         <div
                           key={index}

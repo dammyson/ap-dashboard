@@ -113,7 +113,7 @@ function CreateSurvey() {
               className='!border-b-light-secondary-light_blue'
               title='Add survey question'
             >
-              <div className='relative grid grid-cols-[minmax(250px,480px)] 768:grid-cols-[minmax(250px,480px)_minmax(250px,480px)] justify-between gap-5 pb-10 mt-3 768:mt-0'>
+              <div className='relative grid grid-cols-[minmax(200px,480px)] 768:grid-cols-[minmax(250px,480px)_minmax(250px,480px)] justify-between gap-5 pb-10 mt-3 768:mt-0'>
                 {SurveyQuestions.map((item) => (
                   <>
                     <div className='max-w-[620px] 768:mt-10 mb-2'>
@@ -232,7 +232,7 @@ function CreateSurvey() {
               title='Others'
             >
               <>
-                <div className='grid grid-cols-[minmax(250px,480px)] 768:grid-cols-[minmax(250px,480px)_minmax(250px,480px)] justify-between gap-5 mt-3 768:mt-0'>
+                <div className='grid grid-cols-[minmax(200px,480px)] 768:grid-cols-[minmax(250px,480px)_minmax(250px,480px)] justify-between gap-5 mt-3 768:mt-0'>
                   {OtherList.map((item) => (
                     <>
                       <div className='max-w-[620px] 768:mt-10 mb-2'>
