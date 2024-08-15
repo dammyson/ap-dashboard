@@ -260,6 +260,17 @@ button:focus-visible {
   min-width: 250px !important;
 }
 
+/* SETTINGS */
+@media (max-width: 960px) {
+  .team-members .remove-member,
+  .team-members .update-member {
+    width: 100px !important;
+  }
+  .team-members .role {
+    width: 100px;
+  }
+}
+
 /*HIDDEN SCROLLBAR */
 .hidden-scrollbar::-webkit-scrollbar {
   display: none !important;

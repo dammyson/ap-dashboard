@@ -31,14 +31,16 @@ export const useTeamMembersColumn = (
       {
         dataIndex: 'role',
         key: 'role',
+        className: 'role',
       },
       {
         dataIndex: 'email',
         key: 'email',
       },
       {
-        dataIndex: '',
-        key: '',
+        dataIndex: 'remove',
+        key: 'remove',
+        className: 'remove-member',
         render: (_, record) => (
           <Button
             buttonText='Remove'
@@ -52,8 +54,9 @@ export const useTeamMembersColumn = (
         ),
       },
       {
-        dataIndex: '',
-        key: '',
+        dataIndex: 'update',
+        key: 'update',
+        className: 'update-member',
         render: (_, record) => (
           <Button
             buttonText='Update'

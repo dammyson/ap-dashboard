@@ -22,6 +22,7 @@ interface ButtonProps {
   buttonText: string;
   size?: ButtonSize;
   className?: string;
+  buttonClass?: string;
   onClick: () => void;
 }
 
@@ -32,6 +33,7 @@ export function Button({
   radius,
   className,
   buttonText,
+  buttonClass,
   size,
   onClick,
 }: ButtonProps) {
@@ -60,7 +62,7 @@ export function Button({
         )}
       >
         {leadingIcon}
-        <p>{buttonText}</p>
+        <p className={buttonClass}>{buttonText}</p>
         {trailingIcon}
       </HeadlessButton>
     </div>

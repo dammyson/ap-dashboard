@@ -16,7 +16,7 @@ function Profile() {
             buttonText='Upload Photo'
             leadingIcon={<Upload />}
             mode='text'
-            className='bg-transparent text-primary-white hover:text-[#393939] text-nowrap flex 560:hidden'
+            className='bg-transparent text-primary-white text-nowrap flex 560:hidden'
           />
         }
       />

@@ -23,7 +23,7 @@ export const ProfileData = ({
         className,
       )}
     >
-      <div className='max-w-[80px] 560:max-w-[100px]'>
+      <div className='min-w-[60px] max-w-[80px] 560:max-w-[100px]'>
         <img
           onClick={onClick}
           src={src}
