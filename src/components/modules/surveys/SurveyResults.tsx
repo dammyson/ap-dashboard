@@ -9,7 +9,7 @@ export const SurveyResults = () => {
           Question 1 - How would you rate your experience?
         </h3>
         <div className='flex flex-col 640:flex-row 768:items-center justify-between gap-4 pb-10 640:pb-24 border-b border-b-light-secondary-light_blue '>
-          <div className='768:w-1/2 pl-6'>
+          <div className='768:w-1/2 560:pl-6'>
             {firstOptions.map((option, index) => {
               return (
                 <div className='flex text-primary-black items-center justify-between my-5 pb-2.5 border-b border-b-light-secondary-light_blue min-w-[200px] '>
@@ -43,7 +43,7 @@ export const SurveyResults = () => {
           Question 2 - Would you recommend us?
         </h3>
         <div className='flex flex-col 640:flex-row 640:items-center justify-between gap-4 pb-10 640:pb-24 border-b border-b-light-secondary-light_blue'>
-          <div className='768:w-1/2 pl-6'>
+          <div className='768:w-1/2 560:pl-6'>
             {secondOptions.map((option, index) => {
               return (
                 <div className='flex text-primary-black items-center justify-between my-5 pb-2.5 border-b border-b-light-secondary-light_blue min-w-[200px]'>
@@ -81,10 +81,10 @@ export const SurveyResults = () => {
           User by gender
         </h3>
         <div className='flex flex-col 640:flex-row 640:items-center justify-between gap-4 640:pb-10 '>
-          <div className='768:w-1/2 pl-6'>
+          <div className='768:w-1/2 560:pl-6'>
             {thirdOptions.map((option) => {
               return (
-                <div className='min-w-[200px] '>
+                <div className='min-w-[200px]'>
                   <div className='flex text-primary-black items-center justify-between my-5 pb-2.5 border-b border-b-light-secondary-light_blue'>
                     <p className='font-semibold'>{option.label}</p>
                     <p className='font-semibold'>{option.value}%</p>

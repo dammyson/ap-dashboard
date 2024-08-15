@@ -36,7 +36,7 @@ export const Card = ({
   return (
     <div
       className={clsx(
-        'mt-8 bg-primary-white shadow-default rounded-[20px] p-9',
+        'mt-8 bg-primary-white shadow-default rounded-[20px] p-5 560:p-7 1240:p-9',
         mainClass,
       )}
     >
