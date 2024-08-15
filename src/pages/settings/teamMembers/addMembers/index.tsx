@@ -29,7 +29,7 @@ function AddMembers() {
         }
       />
       <AddMembersInputForm />
-      <div className='w-full max-w-[447px] grid items-center gap-9 mt-10 960:mt-28 mb-10 960:mb-[80px]'>
+      <div className='w-full max-w-[447px] grid items-center gap-6 960:gap-9 mt-8 960:mt-28 mb-10 960:mb-[80px]'>
         <Button
           onClick={() => {}}
           buttonText='Generate OTP'
