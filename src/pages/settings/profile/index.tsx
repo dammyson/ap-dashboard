@@ -31,19 +31,18 @@ function Profile() {
         />
       </div>
       <div className='bg-[#00000003] w-full border-[1px] border-light-blue-50 rounded-[20px] py-6 px-8'>
-        <div className='flex flex-col 560:flex-row 560:items-center justify-between w-full'>
+        <div className='flex items-center justify-between w-full'>
           <p className='text-lg 560:text-xl 960:text-2xl font-medium text-primary-black'>
             Personal Information
           </p>
-          <div className='w-full 560:w-fit '>
-            <Button
-              onClick={() => {}}
-              buttonText='Edit'
-              trailingIcon={<Edit className='w-4 560:w-5 ' />}
-              mode='outlined'
-              className='!w-fit float-right !bg-[#E9EEF5] text-light-primary-black border-[1px] rounded-[20px] border-light-blue-50 hover:border-[#9daabe] py-[7px] 560:py-[11px] px-[12px]'
-            />
-          </div>
+          <Button
+            onClick={() => {}}
+            buttonText='Edit'
+            buttonClass='hidden 560:block'
+            trailingIcon={<Edit />}
+            mode='outlined'
+            className='!w-14 560:!w-fit float-right !bg-[#E9EEF5] text-light-primary-black border-[1px] rounded-[20px] border-light-blue-50 hover:border-[#9daabe] py-[7px] 560:py-[11px] px-[12px]'
+          />
         </div>
         <ProfileForm />
       </div>
