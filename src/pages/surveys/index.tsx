@@ -95,7 +95,7 @@ function Surveys() {
                 buttonText='Create new survey'
                 size={ButtonSize.Small}
                 radius={BorderRadius.Large}
-                className='font-semibold hidden 560:block'
+                className='font-semibold hidden 560:flex'
                 onClick={() => {
                   navigate(`/surveys-create/create-new-survey`);
                 }}

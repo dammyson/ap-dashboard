@@ -37,7 +37,7 @@ export const ProfileForm = () => {
         return label.label === 'Role' ? (
           <div
             key={label.id}
-            className='text-light-grey-200 font-medium text-xl max-w-[569px]'
+            className='text-light-grey-200 font-medium text-[17px] 760:text-xl max-w-[569px]'
           >
             <CustomSelect
               label='Role'
@@ -54,13 +54,13 @@ export const ProfileForm = () => {
         ) : (
           <div
             key={label.id}
-            className='text-light-grey-200 font-medium text-lg 768:text-xl 960:text-xl max-w-[569px]'
+            className='text-light-grey-200 font-medium text-[17px] 768:text-xl max-w-[569px]'
           >
             <Input
               label={label.label}
               isCurved
               hasBorder
-              className='drop-shadow-none text-base 768:text-xl 960:text-xl !border-light-blue-50 hover:!border-[#acbbd0] !h-[50px] 960:!min-h-[65px]'
+              className='drop-shadow-none text-base 768:text-xl !border-light-blue-50 hover:!border-[#acbbd0] !h-[50px] 960:!min-h-[65px]'
             />
           </div>
         );

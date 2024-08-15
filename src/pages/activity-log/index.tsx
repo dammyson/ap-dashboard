@@ -87,7 +87,7 @@ function ActivityLog() {
               buttonText='Export log'
               radius={BorderRadius.Large}
               size={ButtonSize.Medium}
-              className='text-light-blue-main !font-semibold !w-fit float-right 560:hidden'
+              className='text-light-blue-main !font-semibold !w-fit float-right 560:hidden text-sm'
               onClick={() => setExportLog(true)}
             />
           </div>
@@ -105,7 +105,7 @@ function ActivityLog() {
                 buttonText='Export log'
                 radius={BorderRadius.Large}
                 size={ButtonSize.Medium}
-                className='text-light-blue-main !font-semibold hidden 560:block'
+                className='text-light-blue-main !font-semibold hidden 560:flex'
                 onClick={() => setExportLog(true)}
               />
             }
