@@ -19,27 +19,31 @@ export const ProfileData = ({
     <div
       className={clsx(
         name ? 'flex gap-4 items-center' : '',
-        'w-max',
+        'w-full max-w-[300px]',
         className,
       )}
     >
-      <img
-        onClick={onClick}
-        src={src}
-        alt='profile image'
-        className={clsx(
-          name ? 'w-[120px] h-[120px]' : 'w-12 h-12',
-          'rounded-full cursor-pointer',
-        )}
-      />
-      <div className='grid gap-3'>
+      <div className='min-w-[60px] max-w-[80px] 560:max-w-[100px]'>
+        <img
+          onClick={onClick}
+          src={src}
+          alt='profile image'
+          className={clsx(
+            name ? 'w-full ' : 'w-12 h-12',
+            'rounded-full cursor-pointer',
+          )}
+        />
+      </div>
+      <div className='grid gap-1.5 960:gap-3'>
         {name && (
-          <div className='font-semibold text-2xl text-light-primary-black '>
+          <div className='font-semibold text-lg 768:text-xl 960:text-2xl text-light-primary-black text-nowrap '>
             {name}
           </div>
         )}
         {role && (
-          <span className='font-normal text-primary-black text-xl'>{role}</span>
+          <span className='font-normal text-primary-black text-base 768:text-lg 960:text-xl'>
+            {role}
+          </span>
         )}
       </div>
     </div>

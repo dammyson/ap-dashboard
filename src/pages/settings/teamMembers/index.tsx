@@ -8,6 +8,7 @@ import profileImage from '../../../assets/profileImage/profile-img.png';
 import CategoryHeader from '@/components/categoryHeader';
 import { Modal, SizeType } from '@/components/modal';
 import { Bin, Cancel } from '@/components/svg/modal/Modal';
+import { Card } from '@/components/card';
 
 function TeamMembers() {
   const [addMembers, setAddMembers] = useState<boolean>(false);
@@ -46,13 +47,14 @@ function TeamMembers() {
   ];
 
   return (
-    <div className='mt-8 bg-primary-white shadow-default rounded-[20px] p-10'>
+    <Card>
       {addMembers ? (
         <AddMembers />
       ) : (
         <div>
           <CategoryHeader
             title='Team Members'
+            className='!text-base 560:!text-[18px]'
             button={
               <Button
                 onClick={() => setAddMembers(true)}
@@ -60,6 +62,7 @@ function TeamMembers() {
                 mode='outlined'
                 trailingIcon={<Add />}
                 size={ButtonSize.Small}
+                buttonClass='hidden 560:block'
                 className='bg-transparent text-primary-white hover:text-light-grey-100 hover:border-inherit h-9'
               />
             }
@@ -67,7 +70,7 @@ function TeamMembers() {
           <Table
             pagination={false}
             columns={tableColumns}
-            // className='table'
+            className='team-members'
             dataSource={list}
             scroll={{
               y: 506,
@@ -124,7 +127,7 @@ function TeamMembers() {
       ) : (
         <></>
       )}
-    </div>
+    </Card>
   );
 }
 

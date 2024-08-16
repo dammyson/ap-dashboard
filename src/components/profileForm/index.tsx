@@ -32,12 +32,12 @@ export const ProfileForm = () => {
   const [selectedRole, setSelectedRole] = useState<string>('');
 
   return (
-    <div className='grid grid-cols-[minmax(250px,569px)_minmax(250px,569px)] gap-y-10 gap-32 justify-between py-6'>
+    <div className='grid grid-cols-[minmax(200px,480px)] 768:grid-cols-[minmax(250px,569px)_minmax(250px,569px)] gap-y-4 768:gap-y-10 gap-x-6 768:gap-x-12 960:gap-x-24 1300:gap-x-32 justify-between pt-3 pb-6 560:py-6'>
       {profileLabels.map((label) => {
         return label.label === 'Role' ? (
           <div
             key={label.id}
-            className='text-light-grey-200 font-medium text-xl max-w-[569px]'
+            className='text-light-grey-200 font-medium text-[17px] 760:text-xl max-w-[569px]'
           >
             <CustomSelect
               label='Role'
@@ -48,18 +48,19 @@ export const ProfileForm = () => {
               selectedRole={selectedRole}
               options={roleOptions}
               onSelect={(info) => setSelectedRole(info)}
+              className='!h-[50px] 960:!min-h-[65px]'
             />
           </div>
         ) : (
           <div
             key={label.id}
-            className='text-light-grey-200 font-medium text-xl max-w-[569px]'
+            className='text-light-grey-200 font-medium text-[17px] 768:text-xl max-w-[569px]'
           >
             <Input
               label={label.label}
               isCurved
               hasBorder
-              className='drop-shadow-none text-xl !border-light-blue-50 hover:!border-[#acbbd0] h-[65px]'
+              className='drop-shadow-none text-base 768:text-xl !border-light-blue-50 hover:!border-[#acbbd0] !h-[50px] 960:!min-h-[65px]'
             />
           </div>
         );

@@ -127,8 +127,8 @@ export const SideNavigationItems = () => {
 
           return (
             <div key={title}>
-              <a
-                href={title === 'Settings' ? route : '/'}
+              <NavLink
+                to={title === 'Settings' ? route : '/'}
                 className={clsx(
                   isActive
                     ? 'bg-light-blue-main border-r-[5px] 560:border-r-[7px] border-r-light-blue-100 rounded-tl-md rounded-bl-md'
@@ -145,7 +145,7 @@ export const SideNavigationItems = () => {
                     {countId}
                   </div>
                 )}
-              </a>
+              </NavLink>
             </div>
           );
         })}

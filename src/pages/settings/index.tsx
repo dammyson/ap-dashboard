@@ -30,17 +30,18 @@ function Settings() {
       <div
         className={clsx(
           useWindowSize(1240) ? 'w-full' : 'app-container',
-          'py-2 pl-14 pr-10 ',
+          'py-7 px-5 1240:pl-14 1240:pr-10',
         )}
       >
         <Header />
-        <div className='pr-12'>
+        <div className='1240:pr-12'>
           <Panel
             navigationItems={navigationItems}
             currentTab={currentTab}
             setCurrentTab={setCurrentTab}
+            className='!pb-0 1240:!pb-10'
           >
-            <div className='mt-10'>
+            <div className='mt-6 640:mt-10'>
               {currentTab.id === 'profile' ? (
                 <Profile />
               ) : currentTab.id === 'team members' ? (
