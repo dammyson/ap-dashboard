@@ -23,7 +23,7 @@ export const Panel = ({
   return (
     <div className={clsx('pb-10', className)}>
       <div>
-        <div className='flex 560:p-[10px] 768:gap-6 overflow-x-auto'>
+        <div className='flex 560:p-[10px] 768:gap-6 overflow-x-auto hidden-scrollbar'>
           {navigationItems.map((item) => {
             return (
               <div key={item.id}>

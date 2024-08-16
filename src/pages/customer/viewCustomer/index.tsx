@@ -158,7 +158,7 @@ function ViewCustomer() {
                 trailingIcon1={<Filter />}
                 mainClass='h-full max-h-[513px]'
               >
-                <div className='flex items-center gap-1 640:gap-2 mb-12 overflow-x-auto'>
+                <div className='flex items-center gap-1 640:gap-2 mb-12 overflow-x-auto hidden-scrollbar'>
                   {tabs.map((tab, index) => (
                     <div
                       onClick={() => setActiveTab(tab)}
