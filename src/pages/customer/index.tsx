@@ -71,11 +71,11 @@ function Customer() {
               onClick={() => setAwardPoints(false)}
               className=''
             >
-              <div className='flex flex-col items-center justify-center w-full 768:w-4/5 960:w-[70%] 1240:py-5'>
+              <div className='flex flex-col items-center justify-center w-full 768:w-4/5 960:w-[68%] 1240:py-5'>
                 <h3 className='text-light-primary-deep_black text-lg 560:text-xl 768:text-2xl 960:text-[28px] 1240:text-[32px] font-medium mb-4 768:mb-6 1400:mb-10 pt-5 960:pt-0'>
                   Manually award points to user
                 </h3>
-                <div className='w-11/12'>
+                <div className='w-full'>
                   <div className='mb-3 768:mb-5 1400:mb-10 text-light-grey-600'>
                     <p className='text-left text-base 768:text-lg 960:text-xl font-medium 960:pb-2 1400:pb-4'>
                       Points to award
@@ -110,7 +110,7 @@ function Customer() {
                   </div>
                 </div>
 
-                <ul className='w-full list-disc list-inside text-left pt-2 pb-8 1240:pb-10 1400:pb-20'>
+                <ul className='w-[96%] list-disc list-outside text-left pt-2 pb-8 1240:pb-10 1400:pb-20 '>
                   <li className='text-xs 1024:text-base text-light-grey-600'>
                     <span className='font-medium'>Note:</span> Manually awarded
                     points will be reflected in the user's account immediately.

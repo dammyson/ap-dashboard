@@ -58,7 +58,7 @@ export const Modal = ({
               : size === SizeType.SMALL
                 ? 'max-w-[512px]'
                 : '',
-          'relative rounded-[20px] bg-primary-white p-6 960:p-10 text-center drop-shadow-2xl',
+          'relative rounded-[20px] bg-primary-white p-7 960:p-10 text-center drop-shadow-2xl',
           isCentered ? 'grid items-center justify-items-center' : '',
           className,
         )}
