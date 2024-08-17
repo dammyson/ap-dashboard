@@ -196,28 +196,29 @@ function ActivityLog() {
             cancelIcon={<Cancel />}
             onClick={() => closeModal()}
           >
-            <div className='border-b border-light-blue-50 pb-8'>
-              <p className='text-light-primary-black text-2xl font-medium text-start'>
+            <div className='border-b border-light-blue-50 pb-4 880:pb-8'>
+              <p className='text-light-primary-black text-xl 960:text-2xl font-medium text-start'>
                 Activity details
               </p>
             </div>
             <div>
               <div className='flex flex-col items-center'>
                 <div className='text-start w-full'>
-                  {activities.map((activity) => (
+                  {activities.map((activity, index) => (
                     <div
+                      key={index}
                       className={clsx(
                         activity.key === 'description' ||
                           activity.key === 'activites'
                           ? ''
                           : 'flex items-center ',
-                        'pt-4',
+                        'pt-2 880:pt-4',
                       )}
                     >
-                      <span className='text-light-primary-black font-medium text-2xl pr-6 w-full max-w-[340px]'>
+                      <span className='text-light-primary-black font-medium text-base 560:text-lg 768:text-xl 960:text-2xl 768:pr-6 w-full max-w-[110px] 560:max-w-[160px] 768:max-w-[240px] 880:max-w-[340px]'>
                         {`${activity.title}:`}
                       </span>
-                      <span className='text-light-grey-600 text-2xl text-start'>
+                      <span className='text-light-grey-600 text-base 560:text-lg 768:text-xl 960:text-2xl text-start'>
                         {activity.key === 'timeStamp' ? (
                           selectedRecord.timeStamp
                         ) : activity.key === 'user' ? (
@@ -227,12 +228,12 @@ function ActivityLog() {
                         ) : activity.key === 'activityType' ? (
                           selectedRecord.activityType
                         ) : activity.key === 'description' ? (
-                          <ul className='text-light-grey-600 text-[18px] list-disc list-inside ml-3 leading-tight'>
+                          <ul className='text-light-grey-600 text-sm 768:text-base 960:text-lg list-disc list-outside 560:list-inside ml-3 leading-tight'>
                             <li>Action - logged in</li>
                             <li>IP address - {selectedRecord.ipaddress}</li>
                           </ul>
                         ) : activity.key === 'activites' ? (
-                          <ul className='text-light-grey-600 text-[18px] list-disc list-inside ml-3 leading-tight'>
+                          <ul className='text-light-grey-600 text-sm  768:text-base 960:text-lg list-disc list-outside 560:list-inside ml-3 leading-tight'>
                             <li>
                               Created new user account for user John Kevin with
                               ID: 1234
@@ -251,12 +252,12 @@ function ActivityLog() {
                     </div>
                   ))}
                 </div>
-                <div className='w-full max-w-[447px] mt-20 mb-12'>
+                <div className='w-full max-w-[360px] 768:max-w-[447px] mt-8 768:mt-12 960:mt-20 mb-4 768:mb-6 960:mb-12'>
                   <Button
                     buttonText='Export log'
                     radius={BorderRadius.Large}
                     size={ButtonSize.Large}
-                    className='text-light-blue-main !font-semibold !text-2xl'
+                    className='text-light-blue-main !font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[65px]'
                     onClick={() => {}}
                   />
                 </div>
