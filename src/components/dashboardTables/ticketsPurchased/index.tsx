@@ -17,7 +17,7 @@ export const TicketsPurchased = () => {
         pagination={false}
         columns={tableColumns}
         dataSource={TicketsPurchasedData}
-        rootClassName='w-full overflow-x-scroll'
+        rootClassName='w-full overflow-x-scroll hidden-scrollbar'
       />
     </Card>
   );

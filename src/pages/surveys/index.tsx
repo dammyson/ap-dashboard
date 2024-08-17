@@ -107,7 +107,7 @@ function Surveys() {
               columns={tableColumns}
               dataSource={list}
               className='custom-survey-table'
-              rootClassName='overflow-x-scroll'
+              rootClassName='overflow-x-scroll hidden-scrollbar'
             />
           </Card>
         </div>

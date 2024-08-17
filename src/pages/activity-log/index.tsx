@@ -114,7 +114,7 @@ function ActivityLog() {
               pagination={false}
               dataSource={activityData}
               columns={tableColumns}
-              rootClassName='overflow-x-scroll'
+              rootClassName='overflow-x-scroll hidden-scrollbar'
             />
           </Card>
         </div>

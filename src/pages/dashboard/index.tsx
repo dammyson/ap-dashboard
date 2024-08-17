@@ -242,7 +242,7 @@ function Dashboard() {
                     title='Recent activities'
                     titleClass='text-lg'
                   >
-                    <div className='flex flex-col gap-3 h-[390px] overflow-y-auto no-scrollbar mb-4 560:mb-12'>
+                    <div className='flex flex-col gap-3 h-[390px] overflow-y-auto hidden-scrollbar mb-4 560:mb-12'>
                       {RecentActivities.map((activity, index) => (
                         <div
                           key={index}

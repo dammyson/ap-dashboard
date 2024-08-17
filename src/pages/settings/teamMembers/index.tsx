@@ -75,7 +75,7 @@ function TeamMembers() {
             scroll={{
               y: 506,
             }}
-            rootClassName='w-full overflow-x-scroll'
+            rootClassName='w-full overflow-x-scroll hidden-scrollbar'
             showHeader={false}
           />
         </div>

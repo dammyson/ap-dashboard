@@ -152,7 +152,7 @@ function CustomerFeedback() {
                     columns={tableColumns}
                     dataSource={list}
                     className='survey-participants'
-                    rootClassName='overflow-x-scroll'
+                    rootClassName='overflow-x-scroll hidden-scrollbar'
                   />
                 ) : (
                   <SurveyResults />

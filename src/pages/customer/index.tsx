@@ -59,7 +59,7 @@ function Customer() {
               pagination={false}
               columns={tableColumns}
               dataSource={Customerslist}
-              rootClassName='w-full overflow-x-scroll'
+              rootClassName='w-full overflow-x-scroll hidden-scrollbar'
             />
           </Card>
           {awardPoints && (
