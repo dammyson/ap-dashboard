@@ -69,7 +69,6 @@ function Customer() {
               size={SizeType.LARGE}
               cancelIcon={<Cancel />}
               onClick={() => setAwardPoints(false)}
-              className=''
             >
               <div className='flex flex-col items-center justify-center w-full 768:w-4/5 960:w-[68%] 1240:py-5'>
                 <h3 className='text-light-primary-deep_black text-lg 560:text-xl 768:text-2xl 960:text-[28px] 1240:text-[32px] font-medium mb-4 768:mb-6 1400:mb-10 pt-5 960:pt-0'>

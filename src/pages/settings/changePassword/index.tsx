@@ -36,7 +36,7 @@ function ChangePassword() {
             mode='outlined'
             size={ButtonSize.Large}
             radius={BorderRadius.Large}
-            className=' hover:border-light-blue-100 768:!text-xl 1240:!text-2xl !min-h-[55px]  960:!min-h-[65px]font-semibold'
+            className=' hover:border-light-blue-100 768:!text-xl 1240:!text-2xl !min-h-[55px] 960:!min-h-[65px] font-semibold'
           />
         </div>
         {updatePassword && (
