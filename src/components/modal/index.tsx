@@ -54,7 +54,7 @@ export const Modal = ({
           size === SizeType.LARGE
             ? 'w-5/6 640:w-[68.5%] 1400:w-full max-w-[980px]'
             : size === SizeType.MEDIUM
-              ? 'max-w-[717px]'
+              ? ' w-5/6 640:w-[75%] 1240:w-full max-w-[717px]'
               : size === SizeType.SMALL
                 ? 'max-w-[512px]'
                 : '',

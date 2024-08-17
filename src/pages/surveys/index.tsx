@@ -119,13 +119,13 @@ function Surveys() {
           size={SizeType.MEDIUM}
           onClick={() => setPublishSurvey(false)}
         >
-          <p className='font-semibold text-[22px] mb-4 mt-8 text-light-primary-deep_black'>
+          <p className='font-semibold text-lg 880:text-[22px] mb-2 560:mb-4 mt-2 560:mt-4 880:mt-8 text-light-primary-deep_black'>
             Are you sure you want to publish this survey?
           </p>
-          <p className='pb-11 text-[17px] text-light-primary-deep_black'>
+          <p className=' pb-7 880:pb-11 text-[15px] 880:text-[17px] text-light-primary-deep_black'>
             This will make the survey available for participants
           </p>
-          <div className='w-full max-w-[380px]'>
+          <div className='w-full max-w-[300px] 880:max-w-[380px]'>
             <Button
               size={ButtonSize.Medium}
               radius={BorderRadius.Large}
@@ -150,13 +150,13 @@ function Surveys() {
           size={SizeType.MEDIUM}
           onClick={() => setUnpublishSurvey(false)}
         >
-          <p className='font-semibold text-[22px] mb-4 mt-8 text-light-primary-deep_black'>
+          <p className='font-semibold text-lg 880:text-[22px] mb-2 560:mb-4 mt-2 560:mt-4 880:mt-8 text-light-primary-deep_black'>
             Are you sure you want to unpublish this survey?
           </p>
-          <p className='pb-11 text-[17px] text-light-primary-deep_black'>
+          <p className='pb-7 880:pb-11 text-[15px] 880:text-[17px] text-light-primary-deep_black'>
             This will make the survey unavailable for participants
           </p>
-          <div className='w-full max-w-[380px]'>
+          <div className='w-full max-w-[300px] 880:max-w-[380px]'>
             <Button
               size={ButtonSize.Medium}
               radius={BorderRadius.Large}
@@ -181,13 +181,13 @@ function Surveys() {
           size={SizeType.MEDIUM}
           onClick={() => setDeleteSurvey(false)}
         >
-          <p className='font-semibold text-[22px] mb-4 mt-8 text-light-primary-deep_black'>
+          <p className='font-semibold text-lg 880:text-[22px] mb-2 560:mb-4 mt-2 560:mt-4 880:mt-8 text-light-primary-deep_black'>
             Are you sure you want to delete this survey?
           </p>
-          <p className='pb-11 text-[17px] text-light-primary-deep_black'>
+          <p className='pb-7 880:pb-11 text-[15px] 880:text-[17px] text-light-primary-deep_black'>
             This action cannot be undone
           </p>
-          <div className='w-full max-w-[380px]'>
+          <div className='w-full max-w-[300px] 880:max-w-[380px]'>
             <Button
               size={ButtonSize.Medium}
               radius={BorderRadius.Large}
