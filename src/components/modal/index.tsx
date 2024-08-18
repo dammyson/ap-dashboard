@@ -56,7 +56,7 @@ export const Modal = ({
             : size === SizeType.MEDIUM
               ? ' w-5/6 640:w-[75%] 1240:w-full max-w-[717px]'
               : size === SizeType.SMALL
-                ? 'max-w-[512px]'
+                ? 'w-[75%] 1240:w-full  max-w-[512px]'
                 : '',
           'relative rounded-[20px] bg-primary-white p-7 960:p-10 text-center drop-shadow-2xl',
           isCentered ? 'grid items-center justify-items-center' : '',
@@ -74,7 +74,7 @@ export const Modal = ({
                     ? 'right-3 top-3'
                     : ''
                 : cancelType === 'filled'
-                  ? 'right-[-20px] top-[-20px]'
+                  ? 'right-[-14px] top-[-14px] 960:right-[-20px] 960:top-[-20px]'
                   : '',
               'absolute cursor-pointer',
             )}

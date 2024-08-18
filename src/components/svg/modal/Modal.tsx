@@ -17,11 +17,14 @@ export const AccessLock = () => {
   );
 };
 
-export const Cancel = () => {
+export const Cancel = ({
+  className = 'w-7 h-7 960:w-[32px] 960:h-[32px]',
+}: {
+  className?: string;
+}) => {
   return (
     <svg
-      width='32'
-      height='32'
+      className={className}
       viewBox='0 0 32 32'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'

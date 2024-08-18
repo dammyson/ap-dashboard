@@ -47,11 +47,12 @@ function ChangePassword() {
             cancelIcon={<CircleCancel />}
             cancelType='filled'
             onClick={() => setUPdatePassowrd(false)}
+            className='  640:!max-w-[610px] 1240:!max-w-[717px]'
           >
-            <div className='mb-8 mt-9'>
-              <LargeCheckmark />
+            <div className='mb-4 768:mb-8 mt-4 1024:mt-9'>
+              <LargeCheckmark className='w-12 h-12 768:w-16 768:h-16 1300:w-[101px] 1300:h-[100px]' />
             </div>
-            <p className='font-medium text-[26px] text-[#010101] pb-8'>
+            <p className='font-medium text-xl 1240:text-[26px] text-[#010101] pb-8'>
               Your password has been updated. Remember to use the new password
               on your next log in.
             </p>

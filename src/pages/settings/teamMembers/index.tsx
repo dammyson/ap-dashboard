@@ -89,7 +89,7 @@ function TeamMembers() {
           onClick={() => setRemoveTeamMember(false)}
         >
           <Bin />
-          <div className='font-normal text-[22px]  mt-4 mb-9 text-light-primary-deep_black'>
+          <div className='font-normal text-lg 768:text-[22px] mt-2 768::mt-4 mb-5 768:mb-9 text-light-primary-deep_black'>
             This team member will no longer have access to the portal.
           </div>
           <div className='w-full max-w-[340px]'>
@@ -98,7 +98,7 @@ function TeamMembers() {
               radius={BorderRadius.Large}
               buttonText='Delete'
               onClick={() => {}}
-              className='!font-semibold !text-xl'
+              className='!font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[65px]'
             />
           </div>
         </Modal>
@@ -111,7 +111,7 @@ function TeamMembers() {
           onClick={() => setUpdateTeamMember(false)}
         >
           <SmallCheckmark />
-          <div className='font-normal text-[22px] mt-4 mb-9 text-light-primary-deep_black'>
+          <div className='font-normal text-lg 768:text-[22px] mt-2 768:mt-4 mb-5 768:mb-9 text-light-primary-deep_black'>
             This team member’s role will be updated to admin.
           </div>
           <div className='w-full max-w-[340px]'>
@@ -120,7 +120,7 @@ function TeamMembers() {
               radius={BorderRadius.Large}
               buttonText='Update'
               onClick={() => {}}
-              className='!font-semibold !text-xl '
+              className='!font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[65px] '
             />
           </div>
         </Modal>

@@ -143,11 +143,14 @@ export const Copy = () => {
   );
 };
 
-export const CircleCancel = () => {
+export const CircleCancel = ({
+  className = 'w-8 h-8 960:w-[42px] 960:h-[42px]',
+}: {
+  className?: string;
+}) => {
   return (
     <svg
-      width='42'
-      height='42'
+      className={className}
       viewBox='0 0 42 42'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
@@ -190,11 +193,10 @@ export const SmallCheckmark = () => {
   );
 };
 
-export const LargeCheckmark = () => {
+export const LargeCheckmark = ({ className }: { className?: string }) => {
   return (
     <svg
-      width='101'
-      height='100'
+      className={className}
       viewBox='0 0 101 100'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
