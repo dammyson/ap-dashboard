@@ -52,9 +52,9 @@ export const Modal = ({
       <div
         className={clsx(
           size === SizeType.LARGE
-            ? 'w-5/6 640:w-[68.5%] 1400:w-full max-w-[980px]'
+            ? 'w-5/6 480:w-[68.5%] 1400:w-full max-w-[980px]'
             : size === SizeType.MEDIUM
-              ? ' w-5/6 640:w-[75%] 1240:w-full max-w-[717px]'
+              ? ' w-5/6 480:w-[75%] 1240:w-full max-w-[717px]'
               : size === SizeType.SMALL
                 ? 'w-[75%] 1240:w-full  max-w-[512px]'
                 : '',
