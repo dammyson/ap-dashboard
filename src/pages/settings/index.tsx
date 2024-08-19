@@ -7,6 +7,8 @@ import TeamMembers from './teamMembers';
 import ChangePassword from './changePassword';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import clsx from 'clsx';
+import { Modal, SizeType } from '@/components/modal';
+import { AccessLock, Cancel } from '@/components/svg/modal/Modal';
 
 function Settings() {
   const navigationItems: PanelNavigationItem[] = [
@@ -25,6 +27,7 @@ function Settings() {
   ];
 
   const [currentTab, setCurrentTab] = useState(navigationItems[0]);
+  const [adminRole, setAdminRole] = useState(false);
   return (
     <AppLayout logo=''>
       <div
@@ -53,6 +56,27 @@ function Settings() {
           </Panel>
         </div>
       </div>
+      {adminRole && (
+        <Modal
+          isBackground
+          isCentered
+          size={SizeType.MEDIUM}
+          cancelIcon={<Cancel />}
+          onClick={() => setAdminRole(false)}
+          className='640:!max-w-[610px] 1240:!max-w-[717px]'
+        >
+          <div className='mb-4 mt-3'>
+            <AccessLock />
+          </div>
+          <h3 className='font-medium text-[22px] 768:text-2xl 1240:text-[30px] text-light-primary-deep_black pb-4'>
+            Access Denied
+          </h3>
+          <p className='text-lg 880:text-xl text-light-primary-deep_black font-medium'>
+            You do not have permission to view team members. Please contact your
+            system administrator if you believe this is an error.
+          </p>
+        </Modal>
+      )}
     </AppLayout>
   );
 }

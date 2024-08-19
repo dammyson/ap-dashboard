@@ -110,7 +110,7 @@ function ViewCustomer() {
               </p>
             </div>
           </div>
-          <div className='no-scrollbar overflow-x-auto pb-4 pl-4'>
+          <div className='hidden-scrollbar overflow-x-auto pb-4 pl-4'>
             <div className='flex items-center gap-4 w-fit'>
               {userStats.map((stats, index) => {
                 const lastCard = index === userStats.length - 1;
@@ -308,7 +308,7 @@ function ViewCustomer() {
               dataSource={ActivityList}
               columns={tableColumns}
               className='customer'
-              rootClassName='w-full overflow-x-scroll'
+              rootClassName='w-full overflow-x-scroll hidden-scrollbar'
             />
           </Card>
         </div>

@@ -82,17 +82,6 @@ button:focus-visible {
   }
 }
 
-@layer utilities {
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-}
-
 /* REACT SELECT STYLES */
 .react-select__control {
   border: 1px solid #bbcae1 !important;
