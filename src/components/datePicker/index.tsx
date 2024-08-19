@@ -18,7 +18,7 @@ const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
         value={value}
         onChange={onChange}
         onClick={onClick}
-        className='!rounded-full w-full !h-11 pr-14 border !border-light-grey-800 hover:!border-light-blue-50 focus:!border-light-blue-50 focus:ring-0 focus:outline-none text-light-grey-500 text-[14px]'
+        className='!rounded-full w-full !h-11 pr-14 border !border-light-grey-800 hover:!border-light-blue-50 focus:!border-light-blue-50 focus:ring-0 focus:outline-none text-light-grey-500 text-[16px]'
       />
       <span
         className='absolute right-6 cursor-pointer top-1/2 -translate-y-1/2 custom-icon-class'
