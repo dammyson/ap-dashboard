@@ -41,12 +41,11 @@ export const useTeamMembersColumn = (
         dataIndex: 'remove',
         key: 'remove',
         className: 'remove-member',
-        render: (_, record) => (
+        render: (_) => (
           <Button
             buttonText='Remove'
             onClick={() => {
               setRemoveTeamMember(true);
-              console.warn('removed', record);
             }}
             mode='text'
             trailingIcon={<Remove />}
@@ -57,12 +56,11 @@ export const useTeamMembersColumn = (
         dataIndex: 'update',
         key: 'update',
         className: 'update-member',
-        render: (_, record) => (
+        render: (_) => (
           <Button
             buttonText='Update'
             onClick={() => {
               setUpdateTeamMember(true);
-              console.warn('Update', record);
             }}
             mode='text'
             trailingIcon={<CircularArrow />}

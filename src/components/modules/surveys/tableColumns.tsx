@@ -96,10 +96,8 @@ export const useSurveyColumn = (
                     record.status.includes('Completed')
                   ) {
                     setUnpublishSurvey(true);
-                    console.warn(record, 'about to be unpublished');
                   } else {
                     setPublishSurvey(true);
-                    console.warn(record, 'about to be published');
                   }
                 }}
                 className='!bg-[#C7C7CC] min-w-[105px] !px-0 hover:!bg-[#bababe]'
@@ -108,7 +106,6 @@ export const useSurveyColumn = (
                 buttonText='Delete'
                 onClick={() => {
                   setDeleteSurvey(true);
-                  console.warn(record, 'about to be deleted');
                 }}
                 className='!bg-[#C7C7CC] min-w-[105px] !px-0 hover:!bg-[#bababe]'
               />

@@ -53,7 +53,6 @@ export function CustomSelect({
     setIsActive(!isActive);
   };
 
-  console.log(options);
   return (
     <Field className='relative'>
       {label && <Label className={'mb-1 inline-block'}>{label}</Label>}

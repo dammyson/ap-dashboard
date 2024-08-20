@@ -38,13 +38,8 @@ export const useCustomerFeedbackColumn = (setAwardPoints: ModalStateSetter) => {
         title: 'ACTIONS',
         dataIndex: '',
         key: '',
-        render: (_, record) => (
-          <span
-            className='cursor-pointer'
-            onClick={() => (
-              setAwardPoints(true), console.warn(record, 'awarded')
-            )}
-          >
+        render: (_) => (
+          <span className='cursor-pointer' onClick={() => setAwardPoints(true)}>
             {<Trophy />}
           </span>
         ),
