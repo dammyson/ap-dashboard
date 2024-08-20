@@ -12,7 +12,7 @@ import { ChangeEvent, useState } from 'react';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import clsx from 'clsx';
-import { CustomDatePicker, PickerType } from '@/components/datePicker';
+import { CustomDatePicker } from '@/components/datePicker';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 
 type ActivityRecord = {
@@ -27,7 +27,7 @@ type ActivityRecord = {
 export type OpenActivity = (record: ActivityRecord) => void;
 
 function ActivityLog() {
-  const [exportLog, setExportLog] = useState<boolean>();
+  const [exportLog, setExportLog] = useState<boolean>(true);
   const [viewActivity, setViewActivity] = useState<boolean>(false);
   const [selectedRecord, setSelectedRecord] = useState<ActivityRecord | null>(
     null,
@@ -136,13 +136,8 @@ function ActivityLog() {
                 <p className='font-medium text-light-grey-600 text-base 560:text-lg 960:text-xl text-start'>
                   Time period
                 </p>
-                <div className='flex flex-col 768:flex-row 768:items-center 768:justify-between gap-3 768:gap-8 mt-2.5 '>
-                  <div className='max-w-[350px] 768:max-w-[420px] w-full'>
-                    <CustomDatePicker type={PickerType.START} />
-                  </div>
-                  <div className='max-w-[350px] 768:max-w-[420px]  w-full'>
-                    <CustomDatePicker type={PickerType.END} />
-                  </div>
+                <div>
+                  <CustomDatePicker />
                 </div>
               </div>
 

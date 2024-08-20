@@ -47,7 +47,7 @@ export const UseActivivtyLog = (openModal: OpenActivity) => {
             <span
               className='cursor-pointer'
               onClick={() => {
-                openModal(record), console.warn('view', record);
+                openModal(record);
               }}
             >
               <Eye />
