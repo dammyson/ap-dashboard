@@ -58,7 +58,6 @@ export const CustomDatePicker = () => {
           startDate={startDate}
           endDate={endDate}
           maxDate={new Date()}
-          minDate={startDate}
           dateFormat='dd/MM/yyyy'
           onChange={(date) => (date ? setEndDate(date) : null)}
           customInput={<CustomInput />}

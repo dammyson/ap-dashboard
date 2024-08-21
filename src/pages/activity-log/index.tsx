@@ -27,7 +27,7 @@ type ActivityRecord = {
 export type OpenActivity = (record: ActivityRecord) => void;
 
 function ActivityLog() {
-  const [exportLog, setExportLog] = useState<boolean>(true);
+  const [exportLog, setExportLog] = useState<boolean>(false);
   const [viewActivity, setViewActivity] = useState<boolean>(false);
   const [selectedRecord, setSelectedRecord] = useState<ActivityRecord | null>(
     null,
@@ -247,7 +247,7 @@ function ActivityLog() {
                     </div>
                   ))}
                 </div>
-                <div className='w-full max-w-[360px] 768:max-w-[447px] mt-8 768:mt-12 960:mt-20 mb-4 768:mb-6 960:mb-12'>
+                <div className='w-full max-w-[360px] 768:max-w-[447px] mt-8 768:mt-12 960:mt-20 mb-4 768:mb-6 960:mb-10'>
                   <Button
                     buttonText='Export log'
                     radius={BorderRadius.Large}
