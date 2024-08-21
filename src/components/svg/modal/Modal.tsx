@@ -1,8 +1,11 @@
-export const AccessLock = () => {
+export const AccessLock = ({
+  className = 'w-20 h-20 1240:w-[120px] 1240:h-[120px]',
+}: {
+  className?: string;
+}) => {
   return (
     <svg
-      width='120'
-      height='120'
+      className={className}
       viewBox='0 0 120 120'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
@@ -17,11 +20,14 @@ export const AccessLock = () => {
   );
 };
 
-export const Cancel = () => {
+export const Cancel = ({
+  className = 'w-7 h-7 960:w-[32px] 960:h-[32px]',
+}: {
+  className?: string;
+}) => {
   return (
     <svg
-      width='32'
-      height='32'
+      className={className}
       viewBox='0 0 32 32'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'

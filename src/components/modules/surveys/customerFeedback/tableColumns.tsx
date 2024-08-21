@@ -12,9 +12,14 @@ export const useCustomerFeedbackColumn = (setAwardPoints: ModalStateSetter) => {
         title: 'NAME',
         dataIndex: 'name',
         key: 'name',
-        className: 'name-column',
+        className: 'table-name-column',
       },
-      { title: 'EMAIL', dataIndex: 'email', key: 'email' },
+      {
+        title: 'EMAIL',
+        dataIndex: 'email',
+        key: 'email',
+        className: 'email-column',
+      },
       {
         title: 'AIRPEACE ID',
         dataIndex: 'airpeaceID',
@@ -33,13 +38,8 @@ export const useCustomerFeedbackColumn = (setAwardPoints: ModalStateSetter) => {
         title: 'ACTIONS',
         dataIndex: '',
         key: '',
-        render: (_, record) => (
-          <span
-            className='cursor-pointer'
-            onClick={() => (
-              setAwardPoints(true), console.warn(record, 'awarded')
-            )}
-          >
+        render: (_) => (
+          <span className='cursor-pointer' onClick={() => setAwardPoints(true)}>
             {<Trophy />}
           </span>
         ),

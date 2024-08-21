@@ -8,6 +8,7 @@ import profileImage from '../../../assets/profileImage/profile-img.png';
 import CategoryHeader from '@/components/categoryHeader';
 import { Modal, SizeType } from '@/components/modal';
 import { Bin, Cancel } from '@/components/svg/modal/Modal';
+import { Card } from '@/components/card';
 
 function TeamMembers() {
   const [addMembers, setAddMembers] = useState<boolean>(false);
@@ -46,13 +47,14 @@ function TeamMembers() {
   ];
 
   return (
-    <div className='mt-8 bg-primary-white shadow-default rounded-[20px] p-10'>
+    <Card>
       {addMembers ? (
         <AddMembers />
       ) : (
         <div>
           <CategoryHeader
             title='Team Members'
+            className='!text-base 560:!text-[18px]'
             button={
               <Button
                 onClick={() => setAddMembers(true)}
@@ -60,6 +62,7 @@ function TeamMembers() {
                 mode='outlined'
                 trailingIcon={<Add />}
                 size={ButtonSize.Small}
+                buttonClass='hidden 560:block'
                 className='bg-transparent text-primary-white hover:text-light-grey-100 hover:border-inherit h-9'
               />
             }
@@ -67,12 +70,12 @@ function TeamMembers() {
           <Table
             pagination={false}
             columns={tableColumns}
-            // className='table'
+            className='team-members'
             dataSource={list}
             scroll={{
               y: 506,
             }}
-            rootClassName='w-full overflow-x-scroll'
+            rootClassName='w-full overflow-x-scroll hidden-scrollbar'
             showHeader={false}
           />
         </div>
@@ -86,7 +89,7 @@ function TeamMembers() {
           onClick={() => setRemoveTeamMember(false)}
         >
           <Bin />
-          <div className='font-normal text-[22px]  mt-4 mb-9 text-light-primary-deep_black'>
+          <div className='font-normal text-lg 768:text-[22px] mt-2 768::mt-4 mb-5 768:mb-9 text-light-primary-deep_black'>
             This team member will no longer have access to the portal.
           </div>
           <div className='w-full max-w-[340px]'>
@@ -95,7 +98,7 @@ function TeamMembers() {
               radius={BorderRadius.Large}
               buttonText='Delete'
               onClick={() => {}}
-              className='!font-semibold !text-xl'
+              className='!font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[65px]'
             />
           </div>
         </Modal>
@@ -108,7 +111,7 @@ function TeamMembers() {
           onClick={() => setUpdateTeamMember(false)}
         >
           <SmallCheckmark />
-          <div className='font-normal text-[22px] mt-4 mb-9 text-light-primary-deep_black'>
+          <div className='font-normal text-lg 768:text-[22px] mt-2 768:mt-4 mb-5 768:mb-9 text-light-primary-deep_black'>
             This team member’s role will be updated to admin.
           </div>
           <div className='w-full max-w-[340px]'>
@@ -117,14 +120,14 @@ function TeamMembers() {
               radius={BorderRadius.Large}
               buttonText='Update'
               onClick={() => {}}
-              className='!font-semibold !text-xl '
+              className='!font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[65px] '
             />
           </div>
         </Modal>
       ) : (
         <></>
       )}
-    </div>
+    </Card>
   );
 }
 

@@ -18,7 +18,7 @@ const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
         value={value}
         onChange={onChange}
         onClick={onClick}
-        className='!rounded-full w-full !h-11 pr-14 border !border-light-grey-800 hover:!border-light-blue-50 focus:!border-light-blue-50 focus:ring-0 focus:outline-none text-light-grey-500 text-[14px]'
+        className='!rounded-full w-full !h-11 pr-14 border !border-light-grey-800 hover:!border-light-blue-50 focus:!border-light-blue-50 focus:ring-0 focus:outline-none text-light-grey-500 text-[16px]'
       />
       <span
         className='absolute right-6 cursor-pointer top-1/2 -translate-y-1/2 custom-icon-class'
@@ -30,45 +30,39 @@ const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
   ),
 );
 
-export enum PickerType {
-  START = 'start',
-  END = 'end',
-}
-
-interface Props {
-  type: PickerType;
-}
-
-export const CustomDatePicker = ({ type }: Props) => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
-  const [endDate, setEndDate] = useState<Date | null>(new Date());
+export const CustomDatePicker = () => {
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [endDate, setEndDate] = useState<Date>(new Date());
 
   return (
-    <div className='relative'>
-      {type == PickerType.START ? (
+    <div className='flex flex-col 768:flex-row 768:items-center 768:justify-between gap-3 768:gap-8 mt-2.5 '>
+      <div className='max-w-[350px] 768:max-w-[420px] w-full relative'>
         <DatePicker
-          selectsStart
+          placeholderText='start'
+          isClearable={true}
           selected={startDate}
-          startDate={startDate!}
-          endDate={endDate!}
+          onChange={(date) => (date ? setStartDate(date) : null)}
+          selectsStart
+          startDate={startDate}
+          maxDate={new Date()}
           dateFormat='dd/MM/yyyy'
-          onChange={(date) => setStartDate(date)}
           customInput={<CustomInput />}
         />
-      ) : type == PickerType.END ? (
+      </div>
+      <div className='max-w-[350px] 768:max-w-[420px] w-full relative'>
         <DatePicker
-          selectsEnd
+          placeholderText='start'
+          isClearable={true}
           selected={endDate}
-          startDate={startDate!}
-          endDate={endDate!}
-          minDate={startDate!}
+          selectsEnd
+          startDate={startDate}
+          endDate={endDate}
+          maxDate={new Date()}
           dateFormat='dd/MM/yyyy'
-          onChange={(date) => setEndDate(date)}
+          onChange={(date) => (date ? setEndDate(date) : null)}
           customInput={<CustomInput />}
         />
-      ) : (
-        <></>
-      )}
+      </div>
     </div>
   );
 };

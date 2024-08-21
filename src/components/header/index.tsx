@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router';
 export const Header = () => {
   const navigate = useNavigate();
   return (
-    <div className='flex w-full h-20 gap-10 items-center justify-between px-2 mb-6 768:px-4'>
-      <div className='flex-grow max-w-[480px] min-w-[255px]'>
+    <div className='flex w-full h-20 gap-5 560:gap-10 items-center justify-between px-2 mb-6 768:px-4'>
+      <div className='flex-grow max-w-[480px] 560:min-w-[255px]'>
         <Input
           placeHolder='Search'
           inputSize='small'
@@ -23,6 +23,7 @@ export const Header = () => {
           onClick={() => {
             navigate('/settings');
           }}
+          className='hidden 560:flex'
         />
         <NotificationBell notification={1} />
       </div>

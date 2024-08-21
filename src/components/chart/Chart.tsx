@@ -50,7 +50,7 @@ export const Chart = ({ chartData, transactionType }: Props) => {
           left: 0,
           top: 5,
         }}
-        className='w-full min-w-[500px] max-w-[800px]'
+        className='w-full 1240:min-w-[500px] max-w-[800px]'
       >
         <Tooltip
           content={

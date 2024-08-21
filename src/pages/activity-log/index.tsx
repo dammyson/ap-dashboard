@@ -12,7 +12,8 @@ import { ChangeEvent, useState } from 'react';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import clsx from 'clsx';
-import { CustomDatePicker, PickerType } from '@/components/datePicker';
+import { CustomDatePicker } from '@/components/datePicker';
+import { useWindowSize } from '@/components/hooks/useWindowSize';
 
 type ActivityRecord = {
   timeStamp: string;
@@ -26,7 +27,7 @@ type ActivityRecord = {
 export type OpenActivity = (record: ActivityRecord) => void;
 
 function ActivityLog() {
-  const [exportLog, setExportLog] = useState<boolean>();
+  const [exportLog, setExportLog] = useState<boolean>(false);
   const [viewActivity, setViewActivity] = useState<boolean>(false);
   const [selectedRecord, setSelectedRecord] = useState<ActivityRecord | null>(
     null,
@@ -69,27 +70,42 @@ function ActivityLog() {
 
   return (
     <AppLayout logo=''>
-      <div className='app-container py-2 pl-14 pr-10'>
+      <div
+        className={clsx(
+          useWindowSize(1240) ? 'w-full' : 'app-container',
+          'py-7 px-5 1240:pl-14 1240:pr-10',
+        )}
+      >
         <Header />
-        <div>
+        <div className='flex flex-col gap-2 560:block'>
           <WelcomeMessage
             username='Ayo'
             description="Let's review today's insights"
           />
+          <div>
+            <Button
+              buttonText='Export log'
+              radius={BorderRadius.Large}
+              size={ButtonSize.Medium}
+              className='text-light-blue-main !font-semibold !w-fit float-right 560:hidden text-sm'
+              onClick={() => setExportLog(true)}
+            />
+          </div>
         </div>
-        <div className='mt-10 pr-12'>
+        <div className='1240:pr-12'>
           <Card
             hasHeader
             hasBadge
             title='Activity log'
             trailingIcon1={<Filter />}
             trailingIcon2={<Update />}
+            mainClass='!mt-4 560:!mt-8'
             hasButton={
               <Button
                 buttonText='Export log'
                 radius={BorderRadius.Large}
                 size={ButtonSize.Medium}
-                className='text-light-blue-main !font-semibold'
+                className='text-light-blue-main !font-semibold hidden 560:flex'
                 onClick={() => setExportLog(true)}
               />
             }
@@ -98,7 +114,7 @@ function ActivityLog() {
               pagination={false}
               dataSource={activityData}
               columns={tableColumns}
-              rootClassName='overflow-x-scroll'
+              rootClassName='overflow-x-scroll hidden-scrollbar'
             />
           </Card>
         </div>
@@ -111,30 +127,25 @@ function ActivityLog() {
           >
             <div className='max-w-[890px] w-full grid it'>
               <div className='flex items-center justify-center'>
-                <h3 className='text-light-primary-deep_black text-[32px] font-medium text-center w-3/4'>
+                <h3 className='text-light-primary-deep_black text-lg 560:text-xl 768:text-2xl 960:text-[28px] 1240:text-[32px] font-medium text-center w-[85%] 960:w-3/4 pt-4 880:pt-0'>
                   Please specify the time period of format for exporting the
                   activity log
                 </h3>
               </div>
-              <div className='w-11/12 mt-8'>
-                <p className='font-medium text-light-grey-600 text-xl text-start'>
+              <div className='w-11/12 mt-2 560:mt-4 960:mt-8'>
+                <p className='font-medium text-light-grey-600 text-base 560:text-lg 960:text-xl text-start'>
                   Time period
                 </p>
-                <div className='flex items-center justify-between gap-8 mt-2.5 '>
-                  <div className='max-w-[420px] w-full'>
-                    <CustomDatePicker type={PickerType.START} />
-                  </div>
-                  <div className='max-w-[420px] w-full'>
-                    <CustomDatePicker type={PickerType.END} />
-                  </div>
+                <div>
+                  <CustomDatePicker />
                 </div>
               </div>
 
-              <div className='w-36 my-12'>
-                <p className='text-light-grey-600 text-xl font-medium text-start'>
+              <div className='w-36 my-4 768:my-6 960:my-12'>
+                <p className='text-light-grey-600 560:text-lg 960:text-xl font-medium text-start'>
                   Export format
                 </p>
-                <div className='grid gap-2 mt-3'>
+                <div className='grid 768:gap-2 768:mt-3'>
                   {formats.map((format, index) => (
                     <div key={index} className='flex items-center gap-3 pt-2 '>
                       <div className='relative'>
@@ -144,19 +155,15 @@ function ActivityLog() {
                           checked={selectedOption === format.key}
                           onChange={handleChange}
                           name='option format'
-                          className='w-8  h-8 inset-0 absolute opacity-0 cursor-pointer'
+                          className='w-8 h-8 inset-0 absolute opacity-0 cursor-pointer'
                         />
                         <div className='flex items-center justify-center w-7 h-7 border-light-blue-50 border-2 rounded-full'>
                           {selectedOption === format.key && (
-                            <RadioFilled
-                              color='#23539F'
-                              width='16'
-                              height='16'
-                            />
+                            <RadioFilled color='#23539F' className='w-4 h-4' />
                           )}
                         </div>
                       </div>
-                      <span className='text-light-grey-500 text-[16px] font-medium'>
+                      <span className='text-light-grey-500 text-sm 768:text-base font-medium'>
                         {format.title}
                       </span>
                     </div>
@@ -169,7 +176,7 @@ function ActivityLog() {
                     buttonText='Export log'
                     radius={BorderRadius.Large}
                     size={ButtonSize.Large}
-                    className='text-light-blue-main !font-semibold !text-2xl'
+                    className='text-light-blue-main !font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[66px]'
                     onClick={() => {}}
                   />
                 </div>
@@ -184,28 +191,29 @@ function ActivityLog() {
             cancelIcon={<Cancel />}
             onClick={() => closeModal()}
           >
-            <div className='border-b border-light-blue-50 pb-8'>
-              <p className='text-light-primary-black text-2xl font-medium text-start'>
+            <div className='border-b border-light-blue-50 pb-4 880:pb-8'>
+              <p className='text-light-primary-black text-xl 960:text-2xl font-medium text-start'>
                 Activity details
               </p>
             </div>
             <div>
               <div className='flex flex-col items-center'>
                 <div className='text-start w-full'>
-                  {activities.map((activity) => (
+                  {activities.map((activity, index) => (
                     <div
+                      key={index}
                       className={clsx(
                         activity.key === 'description' ||
                           activity.key === 'activites'
                           ? ''
                           : 'flex items-center ',
-                        'pt-4',
+                        'pt-2 880:pt-4',
                       )}
                     >
-                      <span className='text-light-primary-black font-medium text-2xl pr-6 w-full max-w-[340px]'>
+                      <span className='text-light-primary-black font-medium text-base 560:text-lg 768:text-xl 960:text-2xl 768:pr-6 w-full max-w-[110px] 560:max-w-[160px] 768:max-w-[240px] 880:max-w-[340px]'>
                         {`${activity.title}:`}
                       </span>
-                      <span className='text-light-grey-600 text-2xl text-start'>
+                      <span className='text-light-grey-600 text-base 560:text-lg 768:text-xl 960:text-2xl text-start'>
                         {activity.key === 'timeStamp' ? (
                           selectedRecord.timeStamp
                         ) : activity.key === 'user' ? (
@@ -215,12 +223,12 @@ function ActivityLog() {
                         ) : activity.key === 'activityType' ? (
                           selectedRecord.activityType
                         ) : activity.key === 'description' ? (
-                          <ul className='text-light-grey-600 text-[18px] list-disc list-inside ml-3 leading-tight'>
+                          <ul className='text-light-grey-600 text-sm 768:text-base 960:text-lg list-disc list-outside 560:list-inside ml-3 leading-tight'>
                             <li>Action - logged in</li>
                             <li>IP address - {selectedRecord.ipaddress}</li>
                           </ul>
                         ) : activity.key === 'activites' ? (
-                          <ul className='text-light-grey-600 text-[18px] list-disc list-inside ml-3 leading-tight'>
+                          <ul className='text-light-grey-600 text-sm  768:text-base 960:text-lg list-disc list-outside 560:list-inside ml-3 leading-tight'>
                             <li>
                               Created new user account for user John Kevin with
                               ID: 1234
@@ -239,12 +247,12 @@ function ActivityLog() {
                     </div>
                   ))}
                 </div>
-                <div className='w-full max-w-[447px] mt-20 mb-12'>
+                <div className='w-full max-w-[360px] 768:max-w-[447px] mt-8 768:mt-12 960:mt-20 mb-4 768:mb-6 960:mb-10'>
                   <Button
                     buttonText='Export log'
                     radius={BorderRadius.Large}
                     size={ButtonSize.Large}
-                    className='text-light-blue-main !font-semibold !text-2xl'
+                    className='text-light-blue-main !font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[65px]'
                     onClick={() => {}}
                   />
                 </div>

@@ -11,6 +11,8 @@ import {
 import clsx from 'clsx';
 import { convertToUrlString } from '../../utils';
 import whiteLogo from '../../assets/logos/white_logo.png';
+import birdLogo from '../../assets/logos/Bird Logo White.png';
+import { useWindowSize } from '../hooks/useWindowSize';
 
 interface NavigationItem {
   icon: ReactNode;
@@ -62,10 +64,16 @@ export const SideNavigationItems = () => {
 
   return (
     <div>
-      <div className='flex justify-center items-center pt-10 pr-[4.6rem] pl-8'>
-        <img src={whiteLogo} alt='' />
-      </div>
-      <div className='grid gap-6 pl-6 mt-[85px]'>
+      {useWindowSize(1240) ? (
+        <div className='flex justify-center items-center pt-6 1240:pt-10 pl-3 pr-3'>
+          <img src={birdLogo} alt='airpeace-bird logo' />
+        </div>
+      ) : (
+        <div className='flex justify-center items-center pt-10 pr-[4.6rem] pl-8'>
+          <img src={whiteLogo} alt='airpeace logo' />
+        </div>
+      )}
+      <div className='grid gap-6 pl-[14px] 560:pl-6 mt-[60px] 1240:mt-[85px]'>
         {navigationItems
           ?.slice(0, -2)
           .map(({ icon, title, countId, id }, index) => {
@@ -86,14 +94,14 @@ export const SideNavigationItems = () => {
                   to={route}
                   className={clsx(
                     isActive
-                      ? 'bg-light-blue-main border-r-[7px] border-r-light-blue-100 rounded-tl-md rounded-bl-md'
+                      ? 'bg-light-blue-main border-r-[5px] 560:border-r-[7px] border-r-light-blue-100 rounded-tl-md rounded-bl-md'
                       : '',
-                    'hover:text-light-grey-300 cursor-pointer text-white no-underline relative flex text-sm font-normal transition-colors duration-200 px-4 py-3  mb-1 ',
+                    'hover:text-light-grey-300 cursor-pointer text-white no-underline relative flex text-sm font-normal transition-colors duration-200 px-[12px] 560:px-4 py-3 mb-1',
                   )}
                 >
                   <div className='flex gap-8 items-center'>
                     <span>{icon}</span>
-                    <span>{title}</span>
+                    {useWindowSize(1240) ? <></> : <span>{title}</span>}
                   </div>
                   {countId && (
                     <div className='absolute top-15 right-10 text-xs font-light bg-gray-200 rounded-full px-2 py-1 text-gray-700 shadow-sm'>
@@ -106,7 +114,11 @@ export const SideNavigationItems = () => {
           })}
       </div>
 
-      <div className='fixed bottom-12 grid gap-6 pl-6 py-15 w-[270px]'>
+      <div
+        className={clsx(
+          'w-[70px] 560:w-24 1240:w-[270px] fixed bottom-12 grid gap-6 pl-[12px] 560:pl-6 py-15',
+        )}
+      >
         {navigationItems?.slice(-2).map(({ icon, title, countId, id }) => {
           const route = `/${convertToUrlString(id ?? title)}`;
           const isActive = pathname.includes(convertToUrlString(id ?? title))
@@ -115,25 +127,25 @@ export const SideNavigationItems = () => {
 
           return (
             <div key={title}>
-              <a
-                href={title === 'Settings' ? route : '/'}
+              <NavLink
+                to={title === 'Settings' ? route : '/'}
                 className={clsx(
                   isActive
-                    ? 'bg-light-blue-main border-r-[7px] border-r-light-blue-100 rounded-tl-md rounded-bl-md'
+                    ? 'bg-light-blue-main border-r-[5px] 560:border-r-[7px] border-r-light-blue-100 rounded-tl-md rounded-bl-md'
                     : '',
-                  'hover:text-light-grey-300 cursor-pointer text-white no-underline relative flex text-sm font-normal transition-colors duration-200  mb-1 px-4 py-3',
+                  'hover:text-light-grey-300 cursor-pointer text-white no-underline relative flex text-sm font-normal transition-colors duration-200  mb-1 px-[14px] 560:px-4 py-3',
                 )}
               >
                 <div className='flex gap-8 items-center'>
                   <span>{icon}</span>
-                  <span>{title}</span>
+                  {useWindowSize(1240) ? <></> : <span>{title}</span>}
                 </div>
                 {countId && (
                   <div className='absolute top-15 right-10 text-xs font-light bg-gray-200 rounded-full px-2 py-1 text-gray-700  shadow-sm'>
                     {countId}
                   </div>
                 )}
-              </a>
+              </NavLink>
             </div>
           );
         })}
@@ -145,7 +157,11 @@ export const SideNavigationItems = () => {
 export const SideNavigationContent = () => {
   return (
     <div>
-      <div className='h-lvh w-[270px] bg-black fixed top-0 left-0 py-[15px]  '>
+      <div
+        className={clsx(
+          'w-[70px] 560:w-24 1240:w-[270px] h-lvh bg-black fixed top-0 left-0 py-[15px]',
+        )}
+      >
         <SideNavigationItems />
       </div>
     </div>

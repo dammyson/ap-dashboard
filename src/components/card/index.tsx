@@ -36,7 +36,7 @@ export const Card = ({
   return (
     <div
       className={clsx(
-        'mt-8 bg-primary-white shadow-default rounded-[20px] p-9',
+        'mt-8 bg-primary-white shadow-default rounded-[20px] p-5 560:p-7 1240:p-9',
         mainClass,
       )}
     >
@@ -51,12 +51,12 @@ export const Card = ({
           >
             <div className='flex items-center'>
               {hasBadge && (
-                <span className='w-3 h-3 rounded-full bg-light-blue-main mr-4'></span>
+                <span className='min-w-[10px] min-h-[10px] 560:w-3 560:h-3  rounded-full bg-light-blue-main mr-4'></span>
               )}
               {title && (
                 <span
                   className={clsx(
-                    'font-medium text-xl text-light-grey-700 ',
+                    'font-medium 560:text-xl text-light-grey-700 ',
                     titleClass,
                   )}
                 >

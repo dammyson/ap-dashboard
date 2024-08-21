@@ -7,14 +7,17 @@ import { Table } from 'antd';
 import { useCustomerFeedbackColumn } from '@/components/modules/surveys/customerFeedback/tableColumns';
 import { Panel, PanelNavigationItem } from '@/components/Panel';
 import { useState } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { SurveyResults } from '@/components/modules/surveys/SurveyResults';
 import { DropDownArrow } from '@/components/svg/settings/Settings';
 import { CustomSelect, SelectType } from '@/components/customSelect';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
+import clsx from 'clsx';
+import { useWindowSize } from '@/components/hooks/useWindowSize';
 
 function CustomerFeedback() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const list = [
     {
@@ -95,14 +98,28 @@ function CustomerFeedback() {
   const { tableColumns } = useCustomerFeedbackColumn(setAwardPoints);
   return (
     <AppLayout logo=''>
-      <div className='app-container py-2 pl-14 pr-10'>
-        <div className='pr-12'>
+      <div
+        className={clsx(
+          useWindowSize(1240) ? 'w-full' : 'app-container',
+          'py-7 px-5 1240:pl-14 1240:pr-10',
+        )}
+      >
+        <div className='1240:pr-12'>
           <Header />
-          <div>
+          <div className='flex flex-col gap-2 560:block'>
             <WelcomeMessage
               username='Ayo'
               description="Let's review today's insights"
             />
+            <div>
+              <Button
+                buttonText='Back to survey'
+                size={ButtonSize.Small}
+                radius={BorderRadius.Large}
+                className='font-semibold !w-fit float-right 560:hidden'
+                onClick={() => navigate('/surveys')}
+              />
+            </div>
           </div>
 
           <Card
@@ -111,13 +128,14 @@ function CustomerFeedback() {
             title={`Survey:${id}`}
             hasBorder
             className='!pb-2'
+            mainClass='!mt-4 560:!mt-8'
             hasButton={
               <Button
                 buttonText='Back to survey'
                 size={ButtonSize.Small}
                 radius={BorderRadius.Large}
-                className='font-semibold'
-                onClick={() => window.history.back()}
+                className='font-semibold hidden 560:block'
+                onClick={() => navigate('/surveys')}
               />
             }
           >
@@ -125,7 +143,7 @@ function CustomerFeedback() {
               navigationItems={navigationItems}
               currentTab={currentTab}
               setCurrentTab={setCurrentTab}
-              className='pb-0'
+              className='!pb-0'
             >
               <div className='mt-8'>
                 {currentTab.id === 'Survey participants' ? (
@@ -133,7 +151,8 @@ function CustomerFeedback() {
                     pagination={false}
                     columns={tableColumns}
                     dataSource={list}
-                    rootClassName='overflow-x-scroll'
+                    className='survey-participants'
+                    rootClassName='overflow-x-scroll hidden-scrollbar'
                   />
                 ) : (
                   <SurveyResults />

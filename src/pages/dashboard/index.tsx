@@ -23,6 +23,7 @@ import { PieChart } from 'react-minimal-pie-chart';
 import { chartData, devices, RecentActivities, stats } from './constants';
 import { Chart } from '@/components/chart/Chart';
 import { HorizontalBarChart } from '@/components/chart/HorizontalBarChart';
+import { useWindowSize } from '@/components/hooks/useWindowSize';
 
 const tabs = [
   { name: 'Ticket sales', value: 2000 },
@@ -37,9 +38,14 @@ function Dashboard() {
 
   return (
     <AppLayout logo=''>
-      <div className='app-container pl-14 pr-10 mb-5'>
+      <div
+        className={clsx(
+          useWindowSize(1240) ? 'w-full' : 'app-container',
+          'py-7 px-5 1240:pl-14 1240:pr-10',
+        )}
+      >
         <Header />
-        <div className='pr-12'>
+        <div className='1240:pr-12'>
           <div>
             <WelcomeMessage
               username='Ayo'
@@ -47,9 +53,11 @@ function Dashboard() {
             />
           </div>
 
-          <div className='flex items-center justify-end gap-1'>
-            <p className='text-gradient text-lg font-medium'>Swipe</p>
-            <ArrowRight className='w-4 h-4' />
+          <div className='flex items-center justify-end gap-1 mt-5 480:mt-0'>
+            <p className='text-gradient text-[16px] 560:text-lg font-medium'>
+              Swipe
+            </p>
+            <ArrowRight className='w-3 h-3 560:w-4 560:h-4' />
           </div>
           <div className='hidden-scrollbar overflow-x-auto'>
             <div className='min-w-fit'>
@@ -76,7 +84,7 @@ function Dashboard() {
                       </div>
                       <div className='flex items-center gap-3 justify-between'>
                         <div>
-                          <h3 className='text-primary-black font-bold text-2xl mb-4'>
+                          <h3 className='text-primary-black font-bold text-xl 560:text-2xl mb-4'>
                             {numberShortener(stat.value)}
                           </h3>
                           <div className='flex items-center gap-1'>
@@ -108,16 +116,17 @@ function Dashboard() {
             </div>
           </div>
           {activeStat !== 'active' && (
-            <div className='mt-2 grid grid-cols-12 gap-10 pb-2'>
-              <div className='col-span-8 relative'>
+            <div className='mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>
+              <div className='col-span-12 1240:col-span-8 relative'>
                 <Card
                   hasBadge
                   hasHeader
                   trailingIcon1={<Filter />}
                   title='Revenue via app'
                   mainClass='relative grid justify-items-between h-[513px]'
+                  titleClass='text-lg'
                 >
-                  <div className='flex items-center gap-5 mb-12'>
+                  <div className='flex items-center gap-1.5 480:gap-5 mb-6 560:mb-12'>
                     {tabs.map((tab, index) => {
                       return (
                         <div
@@ -130,7 +139,7 @@ function Dashboard() {
                             'p-2 pb-3.5 cursor-pointer',
                           )}
                         >
-                          <h3 className='text-primary-black text-xl font-bold mb-2'>
+                          <h3 className='text-primary-black text-[16px] 480:text-lg 560:text-xl font-bold mb-2'>
                             {numberShortener(tab.value)}
                           </h3>
                           <p className='text-sm font-medium text-light-grey-400'>
@@ -143,13 +152,14 @@ function Dashboard() {
                   <Chart chartData={chartData} transactionType='all' />
                 </Card>
               </div>
-              <div className='col-span-4 '>
+              <div className='col-span-12 1240:col-span-4 '>
                 <Card
                   hasHeader
                   trailingIcon1={<Filter />}
                   title='Users by devices'
                   className='!pb-0.5'
-                  mainClass='h-[513px]'
+                  mainClass='1240:h-full max-h-[513px]'
+                  titleClass='text-lg'
                 >
                   <p className='text-light-grey-700 text-sm font-normal'>
                     Last 7 days
@@ -171,11 +181,12 @@ function Dashboard() {
                         fontWeight: 600,
                       }}
                       labelPosition={70}
+                      className='max-h-[300px] 1240:max-h-inherit'
                       totalValue={100}
                       label={({ dataEntry }) => `${dataEntry.value}%`}
                     />
                   </div>
-                  <div className='grid gap-2'>
+                  <div className='grid gap-2 pb-2 560:pb-0'>
                     {devices.map((device, index) => {
                       return (
                         <div key={index} className='flex items-center gap-2'>
@@ -213,20 +224,25 @@ function Dashboard() {
             <ActiveUsers />
           ) : (
             <>
-              <div className='mt-2 grid grid-cols-12 gap-10 pb-2'>
-                <div className='col-span-8 relative'>
+              <div className='mt-2 560:mt-8 1240:mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>
+                <div className='col-span-12 1240:col-span-8 relative'>
                   <Card
                     hasHeader
                     hasBadge
                     title='Users by screen resolution'
                     trailingIcon1={<Filter />}
+                    titleClass='text-lg'
                   >
                     <HorizontalBarChart />
                   </Card>
                 </div>
-                <div className='col-span-4'>
-                  <Card hasHeader title='Recent activities'>
-                    <div className='flex flex-col gap-3 h-[390px] overflow-y-auto no-scrollbar mb-12'>
+                <div className='col-span-12 1240:col-span-4'>
+                  <Card
+                    hasHeader
+                    title='Recent activities'
+                    titleClass='text-lg'
+                  >
+                    <div className='flex flex-col gap-3 h-[390px] overflow-y-auto hidden-scrollbar mb-4 560:mb-12'>
                       {RecentActivities.map((activity, index) => (
                         <div
                           key={index}

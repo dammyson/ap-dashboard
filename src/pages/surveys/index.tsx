@@ -11,6 +11,8 @@ import { useState } from 'react';
 import { Modal, SizeType } from '@/components/modal';
 
 import { useNavigate } from 'react-router';
+import { useWindowSize } from '@/components/hooks/useWindowSize';
+import clsx from 'clsx';
 
 function Surveys() {
   const navigate = useNavigate();
@@ -57,26 +59,43 @@ function Surveys() {
 
   return (
     <AppLayout logo=''>
-      <div className='app-container py-2 pl-14 pr-10'>
+      <div
+        className={clsx(
+          useWindowSize(1240) ? 'w-full' : 'app-container',
+          'py-7 px-5 1240:pl-14 1240:pr-10',
+        )}
+      >
         <Header />
-        <div className='pr-12'>
-          <div className='flex justify-between items-center'>
+        <div className='1240:pr-12'>
+          <div className='flex flex-col gap-2 560:block'>
             <WelcomeMessage
               username='Ayo'
               description="Let's review today's insights"
             />
+            <div>
+              <Button
+                buttonText='Create new survey'
+                size={ButtonSize.Small}
+                radius={BorderRadius.Large}
+                className='font-semibold !w-fit float-right 560:hidden'
+                onClick={() => {
+                  navigate(`/surveys-create/create-new-survey`);
+                }}
+              />
+            </div>
           </div>
           <Card
             hasHeader
             hasBadge
             title='Survey'
             trailingIcon1={<Filter />}
+            mainClass='!mt-4 560:!mt-8'
             hasButton={
               <Button
                 buttonText='Create new survey'
                 size={ButtonSize.Small}
                 radius={BorderRadius.Large}
-                className='font-semibold'
+                className='font-semibold hidden 560:flex'
                 onClick={() => {
                   navigate(`/surveys-create/create-new-survey`);
                 }}
@@ -88,7 +107,7 @@ function Surveys() {
               columns={tableColumns}
               dataSource={list}
               className='custom-survey-table'
-              rootClassName='overflow-x-scroll'
+              rootClassName='overflow-x-scroll hidden-scrollbar'
             />
           </Card>
         </div>
@@ -100,13 +119,13 @@ function Surveys() {
           size={SizeType.MEDIUM}
           onClick={() => setPublishSurvey(false)}
         >
-          <p className='font-semibold text-[22px] mb-4 mt-8 text-light-primary-deep_black'>
+          <p className='font-semibold text-lg 880:text-[22px] mb-2 560:mb-4 mt-2 560:mt-4 880:mt-8 text-light-primary-deep_black'>
             Are you sure you want to publish this survey?
           </p>
-          <p className='pb-11 text-[17px] text-light-primary-deep_black'>
+          <p className=' pb-7 880:pb-11 text-[15px] 880:text-[17px] text-light-primary-deep_black'>
             This will make the survey available for participants
           </p>
-          <div className='w-full max-w-[380px]'>
+          <div className='w-full max-w-[300px] 880:max-w-[380px]'>
             <Button
               size={ButtonSize.Medium}
               radius={BorderRadius.Large}
@@ -131,13 +150,13 @@ function Surveys() {
           size={SizeType.MEDIUM}
           onClick={() => setUnpublishSurvey(false)}
         >
-          <p className='font-semibold text-[22px] mb-4 mt-8 text-light-primary-deep_black'>
+          <p className='font-semibold text-lg 880:text-[22px] mb-2 560:mb-4 mt-2 560:mt-4 880:mt-8 text-light-primary-deep_black'>
             Are you sure you want to unpublish this survey?
           </p>
-          <p className='pb-11 text-[17px] text-light-primary-deep_black'>
+          <p className='pb-7 880:pb-11 text-[15px] 880:text-[17px] text-light-primary-deep_black'>
             This will make the survey unavailable for participants
           </p>
-          <div className='w-full max-w-[380px]'>
+          <div className='w-full max-w-[300px] 880:max-w-[380px]'>
             <Button
               size={ButtonSize.Medium}
               radius={BorderRadius.Large}
@@ -162,13 +181,13 @@ function Surveys() {
           size={SizeType.MEDIUM}
           onClick={() => setDeleteSurvey(false)}
         >
-          <p className='font-semibold text-[22px] mb-4 mt-8 text-light-primary-deep_black'>
+          <p className='font-semibold text-lg 880:text-[22px] mb-2 560:mb-4 mt-2 560:mt-4 880:mt-8 text-light-primary-deep_black'>
             Are you sure you want to delete this survey?
           </p>
-          <p className='pb-11 text-[17px] text-light-primary-deep_black'>
+          <p className='pb-7 880:pb-11 text-[15px] 880:text-[17px] text-light-primary-deep_black'>
             This action cannot be undone
           </p>
-          <div className='w-full max-w-[380px]'>
+          <div className='w-full max-w-[300px] 880:max-w-[380px]'>
             <Button
               size={ButtonSize.Medium}
               radius={BorderRadius.Large}

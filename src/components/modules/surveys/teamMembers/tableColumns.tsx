@@ -31,20 +31,21 @@ export const useTeamMembersColumn = (
       {
         dataIndex: 'role',
         key: 'role',
+        className: 'role',
       },
       {
         dataIndex: 'email',
         key: 'email',
       },
       {
-        dataIndex: '',
-        key: '',
-        render: (_, record) => (
+        dataIndex: 'remove',
+        key: 'remove',
+        className: 'remove-member',
+        render: (_) => (
           <Button
             buttonText='Remove'
             onClick={() => {
               setRemoveTeamMember(true);
-              console.warn('removed', record);
             }}
             mode='text'
             trailingIcon={<Remove />}
@@ -52,14 +53,14 @@ export const useTeamMembersColumn = (
         ),
       },
       {
-        dataIndex: '',
-        key: '',
-        render: (_, record) => (
+        dataIndex: 'update',
+        key: 'update',
+        className: 'update-member',
+        render: (_) => (
           <Button
             buttonText='Update'
             onClick={() => {
               setUpdateTeamMember(true);
-              console.warn('Update', record);
             }}
             mode='text'
             trailingIcon={<CircularArrow />}

@@ -17,7 +17,7 @@ export const TotalRevenue = () => {
         pagination={false}
         columns={tableColumns}
         dataSource={TotalRevenueData}
-        rootClassName='w-full overflow-x-scroll'
+        rootClassName='w-full overflow-x-scroll hidden-scrollbar'
       />
     </Card>
   );

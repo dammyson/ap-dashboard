@@ -12,6 +12,8 @@ import { Cancel } from '@/components/svg/modal/Modal';
 import { BorderRadius, Button, ButtonSize } from '@/components/button';
 import { CustomSelect, SelectType } from '@/components/customSelect';
 import { DropDownArrow } from '@/components/svg/settings/Settings';
+import { useWindowSize } from '@/components/hooks/useWindowSize';
+import clsx from 'clsx';
 
 function Customer() {
   const [awardPoints, setAwardPoints] = useState<boolean>(false);
@@ -31,9 +33,14 @@ function Customer() {
   ];
   return (
     <AppLayout logo=''>
-      <div className='app-container py-2 pl-14 pr-10'>
+      <div
+        className={clsx(
+          useWindowSize(1240) ? 'w-full' : 'app-container',
+          'py-7 px-5 1240:pl-14 1240:pr-10',
+        )}
+      >
         <Header />
-        <div className='pr-12'>
+        <div className='1240:pr-12'>
           <div>
             <WelcomeMessage
               username='Ayo'
@@ -52,7 +59,7 @@ function Customer() {
               pagination={false}
               columns={tableColumns}
               dataSource={Customerslist}
-              rootClassName='w-full overflow-x-scroll'
+              rootClassName='w-full overflow-x-scroll hidden-scrollbar'
             />
           </Card>
           {awardPoints && (
@@ -63,13 +70,13 @@ function Customer() {
               cancelIcon={<Cancel />}
               onClick={() => setAwardPoints(false)}
             >
-              <div className='flex  flex-col items-center justify-center max-w-[633px] w-full py-5'>
-                <h3 className='text-light-primary-deep_black text-[32px] font-medium mb-10'>
+              <div className='flex flex-col items-center justify-center w-full 768:w-4/5 960:w-[68%] 1240:py-5'>
+                <h3 className='text-light-primary-deep_black text-lg 560:text-xl 768:text-2xl 960:text-[28px] 1240:text-[32px] font-medium mb-4 768:mb-6 1400:mb-10 pt-5 960:pt-0'>
                   Manually award points to user
                 </h3>
-                <div className='w-11/12'>
-                  <div className='mb-10 text-light-grey-600'>
-                    <p className='text-left text-xl font-medium pb-4'>
+                <div className='w-full'>
+                  <div className='mb-3 768:mb-5 1400:mb-10 text-light-grey-600'>
+                    <p className='text-left text-base 768:text-lg 960:text-xl font-medium 960:pb-2 1400:pb-4'>
                       Points to award
                     </p>
                     <CustomSelect
@@ -81,10 +88,11 @@ function Customer() {
                       trailingIcon={<DropDownArrow />}
                       selectedRole={selectedPointOption}
                       onSelect={(option) => setSelectedPointOption(option)}
+                      className='!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
                     />
                   </div>
-                  <div className='mb-5 text-light-grey-600'>
-                    <p className='text-left text-xl  font-medium pb-4'>
+                  <div className='768:mb-5 text-light-grey-600'>
+                    <p className='text-left text-base 768:text-lg 960:text-xl font-medium 960:pb-2 1400:pb-4'>
                       Reason for awarding points
                     </p>
                     <CustomSelect
@@ -96,16 +104,17 @@ function Customer() {
                       trailingIcon={<DropDownArrow />}
                       selectedRole={selectedReason}
                       onSelect={(option) => setSelectedReason(option)}
+                      className='!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
                     />
                   </div>
                 </div>
 
-                <ul className='w-full list-disc list-inside text-left pt-2 pb-20'>
-                  <li className='text-[16px] text-light-grey-600'>
+                <ul className='w-[96%] list-disc list-outside text-left pt-2 pb-8 1240:pb-10 1400:pb-20 '>
+                  <li className='text-xs 1024:text-base text-light-grey-600'>
                     <span className='font-medium'>Note:</span> Manually awarded
                     points will be reflected in the user's account immediately.
                   </li>
-                  <li className='text-[16px] text-light-grey-600'>
+                  <li className='text-xs 1024:text-base text-light-grey-600'>
                     Please ensure the points amount is accurate and the reason
                     is clear.
                   </li>
@@ -117,7 +126,7 @@ function Customer() {
                     radius={BorderRadius.Large}
                     buttonText='Award points'
                     onClick={() => {}}
-                    className='!font-semibold !text-2xl'
+                    className='!font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[65px]'
                   />
                   <Button
                     size={ButtonSize.Large}
@@ -125,7 +134,7 @@ function Customer() {
                     mode='outlined'
                     buttonText='Cancel'
                     onClick={() => setAwardPoints(false)}
-                    className='!font-semibold !text-2xl'
+                    className='!font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[65px]'
                   />
                 </div>
               </div>

@@ -17,7 +17,7 @@ export const UsersRegistered = () => {
         pagination={false}
         columns={tableColumns}
         dataSource={usersRegistered}
-        rootClassName='w-full overflow-x-scroll'
+        rootClassName='w-full overflow-x-scroll hidden-scrollbar'
       />
     </Card>
   );
