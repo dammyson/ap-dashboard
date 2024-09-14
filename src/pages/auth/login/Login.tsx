@@ -97,7 +97,13 @@ function Login() {
           </NavLink>
           <Button
             type='submit'
-            buttonText={loading ? <Spinner /> : 'Log in'}
+            buttonText={
+              loading ? (
+                <Spinner className='text-white w-5 h-5 768:w-7 768:h-7' />
+              ) : (
+                'Log in'
+              )
+            }
             radius={BorderRadius.Large}
             className='mt-14 768:mt-20 font-bold'
             size={ButtonSize.Large}
