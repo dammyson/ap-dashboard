@@ -13,12 +13,14 @@ import { Modal, SizeType } from '@/components/modal';
 import { useNavigate } from 'react-router';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import clsx from 'clsx';
+import { useUser } from '@/context/AppContext';
 
 function Surveys() {
   const navigate = useNavigate();
   const [publishSurvey, setPublishSurvey] = useState<boolean>(false);
   const [unpublishSurvey, setUnpublishSurvey] = useState<boolean>(false);
   const [deleteSurvey, setDeleteSurvey] = useState<boolean>(false);
+  const { user } = useUser();
   const { tableColumns } = useSurveyColumn(
     setPublishSurvey,
     setUnpublishSurvey,
@@ -69,7 +71,7 @@ function Surveys() {
         <div className='1240:pr-12'>
           <div className='flex flex-col gap-2 560:block'>
             <WelcomeMessage
-              username='Ayo'
+              username={user?.user_name.split(' ')[1]}
               description="Let's review today's insights"
             />
             <div>

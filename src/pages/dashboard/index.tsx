@@ -24,6 +24,7 @@ import { chartData, devices, RecentActivities, stats } from './constants';
 import { Chart } from '@/components/chart/Chart';
 import { HorizontalBarChart } from '@/components/chart/HorizontalBarChart';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
+import { useUser } from '@/context/AppContext';
 
 const tabs = [
   { name: 'Ticket sales', value: 2000 },
@@ -35,6 +36,7 @@ function Dashboard() {
   const [activeStat, setActiveStat] = useState<string>('');
   const currentTab = tabs[0];
   const [activeTab, setActiveTab] = useState(currentTab);
+  const { user } = useUser();
 
   return (
     <AppLayout logo=''>
@@ -48,7 +50,7 @@ function Dashboard() {
         <div className='1240:pr-12'>
           <div>
             <WelcomeMessage
-              username='Ayo'
+              username={user?.user_name.split(' ')[1]}
               description="Let's review today's insights"
             />
           </div>

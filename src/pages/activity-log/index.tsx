@@ -14,6 +14,7 @@ import { Cancel } from '@/components/svg/modal/Modal';
 import clsx from 'clsx';
 import { CustomDatePicker } from '@/components/datePicker';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
+import { useUser } from '@/context/AppContext';
 
 type ActivityRecord = {
   timeStamp: string;
@@ -32,6 +33,7 @@ function ActivityLog() {
   const [selectedRecord, setSelectedRecord] = useState<ActivityRecord | null>(
     null,
   );
+  const { user } = useUser();
   const openModal: OpenActivity = (record) => {
     setSelectedRecord(record);
     setViewActivity(true);
@@ -79,7 +81,7 @@ function ActivityLog() {
         <Header />
         <div className='flex flex-col gap-2 560:block'>
           <WelcomeMessage
-            username='Ayo'
+            username={user?.user_name.split(' ')[1]}
             description="Let's review today's insights"
           />
           <div>

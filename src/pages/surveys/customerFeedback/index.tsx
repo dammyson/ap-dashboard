@@ -15,6 +15,7 @@ import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import clsx from 'clsx';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
+import { useUser } from '@/context/AppContext';
 
 function CustomerFeedback() {
   const navigate = useNavigate();
@@ -94,8 +95,9 @@ function CustomerFeedback() {
   const [selectedPointOption, setSelectedPointOption] = useState<string>('');
   const [selectedReason, setSelectedReason] = useState<string>('');
   const [currentTab, setCurrentTab] = useState(navigationItems[0]);
-
+  const { user } = useUser();
   const { tableColumns } = useCustomerFeedbackColumn(setAwardPoints);
+
   return (
     <AppLayout logo=''>
       <div
@@ -108,7 +110,7 @@ function CustomerFeedback() {
           <Header />
           <div className='flex flex-col gap-2 560:block'>
             <WelcomeMessage
-              username='Ayo'
+              username={user?.user_name.split(' ')[1]}
               description="Let's review today's insights"
             />
             <div>

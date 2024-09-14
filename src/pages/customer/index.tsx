@@ -14,12 +14,14 @@ import { CustomSelect, SelectType } from '@/components/customSelect';
 import { DropDownArrow } from '@/components/svg/settings/Settings';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import clsx from 'clsx';
+import { useUser } from '@/context/AppContext';
 
 function Customer() {
   const [awardPoints, setAwardPoints] = useState<boolean>(false);
   const [selectedPointOption, setSelectedPointOption] = useState<string>('');
   const [selectedReason, setSelectedReason] = useState<string>('');
   const { tableColumns } = useCustomerInformation(setAwardPoints);
+  const { user } = useUser();
 
   const pointOptions = [
     { label: '2000', value: '2000' },
@@ -43,7 +45,7 @@ function Customer() {
         <div className='1240:pr-12'>
           <div>
             <WelcomeMessage
-              username='Ayo'
+              username={user?.user_name.split(' ')[1]}
               description="Let's review today's insights"
             />
           </div>

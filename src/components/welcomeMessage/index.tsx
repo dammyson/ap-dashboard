@@ -1,5 +1,5 @@
 interface welcomeMessageProps {
-  username: string;
+  username: string | undefined;
   description?: string;
 }
 

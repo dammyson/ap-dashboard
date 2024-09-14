@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { useLocation, NavLink } from 'react-router-dom';
+import { useLocation, NavLink, useNavigate } from 'react-router-dom';
 import {
   Exit,
   HeartBeatLine,
@@ -13,6 +13,8 @@ import { convertToUrlString } from '../../utils';
 import whiteLogo from '../../assets/logos/white_logo.png';
 import birdLogo from '../../assets/logos/Bird Logo White.png';
 import { useWindowSize } from '../hooks/useWindowSize';
+import { useUser } from '@/context/AppContext';
+import { toast } from 'sonner';
 
 interface NavigationItem {
   icon: ReactNode;
@@ -28,6 +30,8 @@ type NavigationItems = NavigationItem[];
 
 export const SideNavigationItems = () => {
   const { pathname } = useLocation();
+  const { setUser, setToken } = useUser();
+  const navigate = useNavigate();
 
   const navigationItems = [
     {
@@ -119,7 +123,7 @@ export const SideNavigationItems = () => {
           'w-[70px] 560:w-24 1240:w-[270px] fixed bottom-12 grid gap-6 pl-[12px] 560:pl-6 py-15',
         )}
       >
-        {navigationItems?.slice(-2).map(({ icon, title, countId, id }) => {
+        {navigationItems?.slice(-2).map(({ icon, title, id }) => {
           const route = `/${convertToUrlString(id ?? title)}`;
           const isActive = pathname.includes(convertToUrlString(id ?? title))
             ? true
@@ -127,25 +131,42 @@ export const SideNavigationItems = () => {
 
           return (
             <div key={title}>
-              <NavLink
-                to={title === 'Settings' ? route : '/'}
-                className={clsx(
-                  isActive
-                    ? 'bg-light-blue-main border-r-[5px] 560:border-r-[7px] border-r-light-blue-100 rounded-tl-md rounded-bl-md'
-                    : '',
-                  'hover:text-light-grey-300 cursor-pointer text-white no-underline relative flex text-sm font-normal transition-colors duration-200  mb-1 px-[14px] 560:px-4 py-3',
-                )}
-              >
-                <div className='flex gap-8 items-center'>
-                  <span>{icon}</span>
-                  {useWindowSize(1240) ? <></> : <span>{title}</span>}
-                </div>
-                {countId && (
-                  <div className='absolute top-15 right-10 text-xs font-light bg-gray-200 rounded-full px-2 py-1 text-gray-700  shadow-sm'>
-                    {countId}
+              {title === 'Settings' ? (
+                <NavLink
+                  to={route}
+                  className={clsx(
+                    isActive
+                      ? 'bg-light-blue-main border-r-[5px] 560:border-r-[7px] border-r-light-blue-100 rounded-tl-md rounded-bl-md'
+                      : '',
+                    'hover:text-light-grey-300 cursor-pointer text-white no-underline relative flex text-sm font-normal transition-colors duration-200  mb-1 px-[14px] 560:px-4 py-3',
+                  )}
+                >
+                  <div className='flex gap-8 items-center'>
+                    <span>{icon}</span>
+                    {useWindowSize(1240) ? <></> : <span>{title}</span>}
                   </div>
-                )}
-              </NavLink>
+                </NavLink>
+              ) : (
+                <button
+                  onClick={() => {
+                    setToken('');
+                    setUser(null);
+                    toast.warning('You are logged out');
+                    navigate('/');
+                  }}
+                  className={clsx(
+                    isActive
+                      ? 'bg-light-blue-main border-r-[5px] 560:border-r-[7px] border-r-light-blue-100 rounded-tl-md rounded-bl-md'
+                      : '',
+                    'hover:text-light-grey-300 cursor-pointer text-white no-underline relative flex text-sm font-normal transition-colors duration-200  mb-1 px-[14px] 560:px-4 py-3 bg-transparent',
+                  )}
+                >
+                  <div className='flex gap-8 items-center'>
+                    <span>{icon}</span>
+                    {useWindowSize(1240) ? <></> : <span>{title}</span>}
+                  </div>
+                </button>
+              )}
             </div>
           );
         })}
