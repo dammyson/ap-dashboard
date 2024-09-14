@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { Button as HeadlessButton } from '@headlessui/react';
 import clsx from 'clsx';
 
 export enum BorderRadius {
@@ -14,16 +13,18 @@ export enum ButtonSize {
   Small = 'small',
 }
 
-interface ButtonProps {
+interface ButtonProps
+  extends Omit<JSX.IntrinsicElements['button'], 'disabled'> {
   leadingIcon?: ReactNode;
   trailingIcon?: ReactNode;
   mode?: 'solid' | 'outlined' | 'text';
   radius?: BorderRadius;
-  buttonText: string;
+  buttonText: ReactNode;
   size?: ButtonSize;
   className?: string;
   buttonClass?: string;
-  onClick: () => void;
+  onClick?: () => void;
+  disabled?: boolean;
 }
 
 export function Button({
@@ -35,11 +36,14 @@ export function Button({
   buttonText,
   buttonClass,
   size,
+  disabled,
   onClick,
+  ...rest
 }: ButtonProps) {
   return (
     <div className='relative'>
-      <HeadlessButton
+      <button
+        disabled={disabled}
         onClick={onClick}
         className={clsx(
           radius === BorderRadius.Large
@@ -60,11 +64,12 @@ export function Button({
           'cursor-pointer flex justify-center items-center gap-2 py-2 px-4 focus:outline-none',
           className,
         )}
+        {...rest}
       >
         {leadingIcon}
         <p className={buttonClass}>{buttonText}</p>
         {trailingIcon}
-      </HeadlessButton>
+      </button>
     </div>
   );
 }

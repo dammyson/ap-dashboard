@@ -17,12 +17,14 @@ import {
   XSCheckMark,
 } from '@/components/svg/surveys/Surveys';
 import WelcomeMessage from '@/components/welcomeMessage';
+import { useUser } from '@/context/AppContext';
 import clsx from 'clsx';
 import { ChangeEvent, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 function EditSurvey({}) {
   const { id } = useParams();
+  const { user } = useUser();
   const navigate = useNavigate();
   const SurveyQuestions: PanelNavigationItem[] = [
     { title: 'Question', id: 'question ' },
@@ -75,7 +77,7 @@ function EditSurvey({}) {
         <div className='1240:pr-12'>
           <div className='flex items-start flex-col 560:flex-row 560:justify-between 560:items-center gap-2'>
             <WelcomeMessage
-              username='Ayo'
+              username={user?.user_name.split(' ')[1]}
               description="Let's review today's insights"
             />
             <div className='w-full 560:w-fit'>

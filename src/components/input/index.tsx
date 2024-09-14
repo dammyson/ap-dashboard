@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Field, Input as HeadlessInput, Label } from '@headlessui/react';
+import { Field, Label } from '@headlessui/react';
 import clsx from 'clsx';
 
 export enum InputState {
@@ -35,12 +35,13 @@ export function Input({
   inputSize,
   isCurved,
   hasBorder,
+  ...rest
 }: InputProps) {
   return (
     <Field className='relative'>
       {label && <Label className={'mb-1 inline-block'}>{label}</Label>}
       <div className='relative'>
-        <HeadlessInput
+        <input
           type={type}
           placeholder={placeHolder}
           disabled={state === InputState.READ_ONLY}
@@ -60,6 +61,7 @@ export function Input({
             hasBorder ? 'border-light-grey-800' : 'border-transparent',
             className,
           )}
+          {...rest}
         />
         {leadingIcon && (
           <span
