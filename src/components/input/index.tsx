@@ -21,6 +21,7 @@ interface InputProps
   inputSize?: 'small' | 'large';
   isCurved?: boolean;
   hasBorder?: boolean;
+  onClick?: () => void;
 }
 
 export function Input({
@@ -35,6 +36,7 @@ export function Input({
   inputSize,
   isCurved,
   hasBorder,
+  onClick,
   ...rest
 }: InputProps) {
   return (
@@ -72,6 +74,7 @@ export function Input({
         )}
         {trailingIcon && (
           <span
+            onClick={onClick}
             className={clsx(
               'absolute right-6 cursor-pointer top-1/2 -translate-y-3',
             )}
@@ -88,7 +91,7 @@ export function Input({
               : state === InputState.Success
                 ? 'text-light-success-100'
                 : 'text-light-grey-500',
-            'absolute mt-2 text-xs 480:text-sm 768:text-base',
+            '768:absolute mt-2 text-xs 480:text-sm 880:text-base',
           )}
         >
           {helper}

@@ -4,6 +4,7 @@ import {
   Email,
   Padlock,
   SlashedEye,
+  UnslashedEye,
 } from '../../../components/svg/auth/AuthIcons';
 import mainLogo from '../../../assets/logos/main_logo.png';
 import { NavLink } from 'react-router-dom';
@@ -77,7 +78,7 @@ function Login() {
               leadingIcon={<Padlock />}
               trailingIcon={
                 <span onClick={() => setShow(!show)}>
-                  <SlashedEye />
+                  {show ? <UnslashedEye /> : <SlashedEye />}
                 </span>
               }
               isCurved
