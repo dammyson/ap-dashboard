@@ -4,6 +4,11 @@ import { toast } from 'sonner';
 
 export const useAddMembers = () => {
   const [loading, setisLoading] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [isValidMail, setIsValidMail] = useState(false);
+  const [selectedRole, setSelectedRole] = useState('Admin');
   const token = sessionStorage.getItem('admin_token');
 
   const handleAddMembers = async (values: AddAdmins) => {
@@ -28,15 +33,34 @@ export const useAddMembers = () => {
 
       const response = await data.json();
       setisLoading(false);
-      if (response?.errors) {
-        toast.error(response.message);
-      } else if (response?.message.includes('SQLSTATE[23000]')) {
-        toast.warning('User with email already exist');
-      } else toast.success(response?.message);
+      if (response?.error) {
+        if (response?.message.includes('SQLSTATE[23000]')) {
+          toast.warning('User with email already exist');
+        } else toast.error(response.message);
+      } else {
+        toast.success(response.message);
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+        setSelectedRole('Admin');
+      }
     } catch (error) {
       toast.error((error as MutationErrorPayload)?.data?.message);
     }
   };
 
-  return { handleAddMembers, loading };
+  return {
+    handleAddMembers,
+    loading,
+    firstName,
+    setFirstName,
+    lastName,
+    setLastName,
+    email,
+    setEmail,
+    isValidMail,
+    setIsValidMail,
+    selectedRole,
+    setSelectedRole,
+  };
 };
