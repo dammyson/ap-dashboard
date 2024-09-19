@@ -22,20 +22,19 @@ export const useChangePwd = () => {
           body: JSON.stringify({
             current_password: values.currentPassword,
             new_password: values.newPassword,
-            current_password_confirmation: values.confirmPassword,
+            new_password_confirmation: values.confirmPassword,
           }),
         },
       );
 
       const res = await patchData.json();
       setLoading(false);
-      if (res?.errors) {
+      if (res?.error) {
         toast.error(res.message);
       } else {
-        // setUpdatePwdModal(true);
+        setUpdatePwdModal(true);
       }
     } catch (error) {
-      console.error('err', error);
       toast.error((error as MutationErrorPayload)?.data?.message);
     }
   };

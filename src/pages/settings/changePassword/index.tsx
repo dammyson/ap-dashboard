@@ -59,9 +59,11 @@ function ChangePassword() {
     }
   }, [pwdField.newPassword, pwdField.confirmPassword]);
 
-  const handleUpdatePwd = () => {
-    // console.log({ ...pwdField });
-    handleChangePassword({ ...pwdField });
+  const handleUpdatePwd = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!validatePwd.confirmPassword) {
+      return;
+    } else handleChangePassword({ ...pwdField });
   };
 
   return (
@@ -73,103 +75,111 @@ function ChangePassword() {
           description='Please, fill in the information below.'
           textClass='hidden 640:block'
         />
-        <div className='w-full'>
-          <div className='grid grid-cols-[minmax(200px,480px)] 768:grid-cols-[minmax(250px,569px)_minmax(250px,569px)] gap-y-7 768:gap-y-10 gap-x-8 1024:gap-x-28 justify-between py-6 mt-4 768:mt-8'>
-            <div className='text-light-grey-200 font-medium text-[16px] max-w-[569px] '>
-              <Input
-                label='Current Password'
-                name='currentPassword'
-                isCurved
-                hasBorder
-                type={showCurrentPwd ? 'text' : 'password'}
-                onChange={handleOnChange}
-                onClick={() => setShowCurrentPwd(!showCurrentPwd)}
-                trailingIcon={
-                  showCurrentPwd ? <UnslashedEye /> : <SlashedEye />
-                }
-                className='drop-shadow-none text-lg !border-[#BBCAE1] !h-[50px] 960:!min-h-[65px]'
-              />
-            </div>
-            <div className='text-light-grey-200 font-medium text-[16px] max-w-[569px] '>
-              <Input
-                label='New Password'
-                name='newPassword'
-                isCurved
-                hasBorder
-                type={showNewPwd ? 'text' : 'password'}
-                onChange={handleOnChange}
-                onClick={() => setShowNewPwd(!showNewPwd)}
-                state={
-                  pwdField.newPassword && !validatePwd.newPassword
-                    ? InputState.ERROR
-                    : InputState.NORMAL
-                }
-                trailingIcon={showNewPwd ? <UnslashedEye /> : <SlashedEye />}
-                helper={
-                  pwdField.newPassword &&
-                  !validatePwd.newPassword &&
-                  'Your password must be at least 8 characters long and contain any of these: _!@#$%'
-                }
-                className='drop-shadow-none text-lg !border-[#BBCAE1] !h-[50px] 960:!min-h-[65px]'
-              />
-            </div>
-            <div className='text-light-grey-200 font-medium text-[16px] max-w-[569px] '>
-              <Input
-                label='Confirm Password'
-                name='confirmPassword'
-                isCurved
-                hasBorder
-                type={showConfirmPwd ? 'text' : 'password'}
-                onChange={handleOnChange}
-                onClick={() => setShowConfirmPwd(!showConfirmPwd)}
-                state={
-                  pwdField.confirmPassword && !validatePwd.confirmPassword
-                    ? InputState.ERROR
-                    : InputState.NORMAL
-                }
-                helper={
-                  pwdField.confirmPassword &&
-                  !validatePwd.confirmPassword &&
-                  'Password must match the new password field'
-                }
-                trailingIcon={
-                  showConfirmPwd ? <UnslashedEye /> : <SlashedEye />
-                }
-                className='drop-shadow-none text-lg !border-[#BBCAE1] !h-[50px] 960:!min-h-[65px]'
-              />
+        <form
+          onSubmit={handleUpdatePwd}
+          className=' flex items-center justify-center flex-col'
+        >
+          <div className='w-full'>
+            <div className='grid grid-cols-[minmax(200px,480px)] 768:grid-cols-[minmax(250px,569px)_minmax(250px,569px)] gap-y-7 768:gap-y-10 gap-x-8 1024:gap-x-28 justify-between py-6 mt-4 768:mt-8'>
+              <div className='text-light-grey-200 font-medium text-[16px] max-w-[569px] '>
+                <Input
+                  label='Current Password'
+                  name='currentPassword'
+                  isCurved
+                  hasBorder
+                  required
+                  type={showCurrentPwd ? 'text' : 'password'}
+                  onChange={handleOnChange}
+                  onClick={() => setShowCurrentPwd(!showCurrentPwd)}
+                  trailingIcon={
+                    showCurrentPwd ? <UnslashedEye /> : <SlashedEye />
+                  }
+                  className='drop-shadow-none text-lg !border-[#BBCAE1] !h-[50px] 960:!min-h-[65px]'
+                />
+              </div>
+              <div className='text-light-grey-200 font-medium text-[16px] max-w-[569px] '>
+                <Input
+                  label='New Password'
+                  name='newPassword'
+                  isCurved
+                  hasBorder
+                  required
+                  type={showNewPwd ? 'text' : 'password'}
+                  onChange={handleOnChange}
+                  onClick={() => setShowNewPwd(!showNewPwd)}
+                  state={
+                    pwdField.newPassword && !validatePwd.newPassword
+                      ? InputState.ERROR
+                      : InputState.NORMAL
+                  }
+                  trailingIcon={showNewPwd ? <UnslashedEye /> : <SlashedEye />}
+                  helper={
+                    pwdField.newPassword &&
+                    !validatePwd.newPassword &&
+                    'Your password must be at least 8 characters long and contain any of these: _!@#$%'
+                  }
+                  className='drop-shadow-none text-lg !border-[#BBCAE1] !h-[50px] 960:!min-h-[65px]'
+                />
+              </div>
+              <div className='text-light-grey-200 font-medium text-[16px] max-w-[569px] '>
+                <Input
+                  label='Confirm Password'
+                  name='confirmPassword'
+                  isCurved
+                  hasBorder
+                  required
+                  type={showConfirmPwd ? 'text' : 'password'}
+                  onChange={handleOnChange}
+                  onClick={() => setShowConfirmPwd(!showConfirmPwd)}
+                  state={
+                    pwdField.confirmPassword && !validatePwd.confirmPassword
+                      ? InputState.ERROR
+                      : InputState.NORMAL
+                  }
+                  helper={
+                    pwdField.confirmPassword &&
+                    !validatePwd.confirmPassword &&
+                    'Password must match the new password field'
+                  }
+                  trailingIcon={
+                    showConfirmPwd ? <UnslashedEye /> : <SlashedEye />
+                  }
+                  className='drop-shadow-none text-lg !border-[#BBCAE1] !h-[50px] 960:!min-h-[65px]'
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className='w-full max-w-[447px] grid items-center gap-6 960:gap-9 mt-8 960:mt-28 960:mb-[80px]'>
-          <Button
-            onClick={() => handleUpdatePwd()}
-            buttonText={
-              loading ? (
-                <Spinner className='text-white w-5 h-5 768:w-7 768:h-7' />
-              ) : (
-                'Update Password'
-              )
-            }
-            size={ButtonSize.Large}
-            radius={BorderRadius.Large}
-            className=' 768:!text-xl 1240:!text-2xl !min-h-[55px]  960:!min-h-[65px] font-semibold'
-          />
-          <Button
-            onClick={() => {
-              setPwdField({
-                currentPassword: '',
-                newPassword: '',
-                confirmPassword: '',
-              }),
-                console.log(pwdField);
-            }}
-            buttonText='Cancel'
-            mode='outlined'
-            size={ButtonSize.Large}
-            radius={BorderRadius.Large}
-            className=' hover:border-light-blue-100 768:!text-xl 1240:!text-2xl !min-h-[55px] 960:!min-h-[65px] font-semibold'
-          />
-        </div>
+          <div className='w-full max-w-[447px] grid items-center gap-6 960:gap-9 mt-8 960:mt-28 960:mb-[80px]'>
+            <Button
+              type='submit'
+              buttonText={
+                loading ? (
+                  <Spinner className='text-white w-5 h-5 768:w-7 768:h-7' />
+                ) : (
+                  'Update Password'
+                )
+              }
+              size={ButtonSize.Large}
+              radius={BorderRadius.Large}
+              className=' 768:!text-xl 1240:!text-2xl !min-h-[55px]  960:!min-h-[65px] font-semibold'
+            />
+            <Button
+              onClick={() => {
+                setPwdField({
+                  currentPassword: '',
+                  newPassword: '',
+                  confirmPassword: '',
+                }),
+                  console.log(pwdField);
+              }}
+              buttonText='Cancel'
+              mode='outlined'
+              size={ButtonSize.Large}
+              radius={BorderRadius.Large}
+              className=' hover:border-light-blue-100 768:!text-xl 1240:!text-2xl !min-h-[55px] 960:!min-h-[65px] font-semibold'
+            />
+          </div>
+        </form>
         {updatePwdModal && (
           <Modal
             isBackground
