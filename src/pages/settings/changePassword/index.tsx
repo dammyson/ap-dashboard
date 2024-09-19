@@ -12,7 +12,6 @@ import {
   LargeCheckmark,
 } from '@/components/svg/settings/Settings';
 import { Card } from '@/components/card';
-import { ChangePwd } from '@/types/types';
 import { passwordRegex } from '@/utils/regex';
 import { useChangePwd } from '@/api/settings/changePassword';
 import { Spinner } from '@/components/svg/spinner/Spinner';
@@ -21,17 +20,25 @@ function ChangePassword() {
   const [showCurrentPwd, setShowCurrentPwd] = useState(false);
   const [showNewPwd, setShowNewPwd] = useState(false);
   const [showConfirmPwd, setShowConfirmPwd] = useState(false);
-  const { handleChangePassword, loading, updatePwdModal, setUpdatePwdModal } =
-    useChangePwd();
-  const [pwdField, setPwdField] = useState<ChangePwd>({
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: '',
-  });
-  const [validatePwd, setValidatePwd] = useState({
-    newPassword: false,
-    confirmPassword: false,
-  });
+  const {
+    handleChangePassword,
+    loading,
+    updatePwdModal,
+    setUpdatePwdModal,
+    pwdField,
+    setPwdField,
+    validatePwd,
+    setValidatePwd,
+  } = useChangePwd();
+  // const [pwdField, setPwdField] = useState<ChangePwd>({
+  //   currentPassword: '',
+  //   newPassword: '',
+  //   confirmPassword: '',
+  // });
+  // const [validatePwd, setValidatePwd] = useState({
+  //   newPassword: false,
+  //   confirmPassword: false,
+  // });
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -85,6 +92,7 @@ function ChangePassword() {
                 <Input
                   label='Current Password'
                   name='currentPassword'
+                  value={pwdField.currentPassword}
                   isCurved
                   hasBorder
                   required
@@ -101,6 +109,7 @@ function ChangePassword() {
                 <Input
                   label='New Password'
                   name='newPassword'
+                  value={pwdField.newPassword}
                   isCurved
                   hasBorder
                   required
@@ -125,6 +134,7 @@ function ChangePassword() {
                 <Input
                   label='Confirm Password'
                   name='confirmPassword'
+                  value={pwdField.confirmPassword}
                   isCurved
                   hasBorder
                   required
@@ -164,14 +174,7 @@ function ChangePassword() {
               className=' 768:!text-xl 1240:!text-2xl !min-h-[55px]  960:!min-h-[65px] font-semibold'
             />
             <Button
-              onClick={() => {
-                setPwdField({
-                  currentPassword: '',
-                  newPassword: '',
-                  confirmPassword: '',
-                }),
-                  console.log(pwdField);
-              }}
+              onClick={() => {}}
               buttonText='Cancel'
               mode='outlined'
               size={ButtonSize.Large}

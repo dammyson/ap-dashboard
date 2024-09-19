@@ -6,6 +6,22 @@ export const useChangePwd = () => {
   const token = sessionStorage.getItem('admin_token');
   const [loading, setLoading] = useState(false);
   const [updatePwdModal, setUpdatePwdModal] = useState<boolean>(false);
+  const [pwdField, setPwdField] = useState<ChangePwd>({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  });
+  const resetField = () => {
+    setPwdField(() => ({
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: '',
+    }));
+  };
+  const [validatePwd, setValidatePwd] = useState({
+    newPassword: false,
+    confirmPassword: false,
+  });
 
   const handleChangePassword = async (values: ChangePwd) => {
     try {
@@ -31,13 +47,25 @@ export const useChangePwd = () => {
       setLoading(false);
       if (res?.error) {
         toast.error(res.message);
+      } else if (res?.errors) {
+        toast.error(res.message);
       } else {
         setUpdatePwdModal(true);
+        resetField();
       }
     } catch (error) {
       toast.error((error as MutationErrorPayload)?.data?.message);
     }
   };
 
-  return { handleChangePassword, loading, updatePwdModal, setUpdatePwdModal };
+  return {
+    handleChangePassword,
+    loading,
+    updatePwdModal,
+    setUpdatePwdModal,
+    pwdField,
+    setPwdField,
+    validatePwd,
+    setValidatePwd,
+  };
 };
