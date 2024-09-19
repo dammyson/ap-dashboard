@@ -17,7 +17,6 @@ export const useLogin = () => {
         {
           method: 'POST',
           headers: {
-            publickey: `${import.meta.env.VITE_API_PUBLIC_KEY}`,
             'content-type': 'application/json',
           },
           body: JSON.stringify({

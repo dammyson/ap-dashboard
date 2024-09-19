@@ -137,6 +137,11 @@ export interface User {
   updated_at: string;
 }
 
+export interface ChangePwd {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
 export interface AddAdmins {
   userName: string;
   email: string;
