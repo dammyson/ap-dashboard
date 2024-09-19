@@ -34,7 +34,7 @@ export const useLogin = () => {
       } else {
         setUser(res.data.admin);
         setToken(res.data.token);
-        toast.success('Admin Login Successful!');
+        toast.success(`${res?.data?.admin?.role} Login Successful!`);
         navigate('/dashboard');
       }
     } catch (err) {

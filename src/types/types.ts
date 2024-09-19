@@ -142,3 +142,8 @@ export interface ChangePwd {
   newPassword: string;
   confirmPassword: string;
 }
+export interface AddAdmins {
+  userName: string;
+  email: string;
+  selectedRole: string;
+}
