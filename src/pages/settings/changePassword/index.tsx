@@ -30,15 +30,6 @@ function ChangePassword() {
     validatePwd,
     setValidatePwd,
   } = useChangePwd();
-  // const [pwdField, setPwdField] = useState<ChangePwd>({
-  //   currentPassword: '',
-  //   newPassword: '',
-  //   confirmPassword: '',
-  // });
-  // const [validatePwd, setValidatePwd] = useState({
-  //   newPassword: false,
-  //   confirmPassword: false,
-  // });
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
