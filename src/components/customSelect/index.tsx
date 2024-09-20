@@ -2,7 +2,7 @@ import { Field, Label } from '@headlessui/react';
 import clsx from 'clsx';
 import { ReactNode, useEffect, useState, useRef } from 'react';
 import { ReactCustomSelect } from '../searchSelect';
-import { RoleOption } from '../profileForm';
+import { RoleOption } from '@/pages/settings/profile';
 
 export enum SelectType {
   SELECT = 'select',
@@ -16,7 +16,7 @@ interface SelectProps {
   hasBorder?: Boolean;
   trailingIcon?: ReactNode;
   isCurved?: Boolean;
-  selectedRole: string;
+  selectedRole: string | undefined;
   options: RoleOption[];
   onSelect?: (info: string) => void;
 }

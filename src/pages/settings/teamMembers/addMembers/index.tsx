@@ -7,12 +7,13 @@ import {
 } from '@/components/svg/settings/Settings';
 import { Input, InputState } from '@/components/input';
 import { CustomSelect, SelectType } from '@/components/customSelect';
-import { RoleOption } from '@/components/profileForm';
+
 import { useAddMembers } from '@/api/settings/addMembers';
 import { Spinner } from '@/components/svg/spinner/Spinner';
 import { emailRegex } from '@/utils/regex';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
+import { RoleOption } from '../../profile';
 
 function AddMembers() {
   const {
