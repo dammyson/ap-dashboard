@@ -39,7 +39,7 @@ export const Modal = ({
     return () => {
       document.removeEventListener('click', closeBackground);
     };
-  });
+  }, [backgroundRef]);
 
   return (
     <div

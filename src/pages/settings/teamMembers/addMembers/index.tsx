@@ -1,12 +1,18 @@
 import CategoryHeader from '@/components/categoryHeader';
 import { BorderRadius, Button, ButtonSize } from '@/components/button';
-import { DropDownArrow, Upload } from '@/components/svg/settings/Settings';
+import {
+  DropDownArrow,
+  SmallCheckmark,
+  Upload,
+} from '@/components/svg/settings/Settings';
 import { Input, InputState } from '@/components/input';
 import { CustomSelect, SelectType } from '@/components/customSelect';
 import { RoleOption } from '@/components/profileForm';
 import { useAddMembers } from '@/api/settings/addMembers';
 import { Spinner } from '@/components/svg/spinner/Spinner';
 import { emailRegex } from '@/utils/regex';
+import { Modal, SizeType } from '@/components/modal';
+import { Cancel } from '@/components/svg/modal/Modal';
 
 function AddMembers() {
   const {
@@ -22,6 +28,8 @@ function AddMembers() {
     setIsValidMail,
     selectedRole,
     setSelectedRole,
+    isModalOpen,
+    setIsModalOpen,
   } = useAddMembers();
 
   const validateMail = (val: string) => {
@@ -136,6 +144,33 @@ function AddMembers() {
           />
         </div>
       </form>
+      {isModalOpen && (
+        <Modal
+          isCentered
+          cancelIcon={<Cancel />}
+          isBackground
+          size={SizeType.SMALL}
+          onClick={() => setIsModalOpen(false)}
+        >
+          <SmallCheckmark />
+          <div className='font-normal text-lg 768:text-[22px] mt-2 768:mt-4 mb-5 768:mb-9 text-light-primary-deep_black'>
+            <p className='font-semibold mb-2'>New member successfully added!</p>
+            <p className='text-base 768:text-lg font-medium'>
+              A tempoary password has been provided via email, Kindly prompt the
+              new member to check their inbox
+            </p>
+          </div>
+          <div className='w-full max-w-[340px]'>
+            <Button
+              size={ButtonSize.Large}
+              radius={BorderRadius.Large}
+              buttonText='Close'
+              onClick={() => setIsModalOpen(false)}
+              className='!font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[65px] '
+            />
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }
