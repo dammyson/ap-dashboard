@@ -1,6 +1,6 @@
 export interface ITeamMembers {
-  avatar: string;
-  name: string;
+  image_url: string;
+  user_name: string;
   role: string;
   email: string;
 }
