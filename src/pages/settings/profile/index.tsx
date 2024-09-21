@@ -3,7 +3,7 @@ import CategoryHeader from '@/components/categoryHeader';
 import { ProfileData } from '@/components/profileData';
 import { Button } from '@/components/button';
 import { Upload } from 'antd';
-import { Input } from '@/components/input';
+import { Input, InputState } from '@/components/input';
 import { CustomSelect, SelectType } from '@/components/customSelect';
 import { useUser } from '@/context/AppContext';
 import { DropDownArrow, Edit } from '@/components/svg/settings/Settings';
@@ -36,7 +36,11 @@ function Profile() {
         }
       />
       <div className='bg-[#00000003] flex items-center justify-between w-full border-[1px] border-light-blue-50 rounded-[20px] py-3 560:py-4 px-6 my-6 gap-4'>
-        <ProfileData src={profileImage} name='Corlet Jasper' role='Admin' />
+        <ProfileData
+          src={profileImage}
+          name={user?.user_name}
+          role={user?.role}
+        />
         <Button
           onClick={() => {}}
           buttonText='Upload Photo'
@@ -66,6 +70,7 @@ function Profile() {
               value={user?.user_name.split(' ')[0]}
               isCurved
               hasBorder
+              state={InputState.READ_ONLY}
               className='drop-shadow-none text-base 768:text-xl !border-light-blue-50 hover:!border-[#acbbd0] !h-[50px] 960:!min-h-[65px] text-black'
             />
           </div>
@@ -75,6 +80,7 @@ function Profile() {
               value={user?.user_name.split(' ')[1]}
               isCurved
               hasBorder
+              state={InputState.READ_ONLY}
               className='drop-shadow-none text-base 768:text-xl !border-light-blue-50 hover:!border-[#acbbd0] !h-[50px] 960:!min-h-[65px]'
             />
           </div>
@@ -84,6 +90,7 @@ function Profile() {
               value={user?.email}
               isCurved
               hasBorder
+              state={InputState.READ_ONLY}
               className='drop-shadow-none text-base 768:text-xl !border-light-blue-50 hover:!border-[#acbbd0] !h-[50px] 960:!min-h-[65px]'
             />
           </div>
