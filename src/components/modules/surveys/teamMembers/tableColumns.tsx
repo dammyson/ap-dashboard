@@ -13,8 +13,8 @@ export const useTeamMembersColumn = (
   const tableColumns = useMemo(() => {
     return [
       {
-        dataIndex: 'avatar',
-        key: 'avatar',
+        dataIndex: 'image_url',
+        key: 'image_url',
         width: 100,
         render: (_, record) => (
           <img
@@ -25,8 +25,8 @@ export const useTeamMembersColumn = (
         ),
       },
       {
-        dataIndex: 'name',
-        key: 'name',
+        dataIndex: 'user_name',
+        key: 'user_name',
       },
       {
         dataIndex: 'role',

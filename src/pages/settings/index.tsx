@@ -42,7 +42,7 @@ function Settings() {
             navigationItems={navigationItems}
             currentTab={currentTab}
             setCurrentTab={setCurrentTab}
-            className='!pb-0 1240:!pb-10'
+            className='!pb-0'
           >
             <div className='mt-6 640:mt-10'>
               {currentTab.id === 'profile' ? (
