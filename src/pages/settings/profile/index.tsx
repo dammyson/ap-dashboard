@@ -1,12 +1,14 @@
 import profileImage from '@/assets/profileImage/profile-img.png';
 import CategoryHeader from '@/components/categoryHeader';
 import { ProfileData } from '@/components/profileData';
-import { Button } from '@/components/button';
+import { BorderRadius, Button, ButtonSize } from '@/components/button';
 import { Upload } from 'antd';
 import { Input, InputState } from '@/components/input';
-import { CustomSelect, SelectType } from '@/components/customSelect';
 import { useUser } from '@/context/AppContext';
-import { DropDownArrow, Edit } from '@/components/svg/settings/Settings';
+import { Edit } from '@/components/svg/settings/Settings';
+import { Spinner } from '@/components/svg/spinner/Spinner';
+import { useState } from 'react';
+import clsx from 'clsx';
 
 export interface RoleOption {
   label: string;
@@ -16,10 +18,8 @@ export interface RoleOption {
 
 function Profile() {
   const { user } = useUser();
-  const roleOptions: RoleOption[] = [
-    { label: 'Admin', value: 'admin' },
-    { label: 'Sub-admin', value: 'sub-admin' },
-  ];
+  const [loading, setLoading] = useState();
+  const [isEditable, setIsEditatble] = useState(false);
 
   return (
     <div>
@@ -49,13 +49,14 @@ function Profile() {
           className='bg-transparent text-light-primary-black hover:text-[#393939] text-nowrap hidden 560:flex'
         />
       </div>
-      <div className='bg-[#00000003] w-full border-[1px] border-light-blue-50 rounded-[20px] py-6 px-8'>
+      <div className='bg-[#00000003] w-full border-[1px] border-light-blue-50 rounded-[20px] py-6 px-8 flex items-center justify-center flex-col'>
         <div className='flex items-center justify-between w-full'>
           <p className='text-lg 560:text-xl 960:text-2xl font-medium text-primary-black'>
             Personal Information
           </p>
           <Button
-            onClick={() => {}}
+            onClick={() => setIsEditatble(true)}
+            disabled={isEditable}
             buttonText='Edit'
             buttonClass='hidden 560:block'
             trailingIcon={<Edit />}
@@ -71,7 +72,7 @@ function Profile() {
               isCurved
               hasBorder
               state={InputState.READ_ONLY}
-              className='drop-shadow-none text-base 768:text-xl !border-light-blue-50 hover:!border-[#acbbd0] !h-[50px] 960:!min-h-[65px] text-black'
+              className='drop-shadow-none text-base 768:text-xl !border-light-blue-50 !h-[50px] 960:!min-h-[65px] text-black'
             />
           </div>
           <div className='text-light-grey-200 font-medium text-[17px] 768:text-xl max-w-[569px]'>
@@ -81,7 +82,7 @@ function Profile() {
               isCurved
               hasBorder
               state={InputState.READ_ONLY}
-              className='drop-shadow-none text-base 768:text-xl !border-light-blue-50 hover:!border-[#acbbd0] !h-[50px] 960:!min-h-[65px]'
+              className='drop-shadow-none text-base 768:text-xl !border-light-blue-50 !h-[50px] 960:!min-h-[65px]'
             />
           </div>
           <div className='text-light-grey-200 font-medium text-[17px] 768:text-xl max-w-[569px]'>
@@ -91,7 +92,7 @@ function Profile() {
               isCurved
               hasBorder
               state={InputState.READ_ONLY}
-              className='drop-shadow-none text-base 768:text-xl !border-light-blue-50 hover:!border-[#acbbd0] !h-[50px] 960:!min-h-[65px]'
+              className='drop-shadow-none text-base 768:text-xl !border-light-blue-50 !h-[50px] 960:!min-h-[65px]'
             />
           </div>
           <div className='text-light-grey-200 font-medium text-[17px] 768:text-xl max-w-[569px]'>
@@ -100,24 +101,42 @@ function Profile() {
               value=''
               isCurved
               hasBorder
-              className='drop-shadow-none text-base 768:text-xl !border-light-blue-50 hover:!border-[#acbbd0] !h-[50px] 960:!min-h-[65px]'
+              state={!isEditable && InputState.READ_ONLY}
+              className={clsx(
+                'drop-shadow-none text-base 768:text-xl !border-light-blue-50 !h-[50px] 960:!min-h-[65px]',
+                isEditable && ' hover:!border-[#acbbd0]',
+              )}
             />
           </div>
-
-          <div className='text-light-grey-200 font-medium text-[17px] 760:text-xl max-w-[569px]'>
-            <CustomSelect
+          <div className='text-light-grey-200 font-medium text-[17px] 768:text-xl max-w-[569px]'>
+            <Input
               label='Role'
-              selectType={SelectType.SELECT}
-              hasBorder
+              value={user?.role}
               isCurved
-              trailingIcon={<DropDownArrow />}
-              selectedRole={user?.role}
-              options={roleOptions}
-              // onSelect={(info) => setSelectedRole(info)}
-              className='!h-[50px] 960:!min-h-[65px]'
+              hasBorder
+              state={InputState.READ_ONLY}
+              className='drop-shadow-none text-base 768:text-xl !border-light-blue-50 !h-[50px] 960:!min-h-[65px]'
             />
           </div>
         </div>
+        {isEditable && (
+          <div className='w-full max-w-[447px] grid items-center gap-6 960:gap-9 my-4 960:mt-10  960:mb-12'>
+            <Button
+              onClick={() => setIsEditatble(false)}
+              type='submit'
+              buttonText={
+                loading ? (
+                  <Spinner className='text-white w-5 h-5 768:w-7 768:h-7' />
+                ) : (
+                  'Confirm'
+                )
+              }
+              size={ButtonSize.Large}
+              radius={BorderRadius.Large}
+              className='768:!text-xl 1240:!text-2xl font-semibold !min-h-[55px] 960:!min-h-[66px]'
+            />
+          </div>
+        )}
       </div>
     </div>
   );

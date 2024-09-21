@@ -1,7 +1,7 @@
 import Select, { components, DropdownIndicatorProps } from 'react-select';
 import '../../index.css';
 import { DropDownArrow } from '../svg/settings/Settings';
-import { RoleOption } from '../profileForm';
+import { RoleOption } from '@/pages/settings/profile';
 
 interface SearchSelectProps {
   className?: string;

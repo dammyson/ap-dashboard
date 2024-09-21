@@ -49,7 +49,7 @@ function TeamMembers() {
           />
 
           {isLoading ? (
-            <div className='flex items-center justify-center py-6'>
+            <div className='flex items-center justify-center py-6 '>
               <Spin
                 indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />}
               />
@@ -58,12 +58,13 @@ function TeamMembers() {
             <Table
               pagination={false}
               columns={tableColumns}
-              className='team-members'
+              className='custom-scrollbar hide-arrows  overflow-x-scroll'
               dataSource={teamMembers}
               scroll={{
                 y: 506,
+                x: true,
               }}
-              rootClassName='w-full overflow-x-scroll hidden-scrollbar'
+              rootClassName='w-full hidden-scrollbar '
               showHeader={false}
             />
           )}
