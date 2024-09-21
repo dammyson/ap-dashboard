@@ -5,7 +5,7 @@ import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { Input } from '@/components/input';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { PanelNavigationItem } from '@/components/Panel';
-import { RoleOption } from '@/components/profileForm';
+
 import { ReactCustomSelect } from '@/components/searchSelect';
 import { DropDownArrow } from '@/components/svg/settings/Settings';
 import {
@@ -18,6 +18,7 @@ import {
 } from '@/components/svg/surveys/Surveys';
 import WelcomeMessage from '@/components/welcomeMessage';
 import { useUser } from '@/context/AppContext';
+import { RoleOption } from '@/pages/settings/profile';
 import clsx from 'clsx';
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router';

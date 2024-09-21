@@ -1,3 +1,4 @@
+import { useUser } from '@/context/AppContext';
 import { AddAdmins, MutationErrorPayload } from '@/types/types';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -9,7 +10,8 @@ export const useAddMembers = () => {
   const [email, setEmail] = useState('');
   const [isValidMail, setIsValidMail] = useState(false);
   const [selectedRole, setSelectedRole] = useState('Admin');
-  const token = sessionStorage.getItem('admin_token');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { token } = useUser();
 
   const handleAddMembers = async (values: AddAdmins) => {
     try {
@@ -38,7 +40,7 @@ export const useAddMembers = () => {
           toast.warning('User with email already exist');
         } else toast.error(response.message);
       } else {
-        toast.success(response.message);
+        setIsModalOpen(true);
         setFirstName('');
         setLastName('');
         setEmail('');
@@ -62,5 +64,7 @@ export const useAddMembers = () => {
     setIsValidMail,
     selectedRole,
     setSelectedRole,
+    isModalOpen,
+    setIsModalOpen,
   };
 };

@@ -3,10 +3,12 @@ import { Login, MutationErrorPayload } from '@/types/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
+import { useGetProfile } from './settings/getProfile';
 
 export const useLogin = () => {
   const navigate = useNavigate();
   const { setUser, setToken } = useUser();
+  const { getProfile } = useGetProfile();
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (values: Login) => {
@@ -18,6 +20,7 @@ export const useLogin = () => {
           method: 'POST',
           headers: {
             'content-type': 'application/json',
+            Accept: 'application/json',
           },
           body: JSON.stringify({
             email: values.email,
@@ -34,6 +37,7 @@ export const useLogin = () => {
       } else {
         setUser(res.data.admin);
         setToken(res.data.token);
+        getProfile(res.data.token);
         toast.success(`${res?.data?.admin?.role} Login Successful!`);
         navigate('/dashboard');
       }

@@ -15,7 +15,7 @@ interface InputProps
   leadingIcon?: ReactNode;
   trailingIcon?: ReactNode;
   helper?: ReactNode;
-  state?: InputState;
+  state?: InputState | boolean;
   className?: string;
   placeHolder?: string;
   inputSize?: 'small' | 'large';

@@ -1,11 +1,26 @@
-import CategoryHeader from '../../../components/categoryHeader';
-import { ProfileData } from '../../../components/profileData';
-import profileImage from '../../../assets/profileImage/profile-img.png';
-import { Button } from '../../../components/button';
-import { Edit, Upload } from '../../../components/svg/settings/Settings';
-import { ProfileForm } from '../../../components/profileForm';
+import profileImage from '@/assets/profileImage/profile-img.png';
+import CategoryHeader from '@/components/categoryHeader';
+import { ProfileData } from '@/components/profileData';
+import { BorderRadius, Button, ButtonSize } from '@/components/button';
+import { Upload } from 'antd';
+import { Input, InputState } from '@/components/input';
+import { useUser } from '@/context/AppContext';
+import { Edit } from '@/components/svg/settings/Settings';
+import { Spinner } from '@/components/svg/spinner/Spinner';
+import { useState } from 'react';
+import clsx from 'clsx';
+
+export interface RoleOption {
+  label: string;
+  value: string;
+  icon?: React.ReactNode;
+}
 
 function Profile() {
+  const { user } = useUser();
+  const [loading, setLoading] = useState();
+  const [isEditable, setIsEditatble] = useState(false);
+
   return (
     <div>
       <CategoryHeader
@@ -21,7 +36,11 @@ function Profile() {
         }
       />
       <div className='bg-[#00000003] flex items-center justify-between w-full border-[1px] border-light-blue-50 rounded-[20px] py-3 560:py-4 px-6 my-6 gap-4'>
-        <ProfileData src={profileImage} name='Corlet Jasper' role='Admin' />
+        <ProfileData
+          src={profileImage}
+          name={user?.user_name}
+          role={user?.role}
+        />
         <Button
           onClick={() => {}}
           buttonText='Upload Photo'
@@ -30,13 +49,14 @@ function Profile() {
           className='bg-transparent text-light-primary-black hover:text-[#393939] text-nowrap hidden 560:flex'
         />
       </div>
-      <div className='bg-[#00000003] w-full border-[1px] border-light-blue-50 rounded-[20px] py-6 px-8'>
+      <div className='bg-[#00000003] w-full border-[1px] border-light-blue-50 rounded-[20px] py-6 px-8 flex items-center justify-center flex-col'>
         <div className='flex items-center justify-between w-full'>
           <p className='text-lg 560:text-xl 960:text-2xl font-medium text-primary-black'>
             Personal Information
           </p>
           <Button
-            onClick={() => {}}
+            onClick={() => setIsEditatble(true)}
+            disabled={isEditable}
             buttonText='Edit'
             buttonClass='hidden 560:block'
             trailingIcon={<Edit />}
@@ -44,7 +64,79 @@ function Profile() {
             className='!w-14 560:!w-fit float-right !bg-[#E9EEF5] text-light-primary-black border-[1px] rounded-[20px] border-light-blue-50 hover:border-[#9daabe] py-[7px] 560:py-[11px] px-[12px]'
           />
         </div>
-        <ProfileForm />
+        <div className='grid grid-cols-[minmax(200px,480px)] 768:grid-cols-[minmax(250px,569px)_minmax(250px,569px)] gap-y-4 768:gap-y-10 gap-x-6 768:gap-x-12 960:gap-x-24 1300:gap-x-32 justify-between pt-3 pb-6 560:py-6'>
+          <div className='text-light-grey-200 font-medium text-[17px] 768:text-xl max-w-[569px]'>
+            <Input
+              label='First Name'
+              value={user?.user_name.split(' ')[0]}
+              isCurved
+              hasBorder
+              state={InputState.READ_ONLY}
+              className='drop-shadow-none text-base 768:text-xl !border-light-blue-50 !h-[50px] 960:!min-h-[65px] text-black'
+            />
+          </div>
+          <div className='text-light-grey-200 font-medium text-[17px] 768:text-xl max-w-[569px]'>
+            <Input
+              label='Last Name'
+              value={user?.user_name.split(' ')[1]}
+              isCurved
+              hasBorder
+              state={InputState.READ_ONLY}
+              className='drop-shadow-none text-base 768:text-xl !border-light-blue-50 !h-[50px] 960:!min-h-[65px]'
+            />
+          </div>
+          <div className='text-light-grey-200 font-medium text-[17px] 768:text-xl max-w-[569px]'>
+            <Input
+              label='Email'
+              value={user?.email}
+              isCurved
+              hasBorder
+              state={InputState.READ_ONLY}
+              className='drop-shadow-none text-base 768:text-xl !border-light-blue-50 !h-[50px] 960:!min-h-[65px]'
+            />
+          </div>
+          <div className='text-light-grey-200 font-medium text-[17px] 768:text-xl max-w-[569px]'>
+            <Input
+              label='Phone Number'
+              value=''
+              isCurved
+              hasBorder
+              state={!isEditable && InputState.READ_ONLY}
+              className={clsx(
+                'drop-shadow-none text-base 768:text-xl !border-light-blue-50 !h-[50px] 960:!min-h-[65px]',
+                isEditable && ' hover:!border-[#acbbd0]',
+              )}
+            />
+          </div>
+          <div className='text-light-grey-200 font-medium text-[17px] 768:text-xl max-w-[569px]'>
+            <Input
+              label='Role'
+              value={user?.role}
+              isCurved
+              hasBorder
+              state={InputState.READ_ONLY}
+              className='drop-shadow-none text-base 768:text-xl !border-light-blue-50 !h-[50px] 960:!min-h-[65px]'
+            />
+          </div>
+        </div>
+        {isEditable && (
+          <div className='w-full max-w-[447px] grid items-center gap-6 960:gap-9 my-4 960:mt-10  960:mb-12'>
+            <Button
+              onClick={() => setIsEditatble(false)}
+              type='submit'
+              buttonText={
+                loading ? (
+                  <Spinner className='text-white w-5 h-5 768:w-7 768:h-7' />
+                ) : (
+                  'Confirm'
+                )
+              }
+              size={ButtonSize.Large}
+              radius={BorderRadius.Large}
+              className='768:!text-xl 1240:!text-2xl font-semibold !min-h-[55px] 960:!min-h-[66px]'
+            />
+          </div>
+        )}
       </div>
     </div>
   );

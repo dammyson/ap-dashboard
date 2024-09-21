@@ -1,50 +1,30 @@
 import { Add, SmallCheckmark } from '@/components/svg/settings/Settings';
 import { BorderRadius, Button, ButtonSize } from '@/components/button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AddMembers from './addMembers';
-import { Table } from 'antd';
+import { Table, Spin } from 'antd';
 import { useTeamMembersColumn } from '@/components/modules/surveys/teamMembers/tableColumns';
-import profileImage from '../../../assets/profileImage/profile-img.png';
 import CategoryHeader from '@/components/categoryHeader';
 import { Modal, SizeType } from '@/components/modal';
 import { Bin, Cancel } from '@/components/svg/modal/Modal';
 import { Card } from '@/components/card';
+import { useTeamMembers } from '@/api/settings/teamMembers';
+import { LoadingOutlined } from '@ant-design/icons';
 
 function TeamMembers() {
-  const [addMembers, setAddMembers] = useState<boolean>(false);
-  const [removeTeamMember, setRemoveTeamMember] = useState<boolean>(false);
-  const [updateTeamMember, setUpdateTeamMember] = useState<boolean>(false);
+  const [addMembers, setAddMembers] = useState(false);
+  const [removeMemberModal, setRemoveMemberModal] = useState(false);
+  const [updateMemberModal, setUpdateMemberModal] = useState(false);
   const { tableColumns } = useTeamMembersColumn(
-    setRemoveTeamMember,
-    setUpdateTeamMember,
+    setRemoveMemberModal,
+    setUpdateMemberModal,
   );
-
-  const list = [
-    {
-      avatar: profileImage,
-      name: 'Corlet Jasper',
-      role: 'Admin',
-      email: 'corletjasper@gmail.com',
-    },
-    {
-      avatar: profileImage,
-      name: 'Corlet Jasper',
-      role: 'Admin',
-      email: 'corletjasper@gmail.com',
-    },
-    {
-      avatar: profileImage,
-      name: 'Corlet Jasper',
-      role: 'Admin',
-      email: 'corletjasper@gmail.com',
-    },
-    {
-      avatar: profileImage,
-      name: 'Corlet Jasper',
-      role: 'Admin',
-      email: 'corletjasper@gmail.com',
-    },
-  ];
+  const { getTeamMembers, teamMembers, isLoading } = useTeamMembers();
+  useEffect(() => {
+    if (!isLoading) {
+      getTeamMembers();
+    }
+  }, []);
 
   return (
     <Card>
@@ -67,26 +47,36 @@ function TeamMembers() {
               />
             }
           />
-          <Table
-            pagination={false}
-            columns={tableColumns}
-            className='team-members'
-            dataSource={list}
-            scroll={{
-              y: 506,
-            }}
-            rootClassName='w-full overflow-x-scroll hidden-scrollbar'
-            showHeader={false}
-          />
+
+          {isLoading ? (
+            <div className='flex items-center justify-center py-6 '>
+              <Spin
+                indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />}
+              />
+            </div>
+          ) : (
+            <Table
+              pagination={false}
+              columns={tableColumns}
+              className='custom-scrollbar hide-arrows  overflow-x-scroll'
+              dataSource={teamMembers}
+              scroll={{
+                y: 506,
+                x: true,
+              }}
+              rootClassName='w-full hidden-scrollbar '
+              showHeader={false}
+            />
+          )}
         </div>
       )}
-      {removeTeamMember ? (
+      {removeMemberModal && (
         <Modal
           isCentered
           cancelIcon={<Cancel />}
           isBackground
           size={SizeType.SMALL}
-          onClick={() => setRemoveTeamMember(false)}
+          onClick={() => setRemoveMemberModal(false)}
         >
           <Bin />
           <div className='font-normal text-lg 768:text-[22px] mt-2 768::mt-4 mb-5 768:mb-9 text-light-primary-deep_black'>
@@ -102,13 +92,14 @@ function TeamMembers() {
             />
           </div>
         </Modal>
-      ) : updateTeamMember ? (
+      )}
+      {updateMemberModal && (
         <Modal
           isCentered
           cancelIcon={<Cancel />}
           isBackground
           size={SizeType.SMALL}
-          onClick={() => setUpdateTeamMember(false)}
+          onClick={() => setUpdateMemberModal(false)}
         >
           <SmallCheckmark />
           <div className='font-normal text-lg 768:text-[22px] mt-2 768:mt-4 mb-5 768:mb-9 text-light-primary-deep_black'>
@@ -124,8 +115,6 @@ function TeamMembers() {
             />
           </div>
         </Modal>
-      ) : (
-        <></>
       )}
     </Card>
   );
