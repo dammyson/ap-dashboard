@@ -15,7 +15,11 @@ export const UseActivivtyLog = (openModal: OpenActivity) => {
         className: 'timeStamp-column',
         render: (_, record) => {
           return (
-            <span>{dayjs(record.created_at).format('YYYY-MM-DD hh:mma')}</span>
+            <span>
+              {record.created_at
+                ? dayjs(record.created_at).format('YYYY-MM-DD hh:mma')
+                : '---'}
+            </span>
           );
         },
       },
@@ -24,30 +28,49 @@ export const UseActivivtyLog = (openModal: OpenActivity) => {
         dataIndex: 'user_name',
         key: 'user_name',
         className: 'user-column',
+        render: (_, record) => {
+          return <span> {record.user_name ? record.user_name : '---'}</span>;
+        },
       },
       {
         title: 'ROLE',
         dataIndex: 'role',
         key: 'role',
         className: 'role-column',
+        render: (_, record) => {
+          return <span> {record.role ? record.role : '---'}</span>;
+        },
       },
       {
         title: 'ACTIVITY TYPE',
         dataIndex: 'activity_type',
         key: 'activity_type',
         className: 'activityType-column',
+        render: (_, record) => {
+          return (
+            <span> {record.activity_type ? record.activity_type : '---'}</span>
+          );
+        },
       },
       {
         title: 'DESCRIPTION',
         dataIndex: 'description',
         key: 'description',
         className: 'description-column',
+        render: (_, record) => {
+          return (
+            <span> {record.description ? record.description : '---'}</span>
+          );
+        },
       },
       {
         title: 'IP ADDRESS',
         dataIndex: 'ip_address',
         key: 'ip_address',
         className: 'ipaddress-column',
+        render: (_, record) => {
+          return <span> {record.ip_address ? record.ip_address : '---'}</span>;
+        },
       },
       {
         title: 'ACTION',
