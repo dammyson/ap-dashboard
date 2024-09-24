@@ -8,7 +8,7 @@ import { Spin, Table } from 'antd';
 import { UseActivivtyLog } from '@/components/modules/activityLog/tableColumns';
 import { activities, formats } from './constants';
 import { Update } from '@/components/svg/activityLog/ActivityLog';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import clsx from 'clsx';

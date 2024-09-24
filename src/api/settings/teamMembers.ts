@@ -7,9 +7,10 @@ export const useTeamMembers = () => {
   const { token } = useUser();
   const [teamMembers, setTeamMembers] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  console.log(isLoading);
   const getTeamMembers = async () => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       const data = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}admin/settings/team-members`,
         {
@@ -30,5 +31,5 @@ export const useTeamMembers = () => {
     }
   };
 
-  return { getTeamMembers, teamMembers, isLoading };
+  return { getTeamMembers, teamMembers, isLoading, setIsLoading };
 };

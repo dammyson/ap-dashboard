@@ -6,7 +6,7 @@ import { useTeamMembers } from './teamMembers';
 
 export const useChangeRole = () => {
   const { token } = useUser();
-  const { getTeamMembers } = useTeamMembers();
+  const { getTeamMembers, setIsLoading } = useTeamMembers();
   const [updateMemberModal, setUpdateMemberModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [newRole, setNewRole] = useState('');
@@ -37,6 +37,7 @@ export const useChangeRole = () => {
         toast.error(res?.message);
       } else {
         setUpdateMemberModal(false);
+        getTeamMembers();
         toast.success(res?.message);
       }
     } catch (err) {
@@ -47,6 +48,7 @@ export const useChangeRole = () => {
   return {
     changeAdminRole,
     loading,
+    setLoading,
     updateMemberModal,
     setUpdateMemberModal,
     newRole,

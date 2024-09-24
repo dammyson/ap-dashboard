@@ -36,14 +36,11 @@ function TeamMembers() {
   );
 
   useEffect(() => {
-    if (!isLoading) {
-      getTeamMembers();
-    }
+    getTeamMembers();
   }, []);
 
   const HandleNewRole = () => {
     changeAdminRole({ email, new_role });
-    getTeamMembers();
   };
 
   return (
