@@ -178,6 +178,10 @@ button:focus-visible {
 .ant-table-thead > tr > th::before {
   display: none !important;
 }
+
+tr > th.ant-table-cell.ant-table-cell-scrollbar {
+  box-shadow: none !important;
+}
 .ant-table-cell,
 .ant-table-cell button p {
   color: #727272;
@@ -252,11 +256,18 @@ button:focus-visible {
 .ant-table-cell.user-column,
 .ant-table-cell.activityType-column,
 .ant-table-cell.ipaddress-column {
-  min-width: 190px !important;
+  min-width: 180px !important;
 }
 
 .ant-table-cell.description-column {
   min-width: 250px !important;
+}
+.ant-table-cell.role-column {
+  min-width: 120px !important;
+}
+
+.ant-table-cell.action-column {
+  min-width: 110px !important;
 }
 
 /*HIDDEN SCROLLBAR */

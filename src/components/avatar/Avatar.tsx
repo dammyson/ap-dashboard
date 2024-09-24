@@ -5,7 +5,9 @@ interface Props {
   getBackgroundColor?: (char: string) => string;
   size?: number;
   className?: string;
+  textClassName?: string;
   bg?: string;
+  onClick?: () => void;
 }
 
 export const Avatar = ({
@@ -13,7 +15,9 @@ export const Avatar = ({
   getBackgroundColor,
   size = 40,
   className,
+  textClassName,
   bg,
+  onClick,
 }: Props) => {
   const color = getBackgroundColor
     ? getBackgroundColor(initials?.charAt(0) ?? 'R')
@@ -22,7 +26,7 @@ export const Avatar = ({
       : '#989898';
 
   return (
-    <div className={'my-auto flex-shrink-0'}>
+    <div onClick={onClick} className={'my-auto flex-shrink-0'}>
       <div
         className={clsx(
           'flex items-center justify-center rounded-full text-center',
@@ -34,7 +38,7 @@ export const Avatar = ({
           width: size,
         }}
       >
-        <p className='text-xs font-normal text-white'>
+        <p className={clsx('text-xs font-normal text-white', textClassName)}>
           {initials ? initials?.toUpperCase() : '-'}
         </p>
       </div>

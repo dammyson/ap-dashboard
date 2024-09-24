@@ -103,13 +103,13 @@ export interface CustomerActivityLog {
   description: string;
 }
 
-export interface ActivityLog {
-  timeStamp: string;
-  user: string;
+export interface typeActivityLog {
+  created_at: string;
+  user_name: string;
   role: string;
-  activityType: string;
+  activity_type: string;
   description: string;
-  ipaddress: string;
+  ip_address: string;
 }
 
 export interface MutationErrorPayload {

@@ -1,11 +1,18 @@
 import { Input } from '../input';
 import { Bell, Search } from '../svg/dashboard/Dashboard';
-import profileImage from '../../assets/profileImage/profile-img.png';
 import { ProfileData } from '../profileData';
 import { useNavigate } from 'react-router';
+import { useUser } from '@/context/AppContext';
+import { Avatar } from '../avatar/Avatar';
+import { useGetColorByChar } from '@/hooks/useGetColorByChar';
+import { getInitials } from '@/utils';
+import profileImage from '../../assets/profileImage/profile-img.png';
 
 export const Header = () => {
   const navigate = useNavigate();
+  const { user } = useUser();
+  const { getColor } = useGetColorByChar();
+
   return (
     <div className='flex w-full h-20 gap-5 560:gap-10 items-center justify-between px-2 mb-6 768:px-4'>
       <div className='flex-grow max-w-[480px] 560:min-w-[255px]'>
@@ -17,14 +24,27 @@ export const Header = () => {
           hasBorder
         />
       </div>
-      <div className='flex items-center gap-7'>
-        <ProfileData
-          src={profileImage}
-          onClick={() => {
-            navigate('/settings');
-          }}
-          className='hidden 560:flex'
-        />
+      <div className='flex items-center 560:gap-7'>
+        {user?.image_url ? (
+          <div className='hidden 560:flex min-w-[60px] max-w-[80px]'>
+            <img
+              onClick={() => navigate('/settings')}
+              src={user?.image_url}
+              alt='profile image'
+              className={'w-12 h-12 rounded-full cursor-pointer'}
+            />
+          </div>
+        ) : (
+          <Avatar
+            getBackgroundColor={getColor}
+            size={48}
+            initials={
+              user?.user_name ? getInitials(user?.user_name) : undefined
+            }
+            onClick={() => navigate('/settings')}
+            className='hidden 560:flex'
+          />
+        )}
         <NotificationBell notification={1} />
       </div>
     </div>
