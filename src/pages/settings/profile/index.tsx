@@ -49,7 +49,7 @@ function Profile() {
             ) : (
               <Avatar
                 getBackgroundColor={getColor}
-                textClassName='560:text-xl 960:text-2xl'
+                textClassName='560:text-xl 960:text-4xl'
                 className='!min-w-[60px] !min-h-[60px] 560:!w-[80px] 560:!h-[80px] 960:!w-[100px] 960:!h-[100px]'
                 initials={
                   user?.user_name ? getInitials(user?.user_name) : undefined

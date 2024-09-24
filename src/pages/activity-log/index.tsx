@@ -48,9 +48,7 @@ function ActivityLog() {
   const { tableColumns } = UseActivivtyLog(openModal);
 
   useEffect(() => {
-    if (!loading) {
-      getActivityLog();
-    }
+    getActivityLog();
   }, []);
 
   useEffect(() => {
@@ -89,7 +87,11 @@ function ActivityLog() {
             hasBadge
             title='Activity log'
             trailingIcon1={<Filter />}
-            trailingIcon2={<Update />}
+            trailingIcon2={
+              <button disabled={loading} onClick={getActivityLog}>
+                <Update className={loading ? 'spinner' : ''} />
+              </button>
+            }
             mainClass='!mt-4 560:!mt-8'
             hasButton={
               <Button
