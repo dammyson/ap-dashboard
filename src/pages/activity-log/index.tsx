@@ -47,7 +47,6 @@ function ActivityLog() {
   };
   const { tableColumns } = UseActivivtyLog(openModal);
 
-  console.log(selectedOption);
   useEffect(() => {
     if (!loading) {
       getActivityLog();
