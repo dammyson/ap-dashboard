@@ -43,6 +43,7 @@ export const Header = () => {
             }
             onClick={() => navigate('/settings')}
             className='hidden 560:flex'
+            textClassName='560:text-lg 960:text-xl'
           />
         )}
         <NotificationBell notification={1} />
