@@ -12,8 +12,11 @@ import { getInitials } from '@/utils';
 export const useTeamMembersColumn = (
   setRemoveTeamMember: ModalStateSetter,
   setUpdateTeamMember: ModalStateSetter,
+  setNewRole: (role: string) => void,
+  setEmail: (email: string) => void,
 ) => {
   const { getColor } = useGetColorByChar();
+
   const tableColumns = useMemo(() => {
     return [
       {
@@ -69,11 +72,15 @@ export const useTeamMembersColumn = (
         dataIndex: 'update',
         key: 'update',
         className: 'update-member',
-        render: (_) => (
+        render: (_, record) => (
           <Button
             buttonText='Update'
             onClick={() => {
               setUpdateTeamMember(true);
+              setEmail(record.email);
+              record.role === 'Admin'
+                ? setNewRole('Sub-admin')
+                : setNewRole('Admin');
             }}
             mode='text'
             trailingIcon={<CircularArrow />}

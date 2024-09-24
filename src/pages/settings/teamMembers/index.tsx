@@ -10,21 +10,41 @@ import { Bin, Cancel } from '@/components/svg/modal/Modal';
 import { Card } from '@/components/card';
 import { useTeamMembers } from '@/api/settings/teamMembers';
 import { LoadingOutlined } from '@ant-design/icons';
+import { useChangeRole } from '@/api/settings/changeRole';
+import { Spinner } from '@/components/svg/spinner/Spinner';
 
 function TeamMembers() {
   const [addMembers, setAddMembers] = useState(false);
   const [removeMemberModal, setRemoveMemberModal] = useState(false);
-  const [updateMemberModal, setUpdateMemberModal] = useState(false);
+  const { getTeamMembers, teamMembers, isLoading } = useTeamMembers();
+  const {
+    changeAdminRole,
+    loading,
+    updateMemberModal,
+    setUpdateMemberModal,
+    newRole: new_role,
+    email,
+    setNewRole,
+    setEmail,
+  } = useChangeRole();
+
   const { tableColumns } = useTeamMembersColumn(
     setRemoveMemberModal,
     setUpdateMemberModal,
+    setNewRole,
+    setEmail,
   );
-  const { getTeamMembers, teamMembers, isLoading } = useTeamMembers();
+
   useEffect(() => {
     if (!isLoading) {
       getTeamMembers();
     }
   }, []);
+
+  const HandleNewRole = () => {
+    changeAdminRole({ email, new_role });
+    getTeamMembers();
+  };
 
   return (
     <Card>
@@ -61,7 +81,7 @@ function TeamMembers() {
               className='custom-scrollbar hide-arrows  overflow-x-scroll'
               dataSource={teamMembers}
               scroll={{
-                y: 506,
+                y: 420,
                 x: true,
               }}
               rootClassName='w-full hidden-scrollbar '
@@ -103,14 +123,20 @@ function TeamMembers() {
         >
           <SmallCheckmark />
           <div className='font-normal text-lg 768:text-[22px] mt-2 768:mt-4 mb-5 768:mb-9 text-light-primary-deep_black'>
-            This team member’s role will be updated to admin.
+            {`This team member’s role will be updated to ${new_role}.`}
           </div>
           <div className='w-full max-w-[340px]'>
             <Button
               size={ButtonSize.Large}
               radius={BorderRadius.Large}
-              buttonText='Update'
-              onClick={() => {}}
+              buttonText={
+                loading ? (
+                  <Spinner className='text-white w-5 h-5 768:w-7 768:h-7' />
+                ) : (
+                  'Update'
+                )
+              }
+              onClick={HandleNewRole}
               className='!font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[65px] '
             />
           </div>

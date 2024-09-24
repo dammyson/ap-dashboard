@@ -147,3 +147,7 @@ export interface AddAdmins {
   email: string;
   selectedRole: string;
 }
+export interface changeAdminRole {
+  email: string;
+  new_role: string;
+}
