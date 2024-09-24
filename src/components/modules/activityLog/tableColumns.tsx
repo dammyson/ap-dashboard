@@ -1,47 +1,82 @@
 import { Eye } from '@/components/svg/customer/Customer';
-import { ActivityLog } from '@/types/types';
 import { ColumnType } from 'antd/es/table';
 import { useMemo } from 'react';
 import { OpenActivity } from '@/pages/activity-log';
+import dayjs from 'dayjs';
+import { typeActivityLog } from '@/types/types';
 
 export const UseActivivtyLog = (openModal: OpenActivity) => {
   const tableColumns = useMemo(() => {
     return [
       {
         title: 'TIME STAMP',
-        dataIndex: 'timeStamp',
-        key: 'timeStamp',
+        dataIndex: 'created_at',
+        key: 'created_at',
         className: 'timeStamp-column',
+        render: (_, record) => {
+          return (
+            <span>
+              {record.created_at
+                ? dayjs(record.created_at).format('YYYY-MM-DD hh:mma')
+                : '---'}
+            </span>
+          );
+        },
       },
       {
         title: 'USER',
-        dataIndex: 'user',
-        key: 'user',
+        dataIndex: 'user_name',
+        key: 'user_name',
         className: 'user-column',
+        render: (_, record) => {
+          return <span> {record.user_name ? record.user_name : '---'}</span>;
+        },
       },
-      { title: 'ROLE', dataIndex: 'role', key: 'role' },
+      {
+        title: 'ROLE',
+        dataIndex: 'role',
+        key: 'role',
+        className: 'role-column',
+        render: (_, record) => {
+          return <span> {record.role ? record.role : '---'}</span>;
+        },
+      },
       {
         title: 'ACTIVITY TYPE',
-        dataIndex: 'activityType',
-        key: 'activityType',
+        dataIndex: 'activity_type',
+        key: 'activity_type',
         className: 'activityType-column',
+        render: (_, record) => {
+          return (
+            <span> {record.activity_type ? record.activity_type : '---'}</span>
+          );
+        },
       },
       {
         title: 'DESCRIPTION',
         dataIndex: 'description',
         key: 'description',
         className: 'description-column',
+        render: (_, record) => {
+          return (
+            <span> {record.description ? record.description : '---'}</span>
+          );
+        },
       },
       {
         title: 'IP ADDRESS',
-        dataIndex: 'ipaddress',
-        key: 'ipaddress',
+        dataIndex: 'ip_address',
+        key: 'ip_address',
         className: 'ipaddress-column',
+        render: (_, record) => {
+          return <span> {record.ip_address ? record.ip_address : '---'}</span>;
+        },
       },
       {
         title: 'ACTION',
         dataIndex: 'action',
         key: 'action',
+        className: 'action-column',
         render: (_, record) => {
           return (
             <span
@@ -55,7 +90,7 @@ export const UseActivivtyLog = (openModal: OpenActivity) => {
           );
         },
       },
-    ] as ColumnType<ActivityLog>[];
+    ] as ColumnType<typeActivityLog>[];
   }, []);
   return { tableColumns };
 };

@@ -1,14 +1,15 @@
-import profileImage from '@/assets/profileImage/profile-img.png';
 import CategoryHeader from '@/components/categoryHeader';
 import { ProfileData } from '@/components/profileData';
 import { BorderRadius, Button, ButtonSize } from '@/components/button';
-import { Upload } from 'antd';
 import { Input, InputState } from '@/components/input';
 import { useUser } from '@/context/AppContext';
-import { Edit } from '@/components/svg/settings/Settings';
+import { Edit, Upload } from '@/components/svg/settings/Settings';
 import { Spinner } from '@/components/svg/spinner/Spinner';
 import { useState } from 'react';
 import clsx from 'clsx';
+import { Avatar } from '@/components/avatar/Avatar';
+import { useGetColorByChar } from '@/hooks/useGetColorByChar';
+import { getInitials } from '@/utils';
 
 export interface RoleOption {
   label: string;
@@ -20,6 +21,7 @@ function Profile() {
   const { user } = useUser();
   const [loading, setLoading] = useState();
   const [isEditable, setIsEditatble] = useState(false);
+  const { getColor } = useGetColorByChar();
 
   return (
     <div>
@@ -36,11 +38,34 @@ function Profile() {
         }
       />
       <div className='bg-[#00000003] flex items-center justify-between w-full border-[1px] border-light-blue-50 rounded-[20px] py-3 560:py-4 px-6 my-6 gap-4'>
-        <ProfileData
-          src={profileImage}
-          name={user?.user_name}
-          role={user?.role}
-        />
+        <div className='flex gap-4 items-center w-full max-w-[300px]'>
+          <div className='min-w-[60px] min-h-[60px]  max-w-[80px] max-h-[80px]  560:max-w-[100px] 560:max-h-[100px]'>
+            {user?.image_url ? (
+              <img
+                src={user?.image_url}
+                alt='profile image'
+                className='w-full rounded-full cursor-pointer'
+              />
+            ) : (
+              <Avatar
+                getBackgroundColor={getColor}
+                textClassName='560:text-xl 960:text-4xl'
+                className='!min-w-[60px] !min-h-[60px] 560:!w-[80px] 560:!h-[80px] 960:!w-[100px] 960:!h-[100px]'
+                initials={
+                  user?.user_name ? getInitials(user?.user_name) : undefined
+                }
+              />
+            )}
+          </div>
+          <div className='grid gap-1.5 960:gap-3'>
+            <div className='font-semibold text-lg 768:text-xl 960:text-2xl text-light-primary-black text-nowrap '>
+              {user?.user_name}
+            </div>
+            <span className='font-normal text-primary-black text-base 768:text-lg 960:text-xl'>
+              {user?.role}
+            </span>
+          </div>
+        </div>
         <Button
           onClick={() => {}}
           buttonText='Upload Photo'
