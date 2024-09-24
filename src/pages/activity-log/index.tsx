@@ -24,9 +24,11 @@ export type OpenActivity = (record: typeActivityLog) => void;
 
 function ActivityLog() {
   const { user } = useUser();
+  const currentFormat = formats[0];
   const { getActivityLog, loading, activityData } = useActivityLog();
   const [exportLog, setExportLog] = useState(false);
   const [viewActivity, setViewActivity] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(currentFormat.key);
   const [selectedRecord, setSelectedRecord] = useState<typeActivityLog | null>(
     null,
   );
@@ -44,20 +46,19 @@ function ActivityLog() {
     setViewActivity(false);
   };
   const { tableColumns } = UseActivivtyLog(openModal);
-  const currentFormat = formats[0];
-  const [selectedOption, setSelectedOption] = useState(currentFormat.key);
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const selectedValue = e.target.value;
-    const selectedFormat = formats.find(
-      (format) => format.key === selectedValue,
-    );
-    selectedFormat && setSelectedOption(selectedFormat.key);
-  };
+
+  console.log(selectedOption);
   useEffect(() => {
     if (!loading) {
       getActivityLog();
     }
   }, []);
+
+  useEffect(() => {
+    if (!exportLog) {
+      setSelectedOption(currentFormat.key);
+    }
+  }, [exportLog]);
 
   return (
     <AppLayout logo=''>
@@ -150,22 +151,19 @@ function ActivityLog() {
                 </p>
                 <div className='grid 768:gap-2 768:mt-3'>
                   {formats.map((format, index) => (
-                    <div key={index} className='flex items-center gap-3 pt-2 '>
-                      <div className='relative'>
-                        <input
-                          type='radio'
-                          value={format.key}
-                          checked={selectedOption === format.key}
-                          onChange={handleChange}
-                          name='option format'
-                          className='w-8 h-8 inset-0 absolute opacity-0 cursor-pointer'
-                        />
-                        <div className='flex items-center justify-center w-7 h-7 border-light-blue-50 border-2 rounded-full'>
-                          {selectedOption === format.key && (
-                            <RadioFilled color='#23539F' className='w-4 h-4' />
-                          )}
-                        </div>
+                    <div
+                      key={index}
+                      className='flex items-center gap-3 pt-2 relative'
+                    >
+                      <div
+                        onClick={() => setSelectedOption(format.key)}
+                        className='flex items-center justify-center w-7 h-7 border-light-blue-50 border-2 rounded-full'
+                      >
+                        {selectedOption === format.key && (
+                          <RadioFilled color='#23539F' className='w-4 h-4' />
+                        )}
                       </div>
+
                       <span className='text-light-grey-500 text-sm 768:text-base font-medium'>
                         {format.title}
                       </span>

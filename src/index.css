@@ -175,6 +175,10 @@ button:focus-visible {
   border: none !important;
 }
 
+.ant-table-wrapper .ant-table .ant-table-header {
+  border-radius: 0 !important;
+}
+
 .ant-table-thead > tr > th::before {
   display: none !important;
 }
