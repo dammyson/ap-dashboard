@@ -4,36 +4,39 @@ import WelcomeMessage from '../../components/welcomeMessage';
 import { Card } from '@/components/card';
 import { Filter, RadioFilled } from '@/components/svg/surveys/Surveys';
 import { BorderRadius, Button, ButtonSize } from '@/components/button';
-import { Table } from 'antd';
+import { Spin, Table } from 'antd';
 import { UseActivivtyLog } from '@/components/modules/activityLog/tableColumns';
-import { activityData } from './constants';
+import { activities, formats } from './constants';
 import { Update } from '@/components/svg/activityLog/ActivityLog';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import clsx from 'clsx';
 import { CustomDatePicker } from '@/components/datePicker';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { useUser } from '@/context/AppContext';
+import { useActivityLog } from '@/api/activityLog/activityLog';
+import { LoadingOutlined } from '@ant-design/icons';
+import { typeActivityLog } from '@/types/types';
+import dayjs from 'dayjs';
 
-type ActivityRecord = {
-  timeStamp: string;
-  user: string;
-  role: string;
-  activityType: string;
-  description: string;
-  ipaddress: string;
-};
-
-export type OpenActivity = (record: ActivityRecord) => void;
+export type OpenActivity = (record: typeActivityLog) => void;
 
 function ActivityLog() {
-  const [exportLog, setExportLog] = useState<boolean>(false);
-  const [viewActivity, setViewActivity] = useState<boolean>(false);
-  const [selectedRecord, setSelectedRecord] = useState<ActivityRecord | null>(
+  const { user } = useUser();
+  const currentFormat = formats[0];
+  const { getActivityLog, loading, activityData } = useActivityLog();
+  const [exportLog, setExportLog] = useState(false);
+  const [viewActivity, setViewActivity] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(currentFormat.key);
+  const [selectedRecord, setSelectedRecord] = useState<typeActivityLog | null>(
     null,
   );
-  const { user } = useUser();
+  const sortedActivity = (activityData ?? []).sort(
+    (a: typeActivityLog, b: typeActivityLog) => {
+      return dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf();
+    },
+  );
   const openModal: OpenActivity = (record) => {
     setSelectedRecord(record);
     setViewActivity(true);
@@ -43,32 +46,18 @@ function ActivityLog() {
     setViewActivity(false);
   };
   const { tableColumns } = UseActivivtyLog(openModal);
-  const formats = [
-    { title: 'CSV', key: 'csv' },
-    { title: 'JSON', key: 'json' },
-    { title: 'PDF', key: 'pdf' },
-    { title: 'PNG', key: 'png' },
-  ];
 
-  const activities = [
-    { title: 'Time Stamp', key: 'timeStamp' },
-    { title: 'User', key: 'user' },
-    { title: 'Role', key: 'role' },
-    { title: 'Activty Type', key: 'activityType' },
-    { title: 'Description', key: 'description' },
-    { title: 'Activities', key: 'activites' },
-  ];
-  const currentFormat = formats[0];
-  const [selectedOption, setSelectedOption] = useState(currentFormat.key);
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const selectedValue = e.target.value;
-    const selectedFormat = formats.find(
-      (format) => format.key === selectedValue,
-    );
-    if (selectedFormat) {
-      setSelectedOption(selectedFormat.key);
+  useEffect(() => {
+    if (!loading) {
+      getActivityLog();
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (!exportLog) {
+      setSelectedOption(currentFormat.key);
+    }
+  }, [exportLog]);
 
   return (
     <AppLayout logo=''>
@@ -114,9 +103,21 @@ function ActivityLog() {
           >
             <Table
               pagination={false}
-              dataSource={activityData}
+              dataSource={sortedActivity}
               columns={tableColumns}
-              rootClassName='overflow-x-scroll hidden-scrollbar'
+              scroll={{ y: 390, x: true }}
+              className=' activity-table custom-scrollbar hide-arrows overflow-x-scroll'
+              rootClassName=' w-full  hidden-scrollbar'
+              loading={{
+                spinning: loading,
+                indicator: (
+                  <Spin
+                    indicator={
+                      <LoadingOutlined style={{ fontSize: 48 }} spin />
+                    }
+                  />
+                ),
+              }}
             />
           </Card>
         </div>
@@ -149,22 +150,19 @@ function ActivityLog() {
                 </p>
                 <div className='grid 768:gap-2 768:mt-3'>
                   {formats.map((format, index) => (
-                    <div key={index} className='flex items-center gap-3 pt-2 '>
-                      <div className='relative'>
-                        <input
-                          type='radio'
-                          value={format.key}
-                          checked={selectedOption === format.key}
-                          onChange={handleChange}
-                          name='option format'
-                          className='w-8 h-8 inset-0 absolute opacity-0 cursor-pointer'
-                        />
-                        <div className='flex items-center justify-center w-7 h-7 border-light-blue-50 border-2 rounded-full'>
-                          {selectedOption === format.key && (
-                            <RadioFilled color='#23539F' className='w-4 h-4' />
-                          )}
-                        </div>
+                    <div
+                      key={index}
+                      className='flex items-center gap-3 pt-2 relative'
+                    >
+                      <div
+                        onClick={() => setSelectedOption(format.key)}
+                        className='flex items-center justify-center w-7 h-7 border-light-blue-50 border-2 rounded-full'
+                      >
+                        {selectedOption === format.key && (
+                          <RadioFilled color='#23539F' className='w-4 h-4' />
+                        )}
                       </div>
+
                       <span className='text-light-grey-500 text-sm 768:text-base font-medium'>
                         {format.title}
                       </span>
@@ -193,7 +191,7 @@ function ActivityLog() {
             cancelIcon={<Cancel />}
             onClick={() => closeModal()}
           >
-            <div className='border-b border-light-blue-50 pb-4 880:pb-8'>
+            <div className='border-b border-light-blue-50 pb-2 880:pb-5'>
               <p className='text-light-primary-black text-xl 960:text-2xl font-medium text-start'>
                 Activity details
               </p>
@@ -217,17 +215,19 @@ function ActivityLog() {
                       </span>
                       <span className='text-light-grey-600 text-base 560:text-lg 768:text-xl 960:text-2xl text-start'>
                         {activity.key === 'timeStamp' ? (
-                          selectedRecord.timeStamp
+                          dayjs(selectedRecord.created_at).format(
+                            'YYYY-MM-DD hh:mma',
+                          )
                         ) : activity.key === 'user' ? (
-                          selectedRecord.user
+                          selectedRecord.user_name
                         ) : activity.key === 'role' ? (
                           selectedRecord.role
                         ) : activity.key === 'activityType' ? (
-                          selectedRecord.activityType
+                          selectedRecord.activity_type
                         ) : activity.key === 'description' ? (
                           <ul className='text-light-grey-600 text-sm 768:text-base 960:text-lg list-disc list-outside 560:list-inside ml-3 leading-tight'>
-                            <li>Action - logged in</li>
-                            <li>IP address - {selectedRecord.ipaddress}</li>
+                            <li>Action - {selectedRecord.activity_type}</li>
+                            <li>IP address - {selectedRecord.ip_address}</li>
                           </ul>
                         ) : activity.key === 'activites' ? (
                           <ul className='text-light-grey-600 text-sm  768:text-base 960:text-lg list-disc list-outside 560:list-inside ml-3 leading-tight'>
@@ -243,13 +243,13 @@ function ActivityLog() {
                             </li>
                           </ul>
                         ) : (
-                          ''
+                          <></>
                         )}
                       </span>
                     </div>
                   ))}
                 </div>
-                <div className='w-full max-w-[360px] 768:max-w-[447px] mt-8 768:mt-12 960:mt-20 mb-4 768:mb-6 960:mb-10'>
+                <div className='w-full max-w-[360px] 768:max-w-[447px] mt-6 768:mt-10 960:mt-17 mb-3 768:mb-5 960:mb-8'>
                   <Button
                     buttonText='Export log'
                     radius={BorderRadius.Large}
