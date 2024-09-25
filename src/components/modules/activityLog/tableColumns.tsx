@@ -29,7 +29,11 @@ export const UseActivivtyLog = (openModal: OpenActivity) => {
         key: 'user_name',
         className: 'user-column',
         render: (_, record) => {
-          return <span> {record.user_name ? record.user_name : '---'}</span>;
+          return (
+            <span>
+              {record.admin.user_name ? record.admin.user_name : '---'}
+            </span>
+          );
         },
       },
       {
@@ -38,7 +42,7 @@ export const UseActivivtyLog = (openModal: OpenActivity) => {
         key: 'role',
         className: 'role-column',
         render: (_, record) => {
-          return <span> {record.role ? record.role : '---'}</span>;
+          return <span> {record.admin.role ? record.admin.role : '---'}</span>;
         },
       },
       {

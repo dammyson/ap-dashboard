@@ -221,9 +221,9 @@ function ActivityLog() {
                             'YYYY-MM-DD hh:mma',
                           )
                         ) : activity.key === 'user' ? (
-                          selectedRecord.user_name
+                          selectedRecord.admin.user_name
                         ) : activity.key === 'role' ? (
-                          selectedRecord.role
+                          selectedRecord.admin.role
                         ) : activity.key === 'activityType' ? (
                           selectedRecord.activity_type
                         ) : activity.key === 'description' ? (
@@ -233,10 +233,7 @@ function ActivityLog() {
                           </ul>
                         ) : activity.key === 'activites' ? (
                           <ul className='text-light-grey-600 text-sm  768:text-base 960:text-lg list-disc list-outside 560:list-inside ml-3 leading-tight'>
-                            <li>
-                              Created new user account for user John Kevin with
-                              ID: 1234
-                            </li>
+                            <li>{selectedRecord.description}</li>
                             <li>Viewed the dashboard </li>
                             <li>Updated flight status for flight #1234</li>
                             <li>

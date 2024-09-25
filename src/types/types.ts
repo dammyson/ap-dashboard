@@ -105,11 +105,13 @@ export interface CustomerActivityLog {
 
 export interface typeActivityLog {
   created_at: string;
-  user_name: string;
-  role: string;
   activity_type: string;
   description: string;
   ip_address: string;
+  admin: {
+    user_name: string;
+    role: string;
+  };
 }
 
 export interface MutationErrorPayload {
