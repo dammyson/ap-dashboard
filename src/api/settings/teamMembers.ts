@@ -11,6 +11,11 @@ export const useTeamMembers = () => {
   const { token } = useUser();
   const [teamMembers, setTeamMembers] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [updateMemberModal, setUpdateMemberModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [newRole, setNewRole] = useState('');
+  const [email, setEmail] = useState('');
+
   const getTeamMembers = async () => {
     setIsLoading(true);
     try {
@@ -34,18 +39,7 @@ export const useTeamMembers = () => {
     }
   };
 
-  return { getTeamMembers, teamMembers, isLoading, setIsLoading };
-};
-
-export const useChangeRole = () => {
-  const { token } = useUser();
-  const { getTeamMembers } = useTeamMembers();
-  const [updateMemberModal, setUpdateMemberModal] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [newRole, setNewRole] = useState('');
-  const [email, setEmail] = useState('');
-
-  const changeAdminRole = async (values: changeAdminRole) => {
+    const changeAdminRole = async (values: changeAdminRole) => {
     try {
       setLoading(true);
       const data = await fetch(
@@ -78,7 +72,11 @@ export const useChangeRole = () => {
     }
   };
 
-  return {
+  return { 
+    getTeamMembers, 
+    teamMembers, 
+    isLoading, 
+    setIsLoading,     
     changeAdminRole,
     loading,
     setLoading,
@@ -87,9 +85,11 @@ export const useChangeRole = () => {
     newRole,
     setNewRole,
     email,
-    setEmail,
+    setEmail
   };
+  
 };
+
 
 export const useAddMembers = () => {
   const [loading, setisLoading] = useState(false);

@@ -10,14 +10,15 @@ import { Bin, Cancel } from '@/components/svg/modal/Modal';
 import { Card } from '@/components/card';
 import { useTeamMembers } from '@/api/settings/teamMembers';
 import { LoadingOutlined } from '@ant-design/icons';
-import { useChangeRole } from '@/api/settings/teamMembers';
 import { Spinner } from '@/components/svg/spinner/Spinner';
 
 function TeamMembers() {
   const [addMembers, setAddMembers] = useState(false);
   const [removeMemberModal, setRemoveMemberModal] = useState(false);
-  const { getTeamMembers, teamMembers, isLoading } = useTeamMembers();
   const {
+    getTeamMembers,
+    teamMembers,
+    isLoading,
     changeAdminRole,
     loading,
     updateMemberModal,
@@ -26,7 +27,7 @@ function TeamMembers() {
     email,
     setNewRole,
     setEmail,
-  } = useChangeRole();
+  } = useTeamMembers();
 
   const { tableColumns } = useTeamMembersColumn(
     setRemoveMemberModal,
@@ -120,7 +121,7 @@ function TeamMembers() {
         >
           <SmallCheckmark />
           <div className='font-normal text-lg 768:text-[22px] mt-2 768:mt-4 mb-5 768:mb-9 text-light-primary-deep_black'>
-            {`This team member’s role will be updated to ${new_role}.`}
+            {`This team member's role will be updated to ${new_role}.`}
           </div>
           <div className='w-full max-w-[340px]'>
             <Button
