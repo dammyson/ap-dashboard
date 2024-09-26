@@ -10,7 +10,7 @@ import { Bin, Cancel } from '@/components/svg/modal/Modal';
 import { Card } from '@/components/card';
 import { useTeamMembers } from '@/api/settings/teamMembers';
 import { LoadingOutlined } from '@ant-design/icons';
-import { useChangeRole } from '@/api/settings/changeRole';
+import { useChangeRole } from '@/api/settings/teamMembers';
 import { Spinner } from '@/components/svg/spinner/Spinner';
 
 function TeamMembers() {
