@@ -105,11 +105,13 @@ export interface CustomerActivityLog {
 
 export interface typeActivityLog {
   created_at: string;
-  user_name: string;
-  role: string;
   activity_type: string;
   description: string;
   ip_address: string;
+  admin: {
+    user_name: string;
+    role: string;
+  };
 }
 
 export interface MutationErrorPayload {
@@ -148,7 +150,10 @@ export interface AddAdmins {
   email: string;
   selectedRole: string;
 }
-
+export interface changeAdminRole {
+  email: string;
+  new_role: string;
+}
 export interface EditProfile {
   image_url: string | null;
   phone_number: string | null;

@@ -3,7 +3,7 @@ import { Login, MutationErrorPayload } from '@/types/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
-import { useGetProfile } from './settings/getProfile';
+import { useGetProfile } from './settings/Profile';
 
 export const useLogin = () => {
   const navigate = useNavigate();

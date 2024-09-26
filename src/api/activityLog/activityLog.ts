@@ -1,5 +1,7 @@
 import { useUser } from '@/context/AppContext';
+import { MutationErrorPayload } from '@/types/types';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 export const useActivityLog = () => {
   const { token } = useUser();
@@ -22,13 +24,11 @@ export const useActivityLog = () => {
       const res = await data.json();
       setLoading(false);
       if (res?.error) {
-        console.log(res);
       } else {
         setActivityData(res.activityLog);
-        console.log(res);
       }
     } catch (err) {
-      console.log(err);
+      toast.error((err as MutationErrorPayload)?.data?.message);
     }
   };
   return { getActivityLog, loading, setLoading, activityData };

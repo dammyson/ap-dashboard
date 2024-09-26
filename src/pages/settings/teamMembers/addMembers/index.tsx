@@ -8,7 +8,7 @@ import {
 import { Input, InputState } from '@/components/input';
 import { CustomSelect, SelectType } from '@/components/customSelect';
 
-import { useAddMembers } from '@/api/settings/addMembers';
+import { useAddMembers } from '@/api/settings/teamMembers';
 import { Spinner } from '@/components/svg/spinner/Spinner';
 import { emailRegex } from '@/utils/regex';
 import { Modal, SizeType } from '@/components/modal';

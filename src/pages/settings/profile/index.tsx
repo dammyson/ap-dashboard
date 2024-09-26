@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import { Avatar } from '@/components/avatar/Avatar';
 import { useGetColorByChar } from '@/hooks/useGetColorByChar';
 import { getInitials } from '@/utils';
-import { useEditProfile } from '@/api/settings/editProfile';
+import { useEditProfile } from '@/api/settings/Profile';
 import { phoneNumberRegex } from '@/utils/regex';
 
 export interface RoleOption {
