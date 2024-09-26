@@ -1,29 +1,30 @@
-import { ChangePwd, MutationErrorPayload } from '@/types/types';
+import { ChangePassword, MutationErrorPayload } from '@/types/types';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-export const useChangePwd = () => {
+export const useChangePassword = () => {
   const token = sessionStorage.getItem('admin_token');
   const [loading, setLoading] = useState(false);
-  const [updatePwdModal, setUpdatePwdModal] = useState<boolean>(false);
-  const [pwdField, setPwdField] = useState<ChangePwd>({
+  const [updatePasswordModal, setUpdatePasswordModal] =
+    useState<boolean>(false);
+  const [passwordField, setPasswordField] = useState<ChangePassword>({
     currentPassword: '',
     newPassword: '',
     confirmPassword: '',
   });
   const resetField = () => {
-    setPwdField(() => ({
+    setPasswordField(() => ({
       currentPassword: '',
       newPassword: '',
       confirmPassword: '',
     }));
   };
-  const [validatePwd, setValidatePwd] = useState({
+  const [validatePassword, setValidatePassword] = useState({
     newPassword: false,
     confirmPassword: false,
   });
 
-  const handleChangePassword = async (values: ChangePwd) => {
+  const handleChangePassword = async (values: ChangePassword) => {
     try {
       setLoading(true);
       const patchData = await fetch(
@@ -50,7 +51,7 @@ export const useChangePwd = () => {
       } else if (res?.errors) {
         toast.error(res.message);
       } else {
-        setUpdatePwdModal(true);
+        setUpdatePasswordModal(true);
         resetField();
       }
     } catch (error) {
@@ -61,11 +62,11 @@ export const useChangePwd = () => {
   return {
     handleChangePassword,
     loading,
-    updatePwdModal,
-    setUpdatePwdModal,
-    pwdField,
-    setPwdField,
-    validatePwd,
-    setValidatePwd,
+    updatePasswordModal,
+    setUpdatePasswordModal,
+    passwordField,
+    setPasswordField,
+    validatePassword,
+    setValidatePassword,
   };
 };

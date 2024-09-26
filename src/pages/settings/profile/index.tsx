@@ -1,15 +1,15 @@
 import CategoryHeader from '@/components/categoryHeader';
-import { ProfileData } from '@/components/profileData';
 import { BorderRadius, Button, ButtonSize } from '@/components/button';
 import { Input, InputState } from '@/components/input';
 import { useUser } from '@/context/AppContext';
 import { Edit, Upload } from '@/components/svg/settings/Settings';
 import { Spinner } from '@/components/svg/spinner/Spinner';
-import { useState } from 'react';
 import clsx from 'clsx';
 import { Avatar } from '@/components/avatar/Avatar';
 import { useGetColorByChar } from '@/hooks/useGetColorByChar';
 import { getInitials } from '@/utils';
+import { useEditProfile } from '@/api/settings/editProfile';
+import { phoneNumberRegex } from '@/utils/regex';
 
 export interface RoleOption {
   label: string;
@@ -19,9 +19,32 @@ export interface RoleOption {
 
 function Profile() {
   const { user } = useUser();
-  const [loading, setLoading] = useState();
-  const [isEditable, setIsEditatble] = useState(false);
+  const {
+    editProfile,
+    loading,
+    isEditable,
+    setIsEditatble,
+    phoneNumber,
+    setPhoneNumber,
+    validate,
+    setValidate,
+    image,
+  } = useEditProfile();
   const { getColor } = useGetColorByChar();
+
+  const handleEditProfile = () => {
+    if (validate || image) {
+      editProfile({
+        phone_number: phoneNumber ?? null,
+        image_url: image ?? null,
+      });
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValidate(phoneNumberRegex.test(e.target.value));
+    setPhoneNumber(e.target.value);
+  };
 
   return (
     <div>
@@ -80,7 +103,10 @@ function Profile() {
             Personal Information
           </p>
           <Button
-            onClick={() => setIsEditatble(true)}
+            onClick={() => (
+              setIsEditatble(true),
+              setValidate(phoneNumberRegex.test(phoneNumber ?? ''))
+            )}
             disabled={isEditable}
             buttonText='Edit'
             buttonClass='hidden 560:block'
@@ -123,13 +149,20 @@ function Profile() {
           <div className='text-light-grey-200 font-medium text-[17px] 768:text-xl max-w-[569px]'>
             <Input
               label='Phone Number'
-              value=''
+              type='number'
+              value={phoneNumber ?? ''}
               isCurved
               hasBorder
-              state={!isEditable && InputState.READ_ONLY}
+              onChange={handleChange}
+              state={
+                !isEditable
+                  ? InputState.READ_ONLY
+                  : phoneNumber && !validate
+                    ? InputState.ERROR
+                    : InputState.NORMAL
+              }
               className={clsx(
-                'drop-shadow-none text-base 768:text-xl !border-light-blue-50 !h-[50px] 960:!min-h-[65px]',
-                isEditable && ' hover:!border-[#acbbd0]',
+                ' hide-arrows no-arrows drop-shadow-none text-base 768:text-xl !border-light-blue-50 !h-[50px] 960:!min-h-[65px]',
               )}
             />
           </div>
@@ -145,10 +178,9 @@ function Profile() {
           </div>
         </div>
         {isEditable && (
-          <div className='w-full max-w-[447px] grid items-center gap-6 960:gap-9 my-4 960:mt-10  960:mb-12'>
+          <div className='w-full max-w-[447px] grid items-center gap-3 960:gap-5 my-4 960:mt-10  960:mb-12'>
             <Button
-              onClick={() => setIsEditatble(false)}
-              type='submit'
+              onClick={handleEditProfile}
               buttonText={
                 loading ? (
                   <Spinner className='text-white w-5 h-5 768:w-7 768:h-7' />
@@ -158,6 +190,14 @@ function Profile() {
               }
               size={ButtonSize.Large}
               radius={BorderRadius.Large}
+              className='768:!text-xl 1240:!text-2xl font-semibold !min-h-[55px] 960:!min-h-[66px]'
+            />
+            <Button
+              onClick={() => setIsEditatble(false)}
+              buttonText='Cancel'
+              size={ButtonSize.Large}
+              radius={BorderRadius.Large}
+              mode='outlined'
               className='768:!text-xl 1240:!text-2xl font-semibold !min-h-[55px] 960:!min-h-[66px]'
             />
           </div>
