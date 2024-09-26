@@ -31,7 +31,9 @@ export const UseActivivtyLog = (openModal: OpenActivity) => {
         render: (_, record) => {
           return (
             <span>
-              {record.admin.user_name ? record.admin.user_name : '---'}
+              {record.admin.user_name
+                ? record.admin.user_name.split(' ').slice(0, 2).join(' ')
+                : '---'}
             </span>
           );
         },

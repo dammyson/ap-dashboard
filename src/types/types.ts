@@ -137,9 +137,10 @@ export interface User {
   otp_expires_at: string;
   role: string;
   updated_at: string;
+  phone_number: string | null;
 }
 
-export interface ChangePwd {
+export interface ChangePassword {
   currentPassword: string;
   newPassword: string;
   confirmPassword: string;
@@ -152,4 +153,8 @@ export interface AddAdmins {
 export interface changeAdminRole {
   email: string;
   new_role: string;
+}
+export interface EditProfile {
+  image_url: string | null;
+  phone_number: string | null;
 }

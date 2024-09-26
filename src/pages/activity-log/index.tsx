@@ -222,6 +222,9 @@ function ActivityLog() {
                           )
                         ) : activity.key === 'user' ? (
                           selectedRecord.admin.user_name
+                            .split(' ')
+                            .slice(0, 2)
+                            .join(' ')
                         ) : activity.key === 'role' ? (
                           selectedRecord.admin.role
                         ) : activity.key === 'activityType' ? (
