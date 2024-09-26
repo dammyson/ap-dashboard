@@ -138,7 +138,7 @@ export interface User {
   phone_number: string | null;
 }
 
-export interface ChangePwd {
+export interface ChangePassword {
   currentPassword: string;
   newPassword: string;
   confirmPassword: string;

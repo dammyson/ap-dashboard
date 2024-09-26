@@ -13,34 +13,34 @@ import {
 } from '@/components/svg/settings/Settings';
 import { Card } from '@/components/card';
 import { passwordRegex } from '@/utils/regex';
-import { useChangePwd } from '@/api/settings/changePassword';
+import { useChangePassword } from '@/api/settings/changePassword';
 import { Spinner } from '@/components/svg/spinner/Spinner';
 
 function ChangePassword() {
-  const [showCurrentPwd, setShowCurrentPwd] = useState(false);
-  const [showNewPwd, setShowNewPwd] = useState(false);
-  const [showConfirmPwd, setShowConfirmPwd] = useState(false);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const {
     handleChangePassword,
     loading,
-    updatePwdModal,
-    setUpdatePwdModal,
-    pwdField,
-    setPwdField,
-    validatePwd,
-    setValidatePwd,
-  } = useChangePwd();
+    updatePasswordModal,
+    setUpdatePasswordModal,
+    passwordField,
+    setPasswordField,
+    validatePassword,
+    setValidatePassword,
+  } = useChangePassword();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setPwdField((prevState) => ({
+    setPasswordField((prevState) => ({
       ...prevState,
       [name]: value,
     }));
 
     if (name !== 'currentPassword') {
       const result = passwordRegex.test(value);
-      setValidatePwd((prevState) => ({
+      setValidatePassword((prevState) => ({
         ...prevState,
         [name]: result,
       }));
@@ -48,20 +48,21 @@ function ChangePassword() {
   };
 
   useEffect(() => {
-    if (pwdField.newPassword && pwdField.confirmPassword) {
-      const result = pwdField.newPassword === pwdField.confirmPassword;
-      setValidatePwd({
-        ...validatePwd,
+    if (passwordField.newPassword && passwordField.confirmPassword) {
+      const result =
+        passwordField.newPassword === passwordField.confirmPassword;
+      setValidatePassword({
+        ...validatePassword,
         confirmPassword: result,
       });
     }
-  }, [pwdField.newPassword, pwdField.confirmPassword]);
+  }, [passwordField.newPassword, passwordField.confirmPassword]);
 
-  const handleUpdatePwd = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdatePassword = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!validatePwd.confirmPassword) {
+    if (!validatePassword.confirmPassword) {
       return;
-    } else handleChangePassword({ ...pwdField });
+    } else handleChangePassword({ ...passwordField });
   };
 
   return (
@@ -74,7 +75,7 @@ function ChangePassword() {
           textClass='hidden 640:block'
         />
         <form
-          onSubmit={handleUpdatePwd}
+          onSubmit={handleUpdatePassword}
           className=' flex items-center justify-center flex-col'
         >
           <div className='w-full'>
@@ -83,15 +84,15 @@ function ChangePassword() {
                 <Input
                   label='Current Password'
                   name='currentPassword'
-                  value={pwdField.currentPassword}
+                  value={passwordField.currentPassword}
                   isCurved
                   hasBorder
                   required
-                  type={showCurrentPwd ? 'text' : 'password'}
+                  type={showCurrentPassword ? 'text' : 'password'}
                   onChange={handleOnChange}
-                  onClick={() => setShowCurrentPwd(!showCurrentPwd)}
+                  onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                   trailingIcon={
-                    showCurrentPwd ? <UnslashedEye /> : <SlashedEye />
+                    showCurrentPassword ? <UnslashedEye /> : <SlashedEye />
                   }
                   className='drop-shadow-none text-lg !border-[#BBCAE1] !h-[50px] 960:!min-h-[65px]'
                 />
@@ -100,22 +101,24 @@ function ChangePassword() {
                 <Input
                   label='New Password'
                   name='newPassword'
-                  value={pwdField.newPassword}
+                  value={passwordField.newPassword}
                   isCurved
                   hasBorder
                   required
-                  type={showNewPwd ? 'text' : 'password'}
+                  type={showNewPassword ? 'text' : 'password'}
                   onChange={handleOnChange}
-                  onClick={() => setShowNewPwd(!showNewPwd)}
+                  onClick={() => setShowNewPassword(!showNewPassword)}
                   state={
-                    pwdField.newPassword && !validatePwd.newPassword
+                    passwordField.newPassword && !validatePassword.newPassword
                       ? InputState.ERROR
                       : InputState.NORMAL
                   }
-                  trailingIcon={showNewPwd ? <UnslashedEye /> : <SlashedEye />}
+                  trailingIcon={
+                    showNewPassword ? <UnslashedEye /> : <SlashedEye />
+                  }
                   helper={
-                    pwdField.newPassword &&
-                    !validatePwd.newPassword &&
+                    passwordField.newPassword &&
+                    !validatePassword.newPassword &&
                     'Your password must be at least 8 characters long and contain any of these: _!@#$%'
                   }
                   className='drop-shadow-none text-lg !border-[#BBCAE1] !h-[50px] 960:!min-h-[65px]'
@@ -125,25 +128,26 @@ function ChangePassword() {
                 <Input
                   label='Confirm Password'
                   name='confirmPassword'
-                  value={pwdField.confirmPassword}
+                  value={passwordField.confirmPassword}
                   isCurved
                   hasBorder
                   required
-                  type={showConfirmPwd ? 'text' : 'password'}
+                  type={showConfirmPassword ? 'text' : 'password'}
                   onChange={handleOnChange}
-                  onClick={() => setShowConfirmPwd(!showConfirmPwd)}
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   state={
-                    pwdField.confirmPassword && !validatePwd.confirmPassword
+                    passwordField.confirmPassword &&
+                    !validatePassword.confirmPassword
                       ? InputState.ERROR
                       : InputState.NORMAL
                   }
                   helper={
-                    pwdField.confirmPassword &&
-                    !validatePwd.confirmPassword &&
+                    passwordField.confirmPassword &&
+                    !validatePassword.confirmPassword &&
                     'Password must match the new password field'
                   }
                   trailingIcon={
-                    showConfirmPwd ? <UnslashedEye /> : <SlashedEye />
+                    showConfirmPassword ? <UnslashedEye /> : <SlashedEye />
                   }
                   className='drop-shadow-none text-lg !border-[#BBCAE1] !h-[50px] 960:!min-h-[65px]'
                 />
@@ -174,14 +178,14 @@ function ChangePassword() {
             />
           </div>
         </form>
-        {updatePwdModal && (
+        {updatePasswordModal && (
           <Modal
             isBackground
             isCentered
             size={SizeType.MEDIUM}
             cancelIcon={<CircleCancel />}
             cancelType='filled'
-            onClick={() => setUpdatePwdModal(false)}
+            onClick={() => setUpdatePasswordModal(false)}
             className='  640:!max-w-[610px] 1240:!max-w-[717px]'
           >
             <div className='mb-4 768:mb-8 mt-4 1024:mt-9'>
