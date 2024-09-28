@@ -3,61 +3,35 @@ import { Header } from '@/components/header';
 import { AppLayout } from '@/components/layout/AppLayout';
 import WelcomeMessage from '@/components/welcomeMessage';
 import { BorderRadius, Button, ButtonSize } from '@/components/button';
-import { Table } from 'antd';
+import { Spin, Table } from 'antd';
 import { useSurveyColumn } from '@/components/modules/surveys/tableColumns';
 import { Filter } from '@/components/svg/surveys/Surveys';
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
 import { Modal, SizeType } from '@/components/modal';
-
 import { useNavigate } from 'react-router';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import clsx from 'clsx';
 import { useUser } from '@/context/AppContext';
+import { useSurvey } from '@/api/surveys/surveys';
+import { LoadingOutlined } from '@ant-design/icons';
 
 function Surveys() {
   const navigate = useNavigate();
-  const [publishSurvey, setPublishSurvey] = useState<boolean>(false);
-  const [unpublishSurvey, setUnpublishSurvey] = useState<boolean>(false);
-  const [deleteSurvey, setDeleteSurvey] = useState<boolean>(false);
   const { user } = useUser();
+  const [publishSurvey, setPublishSurvey] = useState(false);
+  const [unpublishSurvey, setUnpublishSurvey] = useState(false);
+  const [deleteSurvey, setDeleteSurvey] = useState(false);
   const { tableColumns } = useSurveyColumn(
     setPublishSurvey,
     setUnpublishSurvey,
     setDeleteSurvey,
   );
-  const list = [
-    {
-      title: 'Customer feedback',
-      dateCreated: '2024-05-23',
-      status: ['Published', 'Active'],
-      value: 'feedback',
-    },
-    {
-      title: 'In-flight experience',
-      dateCreated: '2024-05-23',
-      status: ['Draft'],
-      value: 'experience',
-    },
-    {
-      title: 'New route survey',
-      dateCreated: '2024-05-23',
-      status: ['Draft'],
-      value: 'new route survey',
-    },
-    {
-      title: 'Customer feedback',
-      dateCreated: '2024-05-23',
-      status: ['Published', 'Completed'],
-      value: 'feedback',
-    },
-    {
-      title: 'Customer feedback',
-      dateCreated: '2024-05-23',
-      status: ['Published', 'Completed'],
-      value: 'feedback',
-    },
-  ];
+
+  const { getSurvey, surveys, isLoading } = useSurvey();
+
+  useEffect(() => {
+    getSurvey();
+  }, []);
 
   return (
     <AppLayout logo=''>
@@ -107,9 +81,20 @@ function Surveys() {
             <Table
               pagination={false}
               columns={tableColumns}
-              dataSource={list}
-              className='custom-survey-table'
-              rootClassName='overflow-x-scroll hidden-scrollbar'
+              dataSource={surveys}
+              scroll={{ y: 390, x: true }}
+              className='survey-table custom-scrollbar hide-arrows overflow-x-scroll'
+              rootClassName='hidden-scrollbar'
+              loading={{
+                spinning: isLoading,
+                indicator: (
+                  <Spin
+                    indicator={
+                      <LoadingOutlined style={{ fontSize: 48 }} spin />
+                    }
+                  />
+                ),
+              }}
             />
           </Card>
         </div>

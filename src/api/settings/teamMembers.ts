@@ -64,7 +64,7 @@ export const useTeamMembers = () => {
         toast.error(res?.message);
       } else {
         setUpdateMemberModal(false);
-        getTeamMembers();
+        await getTeamMembers();
         toast.success(res?.message);
       }
     } catch (err) {
