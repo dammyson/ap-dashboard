@@ -14,20 +14,30 @@ import clsx from 'clsx';
 import { useUser } from '@/context/AppContext';
 import { useSurvey } from '@/api/surveys/surveys';
 import { LoadingOutlined } from '@ant-design/icons';
+import { Spinner } from '@/components/svg/spinner/Spinner';
 
 function Surveys() {
   const navigate = useNavigate();
   const { user } = useUser();
-  const [publishSurvey, setPublishSurvey] = useState(false);
-  const [unpublishSurvey, setUnpublishSurvey] = useState(false);
+  const [isPublished, setisPublished] = useState<number>();
   const [deleteSurvey, setDeleteSurvey] = useState(false);
-  const { tableColumns } = useSurveyColumn(
-    setPublishSurvey,
-    setUnpublishSurvey,
-    setDeleteSurvey,
-  );
+  const [surveyId, setSurveyId] = useState<number>();
+  const {
+    getSurvey,
+    surveys,
+    isLoading,
+    tooglePublish,
+    loading,
+    surveyModal,
+    setSurveyModal,
+  } = useSurvey();
 
-  const { getSurvey, surveys, isLoading } = useSurvey();
+  const { tableColumns } = useSurveyColumn(
+    setSurveyModal,
+    setisPublished,
+    setDeleteSurvey,
+    setSurveyId,
+  );
 
   useEffect(() => {
     getSurvey();
@@ -99,25 +109,37 @@ function Surveys() {
           </Card>
         </div>
       </div>
-      {publishSurvey ? (
+      {surveyModal && (
         <Modal
           isBackground
           isCentered
           size={SizeType.MEDIUM}
-          onClick={() => setPublishSurvey(false)}
+          onClick={() => setSurveyModal(false)}
         >
           <p className='font-semibold text-lg 880:text-[22px] mb-2 560:mb-4 mt-2 560:mt-4 880:mt-8 text-light-primary-deep_black'>
-            Are you sure you want to publish this survey?
+            {isPublished === 0
+              ? 'Are you sure you want to publish this survey?'
+              : 'Are you sure you want to unpublish this survey?'}
           </p>
           <p className=' pb-7 880:pb-11 text-[15px] 880:text-[17px] text-light-primary-deep_black'>
-            This will make the survey available for participants
+            {isPublished === 0
+              ? 'This will make the survey available for participants'
+              : 'This will make the survey unavailable for participants'}
           </p>
           <div className='w-full max-w-[300px] 880:max-w-[380px]'>
             <Button
               size={ButtonSize.Medium}
               radius={BorderRadius.Large}
-              buttonText='Publish'
-              onClick={() => {}}
+              buttonText={
+                loading ? (
+                  <Spinner className='text-white w-5 h-5 768:w-7 768:h-7' />
+                ) : isPublished === 0 ? (
+                  'Publish'
+                ) : (
+                  'UnPublish'
+                )
+              }
+              onClick={() => surveyId && tooglePublish(surveyId)}
               className='mb-5 !font-semibold !text-[17px]'
             />
             <Button
@@ -125,43 +147,13 @@ function Surveys() {
               radius={BorderRadius.Large}
               mode='outlined'
               buttonText='Cancel'
-              onClick={() => setPublishSurvey(false)}
+              onClick={() => setSurveyModal(false)}
               className='!font-semibold !text-[17px] '
             />
           </div>
         </Modal>
-      ) : unpublishSurvey ? (
-        <Modal
-          isBackground
-          isCentered
-          size={SizeType.MEDIUM}
-          onClick={() => setUnpublishSurvey(false)}
-        >
-          <p className='font-semibold text-lg 880:text-[22px] mb-2 560:mb-4 mt-2 560:mt-4 880:mt-8 text-light-primary-deep_black'>
-            Are you sure you want to unpublish this survey?
-          </p>
-          <p className='pb-7 880:pb-11 text-[15px] 880:text-[17px] text-light-primary-deep_black'>
-            This will make the survey unavailable for participants
-          </p>
-          <div className='w-full max-w-[300px] 880:max-w-[380px]'>
-            <Button
-              size={ButtonSize.Medium}
-              radius={BorderRadius.Large}
-              buttonText='Unpublish'
-              onClick={() => {}}
-              className='mb-5 !font-semibold !text-[17px]'
-            />
-            <Button
-              size={ButtonSize.Medium}
-              radius={BorderRadius.Large}
-              mode='outlined'
-              buttonText='Cancel'
-              onClick={() => setUnpublishSurvey(false)}
-              className='!font-semibold !text-[17px] '
-            />
-          </div>
-        </Modal>
-      ) : deleteSurvey ? (
+      )}
+      {deleteSurvey && (
         <Modal
           isBackground
           isCentered
@@ -192,8 +184,6 @@ function Surveys() {
             />
           </div>
         </Modal>
-      ) : (
-        <></>
       )}
     </AppLayout>
   );

@@ -5,15 +5,14 @@ import { Surveys } from '@/types/types';
 import clsx from 'clsx';
 import { Space } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { convertToUrlString } from '@/utils';
 import dayjs from 'dayjs';
 
 export type ModalStateSetter = (value: boolean) => void;
-
 export const useSurveyColumn = (
-  setPublishSurvey: ModalStateSetter,
-  setUnpublishSurvey: ModalStateSetter,
+  setSurveyModal: ModalStateSetter,
+  setisPublished: (value: number) => void,
   setDeleteSurvey: ModalStateSetter,
+  setSurveyId: (id: number) => void,
 ) => {
   const navigate = useNavigate();
   const tableColumns = useMemo(() => {
@@ -91,11 +90,9 @@ export const useSurveyColumn = (
               <Button
                 buttonText={record.is_published === 1 ? 'Unpublish' : 'Publish'}
                 onClick={() => {
-                  if (record.is_published === 1) {
-                    setUnpublishSurvey(true);
-                  } else {
-                    setPublishSurvey(true);
-                  }
+                  setSurveyModal(true);
+                  setisPublished(record?.is_published);
+                  setSurveyId(record?.id);
                 }}
                 className='!bg-[#C7C7CC] min-w-[105px] !px-0 hover:!bg-[#bababe]'
               />
