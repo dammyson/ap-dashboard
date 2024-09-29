@@ -68,9 +68,9 @@ export const SideNavigationItems = () => {
 
   return (
     <div>
-      {useWindowSize(1240) ? (
+      {useWindowSize(1239) ? (
         <div className='flex justify-center items-center pt-6 1240:pt-10 pl-3 pr-3'>
-          <img src={birdLogo} alt='airpeace-bird logo' />
+          <img width={72} height={62} src={birdLogo} alt='airpeace-bird logo' />
         </div>
       ) : (
         <div className='flex justify-center items-center pt-10 pr-[4.6rem] pl-8'>
@@ -105,7 +105,7 @@ export const SideNavigationItems = () => {
                 >
                   <div className='flex gap-8 items-center'>
                     <span>{icon}</span>
-                    {useWindowSize(1240) ? <></> : <span>{title}</span>}
+                    {useWindowSize(1239) ? <></> : <span>{title}</span>}
                   </div>
                   {countId && (
                     <div className='absolute top-15 right-10 text-xs font-light bg-gray-200 rounded-full px-2 py-1 text-gray-700 shadow-sm'>
@@ -143,7 +143,7 @@ export const SideNavigationItems = () => {
                 >
                   <div className='flex gap-8 items-center'>
                     <span>{icon}</span>
-                    {useWindowSize(1240) ? <></> : <span>{title}</span>}
+                    {useWindowSize(1239) ? <></> : <span>{title}</span>}
                   </div>
                 </NavLink>
               ) : (
@@ -163,7 +163,7 @@ export const SideNavigationItems = () => {
                 >
                   <div className='flex gap-8 items-center'>
                     <span>{icon}</span>
-                    {useWindowSize(1240) ? <></> : <span>{title}</span>}
+                    {useWindowSize(1239) ? <></> : <span>{title}</span>}
                   </div>
                 </button>
               )}

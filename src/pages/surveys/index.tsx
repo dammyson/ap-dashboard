@@ -3,61 +3,45 @@ import { Header } from '@/components/header';
 import { AppLayout } from '@/components/layout/AppLayout';
 import WelcomeMessage from '@/components/welcomeMessage';
 import { BorderRadius, Button, ButtonSize } from '@/components/button';
-import { Table } from 'antd';
+import { Spin, Table } from 'antd';
 import { useSurveyColumn } from '@/components/modules/surveys/tableColumns';
 import { Filter } from '@/components/svg/surveys/Surveys';
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
 import { Modal, SizeType } from '@/components/modal';
-
 import { useNavigate } from 'react-router';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import clsx from 'clsx';
 import { useUser } from '@/context/AppContext';
+import { useSurvey } from '@/api/surveys/surveys';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spinner } from '@/components/svg/spinner/Spinner';
 
 function Surveys() {
   const navigate = useNavigate();
-  const [publishSurvey, setPublishSurvey] = useState<boolean>(false);
-  const [unpublishSurvey, setUnpublishSurvey] = useState<boolean>(false);
-  const [deleteSurvey, setDeleteSurvey] = useState<boolean>(false);
   const { user } = useUser();
+  const [isPublished, setisPublished] = useState<number>();
+  const [deleteSurvey, setDeleteSurvey] = useState(false);
+  const [surveyId, setSurveyId] = useState<number>();
+  const {
+    getSurvey,
+    surveys,
+    isLoading,
+    tooglePublish,
+    loading,
+    surveyModal,
+    setSurveyModal,
+  } = useSurvey();
+
   const { tableColumns } = useSurveyColumn(
-    setPublishSurvey,
-    setUnpublishSurvey,
+    setSurveyModal,
+    setisPublished,
     setDeleteSurvey,
+    setSurveyId,
   );
-  const list = [
-    {
-      title: 'Customer feedback',
-      dateCreated: '2024-05-23',
-      status: ['Published', 'Active'],
-      value: 'feedback',
-    },
-    {
-      title: 'In-flight experience',
-      dateCreated: '2024-05-23',
-      status: ['Draft'],
-      value: 'experience',
-    },
-    {
-      title: 'New route survey',
-      dateCreated: '2024-05-23',
-      status: ['Draft'],
-      value: 'new route survey',
-    },
-    {
-      title: 'Customer feedback',
-      dateCreated: '2024-05-23',
-      status: ['Published', 'Completed'],
-      value: 'feedback',
-    },
-    {
-      title: 'Customer feedback',
-      dateCreated: '2024-05-23',
-      status: ['Published', 'Completed'],
-      value: 'feedback',
-    },
-  ];
+
+  useEffect(() => {
+    getSurvey();
+  }, []);
 
   return (
     <AppLayout logo=''>
@@ -107,32 +91,55 @@ function Surveys() {
             <Table
               pagination={false}
               columns={tableColumns}
-              dataSource={list}
-              className='custom-survey-table'
-              rootClassName='overflow-x-scroll hidden-scrollbar'
+              dataSource={surveys}
+              scroll={{ y: 390, x: true }}
+              className='survey-table custom-scrollbar hide-arrows overflow-x-scroll'
+              rootClassName='hidden-scrollbar'
+              loading={{
+                spinning: isLoading,
+                indicator: (
+                  <Spin
+                    indicator={
+                      <LoadingOutlined style={{ fontSize: 48 }} spin />
+                    }
+                  />
+                ),
+              }}
             />
           </Card>
         </div>
       </div>
-      {publishSurvey ? (
+      {surveyModal && (
         <Modal
           isBackground
           isCentered
           size={SizeType.MEDIUM}
-          onClick={() => setPublishSurvey(false)}
+          onClick={() => setSurveyModal(false)}
         >
           <p className='font-semibold text-lg 880:text-[22px] mb-2 560:mb-4 mt-2 560:mt-4 880:mt-8 text-light-primary-deep_black'>
-            Are you sure you want to publish this survey?
+            {isPublished === 0
+              ? 'Are you sure you want to publish this survey?'
+              : 'Are you sure you want to unpublish this survey?'}
           </p>
           <p className=' pb-7 880:pb-11 text-[15px] 880:text-[17px] text-light-primary-deep_black'>
-            This will make the survey available for participants
+            {isPublished === 0
+              ? 'This will make the survey available for participants'
+              : 'This will make the survey unavailable for participants'}
           </p>
           <div className='w-full max-w-[300px] 880:max-w-[380px]'>
             <Button
               size={ButtonSize.Medium}
               radius={BorderRadius.Large}
-              buttonText='Publish'
-              onClick={() => {}}
+              buttonText={
+                loading ? (
+                  <Spinner className='text-white w-5 h-5 768:w-7 768:h-7' />
+                ) : isPublished === 0 ? (
+                  'Publish'
+                ) : (
+                  'UnPublish'
+                )
+              }
+              onClick={() => surveyId && tooglePublish(surveyId)}
               className='mb-5 !font-semibold !text-[17px]'
             />
             <Button
@@ -140,43 +147,13 @@ function Surveys() {
               radius={BorderRadius.Large}
               mode='outlined'
               buttonText='Cancel'
-              onClick={() => setPublishSurvey(false)}
+              onClick={() => setSurveyModal(false)}
               className='!font-semibold !text-[17px] '
             />
           </div>
         </Modal>
-      ) : unpublishSurvey ? (
-        <Modal
-          isBackground
-          isCentered
-          size={SizeType.MEDIUM}
-          onClick={() => setUnpublishSurvey(false)}
-        >
-          <p className='font-semibold text-lg 880:text-[22px] mb-2 560:mb-4 mt-2 560:mt-4 880:mt-8 text-light-primary-deep_black'>
-            Are you sure you want to unpublish this survey?
-          </p>
-          <p className='pb-7 880:pb-11 text-[15px] 880:text-[17px] text-light-primary-deep_black'>
-            This will make the survey unavailable for participants
-          </p>
-          <div className='w-full max-w-[300px] 880:max-w-[380px]'>
-            <Button
-              size={ButtonSize.Medium}
-              radius={BorderRadius.Large}
-              buttonText='Unpublish'
-              onClick={() => {}}
-              className='mb-5 !font-semibold !text-[17px]'
-            />
-            <Button
-              size={ButtonSize.Medium}
-              radius={BorderRadius.Large}
-              mode='outlined'
-              buttonText='Cancel'
-              onClick={() => setUnpublishSurvey(false)}
-              className='!font-semibold !text-[17px] '
-            />
-          </div>
-        </Modal>
-      ) : deleteSurvey ? (
+      )}
+      {deleteSurvey && (
         <Modal
           isBackground
           isCentered
@@ -207,8 +184,6 @@ function Surveys() {
             />
           </div>
         </Modal>
-      ) : (
-        <></>
       )}
     </AppLayout>
   );
