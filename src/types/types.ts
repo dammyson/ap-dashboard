@@ -6,10 +6,11 @@ export interface ITeamMembers {
 }
 
 export interface Surveys {
+  id: number;
   title: string;
-  dateCreated: string;
-  status: string[];
-  value: string;
+  created_at: string;
+  is_published: number;
+  is_completed: boolean;
 }
 
 export interface CustomerFeedback {

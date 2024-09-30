@@ -5,14 +5,14 @@ import { Surveys } from '@/types/types';
 import clsx from 'clsx';
 import { Space } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { convertToUrlString } from '@/utils';
+import dayjs from 'dayjs';
 
 export type ModalStateSetter = (value: boolean) => void;
-
 export const useSurveyColumn = (
-  setPublishSurvey: ModalStateSetter,
-  setUnpublishSurvey: ModalStateSetter,
+  setSurveyModal: ModalStateSetter,
+  setisPublished: (value: number) => void,
   setDeleteSurvey: ModalStateSetter,
+  setSurveyId: (id: number) => void,
 ) => {
   const navigate = useNavigate();
   const tableColumns = useMemo(() => {
@@ -25,32 +25,42 @@ export const useSurveyColumn = (
       },
       {
         title: 'DATE CREATED',
-        dataIndex: 'dateCreated',
-        key: 'dateCreated',
+        dataIndex: 'created_at',
+        key: 'created_at',
         className: 'dateCreated-column',
+        render: (_, record) => {
+          return (
+            <div>
+              {record && (
+                <span>{dayjs(record.created_at).format('YYYY-MM-DD')}</span>
+              )}
+            </div>
+          );
+        },
       },
       {
         title: 'STATUS',
-        dataIndex: 'status',
-        key: 'status',
+        dataIndex: 'is_published',
+        key: 'is_published',
         className: 'status-column',
-        render: (_, { status }) => {
-          const [firstStatus, secondStatus] = status;
+        render: (_, record) => {
           return (
             <div>
-              {firstStatus && <span>{firstStatus}</span>}
-              {secondStatus && (
+              {record && (
+                <span>{record.is_published === 1 ? 'Published' : 'Draft'}</span>
+              )}
+              {record.is_completed && (
                 <span
                   className={clsx(
-                    secondStatus === 'Active'
+                    record.is_completed !== true
                       ? 'text-light-blue-main'
-                      : secondStatus === 'Completed'
+                      : record.is_completed === true
                         ? 'text-light-secondary-mint_green'
                         : '',
                     'ml-3',
                   )}
                 >
-                  {secondStatus}
+                  {record.is_completed ? 'Active' : 'Completed'}
                 </span>
               )}
             </div>
@@ -66,39 +76,23 @@ export const useSurveyColumn = (
           <Space size='middle'>
             <>
               <Button
-                buttonText={
-                  record.status.includes('Draft') ? 'Edit' : 'View Result'
-                }
+                buttonText={record.is_published !== 1 ? 'Edit' : 'View Result'}
                 onClick={() => {
-                  if (record.status.includes('Draft')) {
-                    navigate(
-                      `/surveys-edit/${convertToUrlString(record.value)}`,
-                    );
+                  if (record.is_published !== 1) {
+                    navigate(`/surveys-edit/${record.title}`);
                   } else {
-                    navigate(
-                      `/surveys-feedback/${convertToUrlString(record.value)}`,
-                    );
+                    navigate(`/surveys-feedback/${record.title}`);
                   }
                 }}
                 className='!bg-[#C7C7CC] min-w-[105px] !px-0 hover:!bg-[#bababe]'
               />
 
               <Button
-                buttonText={
-                  record.status.includes('Active') ||
-                  record.status.includes('Completed')
-                    ? 'Unpublish'
-                    : 'Publish'
-                }
+                buttonText={record.is_published === 1 ? 'Unpublish' : 'Publish'}
                 onClick={() => {
-                  if (
-                    record.status.includes('Active') ||
-                    record.status.includes('Completed')
-                  ) {
-                    setUnpublishSurvey(true);
-                  } else {
-                    setPublishSurvey(true);
-                  }
+                  setSurveyModal(true);
+                  setisPublished(record?.is_published);
+                  setSurveyId(record?.id);
                 }}
                 className='!bg-[#C7C7CC] min-w-[105px] !px-0 hover:!bg-[#bababe]'
               />
