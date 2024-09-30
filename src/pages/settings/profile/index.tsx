@@ -10,6 +10,8 @@ import { useGetColorByChar } from '@/hooks/useGetColorByChar';
 import { getInitials } from '@/utils';
 import { useEditProfile } from '@/api/settings/Profile';
 import { phoneNumberRegex } from '@/utils/regex';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 export interface RoleOption {
   label: string;
@@ -29,15 +31,14 @@ function Profile() {
     validate,
     setValidate,
     image,
+    UploadProfileImage,
+    imageLoading,
   } = useEditProfile();
   const { getColor } = useGetColorByChar();
 
   const handleEditProfile = () => {
-    if (validate || image) {
-      editProfile({
-        phone_number: phoneNumber ?? null,
-        image_url: image ?? null,
-      });
+    if (validate) {
+      editProfile(phoneNumber ?? null);
     }
   };
 
@@ -52,7 +53,7 @@ function Profile() {
         title='Profile'
         button={
           <Button
-            onClick={() => {}}
+            onClick={() => UploadProfileImage}
             buttonText='Upload Photo'
             leadingIcon={<Upload />}
             mode='text'
@@ -62,12 +63,12 @@ function Profile() {
       />
       <div className='bg-[#00000003] flex items-center justify-between w-full border-[1px] border-light-blue-50 rounded-[20px] py-3 560:py-4 px-6 my-6 gap-4'>
         <div className='flex gap-4 items-center w-full max-w-[300px]'>
-          <div className='min-w-[60px] min-h-[60px]  max-w-[80px] max-h-[80px]  560:max-w-[100px] 560:max-h-[100px]'>
-            {user?.image_url ? (
+          <div className='rounded-full overflow-hidden w-[100px] h-[100px]'>
+            {image ? (
               <img
-                src={user?.image_url}
+                src={image}
                 alt='profile image'
-                className='w-full rounded-full cursor-pointer'
+                className='w-full h-full object-cover cursor-pointer'
               />
             ) : (
               <Avatar
@@ -89,13 +90,38 @@ function Profile() {
             </span>
           </div>
         </div>
-        <Button
-          onClick={() => {}}
-          buttonText='Upload Photo'
-          leadingIcon={<Upload />}
-          mode='text'
-          className='bg-transparent text-light-primary-black hover:text-[#393939] text-nowrap hidden 560:flex'
-        />
+
+        <div className='relative w-[117px] flex justify-center items-center '>
+          {imageLoading ? (
+            <Spin
+              indicator={<LoadingOutlined style={{ fontSize: 25 }} spin />}
+            />
+          ) : (
+            <>
+              <label
+                htmlFor='profileImage'
+                className='absolute z-10 w-full h-full opacity-0 cursor-pointer'
+              >
+                <input
+                  onChange={(e) => {
+                    e.preventDefault();
+                    const selectedFile = e.target.files && e.target.files[0];
+                    selectedFile && UploadProfileImage(selectedFile);
+                  }}
+                  type='file'
+                  id='profileImage'
+                  className='hidden'
+                />
+              </label>
+              <Button
+                buttonText='Upload Photo'
+                leadingIcon={<Upload />}
+                mode='text'
+                className='bg-transparent text-light-primary-black hover:text-[#393939] text-nowrap hidden 560:flex !px-0 !py-0'
+              />
+            </>
+          )}
+        </div>
       </div>
       <div className='bg-[#00000003] w-full border-[1px] border-light-blue-50 rounded-[20px] py-6 px-8 flex items-center justify-center flex-col'>
         <div className='flex items-center justify-between w-full'>
