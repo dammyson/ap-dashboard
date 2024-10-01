@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export const Trophy = () => {
   return (
     <svg
@@ -122,7 +124,13 @@ export const CircledPlus = ({
   );
 };
 
-export const SmallBin = ({ className }: { className?: string }) => {
+export const SmallBin = ({
+  className,
+  color = '#23539F',
+}: {
+  className?: string;
+  color?: string;
+}) => {
   return (
     <svg
       viewBox='0 0 32 32'
@@ -132,7 +140,7 @@ export const SmallBin = ({ className }: { className?: string }) => {
     >
       <path
         d='M9.33398 28C8.60065 28 7.9731 27.7391 7.45132 27.2173C6.92954 26.6956 6.66821 26.0676 6.66732 25.3333V8H5.33398V5.33333H12.0007V4H20.0007V5.33333H26.6673V8H25.334V25.3333C25.334 26.0667 25.0731 26.6947 24.5513 27.2173C24.0295 27.74 23.4015 28.0009 22.6673 28H9.33398ZM22.6673 8H9.33398V25.3333H22.6673V8ZM12.0007 22.6667H14.6673V10.6667H12.0007V22.6667ZM17.334 22.6667H20.0007V10.6667H17.334V22.6667Z'
-        fill='#23539F'
+        fill={color}
       />
     </svg>
   );
@@ -156,9 +164,11 @@ export const RadioSelect = () => {
 export const RadioFilled = ({
   color = '#D9D9D9',
   className,
+  radius = 10,
 }: {
   color?: string;
   className?: string;
+  radius?: number;
 }) => {
   return (
     <svg
@@ -167,7 +177,7 @@ export const RadioFilled = ({
       xmlns='http://www.w3.org/2000/svg'
       className={className}
     >
-      <circle cx='10' cy='10' r='10' fill={color} />
+      <circle cx='10' cy='10' r={radius} fill={color} />
     </svg>
   );
 };
@@ -210,6 +220,32 @@ export const XSCheckMark = ({ className }: { className?: string }) => {
         d='M10.456 0.455712C10.6673 0.254546 10.9485 0.143333 11.2402 0.14554C11.5319 0.147747 11.8114 0.263203 12.0196 0.467544C12.2279 0.671885 12.3486 0.949128 12.3563 1.24077C12.364 1.53242 12.2581 1.81565 12.061 2.03071L6.07597 9.51571C5.97306 9.62656 5.84885 9.71552 5.71077 9.77726C5.57269 9.83901 5.42358 9.87228 5.27235 9.87508C5.12112 9.87788 4.97087 9.85015 4.8306 9.79356C4.69033 9.73697 4.56292 9.65267 4.45597 9.54571L0.486969 5.57671C0.376439 5.47372 0.287785 5.34952 0.226297 5.21152C0.16481 5.07352 0.131747 4.92455 0.129081 4.7735C0.126416 4.62244 0.154203 4.4724 0.210785 4.33232C0.267367 4.19223 0.351583 4.06498 0.458412 3.95816C0.56524 3.85133 0.69249 3.76711 0.832573 3.71053C0.972655 3.65395 1.1227 3.62616 1.27375 3.62882C1.42481 3.63149 1.57378 3.66455 1.71178 3.72604C1.84978 3.78753 1.97398 3.87618 2.07697 3.98671L5.21797 7.12621L10.4275 0.488713L10.456 0.455712Z'
         fill='#8E8E93'
       />
+    </svg>
+  );
+};
+
+export const EmptyCircle = ({
+  onClick,
+  children,
+  className,
+}: {
+  onClick: () => void;
+  children: ReactNode;
+  className?: string;
+}) => {
+  return (
+    <svg
+      className={className}
+      onClick={onClick}
+      width='32'
+      height='32'
+      viewBox='0 0 32 32'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <circle cx='16' cy='16' r='15' stroke='#8E8E93' stroke-width='2' />
+
+      {children}
     </svg>
   );
 };
