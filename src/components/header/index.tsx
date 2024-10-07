@@ -13,6 +13,8 @@ export const Header = () => {
   const { user } = useUser();
   const { getColor } = useGetColorByChar();
 
+  console.log(user);
+
   return (
     <div className='flex w-full h-20 gap-5 560:gap-10 items-center justify-between px-2 mb-6 768:px-4'>
       <div className='flex-grow max-w-[480px] 560:min-w-[255px]'>
@@ -25,7 +27,8 @@ export const Header = () => {
         />
       </div>
       <div className='flex items-center 560:gap-7'>
-        {user?.image_url_link ? (
+        {user?.image_url_link &&
+        user?.image_url_link !== 'https://srv575046.hstgr.cloud/storage/' ? (
           <div className='rounded-full overflow-hidden hidden 560:block  w-[45px] aspect-square'>
             <img
               onClick={() => navigate('/settings')}
