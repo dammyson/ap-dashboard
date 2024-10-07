@@ -13,7 +13,7 @@ import { phoneNumberRegex } from '@/utils/regex';
 
 export interface RoleOption {
   label: string;
-  value: string;
+  value: string | number;
   icon?: React.ReactNode;
 }
 

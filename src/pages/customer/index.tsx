@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import { BorderRadius, Button, ButtonSize } from '@/components/button';
-import { CustomSelect, SelectType } from '@/components/customSelect';
+import { CustomSelect } from '@/components/Dropdown/selectDropdown';
 import { DropDownArrow } from '@/components/svg/settings/Settings';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import clsx from 'clsx';
@@ -84,7 +84,6 @@ function Customer() {
                     <CustomSelect
                       label=''
                       options={pointOptions}
-                      selectType={SelectType.SELECT}
                       hasBorder
                       isCurved
                       trailingIcon={<DropDownArrow />}
@@ -100,7 +99,6 @@ function Customer() {
                     <CustomSelect
                       label=''
                       options={reasonOptions}
-                      selectType={SelectType.SELECT}
                       hasBorder
                       isCurved
                       trailingIcon={<DropDownArrow />}

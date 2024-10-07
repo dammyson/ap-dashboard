@@ -1,3 +1,5 @@
+import { RoleOption } from '@/pages/settings/profile';
+
 export interface ITeamMembers {
   image_url: string;
   user_name: string;
@@ -158,4 +160,26 @@ export interface changeAdminRole {
 export interface EditProfile {
   image_url: string | null;
   phone_number: string | null;
+}
+
+export interface SurveyOption {
+  option_text: string;
+  value: string;
+}
+
+export interface SurveyQuestion {
+  id: string;
+  questions: [
+    {
+      question_text: string;
+      options: SurveyOption[];
+    },
+  ];
+}
+export interface CreateSurvey {
+  title: string;
+  duration_of_survey: number;
+  points_awarded: number;
+  image_url: string;
+  questions: SurveyQuestion[];
 }
