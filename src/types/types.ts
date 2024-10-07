@@ -133,7 +133,7 @@ export interface User {
   created_at: string;
   email: string;
   email_verified_at: string | null;
-  image_url: string | null;
+  image_url_link: string | null;
   otp: string;
   otp_expires_at: string;
   role: string;

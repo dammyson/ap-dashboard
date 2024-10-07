@@ -52,35 +52,67 @@ function Profile() {
       <CategoryHeader
         title='Profile'
         button={
-          <Button
-            onClick={() => UploadProfileImage}
-            buttonText='Upload Photo'
-            leadingIcon={<Upload />}
-            mode='text'
-            className='bg-transparent text-primary-white text-nowrap flex 560:hidden'
-          />
+          <div className='flex 560:hidden relative'>
+            {imageLoading ? (
+              <Spin
+                indicator={
+                  <LoadingOutlined
+                    style={{ fontSize: 25, color: 'white' }}
+                    spin
+                  />
+                }
+              />
+            ) : (
+              <>
+                <label
+                  htmlFor='profileImage'
+                  className='absolute z-10 w-full h-full opacity-0 cursor-pointer'
+                >
+                  <input
+                    onChange={(e) => {
+                      e.preventDefault();
+                      const selectedFile = e.target.files && e.target.files[0];
+                      selectedFile && UploadProfileImage(selectedFile);
+                    }}
+                    type='file'
+                    id='profileImage'
+                    className='hidden'
+                    name='image'
+                    accept='.jpg, .png'
+                  />
+                </label>
+                <Button
+                  buttonText='Upload Photo'
+                  leadingIcon={<Upload />}
+                  mode='text'
+                  className='bg-transparent text-primary-white text-nowrap '
+                />
+              </>
+            )}
+          </div>
         }
       />
       <div className='bg-[#00000003] flex items-center justify-between w-full border-[1px] border-light-blue-50 rounded-[20px] py-3 560:py-4 px-6 my-6 gap-4'>
         <div className='flex gap-4 items-center w-full max-w-[300px]'>
-          <div className='rounded-full overflow-hidden w-[100px] h-[100px]'>
-            {image ? (
+          {image ? (
+            <div className='rounded-full overflow-hidden min-w-[70px] max-w-[80px] 768:max-w-[100px] aspect-square'>
               <img
                 src={image}
                 alt='profile image'
                 className='w-full h-full object-cover cursor-pointer'
               />
-            ) : (
-              <Avatar
-                getBackgroundColor={getColor}
-                textClassName='560:text-xl 960:text-4xl'
-                className='!min-w-[60px] !min-h-[60px] 560:!w-[80px] 560:!h-[80px] 960:!w-[100px] 960:!h-[100px]'
-                initials={
-                  user?.user_name ? getInitials(user?.user_name) : undefined
-                }
-              />
-            )}
-          </div>
+            </div>
+          ) : (
+            <Avatar
+              getBackgroundColor={getColor}
+              textClassName='560:text-xl 960:text-4xl'
+              className='!min-w-[60px] !min-h-[60px] 560:!w-[80px] 560:!h-[80px] 960:!w-[100px] 960:!h-[100px]'
+              initials={
+                user?.user_name ? getInitials(user?.user_name) : undefined
+              }
+            />
+          )}
+
           <div className='grid gap-1.5 960:gap-3'>
             <div className='font-semibold text-lg 768:text-xl 960:text-2xl text-light-primary-black text-nowrap '>
               {user?.user_name}
@@ -91,7 +123,7 @@ function Profile() {
           </div>
         </div>
 
-        <div className='relative w-[117px] flex justify-center items-center '>
+        <div className='relative w-[117px] hidden 560:flex justify-center items-center '>
           {imageLoading ? (
             <Spin
               indicator={<LoadingOutlined style={{ fontSize: 25 }} spin />}
@@ -111,13 +143,15 @@ function Profile() {
                   type='file'
                   id='profileImage'
                   className='hidden'
+                  name='image'
+                  accept='.jpg, .png'
                 />
               </label>
               <Button
                 buttonText='Upload Photo'
                 leadingIcon={<Upload />}
                 mode='text'
-                className='bg-transparent text-light-primary-black hover:text-[#393939] text-nowrap hidden 560:flex !px-0 !py-0'
+                className='bg-transparent text-light-primary-black hover:text-[#393939] text-nowrap !px-0 !py-0'
               />
             </>
           )}

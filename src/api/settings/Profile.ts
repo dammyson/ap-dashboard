@@ -36,7 +36,7 @@ export const useEditProfile = () => {
   const [isEditable, setIsEditatble] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState(user?.phone_number);
   const [validate, setValidate] = useState(false);
-  const [image, setImage] = useState(user?.image_url);
+  const [image, setImage] = useState(user?.image_url_link);
   const [imageLoading, setImageLoading] = useState(false);
 
   const editProfile = async (value: string | null) => {
@@ -90,10 +90,12 @@ export const useEditProfile = () => {
 
       const res = await data.json();
       setImageLoading(false);
-      if (res) {
-        console.log(res);
+      if (res?.error) {
+        toast.error(res.message);
+      } else {
         setImage(res.image_url_link);
-        token && getProfile(token);
+        token && (await getProfile(token));
+        toast.success(res.message);
       }
     } catch (error) {}
   };

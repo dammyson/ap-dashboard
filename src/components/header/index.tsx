@@ -25,13 +25,13 @@ export const Header = () => {
         />
       </div>
       <div className='flex items-center 560:gap-7'>
-        {user?.image_url ? (
-          <div className='hidden 560:flex min-w-[60px] max-w-[80px]'>
+        {user?.image_url_link ? (
+          <div className='rounded-full overflow-hidden hidden 560:block  w-[45px] aspect-square'>
             <img
               onClick={() => navigate('/settings')}
-              src={user?.image_url}
+              src={user?.image_url_link}
               alt='profile image'
-              className={'w-12 h-12 rounded-full cursor-pointer'}
+              className='w-full h-full object-cover cursor-pointer'
             />
           </div>
         ) : (
