@@ -373,3 +373,7 @@ tr > th.ant-table-cell.ant-table-cell-scrollbar {
 .no-arrows[type='number'] {
   -moz-appearance: textfield;
 }
+
+#file-upload-button {
+  cursor: pointer;
+}
