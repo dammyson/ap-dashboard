@@ -36,11 +36,7 @@ function CreateSurvey() {
     image,
     setImage,
     surveyQuestions,
-    selectedOption,
-    checkedOption,
     handleAddQuestion,
-    handleCheckselect,
-    handleOptionSelect,
     handleRemoveQuestion,
     handleAddOption,
     handleOptionChange,
@@ -108,16 +104,12 @@ function CreateSurvey() {
             </Card>
             <SurveyQuestionCard
               handleAddQuestion={handleAddQuestion}
-              handleOptionSelect={handleOptionSelect}
               handleRemoveQuestion={handleRemoveQuestion}
               handleAddOption={handleAddOption}
               handleOptionChange={handleOptionChange}
               handleRemoveOption={handleRemoveOption}
               handleQuestionText={handleQuestionText}
-              handleCheckselect={handleCheckselect}
               surveyQuestions={surveyQuestions}
-              selectedOption={selectedOption}
-              checkedOPtion={checkedOption}
             />
             <Card
               hasHeader
@@ -167,14 +159,32 @@ function CreateSurvey() {
                 </div>
                 <div className='w-full rounded-[50px] border border-light-blue-50 flex flex-col gap-2 items-center justify-center p-10'>
                   <Photo className='w-12 h-12 640:w-14 640:h-14 960:w-16 960:h-16 1400:w-20 1400:h-20' />
-                  <div className=' w-full max-w-[139px] 768:max-w-[159px] pb-4'>
-                    <Button
-                      size={ButtonSize.Medium}
-                      radius={BorderRadius.Large}
-                      buttonText='Browse'
-                      className='!min-h-[30px] max-h-[35px] !text-[14px] 768:!text-base 768:!min-h-[40px] 960:!min-h-[44px]'
-                      onClick={() => {}}
-                    />
+
+                  <div className='relative w-full max-w-[139px] 768:max-w-[159px] pb-4flex justify-center items-center '>
+                    <>
+                      <label
+                        htmlFor='profileImage'
+                        className='absolute z-10 w-full h-full opacity-0 cursor-pointer'
+                      >
+                        <input
+                          onChange={(e) => {
+                            e.preventDefault();
+                            const selectedFile =
+                              e.target.files && e.target.files[0];
+                          }}
+                          type='file'
+                          id='profileImage'
+                          className='hidden'
+                        />
+                      </label>
+                      <Button
+                        size={ButtonSize.Medium}
+                        radius={BorderRadius.Large}
+                        buttonText='Browse'
+                        className='!min-h-[30px] max-h-[35px] !text-[14px] 768:!text-base 768:!min-h-[40px] 960:!min-h-[44px]'
+                        onClick={() => {}}
+                      />
+                    </>
                   </div>
                   <p className='text-[#8E8E93] text-center 560:text-start text-base 768:text-lg 1240:text-xl font-normal'>
                     Drag and drop a file here

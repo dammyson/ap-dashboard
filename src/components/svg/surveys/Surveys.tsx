@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 export const Trophy = () => {
   return (
     <svg
@@ -208,27 +206,9 @@ export const CheckBoxSelect = () => {
   );
 };
 
-export const EmptyBoxSelect = ({
-  onClick, // Change to onClick
-  questionId,
-  value,
-  children,
-  className,
-}: {
-  onClick?: (
-    e: React.MouseEvent<SVGSVGElement>,
-    questionId: string,
-    value: string,
-  ) => void;
-  children?: ReactNode;
-  questionId?: string;
-  className?: string;
-  value?: string;
-}) => {
+export const EmptyBoxSelect = () => {
   return (
     <svg
-      className={className}
-      onClick={(e) => onClick && onClick(e, questionId!, value!)}
       width='32'
       height='32'
       viewBox='0 0 32 32'
@@ -244,7 +224,6 @@ export const EmptyBoxSelect = ({
         stroke='#C7C7CC'
         stroke-width='2'
       />
-      {children}
     </svg>
   );
 };
@@ -265,19 +244,9 @@ export const XSCheckMark = ({ className }: { className?: string }) => {
   );
 };
 
-export const EmptyCircle = ({
-  onClick,
-  children,
-  className,
-}: {
-  onClick: () => void;
-  children: ReactNode;
-  className?: string;
-}) => {
+export const EmptyCircle = () => {
   return (
     <svg
-      className={className}
-      onClick={onClick}
       width='32'
       height='32'
       viewBox='0 0 32 32'
@@ -285,8 +254,6 @@ export const EmptyCircle = ({
       xmlns='http://www.w3.org/2000/svg'
     >
       <circle cx='16' cy='16' r='15' stroke='#8E8E93' stroke-width='2' />
-
-      {children}
     </svg>
   );
 };

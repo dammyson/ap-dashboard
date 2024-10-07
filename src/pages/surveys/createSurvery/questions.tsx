@@ -7,10 +7,8 @@ import {
   CircledPlus,
   EmptyBoxSelect,
   EmptyCircle,
-  RadioFilled,
   RadioSelect,
   SmallBin,
-  XSCheckMark,
 } from '@/components/svg/surveys/Surveys';
 import { Button, ButtonSize } from '@/components/button';
 import clsx from 'clsx';
@@ -18,7 +16,6 @@ import { RoleOption } from '@/pages/settings/profile';
 import { useState } from 'react';
 import { DropDownArrow } from '@/components/svg/settings/Settings';
 import ListBox from '@/components/Dropdown/listBox';
-import Item from 'antd/es/list/Item';
 
 export const optionFormats: RoleOption[] = [
   {
@@ -35,19 +32,11 @@ export const optionFormats: RoleOption[] = [
 
 interface props {
   surveyQuestions: SurveyQuestion[];
-  selectedOption: SelectedOptions;
-  checkedOPtion: { [key: string]: string[] };
   handleAddQuestion: () => void;
   handleQuestionText: (
     e: React.ChangeEvent<HTMLInputElement>,
     questionId: string,
   ) => void;
-  handleCheckselect: (
-    e: React.MouseEvent<SVGSVGElement>,
-    questionId: string,
-    value: string,
-  ) => void;
-  handleOptionSelect: (questionId: string, optionValue: string) => void;
   handleOptionChange: (questionId: string, OptionId: number, e: string) => void;
   handleAddOption: (questionId: string) => void;
   handleRemoveOption: (questionId: string) => void;
@@ -56,15 +45,11 @@ interface props {
 
 const SurveyQuestionCard = ({
   surveyQuestions,
-  selectedOption,
-  checkedOPtion,
   handleAddQuestion,
-  handleOptionSelect,
   handleRemoveQuestion,
   handleAddOption,
   handleOptionChange,
   handleRemoveOption,
-  handleCheckselect,
   handleQuestionText,
 }: props) => {
   const [selectedFormat, setSelectedFormat] = useState<RoleOption>(
@@ -114,27 +99,9 @@ const SurveyQuestionCard = ({
             {item.questions[0].options.map((option, id) => (
               <div key={id} className='flex items-center gap-3 pt-3 '>
                 {selectedFormat?.label === 'Single choice' ? (
-                  <EmptyCircle
-                    className='cursor-pointer'
-                    onClick={() => handleOptionSelect(item.id, option.value)}
-                  >
-                    {selectedOption[item.id] === option.value && (
-                      <RadioFilled radius={6} />
-                    )}
-                  </EmptyCircle>
-                ) : selectedFormat?.label === 'Multi choice' ? (
-                  <EmptyBoxSelect
-                    className='cursor-pointer'
-                    onClick={(e) => handleCheckselect(e, item.id, option.value)}
-                  >
-                    {checkedOPtion[item.id]?.includes(option.value) ? (
-                      <CheckBoxSelect />
-                    ) : (
-                      ''
-                    )}
-                  </EmptyBoxSelect>
+                  <EmptyCircle />
                 ) : (
-                  <></>
+                  <EmptyBoxSelect />
                 )}
 
                 <input
