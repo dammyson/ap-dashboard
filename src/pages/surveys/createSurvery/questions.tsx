@@ -1,7 +1,6 @@
 import { Card } from '@/components/card';
 import { Input } from '@/components/input';
 import { SurveyQuestion } from '@/types/types';
-import { SelectedOptions } from '.';
 import {
   CheckBoxSelect,
   CircledPlus,

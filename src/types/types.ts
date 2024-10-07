@@ -1,5 +1,3 @@
-import { RoleOption } from '@/pages/settings/profile';
-
 export interface ITeamMembers {
   image_url: string;
   user_name: string;

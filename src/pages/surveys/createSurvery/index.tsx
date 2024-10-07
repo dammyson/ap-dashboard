@@ -17,6 +17,7 @@ import { Spinner } from '@/components/svg/spinner/Spinner';
 import { CustomCombobox } from '../../../components/Dropdown/comboBox';
 import { useSurveyForm } from '../utils';
 import { convertToMinutes } from '@/utils';
+import { DragAndDrop } from '@/components/dragAndDrop';
 
 export interface SelectedOptions {
   [questionId: string]: string;
@@ -151,7 +152,7 @@ function CreateSurvey() {
                   </>
                 ))}
               </div>
-              <div className='w-full'>
+              {/* <div className='w-full'>
                 <div className='max-w-[620px] mt-10 mb-2'>
                   <p className='font-medium text-xl 960:text-[26px] 1024:text-3xl text-light-grey-200 pb-2'>
                     Add image/banner
@@ -163,7 +164,7 @@ function CreateSurvey() {
                   <div className='relative w-full max-w-[139px] 768:max-w-[159px] pb-4flex justify-center items-center '>
                     <>
                       <label
-                        htmlFor='profileImage'
+                        htmlFor='bannerImage'
                         className='absolute z-10 w-full h-full opacity-0 cursor-pointer'
                       >
                         <input
@@ -173,8 +174,10 @@ function CreateSurvey() {
                               e.target.files && e.target.files[0];
                           }}
                           type='file'
-                          id='profileImage'
+                          id='bannerImage'
+                          name='image'
                           className='hidden'
+                          accept='image/png, image/jpg, image/webp'
                         />
                       </label>
                       <Button
@@ -193,7 +196,9 @@ function CreateSurvey() {
                     File supported .png, .jpg & .webp
                   </p>
                 </div>
-              </div>
+              </div> */}
+
+              <DragAndDrop />
               <div className='flex items-center justify-center mt-16 mb-8'>
                 <div className='grid w-full max-w-[330px] 880:max-w-[400px] gap-4 '>
                   <Button
