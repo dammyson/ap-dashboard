@@ -10,6 +10,8 @@ import { useGetColorByChar } from '@/hooks/useGetColorByChar';
 import { getInitials } from '@/utils';
 import { useEditProfile } from '@/api/settings/Profile';
 import { phoneNumberRegex } from '@/utils/regex';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 export interface RoleOption {
   label: string;
@@ -29,15 +31,14 @@ function Profile() {
     validate,
     setValidate,
     image,
+    UploadProfileImage,
+    imageLoading,
   } = useEditProfile();
   const { getColor } = useGetColorByChar();
 
   const handleEditProfile = () => {
-    if (validate || image) {
-      editProfile({
-        phone_number: phoneNumber ?? null,
-        image_url: image ?? null,
-      });
+    if (validate) {
+      editProfile(phoneNumber ?? null);
     }
   };
 
@@ -46,40 +47,74 @@ function Profile() {
     setPhoneNumber(e.target.value);
   };
 
+  console.warn(image);
+
   return (
     <div>
       <CategoryHeader
         title='Profile'
         button={
-          <Button
-            onClick={() => {}}
-            buttonText='Upload Photo'
-            leadingIcon={<Upload />}
-            mode='text'
-            className='bg-transparent text-primary-white text-nowrap flex 560:hidden'
-          />
+          <div className='flex 560:hidden relative'>
+            {imageLoading ? (
+              <Spin
+                indicator={
+                  <LoadingOutlined
+                    style={{ fontSize: 25, color: 'white' }}
+                    spin
+                  />
+                }
+              />
+            ) : (
+              <>
+                <label
+                  htmlFor='profileImage'
+                  className='absolute z-10 w-full h-full opacity-0 cursor-pointer'
+                >
+                  <input
+                    onChange={(e) => {
+                      e.preventDefault();
+                      const selectedFile = e.target.files && e.target.files[0];
+                      selectedFile && UploadProfileImage(selectedFile);
+                    }}
+                    type='file'
+                    id='profileImage'
+                    className='hidden'
+                    name='image'
+                    accept='.jpg, .png'
+                  />
+                </label>
+                <Button
+                  buttonText='Upload Photo'
+                  leadingIcon={<Upload />}
+                  mode='text'
+                  className='bg-transparent text-primary-white text-nowrap '
+                />
+              </>
+            )}
+          </div>
         }
       />
       <div className='bg-[#00000003] flex items-center justify-between w-full border-[1px] border-light-blue-50 rounded-[20px] py-3 560:py-4 px-6 my-6 gap-4'>
         <div className='flex gap-4 items-center w-full max-w-[300px]'>
-          <div className='min-w-[60px] min-h-[60px]  max-w-[80px] max-h-[80px]  560:max-w-[100px] 560:max-h-[100px]'>
-            {user?.image_url ? (
+          {image && image !== 'https://srv575046.hstgr.cloud/storage/' ? (
+            <div className='rounded-full overflow-hidden min-w-[70px] max-w-[80px] 768:max-w-[100px] aspect-square'>
               <img
-                src={user?.image_url}
+                src={image}
                 alt='profile image'
-                className='w-full rounded-full cursor-pointer'
+                className='w-full h-full object-cover cursor-pointer'
               />
-            ) : (
-              <Avatar
-                getBackgroundColor={getColor}
-                textClassName='560:text-xl 960:text-4xl'
-                className='!min-w-[60px] !min-h-[60px] 560:!w-[80px] 560:!h-[80px] 960:!w-[100px] 960:!h-[100px]'
-                initials={
-                  user?.user_name ? getInitials(user?.user_name) : undefined
-                }
-              />
-            )}
-          </div>
+            </div>
+          ) : (
+            <Avatar
+              getBackgroundColor={getColor}
+              textClassName='560:text-xl 960:text-4xl'
+              className='!min-w-[60px] !min-h-[60px] 560:!w-[80px] 560:!h-[80px] 960:!w-[100px] 960:!h-[100px]'
+              initials={
+                user?.user_name ? getInitials(user?.user_name) : undefined
+              }
+            />
+          )}
+
           <div className='grid gap-1.5 960:gap-3'>
             <div className='font-semibold text-lg 768:text-xl 960:text-2xl text-light-primary-black text-nowrap '>
               {user?.user_name}
@@ -89,13 +124,40 @@ function Profile() {
             </span>
           </div>
         </div>
-        <Button
-          onClick={() => {}}
-          buttonText='Upload Photo'
-          leadingIcon={<Upload />}
-          mode='text'
-          className='bg-transparent text-light-primary-black hover:text-[#393939] text-nowrap hidden 560:flex'
-        />
+
+        <div className='relative w-[117px] hidden 560:flex justify-center items-center '>
+          {imageLoading ? (
+            <Spin
+              indicator={<LoadingOutlined style={{ fontSize: 25 }} spin />}
+            />
+          ) : (
+            <>
+              <label
+                htmlFor='profileImage'
+                className='absolute z-10 w-full h-full opacity-0 cursor-pointer'
+              >
+                <input
+                  onChange={(e) => {
+                    e.preventDefault();
+                    const selectedFile = e.target.files && e.target.files[0];
+                    selectedFile && UploadProfileImage(selectedFile);
+                  }}
+                  type='file'
+                  id='profileImage'
+                  className='hidden'
+                  name='image'
+                  accept='.jpg, .png'
+                />
+              </label>
+              <Button
+                buttonText='Upload Photo'
+                leadingIcon={<Upload />}
+                mode='text'
+                className='bg-transparent text-light-primary-black hover:text-[#393939] text-nowrap !px-0 !py-0'
+              />
+            </>
+          )}
+        </div>
       </div>
       <div className='bg-[#00000003] w-full border-[1px] border-light-blue-50 rounded-[20px] py-6 px-8 flex items-center justify-center flex-col'>
         <div className='flex items-center justify-between w-full'>

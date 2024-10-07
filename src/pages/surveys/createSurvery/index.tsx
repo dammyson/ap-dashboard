@@ -5,7 +5,6 @@ import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { Input } from '@/components/input';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { DropDownArrow } from '@/components/svg/settings/Settings';
-import { Photo } from '@/components/svg/surveys/Surveys';
 import WelcomeMessage from '@/components/welcomeMessage';
 import { useUser } from '@/context/AppContext';
 import clsx from 'clsx';
@@ -152,52 +151,6 @@ function CreateSurvey() {
                   </>
                 ))}
               </div>
-              {/* <div className='w-full'>
-                <div className='max-w-[620px] mt-10 mb-2'>
-                  <p className='font-medium text-xl 960:text-[26px] 1024:text-3xl text-light-grey-200 pb-2'>
-                    Add image/banner
-                  </p>
-                </div>
-                <div className='w-full rounded-[50px] border border-light-blue-50 flex flex-col gap-2 items-center justify-center p-10'>
-                  <Photo className='w-12 h-12 640:w-14 640:h-14 960:w-16 960:h-16 1400:w-20 1400:h-20' />
-
-                  <div className='relative w-full max-w-[139px] 768:max-w-[159px] pb-4flex justify-center items-center '>
-                    <>
-                      <label
-                        htmlFor='bannerImage'
-                        className='absolute z-10 w-full h-full opacity-0 cursor-pointer'
-                      >
-                        <input
-                          onChange={(e) => {
-                            e.preventDefault();
-                            const selectedFile =
-                              e.target.files && e.target.files[0];
-                          }}
-                          type='file'
-                          id='bannerImage'
-                          name='image'
-                          className='hidden'
-                          accept='image/png, image/jpg, image/webp'
-                        />
-                      </label>
-                      <Button
-                        size={ButtonSize.Medium}
-                        radius={BorderRadius.Large}
-                        buttonText='Browse'
-                        className='!min-h-[30px] max-h-[35px] !text-[14px] 768:!text-base 768:!min-h-[40px] 960:!min-h-[44px]'
-                        onClick={() => {}}
-                      />
-                    </>
-                  </div>
-                  <p className='text-[#8E8E93] text-center 560:text-start text-base 768:text-lg 1240:text-xl font-normal'>
-                    Drag and drop a file here
-                  </p>
-                  <p className='text-light-primary-deep_black text-base text-center 560:text-start 768:text-lg 1240:text-xl font-medium'>
-                    File supported .png, .jpg & .webp
-                  </p>
-                </div>
-              </div> */}
-
               <DragAndDrop />
               <div className='flex items-center justify-center mt-16 mb-8'>
                 <div className='grid w-full max-w-[330px] 880:max-w-[400px] gap-4 '>
