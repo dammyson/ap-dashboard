@@ -3,10 +3,10 @@ import { Header } from '@/components/header';
 import { AppLayout } from '@/components/layout/AppLayout';
 import WelcomeMessage from '@/components/welcomeMessage';
 import { BorderRadius, Button, ButtonSize } from '@/components/button';
-import { Table } from 'antd';
-import { useCustomerFeedbackColumn } from '@/components/modules/surveys/customerFeedback/tableColumns';
+import { Spin, Table } from 'antd';
+import { useViewResultColumn } from '@/components/modules/surveys/viewResult/tableColumns';
 import { Panel, PanelNavigationItem } from '@/components/Panel';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { SurveyResults } from '@/components/modules/surveys/SurveyResults';
 import { DropDownArrow } from '@/components/svg/settings/Settings';
@@ -16,64 +16,27 @@ import { Cancel } from '@/components/svg/modal/Modal';
 import clsx from 'clsx';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { useUser } from '@/context/AppContext';
+import { pointOptions, reasonOptions } from './constants';
+import { useViewSurveyResult } from '@/api/surveys/viewResults';
+import { LoadingOutlined } from '@ant-design/icons';
 
 function ViewResult() {
   const navigate = useNavigate();
-  const { id } = useParams();
-  const list = [
-    {
-      title: 'Mrs',
-      name: 'Benson Ella',
-      email: 'Bensonella@gmail.com',
-      airpeaceID: 11111,
-      gender: 'Female',
-      nationality: 'Nigerian',
-    },
-    {
-      title: 'Mr',
-      name: 'Benson Daniel',
-      email: 'Bensondaniel@gmail.com',
-      airpeaceID: 98811,
-      gender: 'Male',
-      nationality: 'Nigerian',
-    },
-    {
-      title: 'Mrs',
-      name: 'Corlet joy',
-      email: 'Corletjoy@gmail.com',
-      airpeaceID: 13411,
-      gender: 'Female',
-      nationality: 'British',
-    },
-    {
-      title: 'Mr',
-      name: 'Daniel',
-      email: 'daniel@gmail.com',
-      airpeaceID: 10911,
-      gender: 'Male',
-      nationality: 'Nigerian',
-    },
-    {
-      title: 'Mrs',
-      name: 'Tiwa Savage',
-      email: 'Tiwasavage@gmail.com',
-      airpeaceID: 10111,
-      gender: 'Female',
-      nationality: 'Nigerian',
-    },
-    {
-      title: 'Mr',
-      name: 'Neymar Sanchez',
-      email: 'Neymarsanchez@gmail.com',
-      airpeaceID: 87101,
-      gender: 'Male',
-      nationality: 'Brazilian',
-    },
-  ];
+  const { title, surveyId } = useParams();
+  const id = Number(surveyId);
+
+  const { getSurveyParticipants, participants, Loading } =
+    useViewSurveyResult();
+
+  useEffect(() => {
+    if (id) {
+      getSurveyParticipants(id);
+    }
+  }, []);
 
   const navigationItems: PanelNavigationItem[] = [
     {
-      title: `Survey participants (${list.length})`,
+      title: `Survey participants (${participants.length})`,
       id: 'Survey participants',
     },
     {
@@ -81,22 +44,14 @@ function ViewResult() {
       id: 'Survey results',
     },
   ];
-  const pointOptions = [
-    { label: '2000', value: '2000' },
-    { label: '3000', value: '3000' },
-  ];
-  const reasonOptions = [
-    {
-      label: 'Loyalty and repeat business',
-      value: 'loyalty and repeat business',
-    },
-  ];
+
   const [awardPoints, setAwardPoints] = useState<boolean>(false);
   const [selectedPointOption, setSelectedPointOption] = useState<string>('');
   const [selectedReason, setSelectedReason] = useState<string>('');
   const [currentTab, setCurrentTab] = useState(navigationItems[0]);
   const { user } = useUser();
-  const { tableColumns } = useCustomerFeedbackColumn(setAwardPoints);
+
+  const { tableColumns } = useViewResultColumn(setAwardPoints);
 
   return (
     <AppLayout logo=''>
@@ -127,7 +82,7 @@ function ViewResult() {
           <Card
             hasHeader
             hasBadge
-            title={`Survey:${id}`}
+            title={`Survey: ${title}`}
             hasBorder
             className='!pb-2'
             mainClass='!mt-4 560:!mt-8'
@@ -152,9 +107,19 @@ function ViewResult() {
                   <Table
                     pagination={false}
                     columns={tableColumns}
-                    dataSource={list}
+                    dataSource={participants}
                     className='survey-participants'
                     rootClassName='overflow-x-scroll hidden-scrollbar'
+                    loading={{
+                      spinning: Loading,
+                      indicator: (
+                        <Spin
+                          indicator={
+                            <LoadingOutlined style={{ fontSize: 48 }} spin />
+                          }
+                        />
+                      ),
+                    }}
                   />
                 ) : (
                   <SurveyResults />

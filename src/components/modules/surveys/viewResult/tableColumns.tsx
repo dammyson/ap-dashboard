@@ -1,10 +1,10 @@
 import { ColumnType } from 'antd/es/table';
 import { useMemo } from 'react';
-import { CustomerFeedback } from '@/types/types';
+import { ViewResult } from '@/types/types';
 import { Trophy } from '@/components/svg/surveys/Surveys';
 import { ModalStateSetter } from '../tableColumns';
 
-export const useCustomerFeedbackColumn = (setAwardPoints: ModalStateSetter) => {
+export const useViewResultColumn = (setAwardPoints: ModalStateSetter) => {
   const tableColumns = useMemo(() => {
     return [
       { title: 'TITLE', dataIndex: 'title', key: 'title' },
@@ -44,7 +44,7 @@ export const useCustomerFeedbackColumn = (setAwardPoints: ModalStateSetter) => {
           </span>
         ),
       },
-    ] as ColumnType<CustomerFeedback>[];
+    ] as ColumnType<ViewResult>[];
   }, []);
 
   return { tableColumns };

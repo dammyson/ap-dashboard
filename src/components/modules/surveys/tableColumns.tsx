@@ -81,7 +81,9 @@ export const useSurveyColumn = (
                   if (record.is_published !== 1) {
                     navigate(`/surveys-edit/${record.title}`);
                   } else {
-                    navigate(`/surveys-view-result/${record.title}`);
+                    navigate(
+                      `/surveys-view-result/${record.title}/${record.id}`,
+                    );
                   }
                 }}
                 className='!bg-[#C7C7CC] min-w-[105px] !px-0 hover:!bg-[#bababe]'

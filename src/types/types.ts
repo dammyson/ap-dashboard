@@ -13,7 +13,7 @@ export interface Surveys {
   is_completed: boolean;
 }
 
-export interface CustomerFeedback {
+export interface ViewResult {
   title: string;
   name: string;
   email: string;

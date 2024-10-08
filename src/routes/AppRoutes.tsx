@@ -13,7 +13,7 @@ import CreateSurvey from '@/pages/surveys/createSurvery';
 import Settings from '@/pages/settings';
 import { useUser } from '@/context/AppContext';
 import ProtectedRoutes from './PrivateRoutes';
-import ViewResult from '@/pages/surveys/customerFeedback';
+import ViewResult from '@/pages/surveys/viewResult';
 
 const AppRoutes = () => {
   const { token } = useUser();
@@ -36,7 +36,10 @@ const AppRoutes = () => {
         />
         <Route path='/activity-log' element={<ActivityLog />} />
         <Route path='/surveys' element={<Surveys />} />
-        <Route path='/surveys-view-result/:id' element={<ViewResult />} />
+        <Route
+          path='/surveys-view-result/:titleId/:surveyId'
+          element={<ViewResult />}
+        />
         <Route path='/surveys-edit/:id' element={<EditSurvey />} />
         <Route path='/surveys-create/:id' element={<CreateSurvey />} />
         <Route path='/settings' element={<Settings />} />
