@@ -104,7 +104,7 @@ export const useCreateSurvey = () => {
         toast.error(res.message);
       } else {
         toast.success(res.message);
-        // navigate('/surveys');
+        navigate('/surveys');
       }
     } catch (error) {
       toast.error((error as MutationErrorPayload)?.data?.message);

@@ -36,6 +36,8 @@ function CreateSurvey() {
     image,
     setImage,
     surveyQuestions,
+    selectedFormat,
+    handleSelectFormat,
     handleAddQuestion,
     handleRemoveQuestion,
     handleAddOption,
@@ -110,6 +112,8 @@ function CreateSurvey() {
               handleRemoveOption={handleRemoveOption}
               handleQuestionText={handleQuestionText}
               surveyQuestions={surveyQuestions}
+              selectedFormat={selectedFormat}
+              handleSelectFormat={handleSelectFormat}
             />
             <Card
               hasHeader

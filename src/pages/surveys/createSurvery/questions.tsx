@@ -12,7 +12,6 @@ import {
 import { Button, ButtonSize } from '@/components/button';
 import clsx from 'clsx';
 import { RoleOption } from '@/pages/settings/profile';
-import { useState } from 'react';
 import { DropDownArrow } from '@/components/svg/settings/Settings';
 import ListBox from '@/components/Dropdown/listBox';
 
@@ -31,6 +30,8 @@ export const optionFormats: RoleOption[] = [
 
 interface props {
   surveyQuestions: SurveyQuestion[];
+  selectedFormat: { [key: string]: RoleOption };
+  handleSelectFormat: (questionId: string, format: RoleOption) => void;
   handleAddQuestion: () => void;
   handleQuestionText: (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -44,6 +45,8 @@ interface props {
 
 const SurveyQuestionCard = ({
   surveyQuestions,
+  selectedFormat,
+  handleSelectFormat,
   handleAddQuestion,
   handleRemoveQuestion,
   handleAddOption,
@@ -51,9 +54,6 @@ const SurveyQuestionCard = ({
   handleRemoveOption,
   handleQuestionText,
 }: props) => {
-  const [selectedFormat, setSelectedFormat] = useState<RoleOption>(
-    optionFormats[0],
-  );
   return (
     <Card
       hasHeader
@@ -85,19 +85,21 @@ const SurveyQuestionCard = ({
             <p className='font-medium text-lg 768:text-xl 880:text-2xl 1024:text-3xl text-light-grey-200 pb-2'>
               Option format
             </p>
+
             <ListBox
               trailingIcon={<DropDownArrow />}
-              selected={selectedFormat}
+              selected={selectedFormat[item.id] || optionFormats[0]}
               options={optionFormats}
-              onSelect={(format) => setSelectedFormat(format)}
+              onSelect={(format) => handleSelectFormat(item.id, format)}
               isCurved
               className=' placeholder:!text-light-primary-deep_black placeholder:!text-xl font-medium text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'
             />
           </div>
+          <>{console.log('selectedFormat:', selectedFormat[item.id])}</>
           <div className='font-normal text-xl text-light-primary-deep_black'>
             {item.questions[0].options.map((option, id) => (
               <div key={id} className='flex items-center gap-3 pt-3 '>
-                {selectedFormat?.label === 'Single choice' ? (
+                {selectedFormat[item.id]?.value === 'single choice' ? (
                   <EmptyCircle />
                 ) : (
                   <EmptyBoxSelect />

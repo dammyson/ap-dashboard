@@ -1,7 +1,7 @@
 import { ColumnType } from 'antd/es/table';
 import { useMemo } from 'react';
 import { Button } from '../../../components/button';
-import { Surveys } from '@/types/types';
+import { SurveyType } from '@/types/types';
 import clsx from 'clsx';
 import { Space } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -107,7 +107,7 @@ export const useSurveyColumn = (
           </Space>
         ),
       },
-    ] as ColumnType<Surveys>[];
+    ] as ColumnType<SurveyType>[];
   }, []);
 
   return { tableColumns };

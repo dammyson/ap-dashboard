@@ -5,7 +5,7 @@ export interface ITeamMembers {
   email: string;
 }
 
-export interface Surveys {
+export interface SurveyType {
   id: number;
   title: string;
   created_at: string;

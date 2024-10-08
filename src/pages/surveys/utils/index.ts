@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { SurveyOption, SurveyQuestion } from '@/types/types';
+import { RoleOption } from '@/pages/settings/profile';
+import { optionFormats } from '../createSurvery/questions';
 
 const questionOption: SurveyOption[] = [
   { option_text: '', value: 'option1' },
@@ -24,6 +26,21 @@ export const useSurveyForm = () => {
     },
   ]);
 
+  const [selectedFormat, setSelectedFormat] = useState<{
+    [key: string]: RoleOption;
+  }>(
+    Object.fromEntries(
+      surveyQuestions.map((question) => [question.id, optionFormats[0]]),
+    ),
+  );
+
+  const handleSelectFormat = (id: string, format: RoleOption) => {
+    setSelectedFormat((prev) => ({
+      ...prev,
+      [id]: format,
+    }));
+  };
+
   const handleAddQuestion = () => {
     const newQuestion: SurveyQuestion = {
       id: (surveyQuestions.length + 1).toString(),
@@ -35,6 +52,10 @@ export const useSurveyForm = () => {
       ],
     };
     setSurveyQuestions([...surveyQuestions, newQuestion]);
+    setSelectedFormat((prev) => ({
+      ...prev,
+      [newQuestion.id]: optionFormats[0],
+    }));
   };
 
   const handleRemoveQuestion = (questionId: string) => {
@@ -152,6 +173,9 @@ export const useSurveyForm = () => {
     questionText,
     setQuestionText,
     surveyQuestions,
+    selectedFormat,
+    handleSelectFormat,
+    setSelectedFormat,
     setSurveyQuestions,
     handleAddQuestion,
     handleRemoveQuestion,
