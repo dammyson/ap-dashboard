@@ -17,7 +17,7 @@ import clsx from 'clsx';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { useUser } from '@/context/AppContext';
 
-function CustomerFeedback() {
+function ViewResult() {
   const navigate = useNavigate();
   const { id } = useParams();
   const list = [
@@ -244,4 +244,4 @@ function CustomerFeedback() {
   );
 }
 
-export default CustomerFeedback;
+export default ViewResult;
