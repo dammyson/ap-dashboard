@@ -40,7 +40,7 @@ export const SurveyResults = ({ results, isloading }: props) => {
                         className='flex text-primary-black items-center justify-between my-5 pb-2.5 border-b border-b-light-secondary-light_blue min-w-[200px] '
                       >
                         <p>
-                          Option {option.option_id} - {option.option_text}
+                          Option {index + 1} - {option.option_text}
                         </p>
                         <p className='font-semibold'>{option.percentage}%</p>
                       </div>
