@@ -1,6 +1,7 @@
 import { useUser } from '@/context/AppContext';
-import { MutationErrorPayload } from '@/types/types';
+import { CreateSurvey, MutationErrorPayload } from '@/types/types';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
 export const useSurvey = () => {
@@ -68,5 +69,51 @@ export const useSurvey = () => {
     loading,
     surveyModal,
     setSurveyModal,
+  };
+};
+
+export const useCreateSurvey = () => {
+  const { token } = useUser();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const createSurvey = async (value: CreateSurvey) => {
+    try {
+      setLoading(true);
+      const data = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/create-survey`,
+
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'content-type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            title: value.title,
+            duration_of_survey: value.duration_of_survey,
+            points_awarded: value.points_awarded,
+            image_url: value.image_url,
+            questions: value.questions.map((x) => x.questions[0]),
+          }),
+        },
+      );
+      const res = await data.json();
+      setLoading(false);
+      if (res?.errors) {
+        toast.error(res.message);
+      } else {
+        toast.success(res.message);
+        navigate('/surveys');
+      }
+    } catch (error) {
+      toast.error((error as MutationErrorPayload)?.data?.message);
+    }
+  };
+
+  return {
+    createSurvey,
+    loading,
+    setLoading,
   };
 };

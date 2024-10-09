@@ -5,7 +5,7 @@ export interface ITeamMembers {
   email: string;
 }
 
-export interface Surveys {
+export interface SurveyType {
   id: number;
   title: string;
   created_at: string;
@@ -154,4 +154,30 @@ export interface AddAdmins {
 export interface changeAdminRole {
   email: string;
   new_role: string;
+}
+export interface EditProfile {
+  image_url: string | null;
+  phone_number: string | null;
+}
+
+export interface SurveyOption {
+  option_text: string;
+  value: string;
+}
+
+export interface SurveyQuestion {
+  id: string;
+  questions: [
+    {
+      question_text: string;
+      options: SurveyOption[];
+    },
+  ];
+}
+export interface CreateSurvey {
+  title: string;
+  duration_of_survey: number;
+  points_awarded: number;
+  image_url: string;
+  questions: SurveyQuestion[];
 }

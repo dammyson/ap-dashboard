@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { SurveyResults } from '@/components/modules/surveys/SurveyResults';
 import { DropDownArrow } from '@/components/svg/settings/Settings';
-import { CustomSelect, SelectType } from '@/components/customSelect';
+import { CustomSelect } from '@/components/Dropdown/selectDropdown';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import clsx from 'clsx';
@@ -183,7 +183,6 @@ function CustomerFeedback() {
                   <CustomSelect
                     label=''
                     options={pointOptions}
-                    selectType={SelectType.SELECT}
                     hasBorder
                     isCurved
                     trailingIcon={<DropDownArrow />}
@@ -198,7 +197,6 @@ function CustomerFeedback() {
                   <CustomSelect
                     label=''
                     options={reasonOptions}
-                    selectType={SelectType.SELECT}
                     hasBorder
                     isCurved
                     trailingIcon={<DropDownArrow />}
