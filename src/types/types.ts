@@ -1,5 +1,5 @@
-export interface ITeamMembers {
-  image_url: string;
+export interface TeamMembers {
+  image_url_link: string;
   user_name: string;
   role: string;
   email: string;
@@ -13,7 +13,7 @@ export interface SurveyType {
   is_completed: boolean;
 }
 
-export interface CustomerFeedback {
+export interface ViewParticipants {
   title: string;
   name: string;
   email: string;
@@ -154,6 +154,18 @@ export interface AddAdmins {
 export interface changeAdminRole {
   email: string;
   new_role: string;
+}
+
+export interface ViewResult {
+  question_text: string;
+  options: [
+    {
+      option_id: number;
+      option_text: string;
+      votes: number;
+      percentage: number;
+    },
+  ];
 }
 export interface EditProfile {
   image_url: string | null;
