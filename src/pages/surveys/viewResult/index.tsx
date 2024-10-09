@@ -22,21 +22,28 @@ import { LoadingOutlined } from '@ant-design/icons';
 
 function ViewResult() {
   const navigate = useNavigate();
-  const { title, surveyId } = useParams();
+  const { titleId, surveyId } = useParams();
   const id = Number(surveyId);
 
-  const { getSurveyParticipants, participants, Loading } =
-    useViewSurveyResult();
+  const {
+    getSurveyParticipants,
+    participants,
+    Loading,
+    getSurveyResults,
+    isloading,
+    results,
+  } = useViewSurveyResult();
 
   useEffect(() => {
     if (id) {
       getSurveyParticipants(id);
+      getSurveyResults(id);
     }
   }, []);
 
   const navigationItems: PanelNavigationItem[] = [
     {
-      title: `Survey participants (${participants.length})`,
+      title: `Survey participants (${participants?.length})`,
       id: 'Survey participants',
     },
     {
@@ -82,7 +89,7 @@ function ViewResult() {
           <Card
             hasHeader
             hasBadge
-            title={`Survey: ${title}`}
+            title={`Survey: ${titleId}`}
             hasBorder
             className='!pb-2'
             mainClass='!mt-4 560:!mt-8'
@@ -122,7 +129,7 @@ function ViewResult() {
                     }}
                   />
                 ) : (
-                  <SurveyResults />
+                  <SurveyResults results={results} isloading={isloading} />
                 )}
               </div>
             </Panel>

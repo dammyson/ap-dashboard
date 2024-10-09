@@ -1,6 +1,6 @@
 import { ColumnType } from 'antd/es/table';
 import { useMemo } from 'react';
-import { ITeamMembers } from '@/types/types';
+import { TeamMembers } from '@/types/types';
 import { Button } from '@/components/button';
 import { CircularArrow, Remove } from '@/components/svg/settings/Settings';
 import clsx from 'clsx';
@@ -24,9 +24,10 @@ export const useTeamMembersColumn = (
         key: 'image_url',
         width: 100,
         render: (_, record) =>
-          record.image_url ? (
+          record.image_url_link &&
+          record.image_url_link !== 'https://srv575046.hstgr.cloud/storage/' ? (
             <img
-              src={record.image_url}
+              src={record.image_url_link}
               alt='profile image'
               className={clsx('w-8 h-8 rounded-full')}
             />
@@ -87,7 +88,7 @@ export const useTeamMembersColumn = (
           />
         ),
       },
-    ] as ColumnType<ITeamMembers>[];
+    ] as ColumnType<TeamMembers>[];
   }, []);
 
   return { tableColumns };
