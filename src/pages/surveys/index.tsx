@@ -15,6 +15,8 @@ import { useUser } from '@/context/AppContext';
 import { useSurvey } from '@/api/surveys/surveys';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spinner } from '@/components/svg/spinner/Spinner';
+import { SurveyType } from '@/types/types';
+import dayjs from 'dayjs';
 
 function Surveys() {
   const navigate = useNavigate();
@@ -38,6 +40,10 @@ function Surveys() {
     setDeleteSurvey,
     setSurveyId,
   );
+
+  const sortedSurveys = (surveys ?? []).sort((a: SurveyType, b: SurveyType) => {
+    return dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf();
+  });
 
   useEffect(() => {
     getSurvey();
@@ -91,7 +97,7 @@ function Surveys() {
             <Table
               pagination={false}
               columns={tableColumns}
-              dataSource={surveys}
+              dataSource={sortedSurveys}
               scroll={{ y: 390, x: true }}
               className='survey-table custom-scrollbar hide-arrows overflow-x-scroll'
               rootClassName='hidden-scrollbar'

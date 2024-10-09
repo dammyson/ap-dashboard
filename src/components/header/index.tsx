@@ -1,19 +1,15 @@
 import { Input } from '../input';
 import { Bell, Search } from '../svg/dashboard/Dashboard';
-import { ProfileData } from '../profileData';
 import { useNavigate } from 'react-router';
 import { useUser } from '@/context/AppContext';
 import { Avatar } from '../avatar/Avatar';
 import { useGetColorByChar } from '@/hooks/useGetColorByChar';
 import { getInitials } from '@/utils';
-import profileImage from '../../assets/profileImage/profile-img.png';
 
 export const Header = () => {
   const navigate = useNavigate();
   const { user } = useUser();
   const { getColor } = useGetColorByChar();
-
-  console.log(user);
 
   return (
     <div className='flex w-full h-20 gap-5 560:gap-10 items-center justify-between px-2 mb-6 768:px-4'>

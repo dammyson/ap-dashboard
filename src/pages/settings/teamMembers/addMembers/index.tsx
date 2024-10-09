@@ -6,8 +6,7 @@ import {
   Upload,
 } from '@/components/svg/settings/Settings';
 import { Input, InputState } from '@/components/input';
-import { CustomSelect, SelectType } from '@/components/customSelect';
-
+import { CustomSelect } from '@/components/Dropdown/selectDropdown';
 import { useAddMembers } from '@/api/settings/teamMembers';
 import { Spinner } from '@/components/svg/spinner/Spinner';
 import { emailRegex } from '@/utils/regex';
@@ -117,7 +116,6 @@ function AddMembers() {
             <div className='text-light-grey-200 font-medium text-base max-w-[569px]'>
               <CustomSelect
                 label='Role'
-                selectType={SelectType.SELECT}
                 hasBorder
                 isCurved
                 className='!h-[50px] 960:!min-h-[66px]'
