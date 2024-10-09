@@ -15,7 +15,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 
 export interface RoleOption {
   label: string;
-  value: string;
+  value: string | number;
   icon?: React.ReactNode;
 }
 
