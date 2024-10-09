@@ -8,6 +8,7 @@ export enum CardType {
 }
 
 interface CardProps {
+  isFiltered?: boolean;
   hasHeader?: boolean;
   hasBadge?: boolean;
   title?: string;
@@ -21,6 +22,7 @@ interface CardProps {
 }
 
 export const Card = ({
+  isFiltered,
   hasHeader,
   hasBadge,
   title,
@@ -67,7 +69,12 @@ export const Card = ({
             <div className='flex items-center'>
               {hasButton && <span>{hasButton}</span>}
               {trailingIcon1 && (
-                <span className=' cursor-pointer ml-3 w-8 h-8 rounded-full shadow-100 grid place-content-center'>
+                <span
+                  className={clsx(
+                    isFiltered && 'border-2 border-light-blue-50',
+                    ' cursor-pointer ml-3 w-8 h-8 rounded-full shadow-100 grid place-content-center',
+                  )}
+                >
                   {trailingIcon1}
                 </span>
               )}
