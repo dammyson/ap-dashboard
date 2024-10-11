@@ -85,8 +85,11 @@ export const useManageSurvey = () => {
   const [surveyTitle, setSurveyTitle] = useState('');
   const [duration, setDuration] = useState<number>(0);
   const [points, setPoints] = useState<number>(0);
-  const [image, setImage] = useState('some url');
+  const [imagePreview, setImagePreview] = useState('');
+  const [surveyBanner, setSurveyBanner] = useState<File | null>(null);
   const [showLoading, setShowLoading] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false);
+
   const [surveyQuestions, setSurveyQuestions] = useState<SurveyQuestion[]>([
     {
       id: '1',
@@ -113,7 +116,6 @@ export const useManageSurvey = () => {
             title: value.title,
             duration_of_survey: value.duration_of_survey,
             points_awarded: value.points_awarded,
-            image_url: value.image_url,
             questions: value.questions.map((x) => x),
           }),
         },
@@ -156,6 +158,36 @@ export const useManageSurvey = () => {
         setSurveyQuestions(surveyData.questions);
         setDuration(surveyData.duration_of_survey);
         setPoints(surveyData.points_awarded);
+        setSurveyBanner(res.surveyData.image_url_link);
+        setImagePreview(res.surveyData.image_url_link);
+      }
+    } catch (error) {
+      toast.error((error as MutationErrorPayload)?.data?.message);
+    }
+  };
+
+  const changeSurveyBanner = async (id: number, image: File) => {
+    const bannerImage = new FormData();
+    bannerImage.append('image_url', image);
+    try {
+      setImageLoading(true);
+      const data = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${id}/update-survey-image`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+          },
+          body: bannerImage,
+        },
+      );
+      const res = await data.json();
+      setImageLoading(false);
+      if (res?.error) {
+        toast.error(res.message);
+      } else {
+        console.log(res);
       }
     } catch (error) {
       toast.error((error as MutationErrorPayload)?.data?.message);
@@ -177,6 +209,10 @@ export const useManageSurvey = () => {
     setDuration,
     points,
     setPoints,
-    image,
+    imagePreview,
+    setImagePreview,
+    surveyBanner,
+    setSurveyBanner,
+    changeSurveyBanner,
   };
 };

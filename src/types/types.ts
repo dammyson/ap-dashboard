@@ -187,6 +187,5 @@ export interface CreateSurvey {
   title: string;
   duration_of_survey: number;
   points_awarded: number;
-  image_url: string;
   questions: SurveyQuestion[];
 }

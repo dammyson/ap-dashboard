@@ -30,7 +30,6 @@ function CreateSurvey() {
     surveyTitle,
     duration,
     points,
-    image,
     surveyQuestions,
     setPoints,
     setDuration,
@@ -43,7 +42,6 @@ function CreateSurvey() {
       title: surveyTitle,
       duration_of_survey: duration,
       points_awarded: points,
-      image_url: image,
       questions: surveyQuestions,
     });
   };
@@ -115,6 +113,7 @@ function CreateSurvey() {
                     </p>
                     {item.id === 'points awarded (optional)' ? (
                       <CustomCombobox
+                        selectedLabel=''
                         options={awardPoints}
                         trailingIcon={<DropDownArrow />}
                         isCurved
@@ -125,6 +124,7 @@ function CreateSurvey() {
                       />
                     ) : (
                       <CustomCombobox
+                        selectedLabel=''
                         options={surveyDuration}
                         trailingIcon={<DropDownArrow />}
                         isCurved

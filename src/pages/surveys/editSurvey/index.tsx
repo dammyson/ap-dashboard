@@ -35,13 +35,23 @@ function EditSurvey({}) {
     setDuration,
     points,
     setPoints,
+    imagePreview,
+    setImagePreview,
+    surveyBanner,
+    setSurveyBanner,
+    changeSurveyBanner,
   } = useManageSurvey();
 
-  console.log(surveyTitle);
   const id = Number(surveyId);
   useEffect(() => {
     id && showSurvey(id);
   }, []);
+
+  console.log(surveyBanner);
+
+  const handleEditsurvey = (id: number, image: File) => {
+    changeSurveyBanner(id, image);
+  };
 
   return (
     <AppLayout logo=''>
@@ -154,7 +164,11 @@ function EditSurvey({}) {
                       </>
                     ))}
                   </div>
-                  <DragAndDrop />
+                  <DragAndDrop
+                    imagePreview={imagePreview}
+                    setImagePreview={setImagePreview}
+                    setSurveyBanner={setSurveyBanner}
+                  />
                   <div className='flex items-center justify-center mt-16 mb-8'>
                     <div className='grid w-full max-w-[330px] 880:max-w-[400px] gap-4'>
                       <Button
@@ -170,7 +184,11 @@ function EditSurvey({}) {
                         radius={BorderRadius.Large}
                         mode='outlined'
                         buttonText='Save and publish'
-                        onClick={() => {}}
+                        onClick={() =>
+                          id &&
+                          surveyBanner &&
+                          handleEditsurvey(id, surveyBanner)
+                        }
                         className='!min-h-[55px] 960:!min-h-[66px]'
                       />
                     </div>
