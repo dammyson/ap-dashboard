@@ -1,61 +1,42 @@
-import { useState } from 'react';
 import { SurveyOption, SurveyQuestion } from '@/types/types';
 import { RoleOption } from '@/pages/settings/profile';
-import { optionFormats } from '../createSurvery/questions';
 
-const questionOption: SurveyOption[] = [
+export const questionOption: SurveyOption[] = [
   { option_text: '', value: 'option1' },
   { option_text: '', value: 'option2' },
 ];
 
-export const useSurveyForm = () => {
-  const [surveyTitle, setSurveyTitle] = useState('');
-  const [duration, setDuration] = useState<number>(0);
-  const [points, setPoints] = useState<number>(0);
-  const [image, setImage] = useState('some url');
-  const [questionText, setQuestionText] = useState('');
-  const [surveyQuestions, setSurveyQuestions] = useState<SurveyQuestion[]>([
-    {
-      id: '1',
-      questions: [
-        {
-          question_text: questionText,
-          options: [...questionOption],
-        },
-      ],
-    },
-  ]);
+interface props {
+  surveyQuestions: SurveyQuestion[];
+  setSurveyQuestions: React.Dispatch<React.SetStateAction<SurveyQuestion[]>>;
+}
 
-  const [selectedFormat, setSelectedFormat] = useState<{
-    [key: string]: RoleOption;
-  }>(
-    Object.fromEntries(
-      surveyQuestions.map((question) => [question.id, optionFormats[0]]),
-    ),
-  );
-
+export const useSurveyForm = ({
+  surveyQuestions,
+  setSurveyQuestions,
+}: props) => {
   const handleSelectFormat = (id: string, format: RoleOption) => {
-    setSelectedFormat((prev) => ({
-      ...prev,
-      [id]: format,
-    }));
+    setSurveyQuestions((prevQuestions) =>
+      prevQuestions.map((question) => {
+        if (question.id === id) {
+          return {
+            ...question,
+            is_multiple_choice: Number(format.value),
+          };
+        }
+        return question;
+      }),
+    );
   };
 
   const handleAddQuestion = () => {
     const newQuestion: SurveyQuestion = {
       id: (surveyQuestions.length + 1).toString(),
-      questions: [
-        {
-          question_text: questionText,
-          options: [...questionOption],
-        },
-      ],
+      question_text: '',
+      is_multiple_choice: 0,
+      options: [...questionOption],
     };
     setSurveyQuestions([...surveyQuestions, newQuestion]);
-    setSelectedFormat((prev) => ({
-      ...prev,
-      [newQuestion.id]: optionFormats[0],
-    }));
   };
 
   const handleRemoveQuestion = (questionId: string) => {
@@ -70,17 +51,12 @@ export const useSurveyForm = () => {
         if (question.id === questionId) {
           const newOption = {
             option_text: '',
-            value: `option${question.questions[0].options.length + 1}`,
+            value: `option${question.options.length + 1}`,
           };
 
           return {
             ...question,
-            questions: [
-              {
-                ...question.questions[0],
-                options: [...question.questions[0].options, newOption],
-              },
-            ],
+            options: [...question.options, newOption],
           };
         }
         return question;
@@ -93,25 +69,21 @@ export const useSurveyForm = () => {
     index: number,
     value: string,
   ) => {
+    console.log(
+      `Updating option at index ${index} for question: ${questionId} to ${value}`,
+    );
     setSurveyQuestions((prevQuestions) =>
       prevQuestions.map((question) => {
         if (question.id === questionId) {
-          const updatedOptionsText = question.questions[0].options.map(
-            (option, idx) => {
-              if (idx === index) {
-                return { ...option, option_text: value };
-              }
-              return option;
-            },
-          );
+          const updatedOptionsText = question.options.map((option, idx) => {
+            if (idx === index) {
+              return { ...option, option_text: value };
+            }
+            return option;
+          });
           return {
             ...question,
-            questions: [
-              {
-                ...question.questions[0],
-                options: updatedOptionsText,
-              },
-            ],
+            options: updatedOptionsText,
           };
         }
         return question;
@@ -123,15 +95,10 @@ export const useSurveyForm = () => {
     setSurveyQuestions((prevQuestions) =>
       prevQuestions.map((question) => {
         if (question.id === questionId) {
-          const updatedOptions = question.questions[0].options.slice(0, -1);
+          const updatedOptions = question.options.slice(0, -1);
           return {
             ...question,
-            questions: [
-              {
-                ...question.questions[0],
-                options: updatedOptions,
-              },
-            ],
+            options: updatedOptions,
           };
         }
         return question;
@@ -143,17 +110,14 @@ export const useSurveyForm = () => {
     e: React.ChangeEvent<HTMLInputElement>,
     questionId: string,
   ) => {
+    const newValue = e.target.value; // Get the new value directly
+    console.log(`Updating question: ${questionId} to ${newValue}`);
     setSurveyQuestions((prev) =>
       prev.map((quest) => {
         if (quest.id === questionId) {
           return {
             ...quest,
-            questions: [
-              {
-                ...quest.questions[0],
-                question_text: e.target.value,
-              },
-            ],
+            question_text: newValue,
           };
         }
         return quest;
@@ -162,20 +126,8 @@ export const useSurveyForm = () => {
   };
 
   return {
-    surveyTitle,
-    setSurveyTitle,
-    duration,
-    setDuration,
-    points,
-    setPoints,
-    image,
-    setImage,
-    questionText,
-    setQuestionText,
     surveyQuestions,
-    selectedFormat,
     handleSelectFormat,
-    setSelectedFormat,
     setSurveyQuestions,
     handleAddQuestion,
     handleRemoveQuestion,

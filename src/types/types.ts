@@ -179,12 +179,9 @@ export interface SurveyOption {
 
 export interface SurveyQuestion {
   id: string;
-  questions: [
-    {
-      question_text: string;
-      options: SurveyOption[];
-    },
-  ];
+  question_text: string;
+  is_multiple_choice: number;
+  options: SurveyOption[];
 }
 export interface CreateSurvey {
   title: string;

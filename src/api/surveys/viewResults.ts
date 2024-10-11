@@ -17,7 +17,7 @@ export const useViewSurveyResult = () => {
         {
           method: 'GET',
           headers: {
-            Accept: 'aplication/json',
+            Accept: 'application/json',
             Authorization: `Bearer ${token}`,
           },
         },
@@ -42,7 +42,7 @@ export const useViewSurveyResult = () => {
         {
           method: 'GET',
           headers: {
-            Accept: 'aplication/json',
+            Accept: 'application/json',
             Authorization: `Bearer ${token}`,
           },
         },

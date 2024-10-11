@@ -47,8 +47,6 @@ function Profile() {
     setPhoneNumber(e.target.value);
   };
 
-  console.warn(image);
-
   return (
     <div>
       <CategoryHeader

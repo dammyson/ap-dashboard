@@ -14,46 +14,36 @@ import clsx from 'clsx';
 import { RoleOption } from '@/pages/settings/profile';
 import { DropDownArrow } from '@/components/svg/settings/Settings';
 import ListBox from '@/components/Dropdown/listBox';
+import { useSurveyForm } from '../utils';
 
 export const optionFormats: RoleOption[] = [
   {
     label: 'Single choice',
-    value: 'single choice',
+    value: 0,
     icon: <RadioSelect />,
   },
   {
     label: 'Multi choice',
-    value: 'Multi choice',
+    value: 1,
     icon: <CheckBoxSelect />,
   },
 ];
 
 interface props {
   surveyQuestions: SurveyQuestion[];
-  selectedFormat: { [key: string]: RoleOption };
-  handleSelectFormat: (questionId: string, format: RoleOption) => void;
-  handleAddQuestion: () => void;
-  handleQuestionText: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    questionId: string,
-  ) => void;
-  handleOptionChange: (questionId: string, OptionId: number, e: string) => void;
-  handleAddOption: (questionId: string) => void;
-  handleRemoveOption: (questionId: string) => void;
-  handleRemoveQuestion: (questionId: string) => void;
+  setSurveyQuestions: React.Dispatch<React.SetStateAction<SurveyQuestion[]>>;
 }
 
-const SurveyQuestionCard = ({
-  surveyQuestions,
-  selectedFormat,
-  handleSelectFormat,
-  handleAddQuestion,
-  handleRemoveQuestion,
-  handleAddOption,
-  handleOptionChange,
-  handleRemoveOption,
-  handleQuestionText,
-}: props) => {
+const SurveyQuestionCard = ({ surveyQuestions, setSurveyQuestions }: props) => {
+  const {
+    handleSelectFormat,
+    handleAddQuestion,
+    handleRemoveQuestion,
+    handleAddOption,
+    handleOptionChange,
+    handleRemoveOption,
+    handleQuestionText,
+  } = useSurveyForm({ surveyQuestions, setSurveyQuestions });
   return (
     <Card
       hasHeader
@@ -72,6 +62,7 @@ const SurveyQuestionCard = ({
               Question
             </p>
             <Input
+              value={item.question_text}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 handleQuestionText(e, item.id)
               }
@@ -88,18 +79,17 @@ const SurveyQuestionCard = ({
 
             <ListBox
               trailingIcon={<DropDownArrow />}
-              selected={selectedFormat[item.id] || optionFormats[0]}
+              selected={optionFormats[item.is_multiple_choice]}
               options={optionFormats}
               onSelect={(format) => handleSelectFormat(item.id, format)}
               isCurved
               className=' placeholder:!text-light-primary-deep_black placeholder:!text-xl font-medium text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'
             />
           </div>
-          <>{console.log('selectedFormat:', selectedFormat[item.id])}</>
           <div className='font-normal text-xl text-light-primary-deep_black'>
-            {item.questions[0].options.map((option, id) => (
+            {item.options.map((option, id) => (
               <div key={id} className='flex items-center gap-3 pt-3 '>
-                {selectedFormat[item.id]?.value === 'single choice' ? (
+                {optionFormats[item.is_multiple_choice].value === 0 ? (
                   <EmptyCircle />
                 ) : (
                   <EmptyBoxSelect />
@@ -136,21 +126,17 @@ const SurveyQuestionCard = ({
                   <SmallBin
                     className='min-w-5 max-w-5 min-h-4 max-h-6 880:min-w-6 880:max-w-8 880:min-h-6 880:max-h-8 w-full'
                     color={clsx(
-                      item.questions[0].options.length < 2
-                        ? '#B0B0B0'
-                        : '#23539f',
+                      item.options.length < 2 ? '#B0B0B0' : '#23539f',
                     )}
                   />
                 }
                 buttonText='Remove option'
                 onClick={() => {
-                  item.questions[0].options.length > 1 &&
-                    handleRemoveOption(item.id);
+                  item.options.length > 1 && handleRemoveOption(item.id);
                 }}
                 className={clsx(
                   '!font-semibold !text-[#B0B0B0] text-base 480:!text-[17px] 1300:!text-[18px] !px-2 768:!px-0 880:!px-4 text-nowrap !gap-1 880:!gap-2',
-                  item.questions[0].options.length > 1 &&
-                    '!text-light-blue-main',
+                  item.options.length > 1 && '!text-light-blue-main',
                 )}
               />
             </div>
