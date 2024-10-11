@@ -1,7 +1,5 @@
 import { useUser } from '@/context/AppContext';
-import { RoleOption } from '@/pages/settings/profile';
-import { optionFormats } from '@/pages/surveys/createSurvery/questions';
-import { questionOption, useSurveyForm } from '@/pages/surveys/utils';
+import { questionOption } from '@/pages/surveys/utils';
 import {
   CreateSurvey,
   MutationErrorPayload,

@@ -14,8 +14,10 @@ import { useNavigate, useParams } from 'react-router';
 import SurveyQuestionCard from '../createSurvery/questions';
 import { CustomCombobox } from '@/components/Dropdown/comboBox';
 import { awardPoints, OtherList, surveyDuration } from '../constants';
-import { convertToMinutes } from '@/utils';
+import { convertFromMinutes, convertToMinutes } from '@/utils';
 import { DragAndDrop } from '@/components/dragAndDrop';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 function EditSurvey({}) {
   const { titleId, surveyId } = useParams();
@@ -67,7 +69,16 @@ function EditSurvey({}) {
             </div>
           </div>
           {showLoading ? (
-            <div className='text-black'> LOADING</div>
+            <div className='text-black h-[70svh] w-full flex justify-center items-center'>
+              <Spin
+                indicator={
+                  <LoadingOutlined
+                    className='!text-[38px] 640:!text-[55px]'
+                    spin
+                  />
+                }
+              />
+            </div>
           ) : (
             <div className='grid'>
               <Card
@@ -115,11 +126,7 @@ function EditSurvey({}) {
                           </p>
                           {item.id === 'points awarded (optional)' ? (
                             <CustomCombobox
-                              // value={
-                              //   survey?.points_awarded
-                              //     ? survey.points_awarded.toString()
-                              //     : ''
-                              // }
+                              selectedLabel={`${points} Points`}
                               options={awardPoints}
                               trailingIcon={<DropDownArrow />}
                               isCurved
@@ -130,6 +137,7 @@ function EditSurvey({}) {
                             />
                           ) : (
                             <CustomCombobox
+                              selectedLabel={convertFromMinutes(duration)}
                               options={surveyDuration}
                               trailingIcon={<DropDownArrow />}
                               isCurved
