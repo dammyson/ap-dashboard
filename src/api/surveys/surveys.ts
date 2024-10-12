@@ -89,6 +89,7 @@ export const useManageSurvey = () => {
   const [surveyBanner, setSurveyBanner] = useState<File | null>(null);
   const [showLoading, setShowLoading] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
+  const [editLoading, setEditLoading] = useState(false);
 
   const [surveyQuestions, setSurveyQuestions] = useState<SurveyQuestion[]>([
     {
@@ -158,7 +159,6 @@ export const useManageSurvey = () => {
         setSurveyQuestions(surveyData.questions);
         setDuration(surveyData.duration_of_survey);
         setPoints(surveyData.points_awarded);
-        setSurveyBanner(res.surveyData.image_url_link);
         setImagePreview(res.surveyData.image_url_link);
       }
     } catch (error) {
@@ -194,6 +194,41 @@ export const useManageSurvey = () => {
     }
   };
 
+  const editSurvey = async (id: number, value: CreateSurvey) => {
+    try {
+      setEditLoading(true);
+      const data = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${id}/edit`,
+        {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'content-type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            title: value.title,
+            duration_of_survey: value.duration_of_survey,
+            points_awarded: value.points_awarded,
+            questions: value.questions.map((x) => x),
+          }),
+        },
+      );
+
+      const res = await data.json();
+      setEditLoading(false);
+
+      if (res?.error) {
+        toast.error(res.message);
+      } else {
+        toast.success('Edited survey successfully!');
+        navigate('/surveys');
+      }
+    } catch (error) {
+      toast.error((error as MutationErrorPayload)?.data?.message);
+    }
+  };
+
   return {
     createSurvey,
     loading,
@@ -214,5 +249,7 @@ export const useManageSurvey = () => {
     surveyBanner,
     setSurveyBanner,
     changeSurveyBanner,
+    editSurvey,
+    editLoading,
   };
 };

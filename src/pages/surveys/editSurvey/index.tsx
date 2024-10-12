@@ -18,6 +18,7 @@ import { convertFromMinutes, convertToMinutes } from '@/utils';
 import { DragAndDrop } from '@/components/dragAndDrop';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
+import { Spinner } from '@/components/svg/spinner/Spinner';
 
 function EditSurvey({}) {
   const { titleId, surveyId } = useParams();
@@ -25,7 +26,6 @@ function EditSurvey({}) {
   const navigate = useNavigate();
   const {
     showSurvey,
-    survey,
     surveyQuestions,
     setSurveyQuestions,
     showLoading,
@@ -40,6 +40,8 @@ function EditSurvey({}) {
     surveyBanner,
     setSurveyBanner,
     changeSurveyBanner,
+    editSurvey,
+    editLoading,
   } = useManageSurvey();
 
   const id = Number(surveyId);
@@ -47,10 +49,13 @@ function EditSurvey({}) {
     id && showSurvey(id);
   }, []);
 
-  console.log(surveyBanner);
-
-  const handleEditsurvey = (id: number, image: File) => {
-    changeSurveyBanner(id, image);
+  const handleEditsurvey = (id: number) => {
+    editSurvey(id, {
+      title: surveyTitle,
+      duration_of_survey: duration,
+      points_awarded: points,
+      questions: surveyQuestions,
+    });
   };
 
   return (
@@ -183,12 +188,17 @@ function EditSurvey({}) {
                         size={ButtonSize.Large}
                         radius={BorderRadius.Large}
                         mode='outlined'
-                        buttonText='Save and publish'
-                        onClick={() =>
-                          id &&
-                          surveyBanner &&
-                          handleEditsurvey(id, surveyBanner)
+                        buttonText={
+                          editLoading ? (
+                            <Spinner className='text-light-blue-main w-5 h-5 768:w-7 768:h-7' />
+                          ) : (
+                            'Save and publish'
+                          )
                         }
+                        onClick={() => {
+                          handleEditsurvey(id);
+                          surveyBanner && changeSurveyBanner(id, surveyBanner);
+                        }}
                         className='!min-h-[55px] 960:!min-h-[66px]'
                       />
                     </div>

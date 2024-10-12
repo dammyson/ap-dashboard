@@ -69,9 +69,6 @@ export const useSurveyForm = ({
     index: number,
     value: string,
   ) => {
-    console.log(
-      `Updating option at index ${index} for question: ${questionId} to ${value}`,
-    );
     setSurveyQuestions((prevQuestions) =>
       prevQuestions.map((question) => {
         if (question.id === questionId) {
@@ -110,8 +107,7 @@ export const useSurveyForm = ({
     e: React.ChangeEvent<HTMLInputElement>,
     questionId: string,
   ) => {
-    const newValue = e.target.value; // Get the new value directly
-    console.log(`Updating question: ${questionId} to ${newValue}`);
+    const newValue = e.target.value;
     setSurveyQuestions((prev) =>
       prev.map((quest) => {
         if (quest.id === questionId) {

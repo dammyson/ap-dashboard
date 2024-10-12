@@ -35,6 +35,9 @@ function CreateSurvey() {
     setDuration,
     setSurveyQuestions,
     setSurveyTitle,
+    imagePreview,
+    setImagePreview,
+    setSurveyBanner,
   } = useManageSurvey();
 
   const handleCreateSurvey = () => {
@@ -138,7 +141,11 @@ function CreateSurvey() {
                   </div>
                 ))}
               </div>
-              <DragAndDrop />
+              <DragAndDrop
+                imagePreview={imagePreview}
+                setImagePreview={setImagePreview}
+                setSurveyBanner={setSurveyBanner}
+              />
               <div className='flex items-center justify-center mt-16 mb-8'>
                 <div className='grid w-full max-w-[330px] 880:max-w-[400px] gap-4 '>
                   <Button
