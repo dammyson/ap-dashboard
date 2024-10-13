@@ -1,5 +1,5 @@
 import { PanelNavigationItem } from '@/components/Panel';
-import { RoleOption } from '../../settings/profile';
+import { RoleOption } from '../settings/profile';
 
 export const OtherList: PanelNavigationItem[] = [
   { title: 'Duration of survey', id: 'duration of survey ' },

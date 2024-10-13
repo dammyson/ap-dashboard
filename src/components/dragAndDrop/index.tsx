@@ -1,37 +1,38 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BorderRadius, Button, ButtonSize } from '../button';
 import { Photo } from '../svg/surveys/Surveys';
 import { CircleCancel } from '../svg/settings/Settings';
 
 interface props {
-  setImage: React.Dispatch<React.SetStateAction<File | null>>;
+  setImagePreview: React.Dispatch<React.SetStateAction<string>>;
+  imagePreview: string;
+  setSurveyBanner: React.Dispatch<React.SetStateAction<File | null>>;
 }
 
-export const DragAndDrop = () => {
-  const [image, setImage] = useState<File | null>();
-  const [preview, setPreview] = useState<string | undefined>();
-
+export const DragAndDrop = ({
+  imagePreview,
+  setImagePreview,
+  setSurveyBanner,
+}: props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const selectedFile = e.target.files && e.target.files[0];
     if (selectedFile) {
-      setImage(selectedFile);
-
+      setSurveyBanner(selectedFile);
       const imageURL = URL.createObjectURL(selectedFile);
 
-      setPreview(imageURL);
+      setImagePreview(imageURL);
     }
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const droppedFile = e.dataTransfer.files[0];
-    setImage(droppedFile);
     if (droppedFile) {
-      setImage(droppedFile);
+      setSurveyBanner(droppedFile);
 
       const imageURL = URL.createObjectURL(droppedFile);
-      setPreview(imageURL);
+      setImagePreview(imageURL);
     }
   };
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -39,8 +40,8 @@ export const DragAndDrop = () => {
   };
 
   const handleRemoveImage = () => {
-    setImage(null);
-    setPreview('');
+    setSurveyBanner(null);
+    setImagePreview('');
   };
 
   return (
@@ -51,11 +52,11 @@ export const DragAndDrop = () => {
         </p>
       </div>
       <div className='w-full rounded-[50px] border border-light-blue-50 flex flex-col gap-2 items-center justify-center p-10'>
-        {preview ? (
+        {imagePreview ? (
           <div className='relative'>
             <div className=' w-[120px] 560:w-[200px] aspect-square 880:w-[350px] 880:h-[220px] 1240:w-[420px] 1240:h-[260px]  rounded-lg overflow-hidden'>
               <img
-                src={preview}
+                src={imagePreview}
                 alt='banner Image  Preview'
                 className='w-full h-full object-cover'
               />

@@ -179,17 +179,13 @@ export interface SurveyOption {
 
 export interface SurveyQuestion {
   id: string;
-  questions: [
-    {
-      question_text: string;
-      options: SurveyOption[];
-    },
-  ];
+  question_text: string;
+  is_multiple_choice: number;
+  options: SurveyOption[];
 }
 export interface CreateSurvey {
   title: string;
   duration_of_survey: number;
   points_awarded: number;
-  image_url: string;
   questions: SurveyQuestion[];
 }

@@ -83,3 +83,24 @@ export const convertToMinutes = (val: string) => {
   }
   return numberVal;
 };
+
+export const convertFromMinutes = (val: number) => {
+  const hoursFromVal = val / 60;
+  const daysFromVal = hoursFromVal / 24;
+
+  if (daysFromVal === 1) {
+    return `1 day`;
+  } else if (daysFromVal === 14) {
+    return `14 days`;
+  } else if (daysFromVal < 7) {
+    return `${Math.floor(daysFromVal)} days`;
+  } else if (daysFromVal >= 7 && daysFromVal < 14) {
+    return `1 week`;
+  } else if (daysFromVal > 14 && daysFromVal < 30) {
+    return `${Math.floor(daysFromVal / 7)} weeks`;
+  } else if (daysFromVal >= 30 && daysFromVal < 60) {
+    return `1 month`;
+  } else {
+    return `${Math.floor(daysFromVal / 30)} months`;
+  }
+};

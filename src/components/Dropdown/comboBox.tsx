@@ -21,9 +21,11 @@ interface SelectProps {
   isCurved?: boolean;
   trailingIcon?: React.ReactNode;
   onSelect?: (value: string | number) => void;
+  selectedLabel: string;
 }
 
 export function CustomCombobox({
+  selectedLabel,
   options,
   className,
   hasBorder = true,
@@ -63,8 +65,8 @@ export function CustomCombobox({
               className,
             )}
             placeholder='Enter or select'
-            displayValue={(option: RoleOption | null) => option?.label || ''}
             onChange={(e) => setQuery(e.target.value)}
+            displayValue={() => selectedLabel || selected?.label || ''}
           />
 
           {trailingIcon && (
