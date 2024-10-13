@@ -1,71 +1,63 @@
+import { useManageSurvey } from '@/api/surveys/surveys';
 import { BorderRadius, Button, ButtonSize } from '@/components/button';
 import { Card } from '@/components/card';
 import { Header } from '@/components/header';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { Input } from '@/components/input';
 import { AppLayout } from '@/components/layout/AppLayout';
-import { PanelNavigationItem } from '@/components/Panel';
-
-import { ReactCustomSelect } from '@/components/searchSelect';
 import { DropDownArrow } from '@/components/svg/settings/Settings';
-import {
-  CheckBoxSelect,
-  CircledPlus,
-  Photo,
-  RadioSelect,
-  SmallBin,
-  XSCheckMark,
-} from '@/components/svg/surveys/Surveys';
 import WelcomeMessage from '@/components/welcomeMessage';
 import { useUser } from '@/context/AppContext';
-import { RoleOption } from '@/pages/settings/profile';
 import clsx from 'clsx';
-import { ChangeEvent, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
+import SurveyQuestionCard from '../createSurvery/questions';
+import { CustomCombobox } from '@/components/Dropdown/comboBox';
+import { awardPoints, OtherList, surveyDuration } from '../constants';
+import { convertFromMinutes, convertToMinutes } from '@/utils';
+import { DragAndDrop } from '@/components/dragAndDrop';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spinner } from '@/components/svg/spinner/Spinner';
 
 function EditSurvey({}) {
-  const { id } = useParams();
+  const { titleId, surveyId } = useParams();
   const { user } = useUser();
   const navigate = useNavigate();
-  const SurveyQuestions: PanelNavigationItem[] = [
-    { title: 'Question', id: 'question ' },
-    { title: 'Option format', id: 'option format' },
-  ];
+  const {
+    showSurvey,
+    surveyQuestions,
+    setSurveyQuestions,
+    showLoading,
+    surveyTitle,
+    setSurveyTitle,
+    duration,
+    setDuration,
+    points,
+    setPoints,
+    imagePreview,
+    setImagePreview,
+    surveyBanner,
+    setSurveyBanner,
+    changeSurveyBanner,
+    editSurvey,
+    editLoading,
+  } = useManageSurvey();
 
-  const OtherList: PanelNavigationItem[] = [
-    { title: 'Duration of survey', id: 'duration of survey ' },
-    { title: 'Points awarded (optional)', id: 'points awarded (optional)' },
-  ];
+  const id = Number(surveyId);
+  useEffect(() => {
+    id && showSurvey(id);
+  }, []);
 
-  const Options: RoleOption[] = [
-    { label: '5 Minutes', value: '5 Minutes' },
-    { label: '10 Minutes', value: '10 Minutes' },
-    { label: '15 Minutes', value: '15 Minutes' },
-  ];
-
-  const formats: RoleOption[] = [
-    {
-      label: 'Multiple choice',
-      value: 'multiple choice',
-      icon: <RadioSelect />,
-    },
-    { label: 'Check boxes', value: 'check boxes', icon: <CheckBoxSelect /> },
-  ];
-  const AwardOptions: RoleOption[] = [
-    { label: '20 Points', value: '20 points' },
-    { label: '30 Points', value: '30 points' },
-    { label: '40 Points', value: '40 points' },
-  ];
-
-  const [checkedOPtion, setCheckedOption] = useState<string[]>([]);
-  const handleOnchange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setCheckedOption((prev: string[]) =>
-      prev.includes(value)
-        ? prev.filter((option: string) => option !== value)
-        : [...prev, value],
-    );
+  const handleEditsurvey = (id: number) => {
+    editSurvey(id, {
+      title: surveyTitle,
+      duration_of_survey: duration,
+      points_awarded: points,
+      questions: surveyQuestions,
+    });
   };
+
   return (
     <AppLayout logo=''>
       <div
@@ -91,234 +83,130 @@ function EditSurvey({}) {
               />
             </div>
           </div>
-          <div className='grid'>
-            <Card
-              hasHeader
-              hasBadge
-              hasBorder
-              mainClass='!mt-4 560:!mt-8'
-              className='!border-b-light-secondary-light_blue'
-              title={`Edit survey: ${id}`}
-            >
-              <>
-                <div className='max-w-[620px] mt-10 mb-2'>
-                  <p className='font-medium text-lg 768:text-xl 880:text-2xl 1024:text-3xl text-light-grey-200 pb-2'>
-                    Title of the survey
-                  </p>
-                  <Input
-                    placeHolder='In-flight experience'
-                    isCurved
-                    hasBorder
-                    className='!border-light-blue-50 !drop-shadow-none placeholder:text-light-primary-deep_black placeholder:text-sm 560:placeholder:text-base !h-[55px] 960:!min-h-[70px]'
+          {showLoading ? (
+            <div className='text-black h-[70svh] w-full flex justify-center items-center'>
+              <Spin
+                indicator={
+                  <LoadingOutlined
+                    className='!text-[38px] 640:!text-[55px]'
+                    spin
                   />
-                </div>
-              </>
-            </Card>
-
-            <Card
-              hasHeader
-              hasBadge
-              hasBorder
-              className='!border-b-light-secondary-light_blue'
-              title='Add survey question'
-            >
-              <div className='relative grid grid-cols-[minmax(200px,480px)] 768:grid-cols-[minmax(250px,480px)_minmax(250px,480px)] justify-between gap-5 pb-10 mt-3 768:mt-0'>
-                {SurveyQuestions.map((item) => (
-                  <>
-                    <div className='max-w-[620px] 768:mt-10 mb-2'>
-                      <p className='font-medium text-lg 768:text-xl 880:text-2xl 1024:text-3xl text-light-grey-200 pb-2'>
-                        {item.title}
-                      </p>
-                      {item.id === 'option format' ? (
-                        <ReactCustomSelect
-                          options={formats}
-                          isSearchable={false}
-                          className='!placeholder:text-light-primary-deep_black placeholder:text-xl text-light-primary-deep_black font-medium !h-[55px] 960:!min-h-[70px]'
-                        />
-                      ) : (
-                        <Input
-                          placeHolder='How was your flight experience?'
-                          isCurved
-                          hasBorder
-                          className='!border-light-blue-50 !drop-shadow-none placeholder:text-light-primary-deep_black placeholder:text-sm 560:placeholder:text-base !h-[55px] 960:!min-h-[70px]'
-                        />
-                      )}
-                    </div>
-                  </>
-                ))}
-
-                <div className='font-normal text-xl text-light-primary-deep_black'>
-                  <div className='flex items-center gap-3 pt-3 '>
-                    <div>
-                      <input
-                        type='checkbox'
-                        value='Excellent'
-                        checked={checkedOPtion.includes('Excellent')}
-                        onChange={handleOnchange}
-                        className='w-6 h-6 640:w-7 640:h-7 1240:w-8 1240:h-8 absolute opacity-0 cursor-pointer rounded-[4px]'
-                      />
-                      <div className='flex items-center justify-center w-6 h-6 640:w-7 640:h-7 1240:w-8 1240:h-8 border-[#8E8E93] border-2 rounded-[4px]'>
-                        {checkedOPtion.includes('Excellent') && (
-                          <XSCheckMark className='w-[70%] 640:w-[68%] 1240:w-[70%] 1240:h-[83%]' />
-                        )}
-                      </div>
-                    </div>
-                    <span className=' w-full text-lg 640:text-xl 960:text-2xl py-3 border-b border-b-[#C7C7CC] font-normal '>
-                      Excellent
-                    </span>
-                  </div>
-                  <div className='flex items-center gap-3 pt-3'>
-                    <div>
-                      <input
-                        type='checkbox'
-                        value='Option 2'
-                        checked={checkedOPtion.includes('Option 2')}
-                        onChange={handleOnchange}
-                        className='w-6 h-6 640:w-7 640:h-7 1240:w-8 1240:h-8 absolute opacity-0 cursor-pointer rounded-[4px]'
-                      />
-                      <div className=' flex items-center justify-center w-6 h-6 640:w-7 640:h-7 1240:w-8 1240:h-8 border-[#8E8E93] border-2 rounded-[4px]'>
-                        {checkedOPtion.includes('Option 2') && (
-                          <XSCheckMark className='w-[70%] 640:w-[68%] 1240:w-[70%] 1240:h-[83%]' />
-                        )}
-                      </div>
-                    </div>
-                    <span className=' w-full text-lg 640:text-xl 960:text-2xl py-3 border-b border-b-[#C7C7CC]'>
-                      Option 2
-                    </span>
-                  </div>
-                </div>
-
-                <div className='flex items-start gap-0 560:gap-2 880:gap-3 font-semibold text-light-blue-main'>
-                  <div className='flex items-center justify-start'>
-                    <Button
-                      mode='text'
-                      size={ButtonSize.Small}
-                      leadingIcon={
-                        <CircledPlus className='min-w-5 max-w-5 min-h-4 max-h-6 880:min-w-6 880:max-w-8 880:min-h-6 880:max-h-8 w-full' />
-                      }
-                      buttonText='Add option'
-                      onClick={() => {}}
-                      className='!font-semibold !text-light-blue-main text-base 480:!text-[17px] 1300:!text-[18px] pl-0 pr-2 768:!px-0 880:!px-4 text-nowrap !gap-1 880:!gap-2]'
-                    />
-                  </div>
-                  <div className='flex items-center justify-start'>
-                    <Button
-                      mode='text'
-                      size={ButtonSize.Small}
-                      leadingIcon={
-                        <SmallBin className='min-w-5 max-w-5 min-h-4 max-h-6 880:min-w-6 880:max-w-8 880:min-h-6 880:max-h-8 w-full' />
-                      }
-                      buttonText='Remove option'
-                      onClick={() => {}}
-                      className='!font-semibold !text-light-blue-main text-base 480:!text-[17px] 1300:!text-[18px] !px-2 768:!px-0 880:!px-4 text-nowrap !gap-1 880:!gap-2'
-                    />
-                  </div>
-                </div>
-              </div>
-              <div
-                className='
-          flex  items-center justify-end '
+                }
+              />
+            </div>
+          ) : (
+            <div className='grid'>
+              <Card
+                hasHeader
+                hasBadge
+                hasBorder
+                mainClass='!mt-4 560:!mt-8'
+                className='!border-b-light-secondary-light_blue'
+                title={`Edit survey: ${titleId}`}
               >
-                <Button
-                  mode='text'
-                  size={ButtonSize.Small}
-                  leadingIcon={
-                    <CircledPlus
-                      color='#B0B0B0'
-                      className='min-w-5 max-w-5 min-h-4 max-h-6 880:min-w-6 880:max-w-8 880:min-h-6 880:max-h-8 w-full'
-                    />
-                  }
-                  buttonText='Add option'
-                  onClick={() => {}}
-                  className='!font-semibold !text-[#B0B0B0] text-base 480:!text-[17px] 1300:!text-[18px] text-nowrap '
-                />
-              </div>
-            </Card>
-
-            <Card
-              hasHeader
-              hasBadge
-              hasBorder
-              className='!border-b-light-secondary-light_blue'
-              title='Others'
-            >
-              <>
-                <div className='grid grid-cols-[minmax(200px,480px)] 768:grid-cols-[minmax(250px,480px)_minmax(250px,480px)] justify-between gap-5 mt-3 768:mt-0'>
-                  {OtherList.map((item) => (
-                    <>
-                      <div className='max-w-[620px] 768:mt-10 mb-2'>
-                        <p className='font-medium text-lg 768:text-xl 880:text-2xl 1024:text-3xl text-light-grey-200 pb-2'>
-                          {item.title}
-                        </p>
-                        {item.id === 'points awarded (optional)' ? (
-                          <ReactCustomSelect
-                            options={AwardOptions}
-                            isClearable
-                            isSearchable
-                            placeholder='Enter or select'
-                            className='!placeholder:text-light-primary-deep_black placeholder:text-xl font-medium text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'
-                          />
-                        ) : (
-                          <ReactCustomSelect
-                            options={Options}
-                            isClearable
-                            isSearchable
-                            placeholder='Enter or select'
-                            className='!placeholder:text-light-primary-deep_black placeholder:text-xl  font-medium text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'
-                          />
-                        )}
-                      </div>
-                    </>
-                  ))}
-                </div>
-                <div className='w-full'>
+                <>
                   <div className='max-w-[620px] mt-10 mb-2'>
-                    <p className='font-medium text-xl 960:text-[26px] 1024:text-3xl text-light-grey-200 pb-2'>
-                      Add image/banner
+                    <p className='font-medium text-lg 768:text-xl 880:text-2xl 1024:text-3xl text-light-grey-200 pb-2'>
+                      Title of the survey
                     </p>
+                    <Input
+                      value={surveyTitle}
+                      onChange={(e) => setSurveyTitle(e.target.value)}
+                      placeHolder='In-flight experience'
+                      isCurved
+                      hasBorder
+                      className='!border-light-blue-50 !drop-shadow-none placeholder:text-light-primary-deep_black placeholder:text-sm 560:placeholder:text-base !h-[55px] 960:!min-h-[70px]'
+                    />
                   </div>
-                  <div className='w-full rounded-[50px] border border-light-blue-50 flex flex-col gap-2 items-center justify-center p-10'>
-                    <Photo className='w-12 h-12 640:w-14 640:h-14 960:w-16 960:h-16 1400:w-20 1400:h-20' />
-                    <div className=' w-full max-w-[139px] 768:max-w-[159px] pb-4'>
+                </>
+              </Card>
+              <SurveyQuestionCard
+                setSurveyQuestions={setSurveyQuestions}
+                surveyQuestions={surveyQuestions}
+              />
+              <Card
+                hasHeader
+                hasBadge
+                hasBorder
+                className='!border-b-light-secondary-light_blue'
+                title='Others'
+              >
+                <>
+                  <div className='grid grid-cols-[minmax(200px,480px)] 768:grid-cols-[minmax(250px,480px)_minmax(250px,480px)] justify-between gap-5 mt-3 768:mt-0'>
+                    {OtherList.map((item) => (
+                      <>
+                        <div className='max-w-[620px] 768:mt-10 mb-2'>
+                          <p className='font-medium text-lg 768:text-xl 880:text-2xl 1024:text-3xl text-light-grey-200 pb-2'>
+                            {item.title}
+                          </p>
+                          {item.id === 'points awarded (optional)' ? (
+                            <CustomCombobox
+                              selectedLabel={`${points} Points`}
+                              options={awardPoints}
+                              trailingIcon={<DropDownArrow />}
+                              isCurved
+                              onSelect={(value) => {
+                                setPoints(Number(value));
+                              }}
+                              className='font-medium text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'
+                            />
+                          ) : (
+                            <CustomCombobox
+                              selectedLabel={convertFromMinutes(duration)}
+                              options={surveyDuration}
+                              trailingIcon={<DropDownArrow />}
+                              isCurved
+                              onSelect={(value) => {
+                                const minutes = convertToMinutes(
+                                  value.toString(),
+                                );
+                                setDuration(minutes);
+                              }}
+                              className='font-medium text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'
+                            />
+                          )}
+                        </div>
+                      </>
+                    ))}
+                  </div>
+                  <DragAndDrop
+                    imagePreview={imagePreview}
+                    setImagePreview={setImagePreview}
+                    setSurveyBanner={setSurveyBanner}
+                  />
+                  <div className='flex items-center justify-center mt-16 mb-8'>
+                    <div className='grid w-full max-w-[330px] 880:max-w-[400px] gap-4'>
                       <Button
-                        size={ButtonSize.Medium}
+                        size={ButtonSize.Large}
                         radius={BorderRadius.Large}
-                        buttonText='Browse'
+                        trailingIcon={<DropDownArrow color='#23539F' />}
+                        buttonText='Schedule for later'
                         onClick={() => {}}
-                        className='!min-h-[30px] max-h-[35px] !text-[14px] 768:!text-base 768:!min-h-[40px] 960:!min-h-[44px]'
+                        className='!min-h-[55px] 960:!min-h-[66px]'
+                      />
+                      <Button
+                        size={ButtonSize.Large}
+                        radius={BorderRadius.Large}
+                        mode='outlined'
+                        buttonText={
+                          editLoading ? (
+                            <Spinner className='text-light-blue-main w-5 h-5 768:w-7 768:h-7' />
+                          ) : (
+                            'Save and publish'
+                          )
+                        }
+                        onClick={() => {
+                          handleEditsurvey(id);
+                          surveyBanner && changeSurveyBanner(id, surveyBanner);
+                        }}
+                        className='!min-h-[55px] 960:!min-h-[66px]'
                       />
                     </div>
-                    <p className='text-[#8E8E93] text-center 560:text-start text-base 768:text-lg 1240:text-xl font-normal'>
-                      Drag and drop a file here
-                    </p>
-                    <p className='text-light-primary-deep_black text-base text-center 560:text-start 768:text-lg 1240:text-xl font-medium'>
-                      File supported .png, .jpg & .webp
-                    </p>
                   </div>
-                </div>
-                <div className='flex items-center justify-center mt-16 mb-8'>
-                  <div className='grid w-full max-w-[330px] 880:max-w-[400px] gap-4'>
-                    <Button
-                      size={ButtonSize.Large}
-                      radius={BorderRadius.Large}
-                      trailingIcon={<DropDownArrow color='#23539F' />}
-                      buttonText='Schedule for later'
-                      onClick={() => {}}
-                      className='!min-h-[55px] 960:!min-h-[66px]'
-                    />
-                    <Button
-                      size={ButtonSize.Large}
-                      radius={BorderRadius.Large}
-                      mode='outlined'
-                      buttonText='Save and publish'
-                      onClick={() => {}}
-                      className='!min-h-[55px] 960:!min-h-[66px]'
-                    />
-                  </div>
-                </div>
-              </>
-            </Card>
-          </div>
+                </>
+              </Card>
+            </div>
+          )}
         </div>
       </div>
     </AppLayout>

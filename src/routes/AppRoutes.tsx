@@ -40,7 +40,10 @@ const AppRoutes = () => {
           path='/surveys-view-result/:titleId/:surveyId'
           element={<ViewResult />}
         />
-        <Route path='/surveys-edit/:id' element={<EditSurvey />} />
+        <Route
+          path='/surveys-edit/:titleId/:surveyId'
+          element={<EditSurvey />}
+        />
         <Route path='/surveys-create/:id' element={<CreateSurvey />} />
         <Route path='/settings' element={<Settings />} />
       </Route>

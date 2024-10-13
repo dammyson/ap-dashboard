@@ -9,12 +9,11 @@ import WelcomeMessage from '@/components/welcomeMessage';
 import { useUser } from '@/context/AppContext';
 import clsx from 'clsx';
 import { useNavigate } from 'react-router';
-import { awardPoints, OtherList, surveyDuration } from './constants';
+import { awardPoints, OtherList, surveyDuration } from '../constants';
 import SurveyQuestionCard from './questions';
-import { useCreateSurvey } from '@/api/surveys/surveys';
+import { useManageSurvey } from '@/api/surveys/surveys';
 import { Spinner } from '@/components/svg/spinner/Spinner';
 import { CustomCombobox } from '../../../components/Dropdown/comboBox';
-import { useSurveyForm } from '../utils';
 import { convertToMinutes } from '@/utils';
 import { DragAndDrop } from '@/components/dragAndDrop';
 
@@ -25,33 +24,27 @@ export interface SelectedOptions {
 function CreateSurvey() {
   const { user } = useUser();
   const navigate = useNavigate();
-  const { createSurvey, loading } = useCreateSurvey();
   const {
+    createSurvey,
+    loading,
     surveyTitle,
-    setSurveyTitle,
     duration,
-    setDuration,
     points,
-    setPoints,
-    image,
-    setImage,
     surveyQuestions,
-    selectedFormat,
-    handleSelectFormat,
-    handleAddQuestion,
-    handleRemoveQuestion,
-    handleAddOption,
-    handleOptionChange,
-    handleRemoveOption,
-    handleQuestionText,
-  } = useSurveyForm();
+    setPoints,
+    setDuration,
+    setSurveyQuestions,
+    setSurveyTitle,
+    imagePreview,
+    setImagePreview,
+    setSurveyBanner,
+  } = useManageSurvey();
 
   const handleCreateSurvey = () => {
     createSurvey({
       title: surveyTitle,
       duration_of_survey: duration,
       points_awarded: points,
-      image_url: image,
       questions: surveyQuestions,
     });
   };
@@ -105,15 +98,8 @@ function CreateSurvey() {
               </div>
             </Card>
             <SurveyQuestionCard
-              handleAddQuestion={handleAddQuestion}
-              handleRemoveQuestion={handleRemoveQuestion}
-              handleAddOption={handleAddOption}
-              handleOptionChange={handleOptionChange}
-              handleRemoveOption={handleRemoveOption}
-              handleQuestionText={handleQuestionText}
+              setSurveyQuestions={setSurveyQuestions}
               surveyQuestions={surveyQuestions}
-              selectedFormat={selectedFormat}
-              handleSelectFormat={handleSelectFormat}
             />
             <Card
               hasHeader
@@ -123,39 +109,43 @@ function CreateSurvey() {
               title='Others'
             >
               <div className='grid grid-cols-[minmax(200px,480px)] 768:grid-cols-[minmax(250px,480px)_minmax(250px,480px)] justify-between gap-5 mt-3 768:mt-0'>
-                {OtherList.map((item) => (
-                  <>
-                    <div className='max-w-[620px] 768:mt-10 mb-2'>
-                      <p className='font-medium text-lg 768:text-xl 880:text-2xl 1024:text-3xl text-light-grey-200 pb-2'>
-                        {item.title}
-                      </p>
-                      {item.id === 'points awarded (optional)' ? (
-                        <CustomCombobox
-                          options={awardPoints}
-                          trailingIcon={<DropDownArrow />}
-                          isCurved
-                          onSelect={(value) => {
-                            setPoints(Number(value));
-                          }}
-                          className='font-medium text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'
-                        />
-                      ) : (
-                        <CustomCombobox
-                          options={surveyDuration}
-                          trailingIcon={<DropDownArrow />}
-                          isCurved
-                          onSelect={(value) => {
-                            const minutes = convertToMinutes(value.toString());
-                            setDuration(minutes);
-                          }}
-                          className='font-medium text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'
-                        />
-                      )}
-                    </div>
-                  </>
+                {OtherList.map((item, id) => (
+                  <div key={id} className='max-w-[620px] 768:mt-10 mb-2'>
+                    <p className='font-medium text-lg 768:text-xl 880:text-2xl 1024:text-3xl text-light-grey-200 pb-2'>
+                      {item.title}
+                    </p>
+                    {item.id === 'points awarded (optional)' ? (
+                      <CustomCombobox
+                        selectedLabel=''
+                        options={awardPoints}
+                        trailingIcon={<DropDownArrow />}
+                        isCurved
+                        onSelect={(value) => {
+                          setPoints(Number(value));
+                        }}
+                        className='font-medium text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'
+                      />
+                    ) : (
+                      <CustomCombobox
+                        selectedLabel=''
+                        options={surveyDuration}
+                        trailingIcon={<DropDownArrow />}
+                        isCurved
+                        onSelect={(value) => {
+                          const minutes = convertToMinutes(value.toString());
+                          setDuration(minutes);
+                        }}
+                        className='font-medium text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'
+                      />
+                    )}
+                  </div>
                 ))}
               </div>
-              <DragAndDrop />
+              <DragAndDrop
+                imagePreview={imagePreview}
+                setImagePreview={setImagePreview}
+                setSurveyBanner={setSurveyBanner}
+              />
               <div className='flex items-center justify-center mt-16 mb-8'>
                 <div className='grid w-full max-w-[330px] 880:max-w-[400px] gap-4 '>
                   <Button

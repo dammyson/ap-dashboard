@@ -79,7 +79,7 @@ export const useSurveyColumn = (
                 buttonText={record.is_published !== 1 ? 'Edit' : 'View Result'}
                 onClick={() => {
                   if (record.is_published !== 1) {
-                    navigate(`/surveys-edit/${record.title}`);
+                    navigate(`/surveys-edit/${record.title}/${record.id}`);
                   } else {
                     navigate(
                       `/surveys-view-result/${record.title}/${record.id}`,
@@ -93,8 +93,8 @@ export const useSurveyColumn = (
                 buttonText={record.is_published === 1 ? 'Unpublish' : 'Publish'}
                 onClick={() => {
                   setSurveyModal(true);
-                  setisPublished(record?.is_published);
                   setSurveyId(record?.id);
+                  setisPublished(record?.is_published);
                 }}
                 className='!bg-[#C7C7CC] min-w-[105px] !px-0 hover:!bg-[#bababe]'
               />
