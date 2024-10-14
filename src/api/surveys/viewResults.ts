@@ -52,7 +52,7 @@ export const useViewSurveyResult = () => {
       if (res?.error) {
         toast.error(res.message);
       } else {
-        setResults(res.data);
+        setResults(res.results);
       }
     } catch (error) {
       toast.error((error as MutationErrorPayload)?.data?.message);
