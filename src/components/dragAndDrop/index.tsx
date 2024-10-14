@@ -52,7 +52,8 @@ export const DragAndDrop = ({
         </p>
       </div>
       <div className='w-full rounded-[50px] border border-light-blue-50 flex flex-col gap-2 items-center justify-center p-10'>
-        {imagePreview ? (
+        {imagePreview &&
+        imagePreview !== 'https://srv575046.hstgr.cloud/storage/' ? (
           <div className='relative'>
             <div className=' w-[120px] 560:w-[200px] aspect-square 880:w-[350px] 880:h-[220px] 1240:w-[420px] 1240:h-[260px]  rounded-lg overflow-hidden'>
               <img
