@@ -15,8 +15,11 @@ import { useUser } from '@/context/AppContext';
 import { useSurvey } from '@/api/surveys/surveys';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spinner } from '@/components/svg/spinner/Spinner';
-import { SurveyType } from '@/types/types';
+import { FilterSurveyTable, SurveyType } from '@/types/types';
 import dayjs from 'dayjs';
+import { CustomDatePicker } from '@/components/datePicker';
+import { Cancel } from '@/components/svg/modal/Modal';
+import { Input } from '@/components/input';
 
 function Surveys() {
   const navigate = useNavigate();
@@ -24,6 +27,7 @@ function Surveys() {
   const [isPublished, setisPublished] = useState<number>();
   const [deleteSurvey, setDeleteSurvey] = useState(false);
   const [surveyId, setSurveyId] = useState<number>();
+  const [filterTable, setFilterTable] = useState(false);
   const {
     getSurvey,
     surveys,
@@ -32,6 +36,12 @@ function Surveys() {
     loading,
     surveyModal,
     setSurveyModal,
+    surveyTitle,
+    setSurveyTitle,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
   } = useSurvey();
 
   const { tableColumns } = useSurveyColumn(
@@ -46,8 +56,17 @@ function Surveys() {
   });
 
   useEffect(() => {
-    getSurvey();
+    getSurvey({});
   }, []);
+
+  const handleFilter = async () => {
+    await getSurvey({
+      title: surveyTitle?.toLowerCase(),
+      startDate: startDate && dayjs(startDate).format('YYYY-MM-DD'),
+      endDate: endDate && dayjs(endDate).format('YYYY-MM-DD'),
+    });
+    setFilterTable(false);
+  };
 
   return (
     <AppLayout logo=''>
@@ -80,7 +99,11 @@ function Surveys() {
             hasHeader
             hasBadge
             title='Survey'
-            trailingIcon1={<Filter />}
+            trailingIcon1={
+              <button onClick={() => setFilterTable(true)}>
+                <Filter />
+              </button>
+            }
             mainClass='!mt-4 560:!mt-8'
             hasButton={
               <Button
@@ -188,6 +211,77 @@ function Surveys() {
               onClick={() => setDeleteSurvey(false)}
               className='!font-semibold !text-[17px] '
             />
+          </div>
+        </Modal>
+      )}
+      {filterTable && (
+        <Modal
+          isBackground
+          size={SizeType.SMALL}
+          cancelIcon={<Cancel />}
+          onClick={() => setFilterTable(false)}
+        >
+          <div className='max-w-[890px] w-full grid it'>
+            <div className='flex items-center justify-center'>
+              <h3 className='text-light-primary-deep_black text-lg 560:text-xl 768:text-2xl 960:text-[28px] 1240:text-[32px] font-medium text-center w-[85%] 960:w-3/4 pt-4 880:pt-0'>
+                Filter Table
+              </h3>
+            </div>
+
+            <div className='w-11/12 mt-2 560:mt-4 960:mt-8'>
+              <p className='font-medium text-light-grey-600 text-base 560:text-lg 960:text-xl text-start mb-2'>
+                Survey Title
+              </p>
+              <div>
+                <Input
+                  isCurved
+                  hasBorder
+                  inputSize='small'
+                  value={surveyTitle ?? ''}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setSurveyTitle(e.target.value)
+                  }
+                />
+              </div>
+            </div>
+            <div className='w-11/12 mt-2 560:mt-4 960:mt-8'>
+              <p className='font-medium text-light-grey-600 text-base 560:text-lg 960:text-xl text-start'>
+                Time period
+              </p>
+              <div>
+                <CustomDatePicker
+                  startDate={startDate}
+                  setStartDate={setStartDate}
+                  endDate={endDate}
+                  setEndDate={setEndDate}
+                />
+              </div>
+            </div>
+            <div className='flex justify-center items-center mt-16 '>
+              <div className='w-full max-w-[300px] pb-4 grid gap-4'>
+                <Button
+                  buttonText={
+                    isLoading ? (
+                      <Spinner className='text-white w-5 h-5 768:w-7 768:h-7' />
+                    ) : (
+                      'Confirm'
+                    )
+                  }
+                  radius={BorderRadius.Large}
+                  size={ButtonSize.Medium}
+                  className='text-light-blue-main !font-semibold'
+                  onClick={handleFilter}
+                />
+                <Button
+                  buttonText='Cancel'
+                  radius={BorderRadius.Large}
+                  size={ButtonSize.Medium}
+                  mode='outlined'
+                  className='text-light-blue-main !font-semibold '
+                  onClick={() => setFilterTable(false)}
+                />
+              </div>
+            </div>
           </div>
         </Modal>
       )}

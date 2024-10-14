@@ -2,6 +2,7 @@ import { useUser } from '@/context/AppContext';
 import { questionOption } from '@/pages/surveys/utils';
 import {
   CreateSurvey,
+  FilterSurveyTable,
   MutationErrorPayload,
   SurveyQuestion,
 } from '@/types/types';
@@ -15,17 +16,26 @@ export const useSurvey = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [surveyModal, setSurveyModal] = useState(false);
-  const getSurvey = async () => {
+  const [surveyTitle, setSurveyTitle] = useState<string | undefined>(undefined);
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
+  const getSurvey = async (value: FilterSurveyTable) => {
     try {
       setIsLoading(true);
       const data = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}admin/surveys/survey-table`,
         {
-          method: 'GET',
+          method: 'POST',
           headers: {
             Accept: 'application/json',
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
+          body: JSON.stringify({
+            title: value.title,
+            from_date: value.startDate,
+            to_date: value.endDate,
+          }),
         },
       );
       const res = await data.json();
@@ -34,6 +44,9 @@ export const useSurvey = () => {
         toast.error(res.message);
       } else {
         setSurveys(res.surveys);
+        setSurveyTitle(undefined);
+        setStartDate(undefined);
+        setEndDate(undefined);
       }
     } catch (error) {
       toast.error((error as MutationErrorPayload)?.data?.message);
@@ -58,7 +71,7 @@ export const useSurvey = () => {
       if (res?.error) {
       } else {
         setSurveyModal(false);
-        await getSurvey();
+        await getSurvey({});
         toast.success(res.message);
       }
     } catch (error) {
@@ -74,6 +87,12 @@ export const useSurvey = () => {
     loading,
     surveyModal,
     setSurveyModal,
+    surveyTitle,
+    setSurveyTitle,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
   };
 };
 
