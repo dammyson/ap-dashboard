@@ -49,6 +49,19 @@ function CreateSurvey() {
     });
   };
 
+  const allTrue = [surveyTitle, duration, surveyQuestions].every((field) => {
+    if (typeof field === 'string') return field.trim() !== '';
+    if (typeof field === 'number') return field > 0;
+    if (Array.isArray(field)) {
+      return field.map(
+        (question) =>
+          question.question_text.trim() !== '' &&
+          question.options.map((option) => option.option_text.trim() !== ''),
+      );
+    }
+    return false;
+  });
+
   return (
     <AppLayout logo=''>
       <div
@@ -89,7 +102,11 @@ function CreateSurvey() {
                 </p>
                 <Input
                   value={surveyTitle}
-                  onChange={(e) => setSurveyTitle(e.target.value)}
+                  onChange={(e) => {
+                    const inputValue = e.target.value;
+                    setSurveyTitle(inputValue);
+                    inputValue.trim() === '' && setSurveyTitle?.('');
+                  }}
                   placeHolder='Enter title of the survey'
                   isCurved
                   hasBorder
@@ -157,6 +174,7 @@ function CreateSurvey() {
                     className='!min-h-[55px] 960:!min-h-[66px]'
                   />
                   <Button
+                    disabled={allTrue ? false : true}
                     size={ButtonSize.Large}
                     radius={BorderRadius.Large}
                     mode='outlined'
