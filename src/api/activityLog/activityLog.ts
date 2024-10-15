@@ -57,7 +57,7 @@ export const useActivityLog = () => {
       );
       const res = await data.json();
       setIsLoading(false);
-      if (res?.error) {
+      if (res?.errors) {
         toast.error(res.message);
         setIsFiltered(false);
       } else {

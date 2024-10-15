@@ -57,6 +57,7 @@ function Surveys() {
 
   useEffect(() => {
     getSurvey({});
+    setIsFiltered(false);
   }, []);
 
   const handleFilter = async () => {
