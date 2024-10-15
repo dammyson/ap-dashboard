@@ -17,6 +17,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Spinner } from '@/components/svg/spinner/Spinner';
 import { SurveyType } from '@/types/types';
 import dayjs from 'dayjs';
+import { FilterModal } from '@/components/modal/filterModal';
 
 function Surveys() {
   const navigate = useNavigate();
@@ -24,6 +25,8 @@ function Surveys() {
   const [isPublished, setisPublished] = useState<number>();
   const [deleteSurvey, setDeleteSurvey] = useState(false);
   const [surveyId, setSurveyId] = useState<number>();
+  const [filterTable, setFilterTable] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
   const {
     getSurvey,
     surveys,
@@ -32,6 +35,13 @@ function Surveys() {
     loading,
     surveyModal,
     setSurveyModal,
+    surveyTitle,
+    setSurveyTitle,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    isSucess,
   } = useSurvey();
 
   const { tableColumns } = useSurveyColumn(
@@ -46,8 +56,19 @@ function Surveys() {
   });
 
   useEffect(() => {
-    getSurvey();
+    getSurvey({});
+    setIsFiltered(false);
   }, []);
+
+  const handleFilter = async () => {
+    await getSurvey({
+      title: surveyTitle?.toLowerCase(),
+      startDate: startDate && dayjs(startDate).format('YYYY-MM-DD'),
+      endDate: endDate && dayjs(endDate).format('YYYY-MM-DD'),
+    });
+    setIsFiltered(isSucess);
+    setFilterTable(false);
+  };
 
   return (
     <AppLayout logo=''>
@@ -77,10 +98,18 @@ function Surveys() {
             </div>
           </div>
           <Card
+            isFiltered={isFiltered}
             hasHeader
             hasBadge
             title='Survey'
-            trailingIcon1={<Filter />}
+            trailingIcon1={
+              <button
+                className='w-full rounded-full'
+                onClick={() => setFilterTable(true)}
+              >
+                <Filter />
+              </button>
+            }
             mainClass='!mt-4 560:!mt-8'
             hasButton={
               <Button
@@ -190,6 +219,22 @@ function Surveys() {
             />
           </div>
         </Modal>
+      )}
+      {filterTable && (
+        <FilterModal
+          header='Survey'
+          byInput
+          byDate
+          startDate={startDate}
+          setStartDate={setStartDate}
+          endDate={endDate}
+          setEndDate={setEndDate}
+          loading={isLoading}
+          value={surveyTitle}
+          onChange={(e) => setSurveyTitle(e.target.value)}
+          onclick={() => setFilterTable(false)}
+          handleFilter={handleFilter}
+        />
       )}
     </AppLayout>
   );
