@@ -1,4 +1,6 @@
 import {
+  Field,
+  Label,
   Listbox,
   ListboxButton,
   ListboxOption,
@@ -24,6 +26,7 @@ interface SelectProps {
 }
 
 export default function ListBox({
+  label,
   options,
   selected,
   className,
@@ -33,7 +36,8 @@ export default function ListBox({
   onSelect,
 }: SelectProps) {
   return (
-    <div className='relative'>
+    <Field className='relative'>
+      {label && <Label className={'mb-1 inline-block'}>{label}</Label>}
       <Listbox value={selected} onChange={onSelect}>
         <ListboxButton
           className={clsx(
@@ -71,6 +75,6 @@ export default function ListBox({
           ))}
         </ListboxOptions>
       </Listbox>
-    </div>
+    </Field>
   );
 }

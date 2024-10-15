@@ -6,14 +6,18 @@ import {
   Upload,
 } from '@/components/svg/settings/Settings';
 import { Input, InputState } from '@/components/input';
-import { CustomSelect } from '@/components/Dropdown/selectDropdown';
 import { useAddMembers } from '@/api/settings/teamMembers';
 import { Spinner } from '@/components/svg/spinner/Spinner';
 import { emailRegex } from '@/utils/regex';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import { RoleOption } from '../../profile';
+import ListBox from '@/components/Dropdown/listBox';
 
+export const roleOptions: RoleOption[] = [
+  { label: 'Admin', value: 'admin' },
+  { label: 'Sub-admin', value: 'sub-admin' },
+];
 function AddMembers() {
   const {
     handleAddMembers,
@@ -45,14 +49,10 @@ function AddMembers() {
     if (!firstName || !lastName || !isValidMail || !selectedRole) {
       return;
     } else {
-      handleAddMembers({ userName, email, selectedRole });
+      handleAddMembers({ userName, email, selectedRole: selectedRole.label });
     }
   };
 
-  const roleOptions: RoleOption[] = [
-    { label: 'Admin', value: 'admin' },
-    { label: 'Sub-admin', value: 'sub-admin' },
-  ];
   return (
     <div className=' flex items-center justify-center flex-col'>
       <CategoryHeader
@@ -114,15 +114,14 @@ function AddMembers() {
               />
             </div>
             <div className='text-light-grey-200 font-medium text-base max-w-[569px]'>
-              <CustomSelect
+              <ListBox
                 label='Role'
-                hasBorder
-                isCurved
-                className='!h-[50px] 960:!min-h-[66px]'
                 trailingIcon={<DropDownArrow />}
-                selectedRole={selectedRole}
+                selected={selectedRole}
                 options={roleOptions}
-                onSelect={(info) => setSelectedRole(info)}
+                onSelect={(role) => setSelectedRole(role)}
+                isCurved
+                className=' placeholder:!text-light-primary-deep_black placeholder:!text-xl font-medium text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'
               />
             </div>
           </div>
