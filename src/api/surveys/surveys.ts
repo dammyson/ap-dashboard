@@ -19,6 +19,7 @@ export const useSurvey = () => {
   const [surveyTitle, setSurveyTitle] = useState<string | undefined>(undefined);
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
+  const [isSucess, setIsSucess] = useState(false);
   const getSurvey = async (value: FilterSurveyTable) => {
     try {
       setIsLoading(true);
@@ -42,8 +43,10 @@ export const useSurvey = () => {
       setIsLoading(false);
       if (res?.error) {
         toast.error(res.message);
+        setIsSucess(false);
       } else {
         setSurveys(res.surveys);
+        setIsSucess(true);
         setSurveyTitle(undefined);
         setStartDate(undefined);
         setEndDate(undefined);
@@ -93,6 +96,7 @@ export const useSurvey = () => {
     setStartDate,
     endDate,
     setEndDate,
+    isSucess,
   };
 };
 

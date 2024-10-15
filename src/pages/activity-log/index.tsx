@@ -133,7 +133,20 @@ function ActivityLog() {
             />
           </Card>
         </div>
-        {filter && <FilterModal onclick={() => setFilter(false)} />}
+        {filter && (
+          <></>
+          // <FilterModal
+          //   header='By Date'
+          //   byDate
+          //   startDate={startDate}
+          //   setStartDate={setStartDate}
+          //   endDate={endDate}
+          //   setEndDate={setEndDate}
+          //   loading={isLoading}
+          //   onclick={() => setFilter(false)}
+          //   handleFilter={handleFilter}
+          // />
+        )}
         {exportLog && (
           <Modal
             isBackground
@@ -152,9 +165,7 @@ function ActivityLog() {
                 <p className='font-medium text-light-grey-600 text-base 560:text-lg 960:text-xl text-start'>
                   Time period
                 </p>
-                <div>
-                  <CustomDatePicker />
-                </div>
+                <div>{/* <CustomDatePicker /> */}</div>
               </div>
 
               <div className='w-36 my-4 768:my-6 960:my-12'>
