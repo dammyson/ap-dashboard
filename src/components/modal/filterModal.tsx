@@ -16,7 +16,7 @@ interface Props {
   setStartDate: React.Dispatch<SetStateAction<Date | undefined>>;
   endDate: Date | undefined;
   setEndDate: React.Dispatch<SetStateAction<Date | undefined>>;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleFilter: () => Promise<void>;
   onclick: () => void;
 }

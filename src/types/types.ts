@@ -195,3 +195,8 @@ export interface FilterSurveyTable {
   startDate?: string;
   endDate?: string;
 }
+
+export interface FilterActivityLog {
+  startDate?: string;
+  endDate?: string;
+}

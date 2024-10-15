@@ -1,5 +1,5 @@
 import { useUser } from '@/context/AppContext';
-import { MutationErrorPayload } from '@/types/types';
+import { FilterActivityLog, MutationErrorPayload } from '@/types/types';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -7,7 +7,10 @@ export const useActivityLog = () => {
   const { token } = useUser();
   const [loading, setLoading] = useState(false);
   const [activityData, setActivityData] = useState();
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
+  const [isFiltered, setIsFiltered] = useState(false);
   const getActivityLog = async () => {
     try {
       setLoading(true);
@@ -24,12 +27,60 @@ export const useActivityLog = () => {
       const res = await data.json();
       setLoading(false);
       if (res?.error) {
+        toast.error(res.message);
       } else {
         setActivityData(res.activityLog);
+        setIsFiltered(false);
       }
     } catch (err) {
       toast.error((err as MutationErrorPayload)?.data?.message);
     }
   };
-  return { getActivityLog, loading, setLoading, activityData };
+
+  const filterActivity = async (value: FilterActivityLog) => {
+    try {
+      setIsLoading(true);
+      const data = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}admin/activity-log/filter-survey`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            start_date: value.startDate,
+            end_date: value.endDate,
+          }),
+        },
+      );
+      const res = await data.json();
+      setIsLoading(false);
+      if (res?.error) {
+        toast.error(res.message);
+        setIsFiltered(false);
+      } else {
+        setActivityData(res.filtered_activity_log);
+        setIsFiltered(true);
+        setStartDate(undefined);
+        setEndDate(undefined);
+      }
+    } catch (err) {
+      toast.error((err as MutationErrorPayload)?.data?.message);
+    }
+  };
+  return {
+    getActivityLog,
+    loading,
+    setLoading,
+    activityData,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    isLoading,
+    filterActivity,
+    isFiltered,
+  };
 };

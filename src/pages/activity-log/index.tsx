@@ -12,7 +12,6 @@ import { useEffect, useState } from 'react';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import clsx from 'clsx';
-import { CustomDatePicker } from '@/components/datePicker';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { useUser } from '@/context/AppContext';
 import { useActivityLog } from '@/api/activityLog/activityLog';
@@ -26,7 +25,6 @@ export type OpenActivity = (record: typeActivityLog) => void;
 function ActivityLog() {
   const { user } = useUser();
   const currentFormat = formats[0];
-  const { getActivityLog, loading, activityData } = useActivityLog();
   const [exportLog, setExportLog] = useState(false);
   const [viewActivity, setViewActivity] = useState(false);
   const [selectedOption, setSelectedOption] = useState(currentFormat.key);
@@ -34,6 +32,19 @@ function ActivityLog() {
     null,
   );
   const [filter, setFilter] = useState(false);
+  const {
+    getActivityLog,
+    loading,
+    activityData,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    isLoading,
+    filterActivity,
+    isFiltered,
+  } = useActivityLog();
+
   const sortedActivity = (activityData ?? []).sort(
     (a: typeActivityLog, b: typeActivityLog) => {
       return dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf();
@@ -58,6 +69,14 @@ function ActivityLog() {
       setSelectedOption(currentFormat.key);
     }
   }, [exportLog]);
+
+  const handleFilter = async () => {
+    await filterActivity({
+      startDate: startDate && dayjs(startDate).format('YYYY-MM-DD'),
+      endDate: endDate && dayjs(endDate).format('YYYY-MM-DD'),
+    });
+    setFilter(false);
+  };
 
   return (
     <AppLayout logo=''>
@@ -85,7 +104,7 @@ function ActivityLog() {
         </div>
         <div className='1240:pr-12'>
           <Card
-            isFiltered={filter}
+            isFiltered={isFiltered}
             hasHeader
             hasBadge
             title='Activity log'
@@ -134,18 +153,17 @@ function ActivityLog() {
           </Card>
         </div>
         {filter && (
-          <></>
-          // <FilterModal
-          //   header='By Date'
-          //   byDate
-          //   startDate={startDate}
-          //   setStartDate={setStartDate}
-          //   endDate={endDate}
-          //   setEndDate={setEndDate}
-          //   loading={isLoading}
-          //   onclick={() => setFilter(false)}
-          //   handleFilter={handleFilter}
-          // />
+          <FilterModal
+            header='By Date'
+            byDate
+            startDate={startDate}
+            setStartDate={setStartDate}
+            endDate={endDate}
+            setEndDate={setEndDate}
+            loading={isLoading}
+            onclick={() => setFilter(false)}
+            handleFilter={handleFilter}
+          />
         )}
         {exportLog && (
           <Modal
