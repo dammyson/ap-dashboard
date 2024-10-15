@@ -189,3 +189,14 @@ export interface CreateSurvey {
   points_awarded: number;
   questions: SurveyQuestion[];
 }
+
+export interface FilterSurveyTable {
+  title?: string;
+  startDate?: string;
+  endDate?: string;
+}
+
+export interface FilterActivityLog {
+  startDate?: string;
+  endDate?: string;
+}
