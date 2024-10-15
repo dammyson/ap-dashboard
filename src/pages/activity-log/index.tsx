@@ -19,6 +19,7 @@ import { useActivityLog } from '@/api/activityLog/activityLog';
 import { LoadingOutlined } from '@ant-design/icons';
 import { typeActivityLog } from '@/types/types';
 import dayjs from 'dayjs';
+import { FilterModal } from '@/components/modal/filterModal';
 
 export type OpenActivity = (record: typeActivityLog) => void;
 
@@ -32,6 +33,7 @@ function ActivityLog() {
   const [selectedRecord, setSelectedRecord] = useState<typeActivityLog | null>(
     null,
   );
+  const [filter, setFilter] = useState(false);
   const sortedActivity = (activityData ?? []).sort(
     (a: typeActivityLog, b: typeActivityLog) => {
       return dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf();
@@ -83,10 +85,18 @@ function ActivityLog() {
         </div>
         <div className='1240:pr-12'>
           <Card
+            isFiltered={filter}
             hasHeader
             hasBadge
             title='Activity log'
-            trailingIcon1={<Filter />}
+            trailingIcon1={
+              <button
+                className='w-full rounded-full'
+                onClick={() => setFilter(true)}
+              >
+                <Filter />
+              </button>
+            }
             trailingIcon2={
               <button disabled={loading} onClick={getActivityLog}>
                 <Update className={loading ? 'spinner' : ''} />
@@ -123,6 +133,7 @@ function ActivityLog() {
             />
           </Card>
         </div>
+        {filter && <FilterModal onclick={() => setFilter(false)} />}
         {exportLog && (
           <Modal
             isBackground
