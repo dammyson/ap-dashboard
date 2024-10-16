@@ -1,4 +1,6 @@
 import { useUser } from '@/context/AppContext';
+import { RoleOption } from '@/pages/settings/profile';
+import { roleOptions } from '@/pages/settings/teamMembers/addMembers';
 import {
   MutationErrorPayload,
   changeAdminRole,
@@ -39,7 +41,7 @@ export const useTeamMembers = () => {
     }
   };
 
-    const changeAdminRole = async (values: changeAdminRole) => {
+  const changeAdminRole = async (values: changeAdminRole) => {
     try {
       setLoading(true);
       const data = await fetch(
@@ -72,11 +74,11 @@ export const useTeamMembers = () => {
     }
   };
 
-  return { 
-    getTeamMembers, 
-    teamMembers, 
-    isLoading, 
-    setIsLoading,     
+  return {
+    getTeamMembers,
+    teamMembers,
+    isLoading,
+    setIsLoading,
     changeAdminRole,
     loading,
     setLoading,
@@ -85,11 +87,9 @@ export const useTeamMembers = () => {
     newRole,
     setNewRole,
     email,
-    setEmail
+    setEmail,
   };
-  
 };
-
 
 export const useAddMembers = () => {
   const [loading, setisLoading] = useState(false);
@@ -97,7 +97,7 @@ export const useAddMembers = () => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [isValidMail, setIsValidMail] = useState(false);
-  const [selectedRole, setSelectedRole] = useState('Admin');
+  const [selectedRole, setSelectedRole] = useState<RoleOption>(roleOptions[0]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { token } = useUser();
 
@@ -132,7 +132,7 @@ export const useAddMembers = () => {
         setFirstName('');
         setLastName('');
         setEmail('');
-        setSelectedRole('Admin');
+        setSelectedRole(roleOptions[0]);
       }
     } catch (error) {
       toast.error((error as MutationErrorPayload)?.data?.message);

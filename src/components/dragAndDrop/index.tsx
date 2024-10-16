@@ -48,7 +48,7 @@ export const DragAndDrop = ({
     <div onDrop={handleDrop} onDragOver={handleDragOver} className='w-full'>
       <div className='max-w-[620px] mt-10 mb-2'>
         <p className='font-medium text-xl 960:text-[26px] 1024:text-3xl text-light-grey-200 pb-2'>
-          Add image/banner
+          {`Add image/banner (optional)`}
         </p>
       </div>
       <div className='w-full rounded-[50px] border border-light-blue-50 flex flex-col gap-2 items-center justify-center p-10'>

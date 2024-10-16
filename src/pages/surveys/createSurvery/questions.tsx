@@ -45,7 +45,6 @@ const SurveyQuestionCard = ({ surveyQuestions, setSurveyQuestions }: props) => {
     handleQuestionText,
   } = useSurveyForm({ surveyQuestions, setSurveyQuestions });
 
-  console.log(surveyQuestions.map((x) => x.is_multiple_choice));
   return (
     <Card
       hasHeader

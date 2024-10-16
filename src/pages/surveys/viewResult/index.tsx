@@ -10,7 +10,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { SurveyResults } from '@/components/modules/surveys/SurveyResults';
 import { DropDownArrow } from '@/components/svg/settings/Settings';
-import { CustomSelect } from '@/components/Dropdown/selectDropdown';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import clsx from 'clsx';
@@ -19,6 +18,7 @@ import { useUser } from '@/context/AppContext';
 import { pointOptions, reasonOptions } from './constants';
 import { useViewSurveyResult } from '@/api/surveys/viewResults';
 import { LoadingOutlined } from '@ant-design/icons';
+import ListBox, { RoleOption } from '@/components/Dropdown/listBox';
 
 function ViewResult() {
   const navigate = useNavigate();
@@ -53,8 +53,12 @@ function ViewResult() {
   ];
 
   const [awardPoints, setAwardPoints] = useState<boolean>(false);
-  const [selectedPointOption, setSelectedPointOption] = useState<string>('');
-  const [selectedReason, setSelectedReason] = useState<string>('');
+  const [selectedPointOption, setSelectedPointOption] = useState<RoleOption>(
+    pointOptions[0],
+  );
+  const [selectedReason, setSelectedReason] = useState<RoleOption>(
+    reasonOptions[0],
+  );
   const [currentTab, setCurrentTab] = useState(navigationItems[0]);
   const { user } = useUser();
 
@@ -152,28 +156,26 @@ function ViewResult() {
                   <p className='text-left text-xl font-medium pb-4'>
                     Points to award
                   </p>
-                  <CustomSelect
-                    label=''
-                    options={pointOptions}
-                    hasBorder
-                    isCurved
+                  <ListBox
                     trailingIcon={<DropDownArrow />}
-                    selectedRole={selectedPointOption}
-                    onSelect={(option) => setSelectedPointOption(option)}
+                    selected={selectedPointOption}
+                    options={pointOptions}
+                    onSelect={(point) => setSelectedPointOption(point)}
+                    isCurved
+                    className=' placeholder:!text-light-primary-deep_black placeholder:!text-xl font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
                   />
                 </div>
                 <div className='mb-5 text-light-grey-600'>
                   <p className='text-left text-xl  font-medium pb-4'>
                     Reason for awarding points
                   </p>
-                  <CustomSelect
-                    label=''
-                    options={reasonOptions}
-                    hasBorder
-                    isCurved
+                  <ListBox
                     trailingIcon={<DropDownArrow />}
-                    selectedRole={selectedReason}
-                    onSelect={(option) => setSelectedReason(option)}
+                    selected={selectedReason}
+                    options={reasonOptions}
+                    onSelect={(reason) => setSelectedReason(reason)}
+                    isCurved
+                    className=' placeholder:!text-light-primary-deep_black placeholder:!text-xl font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
                   />
                 </div>
               </div>

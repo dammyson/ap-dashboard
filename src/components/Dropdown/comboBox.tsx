@@ -65,8 +65,16 @@ export function CustomCombobox({
               className,
             )}
             placeholder='Enter or select'
-            onChange={(e) => setQuery(e.target.value)}
             displayValue={() => selectedLabel || selected?.label || ''}
+            onChange={(e) => {
+              const inputValue = e.target.value;
+              setQuery(inputValue);
+
+              if (inputValue.trim() === '') {
+                setSelected(null);
+                onSelect?.('');
+              }
+            }}
           />
 
           {trailingIcon && (

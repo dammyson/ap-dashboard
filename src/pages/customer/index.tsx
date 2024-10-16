@@ -10,29 +10,25 @@ import { useState } from 'react';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import { BorderRadius, Button, ButtonSize } from '@/components/button';
-import { CustomSelect } from '@/components/Dropdown/selectDropdown';
 import { DropDownArrow } from '@/components/svg/settings/Settings';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import clsx from 'clsx';
 import { useUser } from '@/context/AppContext';
+import ListBox from '@/components/Dropdown/listBox';
+import { RoleOption } from '../settings/profile';
+import { pointOptions, reasonOptions } from '../surveys/viewResult/constants';
 
 function Customer() {
   const [awardPoints, setAwardPoints] = useState<boolean>(false);
-  const [selectedPointOption, setSelectedPointOption] = useState<string>('');
-  const [selectedReason, setSelectedReason] = useState<string>('');
+  const [selectedPointOption, setSelectedPointOption] = useState<RoleOption>(
+    pointOptions[0],
+  );
+  const [selectedReason, setSelectedReason] = useState<RoleOption>(
+    reasonOptions[0],
+  );
   const { tableColumns } = useCustomerInformation(setAwardPoints);
   const { user } = useUser();
 
-  const pointOptions = [
-    { label: '2000', value: '2000' },
-    { label: '3000', value: '3000' },
-  ];
-  const reasonOptions = [
-    {
-      label: 'Loyalty and repeat business',
-      value: 'loyalty and repeat business',
-    },
-  ];
   return (
     <AppLayout logo=''>
       <div
@@ -81,30 +77,26 @@ function Customer() {
                     <p className='text-left text-base 768:text-lg 960:text-xl font-medium 960:pb-2 1400:pb-4'>
                       Points to award
                     </p>
-                    <CustomSelect
-                      label=''
-                      options={pointOptions}
-                      hasBorder
-                      isCurved
+                    <ListBox
                       trailingIcon={<DropDownArrow />}
-                      selectedRole={selectedPointOption}
-                      onSelect={(option) => setSelectedPointOption(option)}
-                      className='!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
+                      selected={selectedPointOption}
+                      options={pointOptions}
+                      onSelect={(point) => setSelectedPointOption(point)}
+                      isCurved
+                      className=' placeholder:!text-light-primary-deep_black placeholder:!text-xl font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
                     />
                   </div>
                   <div className='768:mb-5 text-light-grey-600'>
                     <p className='text-left text-base 768:text-lg 960:text-xl font-medium 960:pb-2 1400:pb-4'>
                       Reason for awarding points
                     </p>
-                    <CustomSelect
-                      label=''
-                      options={reasonOptions}
-                      hasBorder
-                      isCurved
+                    <ListBox
                       trailingIcon={<DropDownArrow />}
-                      selectedRole={selectedReason}
-                      onSelect={(option) => setSelectedReason(option)}
-                      className='!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
+                      selected={selectedReason}
+                      options={reasonOptions}
+                      onSelect={(reason) => setSelectedReason(reason)}
+                      isCurved
+                      className=' placeholder:!text-light-primary-deep_black placeholder:!text-xl font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
                     />
                   </div>
                 </div>
