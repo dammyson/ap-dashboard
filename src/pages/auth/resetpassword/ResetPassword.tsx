@@ -2,8 +2,12 @@ import { BorderRadius, Button, ButtonSize } from '../../../components/button';
 import { Input, InputState } from '../../../components/input';
 import { Padlock, SlashedEye } from '../../../components/svg/auth/AuthIcons';
 import mainLogo from '../../../assets/logos/main_logo.png';
+import { useState } from 'react';
 
 function ResetPassword() {
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
+
   return (
     <div className='mobile-container flex justify-center items-center h-lvh bg-auth-bg bg-no-repeat bg-center bg-cover'>
       <div className='grid 768:pt-12 768:pb-20 pt-8 pb-14 mobile-container 560:min-w-[440px] 880:min-w-[750px] px-8 768:px-16 max-h-[640px] shadow-2xl place-items-center rounded-3xl backdrop-blur-md'>
@@ -20,7 +24,8 @@ function ResetPassword() {
               leadingIcon={<Padlock />}
               trailingIcon={<SlashedEye />}
               isCurved
-              type='password'
+              type={showNewPassword ? 'text' : 'password'}
+              onClick={() => setShowNewPassword(!showNewPassword)}
             />
           </div>
           <div className='mb-2'>
@@ -32,7 +37,8 @@ function ResetPassword() {
               leadingIcon={<Padlock />}
               trailingIcon={<SlashedEye />}
               isCurved
-              type='password'
+              type={showConfirmNewPassword ? 'text' : 'password'}
+              onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
             />
           </div>
           <Button

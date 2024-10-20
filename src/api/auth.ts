@@ -10,6 +10,12 @@ export const useLogin = () => {
   const { setUser, setToken } = useUser();
   const { getProfile } = useGetProfile();
   const [loading, setLoading] = useState(false);
+  const [isloading, setIsLoading] = useState(false);
+  const [otpModal, setOtpModal] = useState(false);
+  const [verifying, setVerifying] = useState(false);
+  const [updatingPassword, setUpdatingPassowrd] = useState(false);
+  const [email, setEmail] = useState('');
+  const [otpVals, setOtpVals] = useState('');
 
   const handleLogin = async (values: Login) => {
     try {
@@ -42,10 +48,114 @@ export const useLogin = () => {
         navigate('/dashboard');
       }
     } catch (err) {
-      console.error('err', err);
       toast.error((err as MutationErrorPayload)?.data?.message);
     }
   };
 
-  return { handleLogin, loading, setLoading };
+  const forgotPassword = async (val: string) => {
+    try {
+      setIsLoading(true);
+      const data = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}admin/forgot-password`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: val,
+          }),
+        },
+      );
+      const res = await data.json();
+      setIsLoading(false);
+      if (res?.errors) {
+        toast.error(res.message);
+      } else if (res?.error) {
+        toast.error(res.message);
+      } else {
+        toast.success(res.message);
+        setOtpModal(true);
+      }
+    } catch (err) {
+      toast.error((err as MutationErrorPayload)?.data?.message);
+    }
+  };
+
+  const verifyOtp = async ({ email, otp }: { email: string; otp: string }) => {
+    try {
+      setVerifying(true);
+      const data = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}admin/verify/otp`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            otp: otp,
+          }),
+        },
+      );
+      const res = await data.json();
+      setVerifying(false);
+      if (res?.errors) {
+        toast.error(res.message);
+      } else {
+        navigate(`/reset-password?${email}`);
+      }
+    } catch (err) {
+      toast.error((err as MutationErrorPayload)?.data?.message);
+    }
+  };
+
+  const handleResetPassword = async () => {
+    try {
+      setUpdatingPassowrd(true);
+      const data = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}admin/reset/password`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            new_password: '',
+            new_password_confirmation: '',
+            otp: otpVals,
+          }),
+        },
+      );
+      const res = await data.json();
+      setUpdatingPassowrd(false);
+      if (res?.errors) {
+        toast.error(res.message);
+      } else {
+        navigate('/home');
+      }
+    } catch (err) {
+      toast.error((err as MutationErrorPayload)?.data?.message);
+    }
+  };
+
+  return {
+    handleLogin,
+    loading,
+    setLoading,
+    isloading,
+    forgotPassword,
+    otpModal,
+    verifying,
+    verifyOtp,
+    email,
+    setEmail,
+    otpVals,
+    setOtpVals,
+    handleResetPassword,
+  };
 };
