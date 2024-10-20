@@ -25,7 +25,6 @@ function ForgotPassword() {
     setEmail,
     otpVals,
     setOtpVals,
-    handleResetPassword,
   } = useLogin();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -116,7 +115,7 @@ function ForgotPassword() {
               recover your password.
             </p>
           </div>
-          <div className='mb-10'>
+          <div className={clsx(!isValidEmail && email ? 'mb-5' : 'mb-10')}>
             <Input
               state={
                 !isValidEmail && email ? InputState.ERROR : InputState.NORMAL

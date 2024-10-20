@@ -1,5 +1,5 @@
 import { useUser } from '@/context/AppContext';
-import { Login, MutationErrorPayload } from '@/types/types';
+import { Login, MutationErrorPayload, ResetPassword } from '@/types/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
@@ -70,9 +70,7 @@ export const useLogin = () => {
       );
       const res = await data.json();
       setIsLoading(false);
-      if (res?.errors) {
-        toast.error(res.message);
-      } else if (res?.error) {
+      if (res.error) {
         toast.error(res.message);
       } else {
         toast.success(res.message);
@@ -105,14 +103,14 @@ export const useLogin = () => {
       if (res?.errors) {
         toast.error(res.message);
       } else {
-        navigate(`/reset-password?${email}`);
+        navigate(`/reset-password?email=${email}&otp=${otp}`);
       }
     } catch (err) {
       toast.error((err as MutationErrorPayload)?.data?.message);
     }
   };
 
-  const handleResetPassword = async () => {
+  const handleResetPassword = async (val: ResetPassword) => {
     try {
       setUpdatingPassowrd(true);
       const data = await fetch(
@@ -124,10 +122,10 @@ export const useLogin = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            email: email,
-            new_password: '',
-            new_password_confirmation: '',
-            otp: otpVals,
+            email: val.email,
+            new_password: val.newPassword,
+            new_password_confirmation: val.confirmNewPassword,
+            otp: val.otp,
           }),
         },
       );
@@ -136,7 +134,8 @@ export const useLogin = () => {
       if (res?.errors) {
         toast.error(res.message);
       } else {
-        navigate('/home');
+        toast.success(res.message);
+        navigate('/');
       }
     } catch (err) {
       toast.error((err as MutationErrorPayload)?.data?.message);
@@ -157,5 +156,6 @@ export const useLogin = () => {
     otpVals,
     setOtpVals,
     handleResetPassword,
+    updatingPassword,
   };
 };
