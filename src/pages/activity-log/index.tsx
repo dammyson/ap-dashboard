@@ -19,6 +19,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { typeActivityLog } from '@/types/types';
 import dayjs from 'dayjs';
 import { FilterModal } from '@/components/modal/filterModal';
+import { CustomDatePicker } from '@/components/datePicker';
 
 export type OpenActivity = (record: typeActivityLog) => void;
 
@@ -76,6 +77,60 @@ function ActivityLog() {
       endDate: endDate && dayjs(endDate).format('YYYY-MM-DD'),
     });
     setFilter(false);
+  };
+
+  const downloadCSV = (
+    data: typeActivityLog[],
+    startDate: Date | undefined,
+    endDate: Date | undefined,
+  ) => {
+    const start = startDate ? new Date(startDate) : '';
+    const end = endDate ? new Date(endDate) : '';
+
+    const periodInfo = `Logs from ${dayjs(start).format('DD-MM-YYYY')} to ${dayjs(end).format('DD-MM-YYYY')}\n`;
+
+    const filteredData = data.filter((row) => {
+      const rowDate = new Date(row.created_at);
+      return rowDate >= start && rowDate <= end;
+    });
+
+    if (filteredData.length === 0) {
+      alert('No logs available for the selected date range.');
+      return;
+    }
+    const csvData = filteredData
+      .map((row) => {
+        return {
+          created_at: dayjs(row.created_at).format('DD-MM-YYYY'),
+          activity_type: row.activity_type,
+          description: row.description,
+          user_name: row.admin.user_name,
+        };
+      })
+      .map((row) => Object.values(row).join(','))
+      .join('\n');
+    const csvHeader =
+      Object.keys(
+        filteredData.map((header) => {
+          return {
+            Date: header.created_at,
+            Activity: header.activity_type,
+            Description: header.description,
+            Name: header.admin.user_name,
+          };
+        })[0],
+      ).join(',') + '\n';
+    const csvContent = periodInfo + csvHeader + csvData;
+
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+
+    const formattedStart = dayjs(start).format('DD-MM-YYYY');
+    const formattedEnd = dayjs(end).format('DD-MM-YYYY');
+    link.download = `logs_${formattedStart}_to_${formattedEnd}.csv`;
+    link.click();
   };
 
   return (
@@ -183,7 +238,14 @@ function ActivityLog() {
                 <p className='font-medium text-light-grey-600 text-base 560:text-lg 960:text-xl text-start'>
                   Time period
                 </p>
-                <div>{/* <CustomDatePicker /> */}</div>
+                <div>
+                  <CustomDatePicker
+                    startDate={startDate}
+                    setStartDate={setStartDate}
+                    endDate={endDate}
+                    setEndDate={setEndDate}
+                  />
+                </div>
               </div>
 
               <div className='w-36 my-4 768:my-6 960:my-12'>
@@ -219,7 +281,9 @@ function ActivityLog() {
                     radius={BorderRadius.Large}
                     size={ButtonSize.Large}
                     className='text-light-blue-main !font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[66px]'
-                    onClick={() => {}}
+                    onClick={() =>
+                      downloadCSV(activityData, startDate, endDate)
+                    }
                   />
                 </div>
               </div>
