@@ -22,8 +22,10 @@ export const AccessLock = ({
 
 export const Cancel = ({
   className = 'w-7 h-7 960:w-[32px] 960:h-[32px]',
+  color = '#23539F',
 }: {
   className?: string;
+  color?: string;
 }) => {
   return (
     <svg
@@ -34,7 +36,7 @@ export const Cancel = ({
     >
       <path
         d='M8.53464 25.3332L6.66797 23.4665L14.1346 15.9998L6.66797 8.53317L8.53464 6.6665L16.0013 14.1332L23.468 6.6665L25.3346 8.53317L17.868 15.9998L25.3346 23.4665L23.468 25.3332L16.0013 17.8665L8.53464 25.3332Z'
-        fill='#23539F'
+        fill={color}
       />
     </svg>
   );

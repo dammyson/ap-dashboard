@@ -15,6 +15,8 @@ import { RoleOption } from '@/pages/settings/profile';
 import { DropDownArrow } from '@/components/svg/settings/Settings';
 import ListBox from '@/components/Dropdown/listBox';
 import { useSurveyForm } from '../utils';
+import { Cancel } from '@/components/svg/modal/Modal';
+import { useState } from 'react';
 
 export const optionFormats: RoleOption[] = [
   {
@@ -34,7 +36,18 @@ interface props {
   setSurveyQuestions: React.Dispatch<React.SetStateAction<SurveyQuestion[]>>;
 }
 
+export interface deleteIcon {
+  questionId: string | null;
+  optionId: number | null;
+  visible: boolean;
+}
+
 const SurveyQuestionCard = ({ surveyQuestions, setSurveyQuestions }: props) => {
+  const [showDeleteIcon, setShowDeleteIcon] = useState<deleteIcon>({
+    questionId: null,
+    optionId: null,
+    visible: false,
+  });
   const {
     handleSelectFormat,
     handleAddQuestion,
@@ -43,7 +56,9 @@ const SurveyQuestionCard = ({ surveyQuestions, setSurveyQuestions }: props) => {
     handleOptionChange,
     handleRemoveOption,
     handleQuestionText,
-  } = useSurveyForm({ surveyQuestions, setSurveyQuestions });
+    handleHideIcon,
+    handleDisplayIcon,
+  } = useSurveyForm({ surveyQuestions, setSurveyQuestions, setShowDeleteIcon });
 
   return (
     <Card
@@ -95,16 +110,35 @@ const SurveyQuestionCard = ({ surveyQuestions, setSurveyQuestions }: props) => {
                 ) : (
                   <EmptyBoxSelect />
                 )}
-
-                <input
-                  type='text'
-                  value={option.option_text}
-                  onChange={(e) =>
-                    handleOptionChange(item.id, id, e.target.value)
-                  }
-                  placeholder={`Option ${id + 1}`}
-                  className='w-full text-lg 640:text-xl 960:text-2xl py-3 border-t-0 border-x-0 border-b border-b-[#C7C7CC] font-normal focus:ring-0 placeholder:text-light-primary-deep_black'
-                />
+                <div className='relative'>
+                  <input
+                    type='text'
+                    value={option.option_text}
+                    onChange={(e) =>
+                      handleOptionChange(item.id, id, e.target.value)
+                    }
+                    onFocus={() => handleDisplayIcon(item.id, id)}
+                    onBlur={() => handleHideIcon(item.id, id)}
+                    placeholder={`Option ${id + 1}`}
+                    className='w-[90%] text-lg 640:text-xl 960:text-2xl py-3 pr-9 border-t-0 border-x-0 border-b border-b-[#C7C7CC] font-normal focus:ring-0 placeholder:text-light-primary-deep_black'
+                  />
+                  {showDeleteIcon.questionId === item.id &&
+                    showDeleteIcon.optionId === id &&
+                    showDeleteIcon.visible &&
+                    item.options.length !== 1 && (
+                      <span
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          handleRemoveOption(item.id, id);
+                        }}
+                        className={clsx(
+                          'absolute right-[31px] transform top-1/2 -translate-y-3 cursor-pointer',
+                        )}
+                      >
+                        <Cancel color='#D02626' />
+                      </span>
+                    )}
+                </div>
               </div>
             ))}
           </div>
@@ -120,7 +154,7 @@ const SurveyQuestionCard = ({ surveyQuestions, setSurveyQuestions }: props) => {
                 onClick={() => handleAddOption(item.id)}
                 className='!font-semibold !text-light-blue-main text-base 480:!text-[17px] 1300:!text-[18px] pl-0 pr-2 768:!px-0 880:!px-4 text-nowrap !gap-1 880:!gap-2'
               />
-              <Button
+              {/* <Button
                 mode='text'
                 size={ButtonSize.Small}
                 leadingIcon={
@@ -139,7 +173,7 @@ const SurveyQuestionCard = ({ surveyQuestions, setSurveyQuestions }: props) => {
                   '!font-semibold !text-[#B0B0B0] text-base 480:!text-[17px] 1300:!text-[18px] !px-2 768:!px-0 880:!px-4 text-nowrap !gap-1 880:!gap-2',
                   item.options.length > 1 && '!text-light-blue-main',
                 )}
-              />
+              /> */}
             </div>
             {item.id !== '1' && (
               <div className='flex justify-end items-center w-full '>

@@ -173,6 +173,7 @@ export interface EditProfile {
 }
 
 export interface SurveyOption {
+  id: number;
   option_text: string;
   value: string;
 }

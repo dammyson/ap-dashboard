@@ -1,19 +1,22 @@
 import { SurveyOption, SurveyQuestion } from '@/types/types';
 import { RoleOption } from '@/pages/settings/profile';
+import { deleteIcon } from '../createSurvery/questions';
 
 export const questionOption: SurveyOption[] = [
-  { option_text: '', value: 'option1' },
-  { option_text: '', value: 'option2' },
+  { id: 1, option_text: '', value: 'option1' },
+  { id: 2, option_text: '', value: 'option2' },
 ];
 
 interface props {
   surveyQuestions: SurveyQuestion[];
   setSurveyQuestions: React.Dispatch<React.SetStateAction<SurveyQuestion[]>>;
+  setShowDeleteIcon: React.Dispatch<deleteIcon>;
 }
 
 export const useSurveyForm = ({
   surveyQuestions,
   setSurveyQuestions,
+  setShowDeleteIcon,
 }: props) => {
   const handleSelectFormat = (id: string, format: RoleOption) => {
     setSurveyQuestions((prevQuestions) =>
@@ -50,6 +53,7 @@ export const useSurveyForm = ({
       prevQuestion.map((question) => {
         if (question.id === questionId) {
           const newOption = {
+            id: question.options.length + 1,
             option_text: '',
             value: `option${question.options.length + 1}`,
           };
@@ -62,6 +66,22 @@ export const useSurveyForm = ({
         return question;
       }),
     );
+  };
+
+  const handleDisplayIcon = (questionId: string, index: number) => {
+    setShowDeleteIcon({
+      questionId: questionId,
+      optionId: index,
+      visible: true,
+    });
+  };
+
+  const handleHideIcon = (questionId: string, index: number) => {
+    setShowDeleteIcon({
+      questionId: questionId,
+      optionId: index,
+      visible: false,
+    });
   };
 
   const handleOptionChange = (
@@ -88,14 +108,16 @@ export const useSurveyForm = ({
     );
   };
 
-  const handleRemoveOption = (questionId: string) => {
+  const handleRemoveOption = (questionId: string, index: number) => {
     setSurveyQuestions((prevQuestions) =>
       prevQuestions.map((question) => {
         if (question.id === questionId) {
-          const updatedOptions = question.options.slice(0, -1);
+          const updatedOtions = question.options.filter(
+            (_, idx) => idx !== index,
+          );
           return {
             ...question,
-            options: updatedOptions,
+            options: updatedOtions,
           };
         }
         return question;
@@ -131,5 +153,7 @@ export const useSurveyForm = ({
     handleOptionChange,
     handleRemoveOption,
     handleQuestionText,
+    handleHideIcon,
+    handleDisplayIcon,
   };
 };
