@@ -200,3 +200,10 @@ export interface FilterActivityLog {
   startDate?: string;
   endDate?: string;
 }
+
+export interface ResetPassword {
+  email: string;
+  newPassword: string;
+  confirmNewPassword: string;
+  otp: string;
+}

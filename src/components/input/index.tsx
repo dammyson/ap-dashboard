@@ -91,7 +91,7 @@ export function Input({
               : state === InputState.Success
                 ? 'text-light-success-100'
                 : 'text-light-grey-500',
-            '768:absolute mt-2 text-xs 480:text-sm 880:text-base',
+            'mt-2 text-xs 480:text-sm 880:text-base',
           )}
         >
           {helper}
