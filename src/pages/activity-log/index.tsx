@@ -266,7 +266,7 @@ function ActivityLog() {
             </div>
             <div>
               <div className='flex flex-col items-center'>
-                <div className='text-start w-full'>
+                <div className='text-start w-full mb-5'>
                   {activities.map((activity, index) => (
                     <div
                       key={index}
@@ -315,7 +315,7 @@ function ActivityLog() {
                     </div>
                   ))}
                 </div>
-                <div className='w-full max-w-[360px] 768:max-w-[447px] mt-6 768:mt-10 960:mt-17 mb-3 768:mb-5 960:mb-8'>
+                {/* <div className='w-full max-w-[360px] 768:max-w-[447px] mt-6 768:mt-10 960:mt-17 mb-3 768:mb-5 960:mb-8'>
                   <Button
                     buttonText='Export log'
                     radius={BorderRadius.Large}
@@ -323,7 +323,7 @@ function ActivityLog() {
                     className='text-light-blue-main !font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[65px]'
                     onClick={() => {}}
                   />
-                </div>
+                </div> */}
               </div>
             </div>
           </Modal>
