@@ -274,5 +274,6 @@ export const useManageSurvey = () => {
     changeSurveyBanner,
     editSurvey,
     editLoading,
+    imageLoading,
   };
 };

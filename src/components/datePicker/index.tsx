@@ -1,7 +1,6 @@
 import { DatePicker } from 'antd';
 import dayjs from 'dayjs';
 import { SetStateAction } from 'react';
-import 'react-datepicker/dist/react-datepicker.css';
 import { Calender } from '../svg/activityLog/ActivityLog';
 import { toast } from 'sonner';
 
