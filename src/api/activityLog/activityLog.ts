@@ -1,12 +1,16 @@
 import { useUser } from '@/context/AppContext';
-import { FilterActivityLog, MutationErrorPayload } from '@/types/types';
+import {
+  FilterActivityLog,
+  MutationErrorPayload,
+  typeActivityLog,
+} from '@/types/types';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
 export const useActivityLog = () => {
   const { token } = useUser();
   const [loading, setLoading] = useState(false);
-  const [activityData, setActivityData] = useState();
+  const [activityData, setActivityData] = useState<typeActivityLog[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);

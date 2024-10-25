@@ -8,7 +8,7 @@ import { Spin, Table } from 'antd';
 import { UseActivivtyLog } from '@/components/modules/activityLog/tableColumns';
 import { activities, formats } from './constants';
 import { Update } from '@/components/svg/activityLog/ActivityLog';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import clsx from 'clsx';
@@ -19,19 +19,29 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { typeActivityLog } from '@/types/types';
 import dayjs from 'dayjs';
 import { FilterModal } from '@/components/modal/filterModal';
+import { CustomDatePicker } from '@/components/datePicker';
+import { useExportLogs } from './exports';
 
 export type OpenActivity = (record: typeActivityLog) => void;
 
 function ActivityLog() {
   const { user } = useUser();
   const currentFormat = formats[0];
-  const [exportLog, setExportLog] = useState(false);
   const [viewActivity, setViewActivity] = useState(false);
+  const [filter, setFilter] = useState(false);
   const [selectedOption, setSelectedOption] = useState(currentFormat.key);
   const [selectedRecord, setSelectedRecord] = useState<typeActivityLog | null>(
     null,
   );
-  const [filter, setFilter] = useState(false);
+  const {
+    handleExport,
+    exportModal,
+    setExportModal,
+    fromDate,
+    toDate,
+    setFromDate,
+    setToDate,
+  } = useExportLogs();
   const {
     getActivityLog,
     loading,
@@ -45,11 +55,13 @@ function ActivityLog() {
     isFiltered,
   } = useActivityLog();
 
-  const sortedActivity = (activityData ?? []).sort(
-    (a: typeActivityLog, b: typeActivityLog) => {
-      return dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf();
-    },
-  );
+  const sortedActivity = useMemo(() => {
+    return (activityData ?? []).sort(
+      (a: typeActivityLog, b: typeActivityLog) => {
+        return dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf();
+      },
+    );
+  }, [activityData]);
   const openModal: OpenActivity = (record) => {
     setSelectedRecord(record);
     setViewActivity(true);
@@ -65,10 +77,10 @@ function ActivityLog() {
   }, []);
 
   useEffect(() => {
-    if (!exportLog) {
+    if (!exportModal) {
       setSelectedOption(currentFormat.key);
     }
-  }, [exportLog]);
+  }, [exportModal]);
 
   const handleFilter = async () => {
     await filterActivity({
@@ -98,7 +110,7 @@ function ActivityLog() {
               radius={BorderRadius.Large}
               size={ButtonSize.Medium}
               className='text-light-blue-main !font-semibold !w-fit float-right 560:hidden text-sm'
-              onClick={() => setExportLog(true)}
+              onClick={() => setExportModal(true)}
             />
           </div>
         </div>
@@ -128,7 +140,7 @@ function ActivityLog() {
                 radius={BorderRadius.Large}
                 size={ButtonSize.Medium}
                 className='text-light-blue-main !font-semibold hidden 560:flex'
-                onClick={() => setExportLog(true)}
+                onClick={() => setExportModal(true)}
               />
             }
           >
@@ -165,12 +177,12 @@ function ActivityLog() {
             handleFilter={handleFilter}
           />
         )}
-        {exportLog && (
+        {exportModal && (
           <Modal
             isBackground
             size={SizeType.LARGE}
             cancelIcon={<Cancel />}
-            onClick={() => setExportLog(false)}
+            onClick={() => setExportModal(false)}
           >
             <div className='max-w-[890px] w-full grid it'>
               <div className='flex items-center justify-center'>
@@ -183,7 +195,14 @@ function ActivityLog() {
                 <p className='font-medium text-light-grey-600 text-base 560:text-lg 960:text-xl text-start'>
                   Time period
                 </p>
-                <div>{/* <CustomDatePicker /> */}</div>
+                <div>
+                  <CustomDatePicker
+                    startDate={fromDate}
+                    setStartDate={setFromDate}
+                    endDate={toDate}
+                    setEndDate={setToDate}
+                  />
+                </div>
               </div>
 
               <div className='w-36 my-4 768:my-6 960:my-12'>
@@ -198,7 +217,7 @@ function ActivityLog() {
                     >
                       <div
                         onClick={() => setSelectedOption(format.key)}
-                        className='flex items-center justify-center w-7 h-7 border-light-blue-50 border-2 rounded-full'
+                        className='flex items-center justify-center w-7 h-7 border-light-blue-50 border-2 rounded-full cursor-pointer'
                       >
                         {selectedOption === format.key && (
                           <RadioFilled color='#23539F' className='w-4 h-4' />
@@ -219,7 +238,14 @@ function ActivityLog() {
                     radius={BorderRadius.Large}
                     size={ButtonSize.Large}
                     className='text-light-blue-main !font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[66px]'
-                    onClick={() => {}}
+                    onClick={() =>
+                      handleExport(
+                        selectedOption,
+                        activityData,
+                        fromDate,
+                        toDate,
+                      )
+                    }
                   />
                 </div>
               </div>
@@ -240,7 +266,7 @@ function ActivityLog() {
             </div>
             <div>
               <div className='flex flex-col items-center'>
-                <div className='text-start w-full'>
+                <div className='text-start w-full mb-5'>
                   {activities.map((activity, index) => (
                     <div
                       key={index}
@@ -284,14 +310,12 @@ function ActivityLog() {
                               admin
                             </li>
                           </ul>
-                        ) : (
-                          <></>
-                        )}
+                        ) : null}
                       </span>
                     </div>
                   ))}
                 </div>
-                <div className='w-full max-w-[360px] 768:max-w-[447px] mt-6 768:mt-10 960:mt-17 mb-3 768:mb-5 960:mb-8'>
+                {/* <div className='w-full max-w-[360px] 768:max-w-[447px] mt-6 768:mt-10 960:mt-17 mb-3 768:mb-5 960:mb-8'>
                   <Button
                     buttonText='Export log'
                     radius={BorderRadius.Large}
@@ -299,7 +323,7 @@ function ActivityLog() {
                     className='text-light-blue-main !font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[65px]'
                     onClick={() => {}}
                   />
-                </div>
+                </div> */}
               </div>
             </div>
           </Modal>
