@@ -1,4 +1,6 @@
+import { RoleOption } from '@/components/Dropdown/listBox';
 import { useUser } from '@/context/AppContext';
+import { surveyDuration } from '@/pages/surveys/constants';
 import { questionOption } from '@/pages/surveys/utils';
 import {
   CreateSurvey,
@@ -6,6 +8,7 @@ import {
   MutationErrorPayload,
   SurveyQuestion,
 } from '@/types/types';
+import { convertFromMinutes } from '@/utils';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
@@ -106,8 +109,10 @@ export const useManageSurvey = () => {
   const [loading, setLoading] = useState(false);
   const [survey, setSurvey] = useState<CreateSurvey>();
   const [surveyTitle, setSurveyTitle] = useState('');
-  const [duration, setDuration] = useState<number>(0);
-  const [points, setPoints] = useState<number>(0);
+  const [duration, setDuration] = useState<RoleOption | null>(
+    surveyDuration[0],
+  );
+  const [points, setPoints] = useState<number | string>('');
   const [imagePreview, setImagePreview] = useState('');
   const [surveyBanner, setSurveyBanner] = useState<File | null>(null);
   const [showLoading, setShowLoading] = useState(false);
@@ -123,12 +128,19 @@ export const useManageSurvey = () => {
     },
   ]);
 
+  const getRoleOptionFromDuration = (val: number) => {
+    const convertedVal = convertFromMinutes(val);
+    const matchingOption = surveyDuration.find(
+      (option) => option.value === convertedVal,
+    );
+    return matchingOption || null;
+  };
+
   const createSurvey = async (value: CreateSurvey) => {
     try {
       setLoading(true);
       const data = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}admin/surveys/create-survey`,
-
         {
           method: 'POST',
           headers: {
@@ -180,7 +192,7 @@ export const useManageSurvey = () => {
         setSurvey(surveyData);
         setSurveyTitle(surveyData.title);
         setSurveyQuestions(surveyData.questions);
-        setDuration(surveyData.duration_of_survey);
+        setDuration(getRoleOptionFromDuration(surveyData.duration_of_survey));
         setPoints(surveyData.points_awarded);
         setImagePreview(res.surveyData.image_url_link);
       }

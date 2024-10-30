@@ -13,9 +13,10 @@ import { awardPoints, OtherList, surveyDuration } from '../constants';
 import SurveyQuestionCard from './questions';
 import { useManageSurvey } from '@/api/surveys/surveys';
 import { Spinner } from '@/components/svg/spinner/Spinner';
-import { CustomCombobox } from '../../../components/Dropdown/comboBox';
 import { convertToMinutes } from '@/utils';
 import { DragAndDrop } from '@/components/dragAndDrop';
+import ListBox from '@/components/Dropdown/listBox';
+import { CustomDropdown } from '@/components/Dropdown/customDropdown';
 
 export interface SelectedOptions {
   [questionId: string]: string;
@@ -43,15 +44,14 @@ function CreateSurvey() {
   const handleCreateSurvey = () => {
     createSurvey({
       title: surveyTitle,
-      duration_of_survey: duration,
-      points_awarded: points,
+      duration_of_survey: convertToMinutes(duration?.value as string),
+      points_awarded: Number(points) || 0,
       questions: surveyQuestions,
     });
   };
 
-  const allTrue = [surveyTitle, duration, surveyQuestions].every((field) => {
+  const allTrue = [surveyTitle, surveyQuestions].every((field) => {
     if (typeof field === 'string') return field.trim() !== '';
-    if (typeof field === 'number') return field > 0;
     if (Array.isArray(field)) {
       return field.map(
         (question) =>
@@ -61,7 +61,6 @@ function CreateSurvey() {
     }
     return false;
   });
-
   return (
     <AppLayout logo=''>
       <div
@@ -132,25 +131,24 @@ function CreateSurvey() {
                       {item.title}
                     </p>
                     {item.id === 'points awarded (optional)' ? (
-                      <CustomCombobox
-                        selectedLabel=''
-                        options={awardPoints}
-                        trailingIcon={<DropDownArrow />}
+                      <CustomDropdown
+                        selected={points}
                         isCurved
-                        onSelect={(value) => {
-                          setPoints(Number(value));
-                        }}
-                        className='font-medium text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'
+                        placeholder='Enter or select'
+                        trailingIcon={<DropDownArrow />}
+                        options={awardPoints}
+                        onSelect={(val) => setPoints(val)}
+                        onChange={(val) => setPoints(val)}
+                        className='font-medium text-light-primary-deep_black !h-[55px] 960:!min-h-[70px] !border-light-blue-50 '
                       />
                     ) : (
-                      <CustomCombobox
-                        selectedLabel=''
+                      <ListBox
+                        selected={duration}
                         options={surveyDuration}
                         trailingIcon={<DropDownArrow />}
                         isCurved
                         onSelect={(value) => {
-                          const minutes = convertToMinutes(value.toString());
-                          setDuration(minutes);
+                          setDuration(value);
                         }}
                         className='font-medium text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'
                       />
