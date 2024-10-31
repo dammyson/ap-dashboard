@@ -303,27 +303,12 @@ function ActivityLog() {
                         ) : activity.key === 'activites' ? (
                           <ul className='text-light-grey-600 text-sm  768:text-base 960:text-lg list-disc list-outside 560:list-inside ml-3 leading-tight'>
                             <li>{selectedRecord.description}</li>
-                            <li>Viewed the dashboard </li>
-                            <li>Updated flight status for flight #1234</li>
-                            <li>
-                              Edited user role for John Kevin from sub-admin to
-                              admin
-                            </li>
                           </ul>
                         ) : null}
                       </span>
                     </div>
                   ))}
                 </div>
-                {/* <div className='w-full max-w-[360px] 768:max-w-[447px] mt-6 768:mt-10 960:mt-17 mb-3 768:mb-5 960:mb-8'>
-                  <Button
-                    buttonText='Export log'
-                    radius={BorderRadius.Large}
-                    size={ButtonSize.Large}
-                    className='text-light-blue-main !font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[65px]'
-                    onClick={() => {}}
-                  />
-                </div> */}
               </div>
             </div>
           </Modal>

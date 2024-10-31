@@ -12,13 +12,14 @@ import clsx from 'clsx';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import SurveyQuestionCard from '../createSurvery/questions';
-import { CustomCombobox } from '@/components/Dropdown/comboBox';
 import { awardPoints, OtherList, surveyDuration } from '../constants';
-import { convertFromMinutes, convertToMinutes } from '@/utils';
+import { convertToMinutes } from '@/utils';
 import { DragAndDrop } from '@/components/dragAndDrop';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spinner } from '@/components/svg/spinner/Spinner';
+import { CustomDropdown } from '@/components/Dropdown/customDropdown';
+import ListBox from '@/components/Dropdown/listBox';
 
 function EditSurvey({}) {
   const { titleId, surveyId } = useParams();
@@ -52,8 +53,8 @@ function EditSurvey({}) {
   const handleEditsurvey = (id: number) => {
     editSurvey(id, {
       title: surveyTitle,
-      duration_of_survey: duration,
-      points_awarded: points,
+      duration_of_survey: convertToMinutes(duration?.value as string),
+      points_awarded: Number(points) || 0,
       questions: surveyQuestions,
     });
   };
@@ -140,27 +141,24 @@ function EditSurvey({}) {
                             {item.title}
                           </p>
                           {item.id === 'points awarded (optional)' ? (
-                            <CustomCombobox
-                              selectedLabel={`${points} Points`}
-                              options={awardPoints}
-                              trailingIcon={<DropDownArrow />}
+                            <CustomDropdown
+                              selected={points}
                               isCurved
-                              onSelect={(value) => {
-                                setPoints(Number(value));
-                              }}
-                              className='font-medium text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'
+                              placeholder='Enter or select'
+                              trailingIcon={<DropDownArrow />}
+                              options={awardPoints}
+                              onSelect={(val) => setPoints(val)}
+                              onChange={(val) => setPoints(val)}
+                              className='font-medium text-light-primary-deep_black !h-[55px] 960:!min-h-[70px] !border-light-blue-50 '
                             />
                           ) : (
-                            <CustomCombobox
-                              selectedLabel={convertFromMinutes(duration)}
+                            <ListBox
+                              selected={duration}
                               options={surveyDuration}
                               trailingIcon={<DropDownArrow />}
                               isCurved
                               onSelect={(value) => {
-                                const minutes = convertToMinutes(
-                                  value.toString(),
-                                );
-                                setDuration(minutes);
+                                setDuration(value);
                               }}
                               className='font-medium text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'
                             />

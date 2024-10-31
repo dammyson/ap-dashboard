@@ -77,7 +77,7 @@ export const SideNavigationItems = () => {
           <img src={whiteLogo} alt='airpeace logo' />
         </div>
       )}
-      <div className='grid gap-6 pl-[14px] 560:pl-6 mt-[60px] 1240:mt-[85px]'>
+      <div className='grid gap-6 pl-[14px] 560:pl-6 mt-[60px] 1240:mt-[85px] md-height'>
         {navigationItems
           ?.slice(0, -2)
           .map(({ icon, title, countId, id }, index) => {

@@ -17,7 +17,7 @@ export interface RoleOption {
 interface SelectProps {
   options: RoleOption[];
   label?: string;
-  selected: RoleOption;
+  selected: RoleOption | null;
   className?: string;
   hasBorder?: boolean;
   isCurved?: boolean;

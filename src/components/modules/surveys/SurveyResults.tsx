@@ -51,13 +51,10 @@ export const SurveyResults = ({ results, isloading }: props) => {
                   <PieChart
                     lineWidth={53}
                     radius={40}
-                    data={result.options.map((opt) => {
-                      console.warn(opt);
-                      return {
-                        value: 10, //opt will be passed here when there are values
-                        color: getRandomColor(),
-                      };
-                    })}
+                    data={result.options.map((opt) => ({
+                      value: opt.percentage,
+                      color: getRandomColor(),
+                    }))}
                     segmentsStyle={{ cursor: 'pointer' }}
                     animate
                     startAngle={90}
