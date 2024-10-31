@@ -45,7 +45,7 @@ export const useActivityLog = () => {
     try {
       setIsLoading(true);
       const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/activity-log/filter-survey`,
+        `${import.meta.env.VITE_API_BASE_URL}admin/activity-log/filter-activity-log`,
         {
           method: 'POST',
           headers: {
