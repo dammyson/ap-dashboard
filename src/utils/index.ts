@@ -57,7 +57,7 @@ export function handleSort<T>({
 }
 
 export function getInitials(fullName: string) {
-  const nameParts = fullName.split(' ');
+  const nameParts = fullName.split(' ').slice(0, 2);
 
   return nameParts.map((word) => word.charAt(0)).join('');
 }
