@@ -34,6 +34,9 @@ export const optionFormats: RoleOption[] = [
 interface props {
   surveyQuestions: SurveyQuestion[];
   setSurveyQuestions: React.Dispatch<React.SetStateAction<SurveyQuestion[]>>;
+  surveyId?: number;
+  setQuestionId: React.Dispatch<React.SetStateAction<string>>;
+  setIsDeleteQuestionModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface deleteIcon {
@@ -42,7 +45,13 @@ export interface deleteIcon {
   visible: boolean;
 }
 
-const SurveyQuestionCard = ({ surveyQuestions, setSurveyQuestions }: props) => {
+const SurveyQuestionCard = ({
+  surveyQuestions,
+  setSurveyQuestions,
+  surveyId,
+  setQuestionId,
+  setIsDeleteQuestionModalOpen,
+}: props) => {
   const [showDeleteIcon, setShowDeleteIcon] = useState<deleteIcon>({
     questionId: null,
     optionId: null,
@@ -154,26 +163,6 @@ const SurveyQuestionCard = ({ surveyQuestions, setSurveyQuestions }: props) => {
                 onClick={() => handleAddOption(item.id)}
                 className='!font-semibold !text-light-blue-main text-base 480:!text-[17px] 1300:!text-[18px] pl-0 pr-2 768:!px-0 880:!px-4 text-nowrap !gap-1 880:!gap-2'
               />
-              {/* <Button
-                mode='text'
-                size={ButtonSize.Small}
-                leadingIcon={
-                  <SmallBin
-                    className='min-w-5 max-w-5 min-h-4 max-h-6 880:min-w-6 880:max-w-8 880:min-h-6 880:max-h-8 w-full'
-                    color={clsx(
-                      item.options.length < 2 ? '#B0B0B0' : '#23539f',
-                    )}
-                  />
-                }
-                buttonText='Remove option'
-                onClick={() => {
-                  item.options.length > 1 && handleRemoveOption(item.id);
-                }}
-                className={clsx(
-                  '!font-semibold !text-[#B0B0B0] text-base 480:!text-[17px] 1300:!text-[18px] !px-2 768:!px-0 880:!px-4 text-nowrap !gap-1 880:!gap-2',
-                  item.options.length > 1 && '!text-light-blue-main',
-                )}
-              /> */}
             </div>
             {item.id !== '1' && (
               <div className='flex justify-end items-center w-full '>
@@ -184,7 +173,12 @@ const SurveyQuestionCard = ({ surveyQuestions, setSurveyQuestions }: props) => {
                     <SmallBin className='min-w-5 max-w-5 min-h-4 max-h-6 880:min-w-6 880:max-w-8 880:min-h-6 880:max-h-8 w-full' />
                   }
                   buttonText='Remove question'
-                  onClick={() => handleRemoveQuestion(item.id)}
+                  onClick={() => {
+                    if (surveyId) {
+                      setQuestionId(item.id);
+                      setIsDeleteQuestionModalOpen(true);
+                    } else handleRemoveQuestion(item.id);
+                  }}
                   className='!font-semibold !text-light-blue-main text-base 480:!text-[17px] 1300:!text-[18px] pl-0 pr-2 768:!px-0 880:!px-4 text-nowrap !gap-1 880:!gap-2'
                 />
               </div>

@@ -9,7 +9,7 @@ import { DropDownArrow } from '@/components/svg/settings/Settings';
 import WelcomeMessage from '@/components/welcomeMessage';
 import { useUser } from '@/context/AppContext';
 import clsx from 'clsx';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import SurveyQuestionCard from '../createSurvery/questions';
 import { awardPoints, OtherList, surveyDuration } from '../constants';
@@ -20,11 +20,14 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Spinner } from '@/components/svg/spinner/Spinner';
 import { CustomDropdown } from '@/components/Dropdown/customDropdown';
 import ListBox from '@/components/Dropdown/listBox';
+import { Modal, SizeType } from '@/components/modal';
+import { Cancel } from '@/components/svg/modal/Modal';
 
 function EditSurvey({}) {
   const { titleId, surveyId } = useParams();
   const { user } = useUser();
   const navigate = useNavigate();
+  const [questionId, setQuestionId] = useState('');
   const {
     showSurvey,
     surveyQuestions,
@@ -43,6 +46,10 @@ function EditSurvey({}) {
     changeSurveyBanner,
     editSurvey,
     editLoading,
+    deleteQuestion,
+    isDeleting,
+    isDeleteQuestionModalOpen,
+    setIsDeleteQuestionModalOpen,
   } = useManageSurvey();
 
   const id = Number(surveyId);
@@ -125,6 +132,9 @@ function EditSurvey({}) {
               <SurveyQuestionCard
                 setSurveyQuestions={setSurveyQuestions}
                 surveyQuestions={surveyQuestions}
+                surveyId={id}
+                setQuestionId={setQuestionId}
+                setIsDeleteQuestionModalOpen={setIsDeleteQuestionModalOpen}
               />
               <Card
                 hasHeader
@@ -208,6 +218,37 @@ function EditSurvey({}) {
           )}
         </div>
       </div>
+      {isDeleteQuestionModalOpen && (
+        <Modal
+          onClick={() => setIsDeleteQuestionModalOpen(false)}
+          isCentered
+          cancelIcon={<Cancel />}
+          isBackground
+          size={SizeType.SMALL}
+        >
+          <p className='font-semibold text-lg 880:text-[20px] mb-2 mt-2 560:mt-4 560:mb-2 880:mt-8 text-light-primary-deep_black'>
+            Are you sure you want to delete this question?
+          </p>
+          <p className='pb-4 560:pb-7 text-[15px] 880:text-[17px] text-light-primary-deep_black'>
+            Please note that this action cannot be undone
+          </p>
+          <div className='w-full max-w-[340px]'>
+            <Button
+              size={ButtonSize.Medium}
+              radius={BorderRadius.Large}
+              buttonText={
+                isDeleting ? (
+                  <Spinner className='text-light-blue-main w-5 h-5 768:w-7 768:h-7' />
+                ) : (
+                  'Delete'
+                )
+              }
+              onClick={() => deleteQuestion(id, questionId)}
+              className='!font-semibold !text-[17px]'
+            />
+          </div>
+        </Modal>
+      )}
     </AppLayout>
   );
 }

@@ -152,6 +152,9 @@ export const useManageSurvey = () => {
   const [editLoading, setEditLoading] = useState(false);
   const [isDraftLoading, setIsDraftLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleteQuestionModalOpen, setIsDeleteQuestionModalOpen] =
+    useState(false);
 
   const [surveyQuestions, setSurveyQuestions] = useState<SurveyQuestion[]>([
     {
@@ -333,6 +336,34 @@ export const useManageSurvey = () => {
     }
   };
 
+  const deleteQuestion = async (surveyId: number, questionId: string) => {
+    try {
+      setIsDeleting(true);
+      const data = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${surveyId}/questions/${questionId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            'content-type': 'application/json',
+          },
+        },
+      );
+      const res = await data.json();
+      setIsDeleting(false);
+      if (res?.error) {
+        toast.error(res.message);
+      } else {
+        setIsDeleteQuestionModalOpen(false);
+        showSurvey(surveyId);
+        toast.success(res.message);
+      }
+    } catch (error) {
+      toast.error((error as MutationErrorPayload)?.data?.message);
+    }
+  };
+
   return {
     createSurvey,
     loading,
@@ -360,5 +391,9 @@ export const useManageSurvey = () => {
     isModalOpen,
     setIsModalOpen,
     deactivateSurvey,
+    deleteQuestion,
+    isDeleting,
+    isDeleteQuestionModalOpen,
+    setIsDeleteQuestionModalOpen,
   };
 };
