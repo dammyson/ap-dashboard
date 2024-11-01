@@ -35,8 +35,8 @@ interface props {
   surveyQuestions: SurveyQuestion[];
   setSurveyQuestions: React.Dispatch<React.SetStateAction<SurveyQuestion[]>>;
   surveyId?: number;
-  setQuestionId: React.Dispatch<React.SetStateAction<string>>;
-  setIsDeleteQuestionModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setQuestionId?: React.Dispatch<React.SetStateAction<string>>;
+  setIsDeleteQuestionModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface deleteIcon {
@@ -175,8 +175,8 @@ const SurveyQuestionCard = ({
                   buttonText='Remove question'
                   onClick={() => {
                     if (surveyId) {
-                      setQuestionId(item.id);
-                      setIsDeleteQuestionModalOpen(true);
+                      setQuestionId?.(item.id);
+                      setIsDeleteQuestionModalOpen?.(true);
                     } else handleRemoveQuestion(item.id);
                   }}
                   className='!font-semibold !text-light-blue-main text-base 480:!text-[17px] 1300:!text-[18px] pl-0 pr-2 768:!px-0 880:!px-4 text-nowrap !gap-1 880:!gap-2'

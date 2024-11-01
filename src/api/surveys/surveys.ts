@@ -146,7 +146,7 @@ export const useManageSurvey = () => {
   );
   const [points, setPoints] = useState<number | string>('');
   const [imagePreview, setImagePreview] = useState('');
-  const [surveyBanner, setSurveyBanner] = useState<File | null>(null);
+  const [surveyBanner, setSurveyBanner] = useState('');
   const [showLoading, setShowLoading] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
   const [editLoading, setEditLoading] = useState(false);
@@ -190,6 +190,7 @@ export const useManageSurvey = () => {
           },
           body: JSON.stringify({
             title: value.title,
+            image_url: value.image_url,
             duration_of_survey: value.duration_of_survey,
             points_awarded: value.points_awarded,
             is_active: value.is_active,
@@ -248,13 +249,13 @@ export const useManageSurvey = () => {
     }
   };
 
-  const changeSurveyBanner = async (id: number, image: File) => {
+  const uploadSurveyBanner = async (image: File) => {
     const bannerImage = new FormData();
     bannerImage.append('image_url', image);
     try {
       setImageLoading(true);
       const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${id}/update-survey-image`,
+        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/create-survey-banner`,
         {
           method: 'POST',
           headers: {
@@ -269,7 +270,8 @@ export const useManageSurvey = () => {
       if (res?.error) {
         toast.error(res.message);
       } else {
-        console.log(res);
+        setSurveyBanner(res.image_url);
+        setImagePreview(res.image_url_link);
       }
     } catch (error) {
       toast.error((error as MutationErrorPayload)?.data?.message);
@@ -290,6 +292,7 @@ export const useManageSurvey = () => {
           },
           body: JSON.stringify({
             title: value.title,
+            image_url: value.image_url,
             duration_of_survey: value.duration_of_survey,
             points_awarded: value.points_awarded,
             questions: value.questions.map((x) => x),
@@ -383,7 +386,7 @@ export const useManageSurvey = () => {
     setImagePreview,
     surveyBanner,
     setSurveyBanner,
-    changeSurveyBanner,
+    uploadSurveyBanner,
     editSurvey,
     editLoading,
     imageLoading,

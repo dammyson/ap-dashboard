@@ -28,6 +28,7 @@ function EditSurvey({}) {
   const { user } = useUser();
   const navigate = useNavigate();
   const [questionId, setQuestionId] = useState('');
+
   const {
     showSurvey,
     surveyQuestions,
@@ -43,9 +44,10 @@ function EditSurvey({}) {
     setImagePreview,
     surveyBanner,
     setSurveyBanner,
-    changeSurveyBanner,
+    uploadSurveyBanner,
     editSurvey,
     editLoading,
+    imageLoading,
     deleteQuestion,
     isDeleting,
     isDeleteQuestionModalOpen,
@@ -60,6 +62,7 @@ function EditSurvey({}) {
   const handleEditsurvey = (id: number) => {
     editSurvey(id, {
       title: surveyTitle,
+      image_url: surveyBanner,
       duration_of_survey: convertToMinutes(duration?.value as string),
       points_awarded: Number(points) || 0,
       is_active: true, // will modifly later
@@ -182,6 +185,8 @@ function EditSurvey({}) {
                     imagePreview={imagePreview}
                     setImagePreview={setImagePreview}
                     setSurveyBanner={setSurveyBanner}
+                    imageLoading={imageLoading}
+                    uploadSurveyBanner={uploadSurveyBanner}
                   />
                   <div className='flex items-center justify-center mt-16 mb-8'>
                     <div className='grid w-full max-w-[330px] 880:max-w-[400px] gap-4'>
@@ -204,10 +209,7 @@ function EditSurvey({}) {
                             'Save and publish'
                           )
                         }
-                        onClick={() => {
-                          handleEditsurvey(id);
-                          surveyBanner && changeSurveyBanner(id, surveyBanner);
-                        }}
+                        onClick={() => handleEditsurvey(id)}
                         className='!min-h-[55px] 960:!min-h-[66px]'
                       />
                     </div>
