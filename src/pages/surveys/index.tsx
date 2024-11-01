@@ -22,7 +22,7 @@ import { FilterModal } from '@/components/modal/filterModal';
 function Surveys() {
   const navigate = useNavigate();
   const { user } = useUser();
-  const [isPublished, setisPublished] = useState<number>();
+  const [isPublished, setisPublished] = useState<boolean>();
   const [surveyId, setSurveyId] = useState<number>();
   const [filterTable, setFilterTable] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
@@ -154,12 +154,12 @@ function Surveys() {
           onClick={() => setSurveyModal(false)}
         >
           <p className='font-semibold text-lg 880:text-[22px] mb-2 560:mb-4 mt-2 560:mt-4 880:mt-8 text-light-primary-deep_black'>
-            {isPublished === 0
+            {!isPublished
               ? 'Are you sure you want to publish this survey?'
               : 'Are you sure you want to unpublish this survey?'}
           </p>
           <p className=' pb-7 880:pb-11 text-[15px] 880:text-[17px] text-light-primary-deep_black'>
-            {isPublished === 0
+            {!isPublished
               ? 'This will make the survey available for participants'
               : 'This will make the survey unavailable for participants'}
           </p>
@@ -170,7 +170,7 @@ function Surveys() {
               buttonText={
                 loading ? (
                   <Spinner className='text-white w-5 h-5 768:w-7 768:h-7' />
-                ) : isPublished === 0 ? (
+                ) : !isPublished ? (
                   'Publish'
                 ) : (
                   'UnPublish'

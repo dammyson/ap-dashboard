@@ -4,10 +4,7 @@ import { Header } from '@/components/header';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { Input } from '@/components/input';
 import { AppLayout } from '@/components/layout/AppLayout';
-import {
-  DropDownArrow,
-  SmallCheckmark,
-} from '@/components/svg/settings/Settings';
+import { DropDownArrow } from '@/components/svg/settings/Settings';
 import WelcomeMessage from '@/components/welcomeMessage';
 import { useUser } from '@/context/AppContext';
 import clsx from 'clsx';
@@ -22,6 +19,7 @@ import ListBox from '@/components/Dropdown/listBox';
 import { CustomDropdown } from '@/components/Dropdown/customDropdown';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
+import { NoticeIcon } from '@/components/svg/surveys/Surveys';
 
 export interface SelectedOptions {
   [questionId: string]: string;
@@ -220,9 +218,10 @@ function CreateSurvey() {
           size={SizeType.MEDIUM}
           onClick={() => setIsModalOpen(false)}
         >
-          <div className='pb-5 text-lg 880:text-[22px] mb-2 560:mb-4 mt-2 560:mt-4 880:mt-8 text-light-primary-deep_black'>
-            A survey is currently active would you like to end and begin a new
-            one?
+          <NoticeIcon className='w-16 h-16 880:w-20 880:h-20 ' />
+          <div className='pb-5 max-w-[460px] 880:max-w-[560px] text-lg 880:text-[22px] mb-2 mt-2 560:my-3 880:mt-5 text-light-primary-deep_black'>
+            A survey is currently active would you like to deactivate and
+            publish a new survey?
           </div>
           <div className='w-full max-w-[300px] 880:max-w-[380px]'>
             <Button

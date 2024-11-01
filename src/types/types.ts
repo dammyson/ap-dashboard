@@ -9,7 +9,7 @@ export interface SurveyType {
   id: number;
   title: string;
   created_at: string;
-  is_published: number;
+  is_published: boolean;
   is_active: boolean;
 }
 
