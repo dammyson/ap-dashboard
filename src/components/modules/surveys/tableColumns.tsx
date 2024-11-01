@@ -49,18 +49,18 @@ export const useSurveyColumn = (
               {record && (
                 <span>{record.is_published === 1 ? 'Published' : 'Draft'}</span>
               )}
-              {record.is_completed && (
+              {record.is_active && (
                 <span
                   className={clsx(
-                    record.is_completed !== true
+                    record.is_active
                       ? 'text-light-blue-main'
-                      : record.is_completed === true
+                      : !record.is_active
                         ? 'text-light-secondary-mint_green'
                         : '',
                     'ml-3',
                   )}
                 >
-                  {record.is_completed ? 'Active' : 'Completed'}
+                  {record.is_active ? 'Active' : 'Completed'}
                 </span>
               )}
             </div>

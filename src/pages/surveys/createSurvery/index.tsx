@@ -4,7 +4,10 @@ import { Header } from '@/components/header';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { Input } from '@/components/input';
 import { AppLayout } from '@/components/layout/AppLayout';
-import { DropDownArrow } from '@/components/svg/settings/Settings';
+import {
+  DropDownArrow,
+  SmallCheckmark,
+} from '@/components/svg/settings/Settings';
 import WelcomeMessage from '@/components/welcomeMessage';
 import { useUser } from '@/context/AppContext';
 import clsx from 'clsx';
@@ -17,6 +20,8 @@ import { convertToMinutes } from '@/utils';
 import { DragAndDrop } from '@/components/dragAndDrop';
 import ListBox from '@/components/Dropdown/listBox';
 import { CustomDropdown } from '@/components/Dropdown/customDropdown';
+import { Modal, SizeType } from '@/components/modal';
+import { Cancel } from '@/components/svg/modal/Modal';
 
 export interface SelectedOptions {
   [questionId: string]: string;
@@ -39,15 +44,25 @@ function CreateSurvey() {
     imagePreview,
     setImagePreview,
     setSurveyBanner,
+    isDraftLoading,
+    isModalOpen,
+    setIsModalOpen,
+    deactivateSurvey,
   } = useManageSurvey();
 
-  const handleCreateSurvey = () => {
+  const handleCreateSurvey = (isActive: boolean) => {
     createSurvey({
       title: surveyTitle,
       duration_of_survey: convertToMinutes(duration?.value as string),
       points_awarded: Number(points) || 0,
+      is_active: isActive,
       questions: surveyQuestions,
     });
+  };
+
+  const handleDeactivate = async () => {
+    await deactivateSurvey();
+    handleCreateSurvey(true);
   };
 
   const allTrue = [surveyTitle, surveyQuestions].every((field) => {
@@ -165,10 +180,15 @@ function CreateSurvey() {
                 <div className='grid w-full max-w-[330px] 880:max-w-[400px] gap-4 '>
                   <Button
                     size={ButtonSize.Large}
-                    trailingIcon={<DropDownArrow color='#23539F' />}
                     radius={BorderRadius.Large}
-                    buttonText='Schedule for later'
-                    onClick={() => {}}
+                    buttonText={
+                      isDraftLoading ? (
+                        <Spinner className='text-light-blue-main w-5 h-5 768:w-7 768:h-7' />
+                      ) : (
+                        'Save as Draft'
+                      )
+                    }
+                    onClick={() => handleCreateSurvey(false)}
                     className='!min-h-[55px] 960:!min-h-[66px]'
                   />
                   <Button
@@ -183,7 +203,7 @@ function CreateSurvey() {
                         'Save and publish'
                       )
                     }
-                    onClick={handleCreateSurvey}
+                    onClick={() => handleCreateSurvey(true)}
                     className='!min-h-[55px] 960:!min-h-[66px]'
                   />
                 </div>
@@ -192,6 +212,43 @@ function CreateSurvey() {
           </div>
         </div>
       </div>
+      {isModalOpen && (
+        <Modal
+          isBackground
+          isCentered
+          cancelIcon={<Cancel />}
+          size={SizeType.MEDIUM}
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div className='pb-5 text-lg 880:text-[22px] mb-2 560:mb-4 mt-2 560:mt-4 880:mt-8 text-light-primary-deep_black'>
+            A survey is currently active would you like to end and begin a new
+            one?
+          </div>
+          <div className='w-full max-w-[300px] 880:max-w-[380px]'>
+            <Button
+              size={ButtonSize.Medium}
+              radius={BorderRadius.Large}
+              buttonText={
+                loading ? (
+                  <Spinner className='text-white w-5 h-5 768:w-7 768:h-7' />
+                ) : (
+                  'Deactivate and Publish'
+                )
+              }
+              onClick={handleDeactivate}
+              className='!font-semibold !text-[17px] mb-5'
+            />
+            <Button
+              size={ButtonSize.Medium}
+              radius={BorderRadius.Large}
+              mode='outlined'
+              buttonText='Cancel'
+              onClick={() => setIsModalOpen(false)}
+              className='!font-semibold !text-[17px]'
+            />
+          </div>
+        </Modal>
+      )}
     </AppLayout>
   );
 }

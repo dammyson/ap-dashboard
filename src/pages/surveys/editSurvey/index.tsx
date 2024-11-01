@@ -55,6 +55,7 @@ function EditSurvey({}) {
       title: surveyTitle,
       duration_of_survey: convertToMinutes(duration?.value as string),
       points_awarded: Number(points) || 0,
+      is_active: true, // will modifly later
       questions: surveyQuestions,
     });
   };

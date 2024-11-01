@@ -10,7 +10,7 @@ export interface SurveyType {
   title: string;
   created_at: string;
   is_published: number;
-  is_completed: boolean;
+  is_active: boolean;
 }
 
 export interface ViewParticipants {
@@ -188,6 +188,7 @@ export interface CreateSurvey {
   title: string;
   duration_of_survey: number;
   points_awarded: number;
+  is_active: boolean;
   questions: SurveyQuestion[];
 }
 

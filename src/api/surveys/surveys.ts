@@ -118,6 +118,8 @@ export const useManageSurvey = () => {
   const [showLoading, setShowLoading] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
   const [editLoading, setEditLoading] = useState(false);
+  const [isDraftLoading, setIsDraftLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [surveyQuestions, setSurveyQuestions] = useState<SurveyQuestion[]>([
     {
@@ -138,7 +140,10 @@ export const useManageSurvey = () => {
 
   const createSurvey = async (value: CreateSurvey) => {
     try {
-      setLoading(true);
+      if (!value.is_active) {
+        setIsDraftLoading(true);
+      } else setLoading(true);
+
       const data = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}admin/surveys/create-survey`,
         {
@@ -152,14 +157,21 @@ export const useManageSurvey = () => {
             title: value.title,
             duration_of_survey: value.duration_of_survey,
             points_awarded: value.points_awarded,
+            is_active: value.is_active,
             questions: value.questions.map((x) => x),
           }),
         },
       );
       const res = await data.json();
       setLoading(false);
+      setIsDraftLoading(false);
       if (res?.errors) {
         toast.error(res.message);
+      }
+      if (res?.error) {
+        if (res.message.includes('active')) {
+          setIsModalOpen(true);
+        }
       } else {
         toast.success(res.message);
         navigate('/surveys');
@@ -264,6 +276,31 @@ export const useManageSurvey = () => {
     }
   };
 
+  const deactivateSurvey = async () => {
+    try {
+      setLoading(true);
+      const data = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/deactivate-survey`,
+        {
+          method: 'PATCH',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+          },
+        },
+      );
+      const res = await data.json();
+      setLoading(false);
+      if (res?.error) {
+        toast.error(res.message);
+      } else {
+        toast.success(res.message);
+      }
+    } catch (error) {
+      toast.error((error as MutationErrorPayload)?.data?.message);
+    }
+  };
+
   return {
     createSurvey,
     loading,
@@ -287,5 +324,9 @@ export const useManageSurvey = () => {
     editSurvey,
     editLoading,
     imageLoading,
+    isDraftLoading,
+    isModalOpen,
+    setIsModalOpen,
+    deactivateSurvey,
   };
 };
