@@ -23,7 +23,6 @@ function Surveys() {
   const navigate = useNavigate();
   const { user } = useUser();
   const [isPublished, setisPublished] = useState<number>();
-  const [deleteSurvey, setDeleteSurvey] = useState(false);
   const [surveyId, setSurveyId] = useState<number>();
   const [filterTable, setFilterTable] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
@@ -42,12 +41,15 @@ function Surveys() {
     endDate,
     setEndDate,
     isSucess,
+    viewDelete,
+    setViewDelete,
+    deleteSurvey,
   } = useSurvey();
 
   const { tableColumns } = useSurveyColumn(
     setSurveyModal,
     setisPublished,
-    setDeleteSurvey,
+    setViewDelete,
     setSurveyId,
   );
 
@@ -188,12 +190,12 @@ function Surveys() {
           </div>
         </Modal>
       )}
-      {deleteSurvey && (
+      {viewDelete && (
         <Modal
           isBackground
           isCentered
           size={SizeType.MEDIUM}
-          onClick={() => setDeleteSurvey(false)}
+          onClick={() => setViewDelete(false)}
         >
           <p className='font-semibold text-lg 880:text-[22px] mb-2 560:mb-4 mt-2 560:mt-4 880:mt-8 text-light-primary-deep_black'>
             Are you sure you want to delete this survey?
@@ -205,8 +207,14 @@ function Surveys() {
             <Button
               size={ButtonSize.Medium}
               radius={BorderRadius.Large}
-              buttonText='Delete'
-              onClick={() => {}}
+              buttonText={
+                loading ? (
+                  <Spinner className='text-white w-5 h-5 768:w-7 768:h-7' />
+                ) : (
+                  'Delete'
+                )
+              }
+              onClick={() => surveyId && deleteSurvey(surveyId)}
               className='mb-5 !font-semibold !text-[17px]'
             />
             <Button
@@ -214,7 +222,7 @@ function Surveys() {
               radius={BorderRadius.Large}
               mode='outlined'
               buttonText='Cancel'
-              onClick={() => setDeleteSurvey(false)}
+              onClick={() => setViewDelete(false)}
               className='!font-semibold !text-[17px] '
             />
           </div>

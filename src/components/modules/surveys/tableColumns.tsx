@@ -11,7 +11,7 @@ export type ModalStateSetter = (value: boolean) => void;
 export const useSurveyColumn = (
   setSurveyModal: ModalStateSetter,
   setisPublished: (value: number) => void,
-  setDeleteSurvey: ModalStateSetter,
+  setViewDelete: ModalStateSetter,
   setSurveyId: (id: number) => void,
 ) => {
   const navigate = useNavigate();
@@ -101,7 +101,8 @@ export const useSurveyColumn = (
               <Button
                 buttonText='Delete'
                 onClick={() => {
-                  setDeleteSurvey(true);
+                  setViewDelete(true);
+                  setSurveyId(record?.id);
                 }}
                 className='!bg-[#C7C7CC] min-w-[105px] !px-0 hover:!bg-[#bababe]'
               />

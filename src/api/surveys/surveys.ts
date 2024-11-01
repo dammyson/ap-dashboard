@@ -23,6 +23,7 @@ export const useSurvey = () => {
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [isSucess, setIsSucess] = useState(false);
+  const [viewDelete, setViewDelete] = useState(false);
   const getSurvey = async (value: FilterSurveyTable) => {
     try {
       setIsLoading(true);
@@ -85,6 +86,34 @@ export const useSurvey = () => {
     }
   };
 
+  const deleteSurvey = async (id: number) => {
+    try {
+      setLoading(true);
+      const data = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${id}/delete`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            'content-type': 'application/json',
+          },
+        },
+      );
+      const res = await data.json();
+      setLoading(false);
+      if (res?.error) {
+        toast.error(res.message);
+      } else {
+        setViewDelete(false);
+        await getSurvey({});
+        toast.success(res.message);
+      }
+    } catch (error) {
+      toast.error((error as MutationErrorPayload)?.data?.message);
+    }
+  };
+
   return {
     getSurvey,
     surveys,
@@ -100,6 +129,9 @@ export const useSurvey = () => {
     endDate,
     setEndDate,
     isSucess,
+    viewDelete,
+    setViewDelete,
+    deleteSurvey,
   };
 };
 
