@@ -9,7 +9,7 @@ import { DropDownArrow } from '@/components/svg/settings/Settings';
 import WelcomeMessage from '@/components/welcomeMessage';
 import { useUser } from '@/context/AppContext';
 import clsx from 'clsx';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import SurveyQuestionCard from '../createSurvery/questions';
 import { awardPoints, OtherList, surveyDuration } from '../constants';
