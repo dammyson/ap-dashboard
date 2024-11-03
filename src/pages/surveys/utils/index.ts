@@ -18,7 +18,7 @@ export const useSurveyForm = ({
   setSurveyQuestions,
   setShowDeleteIcon,
 }: props) => {
-  const handleSelectFormat = (id: string, format: RoleOption) => {
+  const handleSelectFormat = (id: number, format: RoleOption) => {
     setSurveyQuestions((prevQuestions) =>
       prevQuestions.map((question) => {
         if (question.id === id) {
@@ -34,7 +34,7 @@ export const useSurveyForm = ({
 
   const handleAddQuestion = () => {
     const newQuestion: SurveyQuestion = {
-      id: (surveyQuestions.length + 1).toString(),
+      id: surveyQuestions.length + 1,
       question_text: '',
       is_multiple_choice: 0,
       options: [...questionOption],
@@ -42,13 +42,13 @@ export const useSurveyForm = ({
     setSurveyQuestions([...surveyQuestions, newQuestion]);
   };
 
-  const handleRemoveQuestion = (questionId: string) => {
+  const handleRemoveQuestion = (questionId: number) => {
     setSurveyQuestions((prevQuestion) =>
       prevQuestion.filter((question) => question.id !== questionId),
     );
   };
 
-  const handleAddOption = (questionId: string) => {
+  const handleAddOption = (questionId: number) => {
     setSurveyQuestions((prevQuestion) =>
       prevQuestion.map((question) => {
         if (question.id === questionId) {
@@ -68,7 +68,7 @@ export const useSurveyForm = ({
     );
   };
 
-  const handleDisplayIcon = (questionId: string, index: number) => {
+  const handleDisplayIcon = (questionId: number, index: number) => {
     setShowDeleteIcon({
       questionId: questionId,
       optionId: index,
@@ -76,7 +76,7 @@ export const useSurveyForm = ({
     });
   };
 
-  const handleHideIcon = (questionId: string, index: number) => {
+  const handleHideIcon = (questionId: number, index: number) => {
     setShowDeleteIcon({
       questionId: questionId,
       optionId: index,
@@ -85,7 +85,7 @@ export const useSurveyForm = ({
   };
 
   const handleOptionChange = (
-    questionId: string,
+    questionId: number,
     index: number,
     value: string,
   ) => {
@@ -108,7 +108,7 @@ export const useSurveyForm = ({
     );
   };
 
-  const handleRemoveOption = (questionId: string, index: number) => {
+  const handleRemoveOption = (questionId: number, index: number) => {
     setSurveyQuestions((prevQuestions) =>
       prevQuestions.map((question) => {
         if (question.id === questionId) {
@@ -127,7 +127,7 @@ export const useSurveyForm = ({
 
   const handleQuestionText = (
     e: React.ChangeEvent<HTMLInputElement>,
-    questionId: string,
+    questionId: number,
   ) => {
     const newValue = e.target.value;
     setSurveyQuestions((prev) =>

@@ -21,10 +21,6 @@ import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import { NoticeIcon } from '@/components/svg/surveys/Surveys';
 
-export interface SelectedOptions {
-  [questionId: string]: string;
-}
-
 function CreateSurvey() {
   const { user } = useUser();
   const navigate = useNavigate();

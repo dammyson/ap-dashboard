@@ -35,12 +35,13 @@ interface props {
   surveyQuestions: SurveyQuestion[];
   setSurveyQuestions: React.Dispatch<React.SetStateAction<SurveyQuestion[]>>;
   surveyId?: number;
-  setQuestionId?: React.Dispatch<React.SetStateAction<string>>;
-  setIsDeleteQuestionModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  setQuestionId?: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setDeleteModal?: React.Dispatch<React.SetStateAction<boolean>>;
+  setOptionId?: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
 
 export interface deleteIcon {
-  questionId: string | null;
+  questionId: number | null;
   optionId: number | null;
   visible: boolean;
 }
@@ -50,7 +51,8 @@ const SurveyQuestionCard = ({
   setSurveyQuestions,
   surveyId,
   setQuestionId,
-  setIsDeleteQuestionModalOpen,
+  setDeleteModal,
+  setOptionId,
 }: props) => {
   const [showDeleteIcon, setShowDeleteIcon] = useState<deleteIcon>({
     questionId: null,
@@ -136,10 +138,14 @@ const SurveyQuestionCard = ({
                     showDeleteIcon.visible &&
                     item.options.length !== 1 && (
                       <span
-                        onMouseDown={(e) => {
-                          e.preventDefault();
-                          handleRemoveOption(item.id, id);
+                        onClick={() => {
+                          if (surveyId) {
+                            setQuestionId?.(item.id);
+                            setOptionId?.(option.id);
+                            setDeleteModal?.(true);
+                          } else handleRemoveOption(item.id, id);
                         }}
+                        onMouseDown={(e) => e.preventDefault()}
                         className={clsx(
                           'absolute right-[31px] transform top-1/2 -translate-y-3 cursor-pointer',
                         )}
@@ -164,7 +170,7 @@ const SurveyQuestionCard = ({
                 className='!font-semibold !text-light-blue-main text-base 480:!text-[17px] 1300:!text-[18px] pl-0 pr-2 768:!px-0 880:!px-4 text-nowrap !gap-1 880:!gap-2'
               />
             </div>
-            {item.id !== '1' && (
+            {surveyQuestions.length !== 1 && (
               <div className='flex justify-end items-center w-full '>
                 <Button
                   mode='text'
@@ -176,7 +182,7 @@ const SurveyQuestionCard = ({
                   onClick={() => {
                     if (surveyId) {
                       setQuestionId?.(item.id);
-                      setIsDeleteQuestionModalOpen?.(true);
+                      setDeleteModal?.(true);
                     } else handleRemoveQuestion(item.id);
                   }}
                   className='!font-semibold !text-light-blue-main text-base 480:!text-[17px] 1300:!text-[18px] pl-0 pr-2 768:!px-0 880:!px-4 text-nowrap !gap-1 880:!gap-2'

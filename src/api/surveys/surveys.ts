@@ -153,12 +153,13 @@ export const useManageSurvey = () => {
   const [isDraftLoading, setIsDraftLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isDeleteQuestionModalOpen, setIsDeleteQuestionModalOpen] =
-    useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [questionId, setQuestionId] = useState<number>();
+  const [optionId, setOptionId] = useState<number>();
 
   const [surveyQuestions, setSurveyQuestions] = useState<SurveyQuestion[]>([
     {
-      id: '1',
+      id: 1,
       question_text: '',
       is_multiple_choice: 0,
       options: [...questionOption],
@@ -339,7 +340,7 @@ export const useManageSurvey = () => {
     }
   };
 
-  const deleteQuestion = async (surveyId: number, questionId: string) => {
+  const deleteQuestion = async (surveyId: number, questionId: number) => {
     try {
       setIsDeleting(true);
       const data = await fetch(
@@ -358,7 +359,41 @@ export const useManageSurvey = () => {
       if (res?.error) {
         toast.error(res.message);
       } else {
-        setIsDeleteQuestionModalOpen(false);
+        setDeleteModal(false);
+        setQuestionId(undefined);
+        showSurvey(surveyId);
+        toast.success(res.message);
+      }
+    } catch (error) {
+      toast.error((error as MutationErrorPayload)?.data?.message);
+    }
+  };
+  const deleteOption = async (
+    surveyId: number,
+    questionId: number,
+    optionId: number,
+  ) => {
+    try {
+      setIsDeleting(true);
+      const data = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${surveyId}/questions/${questionId}/options/${optionId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            'content-type': 'application/json',
+          },
+        },
+      );
+      const res = await data.json();
+      setIsDeleting(false);
+      if (res?.error) {
+        toast.error(res.message);
+      } else {
+        setDeleteModal(false);
+        setOptionId(undefined);
+        setQuestionId(undefined);
         showSurvey(surveyId);
         toast.success(res.message);
       }
@@ -394,9 +429,14 @@ export const useManageSurvey = () => {
     isModalOpen,
     setIsModalOpen,
     deactivateSurvey,
+    questionId,
+    setQuestionId,
     deleteQuestion,
     isDeleting,
-    isDeleteQuestionModalOpen,
-    setIsDeleteQuestionModalOpen,
+    deleteModal,
+    setDeleteModal,
+    optionId,
+    setOptionId,
+    deleteOption,
   };
 };

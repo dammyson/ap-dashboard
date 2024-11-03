@@ -27,7 +27,6 @@ function EditSurvey({}) {
   const { titleId, surveyId } = useParams();
   const { user } = useUser();
   const navigate = useNavigate();
-  const [questionId, setQuestionId] = useState('');
 
   const {
     showSurvey,
@@ -49,9 +48,14 @@ function EditSurvey({}) {
     editLoading,
     imageLoading,
     deleteQuestion,
+    questionId,
+    setQuestionId,
     isDeleting,
-    isDeleteQuestionModalOpen,
-    setIsDeleteQuestionModalOpen,
+    deleteModal,
+    setDeleteModal,
+    optionId,
+    setOptionId,
+    deleteOption,
   } = useManageSurvey();
 
   const id = Number(surveyId);
@@ -69,6 +73,13 @@ function EditSurvey({}) {
       questions: surveyQuestions,
     });
   };
+
+  useEffect(() => {
+    if (!deleteModal) {
+      setQuestionId(undefined);
+      setOptionId(undefined);
+    }
+  }, [deleteModal]);
 
   return (
     <AppLayout logo=''>
@@ -137,7 +148,8 @@ function EditSurvey({}) {
                 surveyQuestions={surveyQuestions}
                 surveyId={id}
                 setQuestionId={setQuestionId}
-                setIsDeleteQuestionModalOpen={setIsDeleteQuestionModalOpen}
+                setDeleteModal={setDeleteModal}
+                setOptionId={setOptionId}
               />
               <Card
                 hasHeader
@@ -220,16 +232,18 @@ function EditSurvey({}) {
           )}
         </div>
       </div>
-      {isDeleteQuestionModalOpen && (
+      {deleteModal && (
         <Modal
-          onClick={() => setIsDeleteQuestionModalOpen(false)}
+          onClick={() => setDeleteModal(false)}
           isCentered
           cancelIcon={<Cancel />}
           isBackground
           size={SizeType.SMALL}
         >
-          <p className='font-semibold text-lg 880:text-[20px] mb-2 mt-2 560:mt-4 560:mb-2 880:mt-8 text-light-primary-deep_black'>
-            Are you sure you want to delete this question?
+          <p className='font-semibold text-lg 880:text-[20px] mb-2 mt-2 560:mt-4 560:mb-2 880:mt-6 text-light-primary-deep_black'>
+            {questionId && optionId
+              ? `Are you sure you want to delete this option?`
+              : questionId && `Are you sure you want to delete this question? `}
           </p>
           <p className='pb-4 560:pb-7 text-[15px] 880:text-[17px] text-light-primary-deep_black'>
             Please note that this action cannot be undone
@@ -245,7 +259,13 @@ function EditSurvey({}) {
                   'Delete'
                 )
               }
-              onClick={() => deleteQuestion(id, questionId)}
+              onClick={() => {
+                if (questionId && optionId) {
+                  deleteOption(id, questionId, optionId);
+                } else if (questionId) {
+                  deleteQuestion(id, questionId);
+                }
+              }}
               className='!font-semibold !text-[17px]'
             />
           </div>
