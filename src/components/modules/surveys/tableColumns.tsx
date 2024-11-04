@@ -92,9 +92,15 @@ export const useSurveyColumn = (
               <Button
                 buttonText={record.is_published ? 'Unpublish' : 'Publish'}
                 onClick={() => {
-                  setSurveyModal(true);
+                  if (record.is_active && record.is_published) {
+                    console.log('results will not be collated');
+                  } else {
+                    setisPublished(record?.is_published);
+                    setSurveyModal(true);
+                  }
+
                   setSurveyId(record?.id);
-                  setisPublished(record?.is_published);
+
                   console.log(record);
                 }}
                 className='!bg-[#C7C7CC] min-w-[105px] !px-0 hover:!bg-[#bababe]'
