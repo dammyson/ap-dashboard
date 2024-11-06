@@ -20,11 +20,14 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Spinner } from '@/components/svg/spinner/Spinner';
 import { CustomDropdown } from '@/components/Dropdown/customDropdown';
 import ListBox from '@/components/Dropdown/listBox';
+import { Modal, SizeType } from '@/components/modal';
+import { Cancel } from '@/components/svg/modal/Modal';
 
 function EditSurvey({}) {
   const { titleId, surveyId } = useParams();
   const { user } = useUser();
   const navigate = useNavigate();
+
   const {
     showSurvey,
     surveyQuestions,
@@ -40,9 +43,19 @@ function EditSurvey({}) {
     setImagePreview,
     surveyBanner,
     setSurveyBanner,
-    changeSurveyBanner,
+    uploadSurveyBanner,
     editSurvey,
     editLoading,
+    imageLoading,
+    deleteQuestion,
+    questionId,
+    setQuestionId,
+    isDeleting,
+    deleteModal,
+    setDeleteModal,
+    optionId,
+    setOptionId,
+    deleteOption,
   } = useManageSurvey();
 
   const id = Number(surveyId);
@@ -53,12 +66,20 @@ function EditSurvey({}) {
   const handleEditsurvey = (id: number) => {
     editSurvey(id, {
       title: surveyTitle,
+      image_url: surveyBanner,
       duration_of_survey: convertToMinutes(duration?.value as string),
       points_awarded: Number(points) || 0,
       is_active: true, // will modifly later
       questions: surveyQuestions,
     });
   };
+
+  useEffect(() => {
+    if (!deleteModal) {
+      setQuestionId(undefined);
+      setOptionId(undefined);
+    }
+  }, [deleteModal]);
 
   return (
     <AppLayout logo=''>
@@ -125,6 +146,10 @@ function EditSurvey({}) {
               <SurveyQuestionCard
                 setSurveyQuestions={setSurveyQuestions}
                 surveyQuestions={surveyQuestions}
+                surveyId={id}
+                setQuestionId={setQuestionId}
+                setDeleteModal={setDeleteModal}
+                setOptionId={setOptionId}
               />
               <Card
                 hasHeader
@@ -172,6 +197,8 @@ function EditSurvey({}) {
                     imagePreview={imagePreview}
                     setImagePreview={setImagePreview}
                     setSurveyBanner={setSurveyBanner}
+                    imageLoading={imageLoading}
+                    uploadSurveyBanner={uploadSurveyBanner}
                   />
                   <div className='flex items-center justify-center mt-16 mb-8'>
                     <div className='grid w-full max-w-[330px] 880:max-w-[400px] gap-4'>
@@ -194,10 +221,7 @@ function EditSurvey({}) {
                             'Save and publish'
                           )
                         }
-                        onClick={() => {
-                          handleEditsurvey(id);
-                          surveyBanner && changeSurveyBanner(id, surveyBanner);
-                        }}
+                        onClick={() => handleEditsurvey(id)}
                         className='!min-h-[55px] 960:!min-h-[66px]'
                       />
                     </div>
@@ -208,6 +232,45 @@ function EditSurvey({}) {
           )}
         </div>
       </div>
+      {deleteModal && (
+        <Modal
+          onClick={() => setDeleteModal(false)}
+          isCentered
+          cancelIcon={<Cancel />}
+          isBackground
+          size={SizeType.SMALL}
+        >
+          <p className='font-semibold text-lg 880:text-[20px] mb-2 mt-2 560:mt-4 560:mb-2 880:mt-6 text-light-primary-deep_black'>
+            {questionId && optionId
+              ? `Are you sure you want to delete this option?`
+              : questionId && `Are you sure you want to delete this question? `}
+          </p>
+          <p className='pb-4 560:pb-7 text-[15px] 880:text-[17px] text-light-primary-deep_black'>
+            Please note that this action cannot be undone
+          </p>
+          <div className='w-full max-w-[340px]'>
+            <Button
+              size={ButtonSize.Medium}
+              radius={BorderRadius.Large}
+              buttonText={
+                isDeleting ? (
+                  <Spinner className='text-light-blue-main w-5 h-5 768:w-7 768:h-7' />
+                ) : (
+                  'Delete'
+                )
+              }
+              onClick={() => {
+                if (questionId && optionId) {
+                  deleteOption(id, questionId, optionId);
+                } else if (questionId) {
+                  deleteQuestion(id, questionId);
+                }
+              }}
+              className='!font-semibold !text-[17px]'
+            />
+          </div>
+        </Modal>
+      )}
     </AppLayout>
   );
 }

@@ -21,10 +21,6 @@ import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import { NoticeIcon } from '@/components/svg/surveys/Surveys';
 
-export interface SelectedOptions {
-  [questionId: string]: string;
-}
-
 function CreateSurvey() {
   const { user } = useUser();
   const navigate = useNavigate();
@@ -41,8 +37,11 @@ function CreateSurvey() {
     setSurveyTitle,
     imagePreview,
     setImagePreview,
+    surveyBanner,
     setSurveyBanner,
+    uploadSurveyBanner,
     isDraftLoading,
+    imageLoading,
     isModalOpen,
     setIsModalOpen,
     deactivateSurvey,
@@ -51,6 +50,7 @@ function CreateSurvey() {
   const handleCreateSurvey = (isActive: boolean) => {
     createSurvey({
       title: surveyTitle,
+      image_url: surveyBanner,
       duration_of_survey: convertToMinutes(duration?.value as string),
       points_awarded: Number(points) || 0,
       is_active: isActive,
@@ -173,6 +173,8 @@ function CreateSurvey() {
                 imagePreview={imagePreview}
                 setImagePreview={setImagePreview}
                 setSurveyBanner={setSurveyBanner}
+                imageLoading={imageLoading}
+                uploadSurveyBanner={uploadSurveyBanner}
               />
               <div className='flex items-center justify-center mt-16 mb-8'>
                 <div className='grid w-full max-w-[330px] 880:max-w-[400px] gap-4 '>
