@@ -65,11 +65,13 @@ export const OverView = ({
         const isLast = index === stats.length - 1;
         return (
           <div
-            onClick={() =>
-              setActiveStat((prevState) =>
-                prevState === stat.state ? '' : stat.state,
-              )
-            }
+            onClick={() => {
+              if (!isLoading) {
+                setActiveStat((prevState) =>
+                  prevState === stat.state ? '' : stat.state,
+                );
+              }
+            }}
             key={index}
             className={clsx(
               isLast && 'mr-6',

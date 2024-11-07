@@ -54,6 +54,7 @@ function Dashboard() {
     getAncilaryRevenue,
     getTotalRevenue,
   } = useManageDashboard();
+
   useEffect(() => {
     getDashboardAnalytics();
   }, []);
