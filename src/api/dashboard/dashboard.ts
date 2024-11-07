@@ -1,5 +1,6 @@
 import { useUser } from '@/context/AppContext';
 import {
+  GraphValues,
   MutationErrorPayload,
   TicketsPurchasedViaApp,
   TotalUsersRegistered,
@@ -9,15 +10,12 @@ import { toast } from 'sonner';
 
 export const useManageDashboard = () => {
   const { token } = useUser();
-  const [isRegisteredUsersLoading, setIsRgisteredUsersLoading] =
-    useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [registeredUsers, setRegisteredUsers] = useState<number>(0);
   const [registeredPercentChange, setRegisteredPercentChange] =
     useState<number>(0);
-  const [isTicketsLoading, setIsTicketsLoading] = useState(false);
   const [ticketsPurchased, setTicketPurchased] = useState(0);
   const [ticketsPercentChange, setTicketsPercentChange] = useState(0);
-  const [isRevenueLoading, setIsRevenueLoading] = useState(false);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [revenuePrecentChange, setRevenuePercentChange] = useState(0);
   const [registeredUsersData, setRegisteredUsersData] = useState<
@@ -26,10 +24,12 @@ export const useManageDashboard = () => {
   const [ticketsPurchasedData, setTicketsPurchasedData] = useState<
     TicketsPurchasedViaApp[]
   >([]);
+  const [isChartLoading, setIsChartLoading] = useState(false);
+  const [chartData, setChartData] = useState<GraphValues[]>([]);
 
   const getRegisteredUsers = async () => {
     try {
-      setIsRgisteredUsersLoading(true);
+      setIsLoading(true);
       const data = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/total-registered-users`,
         {
@@ -42,7 +42,7 @@ export const useManageDashboard = () => {
         },
       );
       const res = await data.json();
-      setIsRgisteredUsersLoading(false);
+      setIsLoading(false);
       if (res?.error) {
         toast.error(res.message);
       } else {
@@ -53,10 +53,9 @@ export const useManageDashboard = () => {
       toast.error((error as MutationErrorPayload)?.data?.message);
     }
   };
-
   const getTicketsPurchased = async () => {
     try {
-      setIsTicketsLoading(true);
+      setIsLoading(true);
       const data = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/ticket-purchased`,
         {
@@ -69,7 +68,7 @@ export const useManageDashboard = () => {
         },
       );
       const res = await data.json();
-      setIsTicketsLoading(false);
+      setIsLoading(false);
       if (res?.error) {
         toast.error(res.message);
       } else {
@@ -82,7 +81,7 @@ export const useManageDashboard = () => {
   };
   const getRevenue = async () => {
     try {
-      setIsRevenueLoading(true);
+      setIsLoading(true);
       const data = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/total-revenue`,
         {
@@ -95,7 +94,7 @@ export const useManageDashboard = () => {
         },
       );
       const res = await data.json();
-      setIsRevenueLoading(false);
+      setIsLoading(false);
       if (res?.error) {
         toast.error(res.message);
       } else {
@@ -108,7 +107,7 @@ export const useManageDashboard = () => {
   };
   const getRegisteredUsersTable = async () => {
     try {
-      setIsRgisteredUsersLoading(true);
+      setIsLoading(true);
       const data = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/total-registered-users-table`,
         {
@@ -121,7 +120,7 @@ export const useManageDashboard = () => {
         },
       );
       const res = await data.json();
-      setIsRgisteredUsersLoading(false);
+      setIsLoading(false);
       if (res?.error) {
         toast.error(res.message);
       } else {
@@ -133,7 +132,7 @@ export const useManageDashboard = () => {
   };
   const getPurchasedTicketTable = async () => {
     try {
-      setIsTicketsLoading(true);
+      setIsLoading(true);
       const data = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/total-purchased-tickets-table`,
         {
@@ -146,7 +145,7 @@ export const useManageDashboard = () => {
         },
       );
       const res = await data.json();
-      setIsTicketsLoading(false);
+      setIsLoading(false);
       if (res?.error) {
         toast.error(res.message);
       } else {
@@ -156,23 +155,110 @@ export const useManageDashboard = () => {
       toast.error((error as MutationErrorPayload)?.data?.message);
     }
   };
+  const getTicketSalesRevenue = async () => {
+    try {
+      setIsChartLoading(true);
+      const data = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/ticket-via-app`,
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const res = await data.json();
+      setIsChartLoading(false);
+      if (res?.error) {
+        toast.error(res.message);
+      } else {
+        setChartData(res.tickets);
+      }
+    } catch (error) {
+      toast.error((error as MutationErrorPayload)?.data?.message);
+    }
+  };
+  const getAncilaryRevenue = async () => {
+    try {
+      setIsChartLoading(true);
+      const data = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/ancillary-via-app`,
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const res = await data.json();
+      setIsChartLoading(false);
+      if (res?.error) {
+        toast.error(res.message);
+      } else {
+        setChartData(res.ancillary_tickets);
+      }
+    } catch (error) {
+      toast.error((error as MutationErrorPayload)?.data?.message);
+    }
+  };
+  const getTotalRevenue = async () => {
+    try {
+      setIsChartLoading(true);
+      const data = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/total-revenue-via-app`,
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const res = await data.json();
+      setIsChartLoading(false);
+      if (res?.error) {
+        toast.error(res.message);
+      } else {
+        setChartData(res.total_revenue);
+      }
+    } catch (error) {
+      toast.error((error as MutationErrorPayload)?.data?.message);
+    }
+  };
+
+  const getDashboardAnalytics = async () => {
+    getRegisteredUsers();
+    getTicketsPurchased();
+    getRevenue();
+    getRegisteredUsersTable();
+    getPurchasedTicketTable();
+  };
 
   return {
-    isRegisteredUsersLoading,
+    isLoading,
     registeredUsers,
     registeredPercentChange,
-    isTicketsLoading,
     ticketsPurchased,
     ticketsPercentChange,
-    isRevenueLoading,
     totalRevenue,
     revenuePrecentChange,
     registeredUsersData,
     ticketsPurchasedData,
+    isChartLoading,
+    chartData,
     getRegisteredUsers,
     getTicketsPurchased,
     getRevenue,
     getRegisteredUsersTable,
     getPurchasedTicketTable,
+    getDashboardAnalytics,
+    getTicketSalesRevenue,
+    getAncilaryRevenue,
+    getTotalRevenue,
   };
 };

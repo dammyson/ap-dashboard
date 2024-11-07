@@ -1,4 +1,5 @@
 import { TicketsPurchasedViaApp } from '@/types/types';
+import { formatCurrency } from '@/utils';
 import { ColumnType } from 'antd/es/table';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
@@ -76,7 +77,9 @@ export const UseTicketsPurchased = () => {
         className: 'amount',
         render: (_, { amount }) => {
           return (
-            <div className='font-semibold text-[#595959]'>{`$${amount}`}</div>
+            <div className='font-semibold text-[#595959]'>
+              {formatCurrency(amount)}
+            </div>
           );
         },
       },

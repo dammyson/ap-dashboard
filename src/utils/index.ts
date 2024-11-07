@@ -12,6 +12,10 @@ export function formatToDollar(value: number) {
   return value?.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 }
 
+export const formatCurrency = (val: number) => {
+  return val.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' });
+};
+
 export const numberShortener = (value: number) => {
   if (value >= 1000000) {
     const shortenedValue = (value / 1000000).toFixed(1);

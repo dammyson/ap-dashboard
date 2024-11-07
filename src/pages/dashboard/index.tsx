@@ -8,27 +8,23 @@ import { ActiveUsers } from '@/components/dashboardTables/activeUsers';
 import { useEffect, useState } from 'react';
 import { formatToDollar, numberShortener } from '@/utils';
 import {
-  ArrowDown,
   ArrowRight,
-  ArrowUp,
   Dot,
-  Fall,
   OptionsVertical,
-  Rise,
 } from '@/components/svg/dashboard/Dashboard';
 import clsx from 'clsx';
 import { Card } from '@/components/card';
 import { Filter } from '@/components/svg/surveys/Surveys';
 import { PieChart } from 'react-minimal-pie-chart';
-import { chartData, devices, RecentActivities, stats } from './constants';
+import { devices, RecentActivities } from './constants';
 import { Chart } from '@/components/chart/Chart';
 import { HorizontalBarChart } from '@/components/chart/HorizontalBarChart';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { useUser } from '@/context/AppContext';
 import { useManageDashboard } from '@/api/dashboard/dashboard';
-import { RegisteredUsers } from '@/components/dashboardAnalytics/registeredUsers';
-import { TicketsBought } from '@/components/dashboardAnalytics/ticketsPurchased';
-import { Revenue } from '@/components/dashboardAnalytics/revenue';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import { OverView } from '@/components/dashboardOverView/overViewCards';
 
 const tabs = [
   { name: 'Ticket sales', value: 2000 },
@@ -42,30 +38,33 @@ function Dashboard() {
   const [activeTab, setActiveTab] = useState(currentTab);
   const { user } = useUser();
   const {
-    isRegisteredUsersLoading,
+    isLoading,
     registeredUsers,
     registeredPercentChange,
-    isTicketsLoading,
     ticketsPurchased,
     ticketsPercentChange,
-    isRevenueLoading,
     totalRevenue,
     revenuePrecentChange,
     registeredUsersData,
     ticketsPurchasedData,
-    getRegisteredUsers,
-    getTicketsPurchased,
-    getRevenue,
-    getRegisteredUsersTable,
-    getPurchasedTicketTable,
+    chartData,
+    isChartLoading,
+    getDashboardAnalytics,
+    getTicketSalesRevenue,
+    getAncilaryRevenue,
+    getTotalRevenue,
   } = useManageDashboard();
   useEffect(() => {
-    getRegisteredUsers();
-    getTicketsPurchased();
-    getRevenue();
-    getRegisteredUsersTable();
-    getPurchasedTicketTable();
+    getDashboardAnalytics();
   }, []);
+
+  useEffect(() => {
+    if (activeTab.name === 'Ticket sales') {
+      getTicketSalesRevenue();
+    } else if (activeTab.name === 'Ancillary sales') {
+      getAncilaryRevenue();
+    } else getTotalRevenue();
+  }, [activeTab]);
 
   return (
     <AppLayout logo=''>
@@ -92,78 +91,17 @@ function Dashboard() {
           </div>
           <div className='hidden-scrollbar overflow-x-auto'>
             <div className='min-w-fit'>
-              <div className='flex gap-8 items-center pt-4'>
-                {stats.map((stat, index) => {
-                  const isLast = index === stats.length - 1;
-                  return (
-                    <div
-                      onClick={() => setActiveStat(stat.state)}
-                      key={index}
-                      className={clsx(
-                        isLast && 'mr-6',
-                        'min-h-[200px] py-5 px-4 cursor-pointer w-[410px] shadow-sm bg-primary-white rounded-[20px] flex flex-col justify-between',
-                        activeStat === stat.state && '!bg-[#E9EEF5]',
-                      )}
-                    >
-                      <div>
-                        <p className='text-light-grey-700 font-medium'>
-                          {stat.title}
-                        </p>
-                        <p className='text-light-grey-700 text-sm font-normal'>
-                          {stat.period}
-                        </p>
-                      </div>
-                      {stat.state === 'registered' ? (
-                        <RegisteredUsers
-                          isRegisteredUsersLoading={isRegisteredUsersLoading}
-                          registeredUsers={registeredUsers}
-                          registeredPercentChange={registeredPercentChange}
-                        />
-                      ) : stat.state === 'tickets' ? (
-                        <TicketsBought
-                          isTicketsLoading={isTicketsLoading}
-                          ticketsPurchased={ticketsPurchased}
-                          ticketsPercentChange={ticketsPercentChange}
-                        />
-                      ) : stat.state === 'revenue' ? (
-                        <Revenue
-                          isRevenueLoading={isRevenueLoading}
-                          totalRevenue={totalRevenue}
-                          revenuePrecentChange={revenuePrecentChange}
-                        />
-                      ) : (
-                        <div className='flex items-center gap-3 justify-between'>
-                          <div>
-                            <h3 className='text-primary-black font-bold text-xl 560:text-2xl mb-4'>
-                              {numberShortener(stat.value)}
-                            </h3>
-                            <div className='flex items-center gap-1'>
-                              {stat.variance < 0 ? <ArrowDown /> : <ArrowUp />}
-                              <p
-                                className={clsx(
-                                  stat.variance < 0
-                                    ? 'text-light-error-800'
-                                    : 'text-light-success-100',
-                                  'text-sm font-medium',
-                                )}
-                              >
-                                {stat.variance < 0
-                                  ? stat.variance * -1
-                                  : stat.variance}
-                                %
-                              </p>
-                              <p className='text-light-grey-400 text-sm font-medium ml-2'>
-                                vs last 7 days
-                              </p>
-                            </div>
-                          </div>
-                          {stat.variance < 0 ? <Fall /> : <Rise />}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
+              <OverView
+                activeStat={activeStat}
+                setActiveStat={setActiveStat}
+                registeredUsers={registeredUsers}
+                registeredPercentChange={registeredPercentChange}
+                ticketsPurchased={ticketsPurchased}
+                ticketsPercentChange={ticketsPercentChange}
+                totalRevenue={totalRevenue}
+                revenuePrecentChange={revenuePrecentChange}
+                isLoading={isLoading}
+              />
             </div>
           </div>
           {activeStat !== 'active' && (
@@ -200,7 +138,17 @@ function Dashboard() {
                       );
                     })}
                   </div>
-                  <Chart chartData={chartData} transactionType='all' />
+                  {isChartLoading ? (
+                    <div className='h-[290px]  flex justify-center items-center'>
+                      <Spin
+                        indicator={
+                          <LoadingOutlined style={{ fontSize: 48 }} spin />
+                        }
+                      />
+                    </div>
+                  ) : (
+                    <Chart chartData={chartData} transactionType='all' />
+                  )}
                 </Card>
               </div>
               <div className='col-span-12 1240:col-span-4 '>
@@ -267,11 +215,14 @@ function Dashboard() {
           )}
           {activeStat === 'registered' ? (
             <UsersRegistered
-              isRegisteredUsersLoading={isRegisteredUsersLoading}
+              isLoading={isLoading}
               registeredUsersData={registeredUsersData}
             />
           ) : activeStat === 'tickets' ? (
-            <TicketsPurchased ticketsPurchasedData={ticketsPurchasedData} />
+            <TicketsPurchased
+              isLoading={isLoading}
+              ticketsPurchasedData={ticketsPurchasedData}
+            />
           ) : activeStat === 'revenue' ? (
             <TotalRevenue />
           ) : activeStat === 'active' ? (

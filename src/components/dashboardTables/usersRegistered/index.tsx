@@ -7,12 +7,9 @@ import { LoadingOutlined } from '@ant-design/icons';
 
 interface Props {
   registeredUsersData: TotalUsersRegistered[];
-  isRegisteredUsersLoading: boolean;
+  isLoading: boolean;
 }
-export const UsersRegistered = ({
-  registeredUsersData,
-  isRegisteredUsersLoading,
-}: Props) => {
+export const UsersRegistered = ({ registeredUsersData, isLoading }: Props) => {
   const { tableColumns } = UseUserRegistered();
   return (
     <Card
@@ -29,7 +26,7 @@ export const UsersRegistered = ({
         className='registered-users-table custom-scrollbar hide-arrows overflow-x-scroll'
         rootClassName=' hidden-scrollbar'
         loading={{
-          spinning: isRegisteredUsersLoading,
+          spinning: isLoading,
           indicator: (
             <Spin
               indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />}
