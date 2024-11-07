@@ -1,10 +1,18 @@
 import { Card } from '@/components/card';
 import { UseUserRegistered } from '@/components/modules/dashboardColumns/usersRegistered/tableColumns';
 import { Filter } from '@/components/svg/surveys/Surveys';
-import { Table } from 'antd';
-import { usersRegistered } from '../data';
+import { Spin, Table } from 'antd';
+import { TotalUsersRegistered } from '@/types/types';
+import { LoadingOutlined } from '@ant-design/icons';
 
-export const UsersRegistered = () => {
+interface Props {
+  registeredUsersData: TotalUsersRegistered[];
+  isRegisteredUsersLoading: boolean;
+}
+export const UsersRegistered = ({
+  registeredUsersData,
+  isRegisteredUsersLoading,
+}: Props) => {
   const { tableColumns } = UseUserRegistered();
   return (
     <Card
@@ -16,8 +24,18 @@ export const UsersRegistered = () => {
       <Table
         pagination={false}
         columns={tableColumns}
-        dataSource={usersRegistered}
-        rootClassName='w-full overflow-x-scroll hidden-scrollbar'
+        dataSource={registeredUsersData}
+        scroll={{ y: 390, x: true }}
+        className='registered-users-table custom-scrollbar hide-arrows overflow-x-scroll'
+        rootClassName=' hidden-scrollbar'
+        loading={{
+          spinning: isRegisteredUsersLoading,
+          indicator: (
+            <Spin
+              indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />}
+            />
+          ),
+        }}
       />
     </Card>
   );

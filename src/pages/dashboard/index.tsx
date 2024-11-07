@@ -5,7 +5,7 @@ import { UsersRegistered } from '@/components/dashboardTables/usersRegistered';
 import { TicketsPurchased } from '@/components/dashboardTables/ticketsPurchased';
 import { TotalRevenue } from '@/components/dashboardTables/totalRevenue';
 import { ActiveUsers } from '@/components/dashboardTables/activeUsers';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { formatToDollar, numberShortener } from '@/utils';
 import {
   ArrowDown,
@@ -25,6 +25,10 @@ import { Chart } from '@/components/chart/Chart';
 import { HorizontalBarChart } from '@/components/chart/HorizontalBarChart';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { useUser } from '@/context/AppContext';
+import { useManageDashboard } from '@/api/dashboard/dashboard';
+import { RegisteredUsers } from '@/components/dashboardAnalytics/registeredUsers';
+import { TicketsBought } from '@/components/dashboardAnalytics/ticketsPurchased';
+import { Revenue } from '@/components/dashboardAnalytics/revenue';
 
 const tabs = [
   { name: 'Ticket sales', value: 2000 },
@@ -37,6 +41,31 @@ function Dashboard() {
   const currentTab = tabs[0];
   const [activeTab, setActiveTab] = useState(currentTab);
   const { user } = useUser();
+  const {
+    isRegisteredUsersLoading,
+    registeredUsers,
+    registeredPercentChange,
+    isTicketsLoading,
+    ticketsPurchased,
+    ticketsPercentChange,
+    isRevenueLoading,
+    totalRevenue,
+    revenuePrecentChange,
+    registeredUsersData,
+    ticketsPurchasedData,
+    getRegisteredUsers,
+    getTicketsPurchased,
+    getRevenue,
+    getRegisteredUsersTable,
+    getPurchasedTicketTable,
+  } = useManageDashboard();
+  useEffect(() => {
+    getRegisteredUsers();
+    getTicketsPurchased();
+    getRevenue();
+    getRegisteredUsersTable();
+    getPurchasedTicketTable();
+  }, []);
 
   return (
     <AppLayout logo=''>
@@ -84,33 +113,53 @@ function Dashboard() {
                           {stat.period}
                         </p>
                       </div>
-                      <div className='flex items-center gap-3 justify-between'>
-                        <div>
-                          <h3 className='text-primary-black font-bold text-xl 560:text-2xl mb-4'>
-                            {numberShortener(stat.value)}
-                          </h3>
-                          <div className='flex items-center gap-1'>
-                            {stat.variance < 0 ? <ArrowDown /> : <ArrowUp />}
-                            <p
-                              className={clsx(
-                                stat.variance < 0
-                                  ? 'text-light-error-800'
-                                  : 'text-light-success-100',
-                                'text-sm font-medium',
-                              )}
-                            >
-                              {stat.variance < 0
-                                ? stat.variance * -1
-                                : stat.variance}
-                              %
-                            </p>
-                            <p className='text-light-grey-400 text-sm font-medium ml-2'>
-                              vs last 7 days
-                            </p>
+                      {stat.state === 'registered' ? (
+                        <RegisteredUsers
+                          isRegisteredUsersLoading={isRegisteredUsersLoading}
+                          registeredUsers={registeredUsers}
+                          registeredPercentChange={registeredPercentChange}
+                        />
+                      ) : stat.state === 'tickets' ? (
+                        <TicketsBought
+                          isTicketsLoading={isTicketsLoading}
+                          ticketsPurchased={ticketsPurchased}
+                          ticketsPercentChange={ticketsPercentChange}
+                        />
+                      ) : stat.state === 'revenue' ? (
+                        <Revenue
+                          isRevenueLoading={isRevenueLoading}
+                          totalRevenue={totalRevenue}
+                          revenuePrecentChange={revenuePrecentChange}
+                        />
+                      ) : (
+                        <div className='flex items-center gap-3 justify-between'>
+                          <div>
+                            <h3 className='text-primary-black font-bold text-xl 560:text-2xl mb-4'>
+                              {numberShortener(stat.value)}
+                            </h3>
+                            <div className='flex items-center gap-1'>
+                              {stat.variance < 0 ? <ArrowDown /> : <ArrowUp />}
+                              <p
+                                className={clsx(
+                                  stat.variance < 0
+                                    ? 'text-light-error-800'
+                                    : 'text-light-success-100',
+                                  'text-sm font-medium',
+                                )}
+                              >
+                                {stat.variance < 0
+                                  ? stat.variance * -1
+                                  : stat.variance}
+                                %
+                              </p>
+                              <p className='text-light-grey-400 text-sm font-medium ml-2'>
+                                vs last 7 days
+                              </p>
+                            </div>
                           </div>
+                          {stat.variance < 0 ? <Fall /> : <Rise />}
                         </div>
-                        {stat.variance < 0 ? <Fall /> : <Rise />}
-                      </div>
+                      )}
                     </div>
                   );
                 })}
@@ -217,9 +266,12 @@ function Dashboard() {
             </div>
           )}
           {activeStat === 'registered' ? (
-            <UsersRegistered />
+            <UsersRegistered
+              isRegisteredUsersLoading={isRegisteredUsersLoading}
+              registeredUsersData={registeredUsersData}
+            />
           ) : activeStat === 'tickets' ? (
-            <TicketsPurchased />
+            <TicketsPurchased ticketsPurchasedData={ticketsPurchasedData} />
           ) : activeStat === 'revenue' ? (
             <TotalRevenue />
           ) : activeStat === 'active' ? (

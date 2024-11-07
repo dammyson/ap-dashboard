@@ -1,6 +1,7 @@
 import { TicketsPurchasedViaApp } from '@/types/types';
 import { ColumnType } from 'antd/es/table';
 import clsx from 'clsx';
+import dayjs from 'dayjs';
 import { useMemo } from 'react';
 
 export const UseTicketsPurchased = () => {
@@ -8,37 +9,63 @@ export const UseTicketsPurchased = () => {
     return [
       {
         title: 'TRANSACTION ID',
-        dataIndex: 'transactionID',
-        key: 'transactionID',
-        render: (_, { transactionID }) => {
-          return <div className='font-semibold'>{transactionID}</div>;
+        dataIndex: 'id',
+        key: 'id',
+        className: 'transaction-id',
+        render: (_, { id }) => {
+          return <div className='font-semibold'>{id}</div>;
         },
       },
       {
         title: 'USER ID',
         dataIndex: 'userID',
-        key: 'userID',
-        render: (_, { userID }) => {
-          return <div className='font-semibold'>{userID}</div>;
+        key: 'user_id',
+        className: 'user-id',
+        render: (_, { user_id }) => {
+          return <div className='font-semibold'>{user_id}</div>;
         },
       },
-      { title: ' NAME', dataIndex: 'name', key: 'name' },
-      { title: 'EMAIL', dataIndex: 'email', key: 'email' },
+      {
+        title: ' NAME',
+        dataIndex: '',
+        key: '',
+        className: 'name',
+        render: (_, record) => {
+          return (
+            <div>{`${record.user.first_name} ${record.user.last_name}`}</div>
+          );
+        },
+      },
+      {
+        title: 'EMAIL',
+        dataIndex: '',
+        key: '',
+        className: 'email',
+        render: (_, { user }) => {
+          return <div>{`${user.email}`}</div>;
+        },
+      },
       {
         title: 'DATE OF PURCHASE',
-        dataIndex: 'dateOfPurchase',
-        key: 'dateOfPurchase',
-        render: (_, { dateOfPurchase }) => {
-          return <div className='text-[#595959]'>{dateOfPurchase}</div>;
+        dataIndex: 'created_at',
+        key: 'created_at',
+        className: 'date-of-purchase',
+        render: (_, { created_at }) => {
+          return (
+            <div className='text-[#595959]'>
+              {dayjs(created_at).format('DD-MM-YYYY')}
+            </div>
+          );
         },
       },
       {
         title: 'ITEMS PURCHASED',
-        dataIndex: 'itemsPurchased',
-        key: 'itemsPurchased',
-        render: (_, { itemPurchased }) => {
+        dataIndex: 'ticket_type',
+        key: 'ticket_type',
+        className: 'tickets-purchased',
+        render: (_, { ticket_type }) => {
           return (
-            <div className='font-semibold text-[#595959]'>{itemPurchased}</div>
+            <div className='font-semibold text-[#595959]'>{ticket_type}</div>
           );
         },
       },
@@ -46,6 +73,7 @@ export const UseTicketsPurchased = () => {
         title: 'AMOUNT',
         dataIndex: 'amount',
         key: 'amount',
+        className: 'amount',
         render: (_, { amount }) => {
           return (
             <div className='font-semibold text-[#595959]'>{`$${amount}`}</div>
@@ -56,11 +84,13 @@ export const UseTicketsPurchased = () => {
         title: 'PAYMENT METHOD',
         dataIndex: 'paymentMethod',
         key: 'paymentMethod',
+        className: 'payment-method',
       },
       {
         title: 'STATUS',
         dataIndex: 'status',
         key: 'status',
+        className: 'status',
         render: (_, { status }) => {
           return (
             <div
