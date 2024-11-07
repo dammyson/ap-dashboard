@@ -4,6 +4,7 @@ import { Toaster } from 'sonner';
 import AppRoutes from './routes/AppRoutes';
 import { useEffect, useState } from 'react';
 import { NoConnection } from './components/noConnection/noConnection';
+import { SurveyProvider } from './context/surveyContext';
 
 const App = () => {
   const [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
@@ -40,9 +41,11 @@ const App = () => {
       ) : (
         <>
           <UserProvider>
-            <BrowserRouter>
-              <AppRoutes />
-            </BrowserRouter>
+            <SurveyProvider>
+              <BrowserRouter>
+                <AppRoutes />
+              </BrowserRouter>
+            </SurveyProvider>
           </UserProvider>
           <Toaster richColors duration={3000} position='top-right' />
         </>

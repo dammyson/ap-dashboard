@@ -8,7 +8,7 @@ import { DropDownArrow } from '@/components/svg/settings/Settings';
 import WelcomeMessage from '@/components/welcomeMessage';
 import { useUser } from '@/context/AppContext';
 import clsx from 'clsx';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { awardPoints, OtherList, surveyDuration } from '../constants';
 import SurveyQuestionCard from './questions';
 import { useManageSurvey } from '@/api/surveys/surveys';
@@ -20,6 +20,8 @@ import { CustomDropdown } from '@/components/Dropdown/customDropdown';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import { NoticeIcon } from '@/components/svg/surveys/Surveys';
+import { useEffect, useState } from 'react';
+import { useSurveyQuestions } from '@/context/surveyContext';
 
 export interface SelectedOptions {
   [questionId: string]: string;
@@ -28,6 +30,7 @@ export interface SelectedOptions {
 function CreateSurvey() {
   const { user } = useUser();
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     createSurvey,
     loading,
@@ -74,6 +77,24 @@ function CreateSurvey() {
     }
     return false;
   });
+
+  const { resetSurvey } = useSurveyQuestions();
+
+  useEffect(() => {
+    sessionStorage.setItem('is_reloading', 'true');
+
+    return () => {
+      const isReloading = sessionStorage.getItem('is_reloading');
+      if (isReloading) {
+        sessionStorage.removeItem('is_reloading');
+        resetSurvey();
+      } else {
+        return;
+      }
+      return;
+    };
+  }, [navigate]);
+
   return (
     <AppLayout logo=''>
       <div

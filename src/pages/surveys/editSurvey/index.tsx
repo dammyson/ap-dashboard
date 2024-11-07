@@ -10,7 +10,7 @@ import WelcomeMessage from '@/components/welcomeMessage';
 import { useUser } from '@/context/AppContext';
 import clsx from 'clsx';
 import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import SurveyQuestionCard from '../createSurvery/questions';
 import { awardPoints, OtherList, surveyDuration } from '../constants';
 import { convertToMinutes } from '@/utils';
@@ -25,6 +25,7 @@ function EditSurvey({}) {
   const { titleId, surveyId } = useParams();
   const { user } = useUser();
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     showSurvey,
     surveyQuestions,
@@ -59,6 +60,13 @@ function EditSurvey({}) {
       questions: surveyQuestions,
     });
   };
+
+  useEffect(() => {
+    return () => {
+      sessionStorage.removeItem('survey_title');
+      setSurveyTitle('');
+    };
+  }, []);
 
   return (
     <AppLayout logo=''>

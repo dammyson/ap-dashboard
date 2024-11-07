@@ -1,5 +1,6 @@
 import { RoleOption } from '@/components/Dropdown/listBox';
 import { useUser } from '@/context/AppContext';
+import { useSurveyQuestions } from '@/context/surveyContext';
 import { surveyDuration } from '@/pages/surveys/constants';
 import { questionOption } from '@/pages/surveys/utils';
 import {
@@ -137,10 +138,12 @@ export const useSurvey = () => {
 
 export const useManageSurvey = () => {
   const { token } = useUser();
+  const { surveyTitle, setSurveyTitle, surveyQuestions, setSurveyQuestions } =
+    useSurveyQuestions();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [survey, setSurvey] = useState<CreateSurvey>();
-  const [surveyTitle, setSurveyTitle] = useState('');
+  // const [surveyTitle, setSurveyTitle] = useState('');
   const [duration, setDuration] = useState<RoleOption | null>(
     surveyDuration[0],
   );
@@ -153,14 +156,14 @@ export const useManageSurvey = () => {
   const [isDraftLoading, setIsDraftLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [surveyQuestions, setSurveyQuestions] = useState<SurveyQuestion[]>([
-    {
-      id: '1',
-      question_text: '',
-      is_multiple_choice: 0,
-      options: [...questionOption],
-    },
-  ]);
+  // const [surveyQuestions, setSurveyQuestions] = useState<SurveyQuestion[]>([
+  //   {
+  //     id: '1',
+  //     question_text: '',
+  //     is_multiple_choice: 0,
+  //     options: [...questionOption],
+  //   },
+  // ]);
 
   const getRoleOptionFromDuration = (val: number) => {
     const convertedVal = convertFromMinutes(val);
