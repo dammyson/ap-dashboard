@@ -22,8 +22,8 @@ interface SurveyQuestionType {
   setPoints: React.Dispatch<React.SetStateAction<string | number>>;
   imagePreview: string;
   setImagePreview: React.Dispatch<React.SetStateAction<string>>;
-  surveyBanner: File | null;
-  setSurveyBanner: React.Dispatch<React.SetStateAction<File | null>>;
+  surveyBanner: string;
+  setSurveyBanner: React.Dispatch<React.SetStateAction<string>>;
 }
 const SurveyContext = createContext<SurveyQuestionType | undefined>(undefined);
 
@@ -43,7 +43,7 @@ interface SurveyProviderProps {
 export const SurveyProvider: React.FC<SurveyProviderProps> = ({ children }) => {
   const defaultQuestion: SurveyQuestion[] = [
     {
-      id: '1',
+      id: 1,
       question_text: '',
       is_multiple_choice: 0,
       options: [...questionOption],
@@ -74,9 +74,9 @@ export const SurveyProvider: React.FC<SurveyProviderProps> = ({ children }) => {
     );
     return storedPreviewImage ? storedPreviewImage : '';
   });
-  const [surveyBanner, setSurveyBanner] = useState<File | null>(() => {
+  const [surveyBanner, setSurveyBanner] = useState(() => {
     const storedBannerUrl = sessionStorage.getItem('survey_banner');
-    return storedBannerUrl ? JSON.parse(storedBannerUrl) : null;
+    return storedBannerUrl ? JSON.parse(storedBannerUrl) : '';
   });
 
   const resetSurvey = () => {

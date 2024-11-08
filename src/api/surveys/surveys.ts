@@ -138,13 +138,15 @@ export const useManageSurvey = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [survey, setSurvey] = useState<CreateSurvey>();
-  // const [imagePreview, setImagePreview] = useState('');
-  // const [surveyBanner, setSurveyBanner] = useState<File | null>(null);
   const [showLoading, setShowLoading] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
   const [editLoading, setEditLoading] = useState(false);
   const [isDraftLoading, setIsDraftLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [questionId, setQuestionId] = useState<number>();
+  const [optionId, setOptionId] = useState<number>();
   const {
     surveyTitle,
     setSurveyTitle,
@@ -185,6 +187,7 @@ export const useManageSurvey = () => {
           },
           body: JSON.stringify({
             title: value.title,
+            image_url: value.image_url,
             duration_of_survey: value.duration_of_survey,
             points_awarded: value.points_awarded,
             is_active: value.is_active,
@@ -243,13 +246,13 @@ export const useManageSurvey = () => {
     }
   };
 
-  const changeSurveyBanner = async (id: number, image: File) => {
+  const uploadSurveyBanner = async (image: File) => {
     const bannerImage = new FormData();
     bannerImage.append('image_url', image);
     try {
       setImageLoading(true);
       const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${id}/update-survey-image`,
+        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/create-survey-banner`,
         {
           method: 'POST',
           headers: {
@@ -264,7 +267,8 @@ export const useManageSurvey = () => {
       if (res?.error) {
         toast.error(res.message);
       } else {
-        console.log(res);
+        setSurveyBanner(res.image_url);
+        setImagePreview(res.image_url_link);
       }
     } catch (error) {
       toast.error((error as MutationErrorPayload)?.data?.message);
@@ -285,6 +289,7 @@ export const useManageSurvey = () => {
           },
           body: JSON.stringify({
             title: value.title,
+            image_url: value.image_url,
             duration_of_survey: value.duration_of_survey,
             points_awarded: value.points_awarded,
             questions: value.questions.map((x) => x),
@@ -331,6 +336,68 @@ export const useManageSurvey = () => {
     }
   };
 
+  const deleteQuestion = async (surveyId: number, questionId: number) => {
+    try {
+      setIsDeleting(true);
+      const data = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${surveyId}/questions/${questionId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            'content-type': 'application/json',
+          },
+        },
+      );
+      const res = await data.json();
+      setIsDeleting(false);
+      if (res?.error) {
+        toast.error(res.message);
+      } else {
+        setDeleteModal(false);
+        setQuestionId(undefined);
+        showSurvey(surveyId);
+        toast.success(res.message);
+      }
+    } catch (error) {
+      toast.error((error as MutationErrorPayload)?.data?.message);
+    }
+  };
+  const deleteOption = async (
+    surveyId: number,
+    questionId: number,
+    optionId: number,
+  ) => {
+    try {
+      setIsDeleting(true);
+      const data = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${surveyId}/questions/${questionId}/options/${optionId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            'content-type': 'application/json',
+          },
+        },
+      );
+      const res = await data.json();
+      setIsDeleting(false);
+      if (res?.error) {
+        toast.error(res.message);
+      } else {
+        setDeleteModal(false);
+        setOptionId(undefined);
+        setQuestionId(undefined);
+        showSurvey(surveyId);
+        toast.success(res.message);
+      }
+    } catch (error) {
+      toast.error((error as MutationErrorPayload)?.data?.message);
+    }
+  };
+
   return {
     createSurvey,
     loading,
@@ -350,7 +417,7 @@ export const useManageSurvey = () => {
     setImagePreview,
     surveyBanner,
     setSurveyBanner,
-    changeSurveyBanner,
+    uploadSurveyBanner,
     editSurvey,
     editLoading,
     imageLoading,
@@ -358,5 +425,14 @@ export const useManageSurvey = () => {
     isModalOpen,
     setIsModalOpen,
     deactivateSurvey,
+    questionId,
+    setQuestionId,
+    deleteQuestion,
+    isDeleting,
+    deleteModal,
+    setDeleteModal,
+    optionId,
+    setOptionId,
+    deleteOption,
   };
 };

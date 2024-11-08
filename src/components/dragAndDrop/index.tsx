@@ -2,45 +2,41 @@ import React from 'react';
 import { BorderRadius, Button, ButtonSize } from '../button';
 import { Photo } from '../svg/surveys/Surveys';
 import { CircleCancel } from '../svg/settings/Settings';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 interface props {
-  setImagePreview: React.Dispatch<React.SetStateAction<string>>;
   imagePreview: string;
-  setSurveyBanner: React.Dispatch<React.SetStateAction<File | null>>;
+  setImagePreview: React.Dispatch<React.SetStateAction<string>>;
+  setSurveyBanner: React.Dispatch<React.SetStateAction<string>>;
+  imageLoading: boolean;
+  uploadSurveyBanner: (image: File) => void;
 }
 
 export const DragAndDrop = ({
   imagePreview,
   setImagePreview,
   setSurveyBanner,
+  imageLoading,
+  uploadSurveyBanner,
 }: props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const selectedFile = e.target.files && e.target.files[0];
-    if (selectedFile) {
-      setSurveyBanner(selectedFile);
-      const imageURL = URL.createObjectURL(selectedFile);
-
-      setImagePreview(imageURL);
-    }
+    selectedFile && uploadSurveyBanner(selectedFile);
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const droppedFile = e.dataTransfer.files[0];
-    if (droppedFile) {
-      setSurveyBanner(droppedFile);
-
-      const imageURL = URL.createObjectURL(droppedFile);
-      setImagePreview(imageURL);
-    }
+    droppedFile && uploadSurveyBanner(droppedFile);
   };
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
   };
 
   const handleRemoveImage = () => {
-    setSurveyBanner(null);
+    setSurveyBanner('');
     setImagePreview('');
   };
 
@@ -52,8 +48,10 @@ export const DragAndDrop = ({
         </p>
       </div>
       <div className='w-full rounded-[50px] border border-light-blue-50 flex flex-col gap-2 items-center justify-center p-10'>
-        {imagePreview &&
-        imagePreview !== 'https://srv575046.hstgr.cloud/storage/' ? (
+        {imageLoading ? (
+          <Spin indicator={<LoadingOutlined style={{ fontSize: 35 }} spin />} />
+        ) : imagePreview &&
+          imagePreview !== 'https://srv575046.hstgr.cloud/storage/' ? (
           <div className='relative'>
             <div className=' w-[120px] 560:w-[200px] aspect-square 880:w-[350px] 880:h-[220px] 1240:w-[420px] 1240:h-[260px]  rounded-lg overflow-hidden'>
               <img
