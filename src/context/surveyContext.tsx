@@ -1,3 +1,5 @@
+import { RoleOption } from '@/components/Dropdown/listBox';
+import { surveyDuration } from '@/pages/surveys/constants';
 import { questionOption } from '@/pages/surveys/utils';
 import { SurveyQuestion } from '@/types/types';
 import {
@@ -14,6 +16,14 @@ interface SurveyQuestionType {
   resetSurvey: () => void;
   surveyQuestions: SurveyQuestion[];
   setSurveyQuestions: React.Dispatch<React.SetStateAction<SurveyQuestion[]>>;
+  duration: RoleOption | null;
+  setDuration: React.Dispatch<React.SetStateAction<RoleOption | null>>;
+  points: string | number;
+  setPoints: React.Dispatch<React.SetStateAction<string | number>>;
+  imagePreview: string;
+  setImagePreview: React.Dispatch<React.SetStateAction<string>>;
+  surveyBanner: File | null;
+  setSurveyBanner: React.Dispatch<React.SetStateAction<File | null>>;
 }
 const SurveyContext = createContext<SurveyQuestionType | undefined>(undefined);
 
@@ -49,18 +59,56 @@ export const SurveyProvider: React.FC<SurveyProviderProps> = ({ children }) => {
       return storedQuestion ? JSON.parse(storedQuestion) : defaultQuestion;
     },
   );
+  const [duration, setDuration] = useState<RoleOption | null>(() => {
+    const storedDuration = sessionStorage.getItem('survey_duration');
+    return storedDuration ? JSON.parse(storedDuration) : surveyDuration[0];
+  });
+  const [points, setPoints] = useState<number | string>(() => {
+    const storedPoints = sessionStorage.getItem('survey_points');
+    return storedPoints ? JSON.parse(storedPoints) : '';
+  });
+
+  const [imagePreview, setImagePreview] = useState(() => {
+    const storedPreviewImage = sessionStorage.getItem(
+      'survey_image_preview_url',
+    );
+    return storedPreviewImage ? storedPreviewImage : '';
+  });
+  const [surveyBanner, setSurveyBanner] = useState<File | null>(() => {
+    const storedBannerUrl = sessionStorage.getItem('survey_banner');
+    return storedBannerUrl ? JSON.parse(storedBannerUrl) : null;
+  });
 
   const resetSurvey = () => {
     setSurveyTitle('');
     sessionStorage.removeItem('survey_title');
     setSurveyQuestions(defaultQuestion);
     sessionStorage.removeItem('survey_questions');
+    setDuration(surveyDuration[0]);
+    sessionStorage.removeItem('survey_duration');
+    setPoints('');
+    sessionStorage.removeItem('survey_points');
+    setImagePreview('');
+    sessionStorage.removeItem('survey_image_preview_url');
+    setSurveyBanner(null);
+    sessionStorage.removeItem('survey_banner');
   };
 
   useEffect(() => {
     sessionStorage.setItem('survey_title', surveyTitle);
     sessionStorage.setItem('survey_questions', JSON.stringify(surveyQuestions));
-  }, [surveyTitle, surveyQuestions]);
+    sessionStorage.setItem('survey_duration', JSON.stringify(duration));
+    sessionStorage.setItem('survey_points', JSON.stringify(points));
+    sessionStorage.setItem('survey_image_preview_url', imagePreview);
+    sessionStorage.setItem('survey_banner', JSON.stringify(surveyBanner));
+  }, [
+    surveyTitle,
+    surveyQuestions,
+    duration,
+    points,
+    imagePreview,
+    surveyBanner,
+  ]);
 
   return (
     <SurveyContext.Provider
@@ -70,6 +118,14 @@ export const SurveyProvider: React.FC<SurveyProviderProps> = ({ children }) => {
         resetSurvey,
         surveyQuestions,
         setSurveyQuestions,
+        duration,
+        setDuration,
+        points,
+        setPoints,
+        imagePreview,
+        setImagePreview,
+        surveyBanner,
+        setSurveyBanner,
       }}
     >
       {children}

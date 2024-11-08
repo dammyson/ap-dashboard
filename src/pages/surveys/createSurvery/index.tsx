@@ -8,7 +8,7 @@ import { DropDownArrow } from '@/components/svg/settings/Settings';
 import WelcomeMessage from '@/components/welcomeMessage';
 import { useUser } from '@/context/AppContext';
 import clsx from 'clsx';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { awardPoints, OtherList, surveyDuration } from '../constants';
 import SurveyQuestionCard from './questions';
 import { useManageSurvey } from '@/api/surveys/surveys';
@@ -20,7 +20,7 @@ import { CustomDropdown } from '@/components/Dropdown/customDropdown';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import { NoticeIcon } from '@/components/svg/surveys/Surveys';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSurveyQuestions } from '@/context/surveyContext';
 
 export interface SelectedOptions {
@@ -30,7 +30,7 @@ export interface SelectedOptions {
 function CreateSurvey() {
   const { user } = useUser();
   const navigate = useNavigate();
-  const location = useLocation();
+  const { resetSurvey } = useSurveyQuestions();
   const {
     createSurvey,
     loading,
@@ -78,22 +78,21 @@ function CreateSurvey() {
     return false;
   });
 
-  const { resetSurvey } = useSurveyQuestions();
-
   useEffect(() => {
-    sessionStorage.setItem('is_reloading', 'true');
+    const surveyData = sessionStorage.getItem('survey_data');
 
+    if (!surveyData && navigator.onLine) {
+      sessionStorage.setItem('survey_data', 'true');
+    }
     return () => {
-      const isReloading = sessionStorage.getItem('is_reloading');
-      if (isReloading) {
-        sessionStorage.removeItem('is_reloading');
-        resetSurvey();
-      } else {
-        return;
+      if (navigator.onLine) {
+        sessionStorage.removeItem('survey_data');
       }
-      return;
+      if (!surveyData && navigator.onLine) {
+        resetSurvey();
+      }
     };
-  }, [navigate]);
+  }, []);
 
   return (
     <AppLayout logo=''>
