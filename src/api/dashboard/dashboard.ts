@@ -11,9 +11,8 @@ import { toast } from 'sonner';
 export const useManageDashboard = () => {
   const { token } = useUser();
   const [isLoading, setIsLoading] = useState(false);
-  const [registeredUsers, setRegisteredUsers] = useState<number>(0);
-  const [registeredPercentChange, setRegisteredPercentChange] =
-    useState<number>(0);
+  const [registeredUsers, setRegisteredUsers] = useState(0);
+  const [registeredPercentChange, setRegisteredPercentChange] = useState(0);
   const [ticketsPurchased, setTicketPurchased] = useState(0);
   const [ticketsPercentChange, setTicketsPercentChange] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
@@ -27,16 +26,15 @@ export const useManageDashboard = () => {
   const [isChartLoading, setIsChartLoading] = useState(false);
   const [chartData, setChartData] = useState<GraphValues[]>([]);
 
-  const getRegisteredUsers = async () => {
+  const getOverViewData = async () => {
     try {
       setIsLoading(true);
       const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/total-registered-users`,
+        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/weekly-analysis`,
         {
           method: 'GET',
           headers: {
             Accept: 'application/json',
-            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
         },
@@ -46,60 +44,15 @@ export const useManageDashboard = () => {
       if (res?.error) {
         toast.error(res.message);
       } else {
-        setRegisteredUsers(res.total_users_registered_last_7_days);
-        setRegisteredPercentChange(res.percentage_change_vs_last_7_days);
-      }
-    } catch (error) {
-      toast.error((error as MutationErrorPayload)?.data?.message);
-    }
-  };
-  const getTicketsPurchased = async () => {
-    try {
-      setIsLoading(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/ticket-purchased`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      const res = await data.json();
-      setIsLoading(false);
-      if (res?.error) {
-        toast.error(res.message);
-      } else {
-        setTicketPurchased(res.ticket7DaysAgo);
-        setTicketsPercentChange(res.percentageChange);
-      }
-    } catch (error) {
-      toast.error((error as MutationErrorPayload)?.data?.message);
-    }
-  };
-  const getRevenue = async () => {
-    try {
-      setIsLoading(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/total-revenue`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      const res = await data.json();
-      setIsLoading(false);
-      if (res?.error) {
-        toast.error(res.message);
-      } else {
-        setTotalRevenue(res.total7daysRevenue);
-        setRevenuePercentChange(res.percentageChange);
+        const users = res.total_registered_users;
+        const tickets = res.total_purchased_ticket;
+        const revenue = res.total_revenue;
+        setRegisteredUsers(users.total_registered_users_last_seven_days);
+        setRegisteredPercentChange(users.percentage);
+        setTicketPurchased(tickets.ticket7DaysAgo);
+        setTicketsPercentChange(tickets.percentageChange);
+        setTotalRevenue(revenue.total7daysRevenue);
+        setRevenuePercentChange(revenue.percentageChange);
       }
     } catch (error) {
       toast.error((error as MutationErrorPayload)?.data?.message);
@@ -232,9 +185,7 @@ export const useManageDashboard = () => {
   };
 
   const getDashboardAnalytics = async () => {
-    getRegisteredUsers();
-    getTicketsPurchased();
-    getRevenue();
+    getOverViewData();
     getRegisteredUsersTable();
     getPurchasedTicketTable();
   };
@@ -251,9 +202,7 @@ export const useManageDashboard = () => {
     ticketsPurchasedData,
     isChartLoading,
     chartData,
-    getRegisteredUsers,
-    getTicketsPurchased,
-    getRevenue,
+    getOverViewData,
     getRegisteredUsersTable,
     getPurchasedTicketTable,
     getDashboardAnalytics,

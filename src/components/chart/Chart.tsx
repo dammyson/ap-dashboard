@@ -8,7 +8,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { useMemo } from 'react';
-import { formatToDollar, numberShortener } from '@/utils';
+import { formatCurrency, numberShortener } from '@/utils';
 import { CustomTooltip } from './CustomTooltip';
 import { GraphValues } from '@/types/types';
 import dayjs from 'dayjs';
@@ -50,7 +50,7 @@ export const Chart = ({ chartData, transactionType }: Props) => {
             <CustomTooltip
               yAxisAccessor={'value'}
               formatter={(value) => {
-                return `${formatToDollar(parseInt(value))}`;
+                return `${formatCurrency(Number(value))}`;
               }}
             />
           }

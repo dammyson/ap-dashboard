@@ -281,7 +281,9 @@ export const useManageSurvey = () => {
 
   const editSurvey = async (id: number, value: CreateSurvey) => {
     try {
-      setEditLoading(true);
+      if (!value.is_active) {
+        setIsDraftLoading(true);
+      } else setEditLoading(true);
       const data = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${id}/edit`,
         {
@@ -303,6 +305,7 @@ export const useManageSurvey = () => {
 
       const res = await data.json();
       setEditLoading(false);
+      setIsDraftLoading(false);
 
       if (res?.error) {
         toast.error(res.message);

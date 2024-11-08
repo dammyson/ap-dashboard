@@ -56,6 +56,7 @@ function EditSurvey({}) {
     optionId,
     setOptionId,
     deleteOption,
+    isDraftLoading,
   } = useManageSurvey();
 
   const id = Number(surveyId);
@@ -63,13 +64,13 @@ function EditSurvey({}) {
     id && showSurvey(id);
   }, []);
 
-  const handleEditsurvey = (id: number) => {
+  const handleEditsurvey = (id: number, isActive: boolean) => {
     editSurvey(id, {
       title: surveyTitle,
       image_url: surveyBanner,
       duration_of_survey: convertToMinutes(duration?.value as string),
       points_awarded: Number(points) || 0,
-      is_active: true, // will modifly later
+      is_active: isActive,
       questions: surveyQuestions,
     });
   };
@@ -205,9 +206,14 @@ function EditSurvey({}) {
                       <Button
                         size={ButtonSize.Large}
                         radius={BorderRadius.Large}
-                        trailingIcon={<DropDownArrow color='#23539F' />}
-                        buttonText='Schedule for later'
-                        onClick={() => {}}
+                        buttonText={
+                          isDraftLoading ? (
+                            <Spinner className='text-light-blue-main w-5 h-5 768:w-7 768:h-7' />
+                          ) : (
+                            'Save as Draft'
+                          )
+                        }
+                        onClick={() => handleEditsurvey(id, false)}
                         className='!min-h-[55px] 960:!min-h-[66px]'
                       />
                       <Button
@@ -221,7 +227,7 @@ function EditSurvey({}) {
                             'Save and publish'
                           )
                         }
-                        onClick={() => handleEditsurvey(id)}
+                        onClick={() => handleEditsurvey(id, true)}
                         className='!min-h-[55px] 960:!min-h-[66px]'
                       />
                     </div>

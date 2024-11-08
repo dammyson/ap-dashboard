@@ -78,7 +78,7 @@ export const UseTicketsPurchased = () => {
         render: (_, { amount }) => {
           return (
             <div className='font-semibold text-[#595959]'>
-              {formatCurrency(amount)}
+              {formatCurrency(Number(amount))}
             </div>
           );
         },
