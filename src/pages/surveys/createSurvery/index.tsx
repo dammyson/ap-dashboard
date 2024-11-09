@@ -20,10 +20,13 @@ import { CustomDropdown } from '@/components/Dropdown/customDropdown';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import { NoticeIcon } from '@/components/svg/surveys/Surveys';
+import { useEffect } from 'react';
+import { useSurveyQuestions } from '@/context/surveyContext';
 
 function CreateSurvey() {
   const { user } = useUser();
   const navigate = useNavigate();
+  const { resetSurvey } = useSurveyQuestions();
   const {
     createSurvey,
     loading,
@@ -74,6 +77,23 @@ function CreateSurvey() {
     }
     return false;
   });
+
+  useEffect(() => {
+    const surveyData = sessionStorage.getItem('survey_data');
+
+    if (!surveyData && navigator.onLine) {
+      sessionStorage.setItem('survey_data', 'true');
+    }
+    return () => {
+      if (navigator.onLine) {
+        sessionStorage.removeItem('survey_data');
+      }
+      if (!surveyData && navigator.onLine) {
+        resetSurvey();
+      }
+    };
+  }, []);
+
   return (
     <AppLayout logo=''>
       <div
