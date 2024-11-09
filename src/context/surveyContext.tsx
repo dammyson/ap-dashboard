@@ -76,7 +76,7 @@ export const SurveyProvider: React.FC<SurveyProviderProps> = ({ children }) => {
   });
   const [surveyBanner, setSurveyBanner] = useState(() => {
     const storedBannerUrl = sessionStorage.getItem('survey_banner');
-    return storedBannerUrl ? JSON.parse(storedBannerUrl) : '';
+    return storedBannerUrl ? storedBannerUrl : '';
   });
 
   const resetSurvey = () => {
@@ -90,7 +90,7 @@ export const SurveyProvider: React.FC<SurveyProviderProps> = ({ children }) => {
     sessionStorage.removeItem('survey_points');
     setImagePreview('');
     sessionStorage.removeItem('survey_image_preview_url');
-    setSurveyBanner(null);
+    setSurveyBanner('');
     sessionStorage.removeItem('survey_banner');
   };
 
@@ -100,7 +100,7 @@ export const SurveyProvider: React.FC<SurveyProviderProps> = ({ children }) => {
     sessionStorage.setItem('survey_duration', JSON.stringify(duration));
     sessionStorage.setItem('survey_points', JSON.stringify(points));
     sessionStorage.setItem('survey_image_preview_url', imagePreview);
-    sessionStorage.setItem('survey_banner', JSON.stringify(surveyBanner));
+    sessionStorage.setItem('survey_banner', surveyBanner);
   }, [
     surveyTitle,
     surveyQuestions,
