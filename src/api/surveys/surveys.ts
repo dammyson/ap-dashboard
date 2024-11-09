@@ -1,12 +1,10 @@
-import { RoleOption } from '@/components/Dropdown/listBox';
 import { useUser } from '@/context/AppContext';
+import { useSurveyQuestions } from '@/context/surveyContext';
 import { surveyDuration } from '@/pages/surveys/constants';
-import { questionOption } from '@/pages/surveys/utils';
 import {
   CreateSurvey,
   FilterSurveyTable,
   MutationErrorPayload,
-  SurveyQuestion,
 } from '@/types/types';
 import { convertFromMinutes } from '@/utils';
 import { useState } from 'react';
@@ -140,13 +138,6 @@ export const useManageSurvey = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [survey, setSurvey] = useState<CreateSurvey>();
-  const [surveyTitle, setSurveyTitle] = useState('');
-  const [duration, setDuration] = useState<RoleOption | null>(
-    surveyDuration[0],
-  );
-  const [points, setPoints] = useState<number | string>('');
-  const [imagePreview, setImagePreview] = useState('');
-  const [surveyBanner, setSurveyBanner] = useState('');
   const [showLoading, setShowLoading] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
   const [editLoading, setEditLoading] = useState(false);
@@ -156,15 +147,20 @@ export const useManageSurvey = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [questionId, setQuestionId] = useState<number>();
   const [optionId, setOptionId] = useState<number>();
-
-  const [surveyQuestions, setSurveyQuestions] = useState<SurveyQuestion[]>([
-    {
-      id: 1,
-      question_text: '',
-      is_multiple_choice: 0,
-      options: [...questionOption],
-    },
-  ]);
+  const {
+    surveyTitle,
+    setSurveyTitle,
+    surveyQuestions,
+    setSurveyQuestions,
+    duration,
+    setDuration,
+    points,
+    setPoints,
+    imagePreview,
+    setImagePreview,
+    surveyBanner,
+    setSurveyBanner,
+  } = useSurveyQuestions();
 
   const getRoleOptionFromDuration = (val: number) => {
     const convertedVal = convertFromMinutes(val);

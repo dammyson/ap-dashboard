@@ -27,7 +27,6 @@ function EditSurvey({}) {
   const { titleId, surveyId } = useParams();
   const { user } = useUser();
   const navigate = useNavigate();
-
   const {
     showSurvey,
     surveyQuestions,
