@@ -63,13 +63,18 @@ function EditSurvey({}) {
     id && showSurvey(id);
   }, []);
 
-  const handleEditsurvey = (id: number, isActive: boolean) => {
+  const handleEditsurvey = (
+    id: number,
+    isActive: boolean,
+    isPublished: boolean,
+  ) => {
     editSurvey(id, {
       title: surveyTitle,
       image_url: surveyBanner,
       duration_of_survey: convertToMinutes(duration?.value as string),
       points_awarded: Number(points) || 0,
       is_active: isActive,
+      is_published: isPublished,
       questions: surveyQuestions,
     });
   };
@@ -212,7 +217,7 @@ function EditSurvey({}) {
                             'Save as Draft'
                           )
                         }
-                        onClick={() => handleEditsurvey(id, false)}
+                        onClick={() => handleEditsurvey(id, false, false)}
                         className='!min-h-[55px] 960:!min-h-[66px]'
                       />
                       <Button
@@ -226,7 +231,7 @@ function EditSurvey({}) {
                             'Save and publish'
                           )
                         }
-                        onClick={() => handleEditsurvey(id, true)}
+                        onClick={() => handleEditsurvey(id, true, true)}
                         className='!min-h-[55px] 960:!min-h-[66px]'
                       />
                     </div>

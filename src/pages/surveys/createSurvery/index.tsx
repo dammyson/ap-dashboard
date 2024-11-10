@@ -50,20 +50,21 @@ function CreateSurvey() {
     deactivateSurvey,
   } = useManageSurvey();
 
-  const handleCreateSurvey = (isActive: boolean) => {
+  const handleCreateSurvey = (isActive: boolean, isPublished: boolean) => {
     createSurvey({
       title: surveyTitle,
       image_url: surveyBanner,
       duration_of_survey: convertToMinutes(duration?.value as string),
       points_awarded: Number(points) || 0,
       is_active: isActive,
+      is_published: isPublished,
       questions: surveyQuestions,
     });
   };
 
   const handleDeactivate = async () => {
     await deactivateSurvey();
-    handleCreateSurvey(true);
+    handleCreateSurvey(true, true);
   };
 
   const allTrue = [surveyTitle, surveyQuestions].every((field) => {
@@ -208,7 +209,7 @@ function CreateSurvey() {
                         'Save as Draft'
                       )
                     }
-                    onClick={() => handleCreateSurvey(false)}
+                    onClick={() => handleCreateSurvey(false, false)}
                     className='!min-h-[55px] 960:!min-h-[66px]'
                   />
                   <Button
@@ -223,7 +224,7 @@ function CreateSurvey() {
                         'Save and publish'
                       )
                     }
-                    onClick={() => handleCreateSurvey(true)}
+                    onClick={() => handleCreateSurvey(true, true)}
                     className='!min-h-[55px] 960:!min-h-[66px]'
                   />
                 </div>

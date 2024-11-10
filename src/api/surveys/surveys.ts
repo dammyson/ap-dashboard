@@ -185,14 +185,24 @@ export const useManageSurvey = () => {
             'content-type': 'application/json',
             Accept: 'application/json',
           },
-          body: JSON.stringify({
-            title: value.title,
-            image_url: value.image_url,
-            duration_of_survey: value.duration_of_survey,
-            points_awarded: value.points_awarded,
-            is_active: value.is_active,
-            questions: value.questions.map((x) => x),
-          }),
+          body: value.image_url
+            ? JSON.stringify({
+                title: value.title,
+                image_url: value.image_url,
+                duration_of_survey: value.duration_of_survey,
+                points_awarded: value.points_awarded,
+                is_active: value.is_active,
+                is_published: value.is_published,
+                questions: value.questions.map((x) => x),
+              })
+            : JSON.stringify({
+                title: value.title,
+                duration_of_survey: value.duration_of_survey,
+                points_awarded: value.points_awarded,
+                is_active: value.is_active,
+                is_published: value.is_published,
+                questions: value.questions.map((x) => x),
+              }),
         },
       );
       const res = await data.json();
@@ -289,13 +299,24 @@ export const useManageSurvey = () => {
             'content-type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({
-            title: value.title,
-            image_url: value.image_url,
-            duration_of_survey: value.duration_of_survey,
-            points_awarded: value.points_awarded,
-            questions: value.questions.map((x) => x),
-          }),
+          body: value.image_url
+            ? JSON.stringify({
+                title: value.title,
+                image_url: value.image_url,
+                duration_of_survey: value.duration_of_survey,
+                points_awarded: value.points_awarded,
+                is_active: value.is_active,
+                is_published: value.is_published,
+                questions: value.questions.map((x) => x),
+              })
+            : JSON.stringify({
+                title: value.title,
+                duration_of_survey: value.duration_of_survey,
+                points_awarded: value.points_awarded,
+                is_active: value.is_active,
+                is_published: value.is_published,
+                questions: value.questions.map((x) => x),
+              }),
         },
       );
 

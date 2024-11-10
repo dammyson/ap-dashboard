@@ -194,6 +194,7 @@ export interface CreateSurvey {
   duration_of_survey: number;
   points_awarded: number;
   is_active: boolean;
+  is_published: boolean;
   questions: SurveyQuestion[];
 }
 
