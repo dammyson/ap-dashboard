@@ -12,12 +12,13 @@ import { useNavigate } from 'react-router';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import clsx from 'clsx';
 import { useUser } from '@/context/AppContext';
-import { useSurvey } from '@/api/surveys/surveys';
+import { useManageSurvey, useSurvey } from '@/api/surveys/surveys';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spinner } from '@/components/svg/spinner/Spinner';
 import { SurveyType } from '@/types/types';
 import dayjs from 'dayjs';
 import { FilterModal } from '@/components/modal/filterModal';
+import { DeactivateSurvey } from '@/components/modal/deactivateSurvey';
 
 function Surveys() {
   const navigate = useNavigate();
@@ -45,7 +46,16 @@ function Surveys() {
     viewDelete,
     setViewDelete,
     deleteSurvey,
+    endActiveSurvey,
+    setEndActiveSurvey,
+    isDeactivating,
+    deactivateSurvey,
   } = useSurvey();
+
+  const handleDeactivate = async () => {
+    await deactivateSurvey();
+    surveyId && tooglePublish(surveyId);
+  };
 
   const { tableColumns } = useSurveyColumn(
     setSurveyModal,
@@ -262,6 +272,13 @@ function Surveys() {
           onChange={(e) => setSurveyTitle(e.target.value)}
           onclick={() => setFilterTable(false)}
           handleFilter={handleFilter}
+        />
+      )}
+      {endActiveSurvey && (
+        <DeactivateSurvey
+          isDeactivating={isDeactivating}
+          setEndActiveSurvey={setEndActiveSurvey}
+          handleDeactivate={handleDeactivate}
         />
       )}
     </AppLayout>

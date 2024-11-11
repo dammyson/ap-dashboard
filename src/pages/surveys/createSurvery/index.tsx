@@ -17,11 +17,9 @@ import { convertToMinutes } from '@/utils';
 import { DragAndDrop } from '@/components/dragAndDrop';
 import ListBox from '@/components/Dropdown/listBox';
 import { CustomDropdown } from '@/components/Dropdown/customDropdown';
-import { Modal, SizeType } from '@/components/modal';
-import { Cancel } from '@/components/svg/modal/Modal';
-import { NoticeIcon } from '@/components/svg/surveys/Surveys';
 import { useEffect } from 'react';
 import { useSurveyQuestions } from '@/context/surveyContext';
+import { DeactivateSurvey } from '@/components/modal/deactivateSurvey';
 
 function CreateSurvey() {
   const { user } = useUser();
@@ -45,9 +43,10 @@ function CreateSurvey() {
     uploadSurveyBanner,
     isDraftLoading,
     imageLoading,
-    isModalOpen,
-    setIsModalOpen,
+    endActiveSurvey,
+    setEndActiveSurvey,
     deactivateSurvey,
+    isDeactivating,
   } = useManageSurvey();
 
   const handleCreateSurvey = (isActive: boolean, isPublished: boolean) => {
@@ -233,43 +232,12 @@ function CreateSurvey() {
           </div>
         </div>
       </div>
-      {isModalOpen && (
-        <Modal
-          isBackground
-          isCentered
-          cancelIcon={<Cancel />}
-          size={SizeType.MEDIUM}
-          onClick={() => setIsModalOpen(false)}
-        >
-          <NoticeIcon className='w-16 h-16 880:w-20 880:h-20 ' />
-          <div className='pb-5 max-w-[460px] 880:max-w-[560px] text-lg 880:text-[22px] mb-2 mt-2 560:my-3 880:mt-5 text-light-primary-deep_black'>
-            A survey is currently active would you like to deactivate and
-            publish a new survey?
-          </div>
-          <div className='w-full max-w-[300px] 880:max-w-[380px]'>
-            <Button
-              size={ButtonSize.Medium}
-              radius={BorderRadius.Large}
-              buttonText={
-                loading ? (
-                  <Spinner className='text-white w-5 h-5 768:w-7 768:h-7' />
-                ) : (
-                  'Deactivate and Publish'
-                )
-              }
-              onClick={handleDeactivate}
-              className='!font-semibold !text-[17px] mb-5'
-            />
-            <Button
-              size={ButtonSize.Medium}
-              radius={BorderRadius.Large}
-              mode='outlined'
-              buttonText='Cancel'
-              onClick={() => setIsModalOpen(false)}
-              className='!font-semibold !text-[17px]'
-            />
-          </div>
-        </Modal>
+      {endActiveSurvey && (
+        <DeactivateSurvey
+          isDeactivating={isDeactivating}
+          setEndActiveSurvey={setEndActiveSurvey}
+          handleDeactivate={handleDeactivate}
+        />
       )}
     </AppLayout>
   );

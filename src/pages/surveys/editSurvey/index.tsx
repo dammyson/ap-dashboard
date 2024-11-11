@@ -22,6 +22,7 @@ import { CustomDropdown } from '@/components/Dropdown/customDropdown';
 import ListBox from '@/components/Dropdown/listBox';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
+import { DeactivateSurvey } from '@/components/modal/deactivateSurvey';
 
 function EditSurvey({}) {
   const { titleId, surveyId } = useParams();
@@ -56,6 +57,10 @@ function EditSurvey({}) {
     setOptionId,
     deleteOption,
     isDraftLoading,
+    endActiveSurvey,
+    setEndActiveSurvey,
+    isDeactivating,
+    deactivateSurvey,
   } = useManageSurvey();
 
   const id = Number(surveyId);
@@ -85,6 +90,11 @@ function EditSurvey({}) {
       setOptionId(undefined);
     }
   }, [deleteModal]);
+
+  const handleDeactivate = async () => {
+    await deactivateSurvey();
+    handleEditsurvey(id, true, true);
+  };
 
   return (
     <AppLayout logo=''>
@@ -280,6 +290,13 @@ function EditSurvey({}) {
             />
           </div>
         </Modal>
+      )}
+      {endActiveSurvey && (
+        <DeactivateSurvey
+          isDeactivating={isDeactivating}
+          setEndActiveSurvey={setEndActiveSurvey}
+          handleDeactivate={handleDeactivate}
+        />
       )}
     </AppLayout>
   );
