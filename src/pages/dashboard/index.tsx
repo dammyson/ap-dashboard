@@ -16,14 +16,12 @@ import clsx from 'clsx';
 import { Card } from '@/components/card';
 import { Filter } from '@/components/svg/surveys/Surveys';
 import { PieChart } from 'react-minimal-pie-chart';
-import { devices, RecentActivities } from './constants';
+import { chartData, devices, RecentActivities } from './constants';
 import { Chart } from '@/components/chart/Chart';
 import { HorizontalBarChart } from '@/components/chart/HorizontalBarChart';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { useUser } from '@/context/AppContext';
 import { useManageDashboard } from '@/api/dashboard/dashboard';
-import { Spin } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
 import { OverView } from '@/components/dashboardOverView/overViewCards';
 
 const tabs = [
@@ -47,25 +45,25 @@ function Dashboard() {
     revenuePrecentChange,
     registeredUsersData,
     ticketsPurchasedData,
-    chartData,
-    isChartLoading,
+    // chartData,
+    // isChartLoading,
     getDashboardAnalytics,
-    getTicketSalesRevenue,
-    getAncilaryRevenue,
-    getTotalRevenue,
+    // getTicketSalesRevenue,
+    // getAncilaryRevenue,
+    // getTotalRevenue,
   } = useManageDashboard();
 
   useEffect(() => {
     getDashboardAnalytics();
   }, []);
 
-  useEffect(() => {
-    if (activeTab.name === 'Ticket sales') {
-      getTicketSalesRevenue();
-    } else if (activeTab.name === 'Ancillary sales') {
-      getAncilaryRevenue();
-    } else getTotalRevenue();
-  }, [activeTab]);
+  // useEffect(() => {
+  //   if (activeTab.name === 'Ticket sales') {
+  //     getTicketSalesRevenue();
+  //   } else if (activeTab.name === 'Ancillary sales') {
+  //     getAncilaryRevenue();
+  //   } else getTotalRevenue();
+  // }, [activeTab]);
 
   return (
     <AppLayout logo=''>
@@ -139,17 +137,7 @@ function Dashboard() {
                       );
                     })}
                   </div>
-                  {isChartLoading ? (
-                    <div className='h-[290px]  flex justify-center items-center'>
-                      <Spin
-                        indicator={
-                          <LoadingOutlined style={{ fontSize: 48 }} spin />
-                        }
-                      />
-                    </div>
-                  ) : (
-                    <Chart chartData={chartData} transactionType='all' />
-                  )}
+                  <Chart chartData={chartData} transactionType='all' />
                 </Card>
               </div>
               <div className='col-span-12 1240:col-span-4 '>

@@ -89,8 +89,8 @@ export interface Args<T> {
 }
 
 export interface GraphValues {
-  day_of_week: string;
-  amount: number;
+  name: string;
+  value: number;
 }
 
 export interface CustomerInfomation {

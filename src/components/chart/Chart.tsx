@@ -11,7 +11,6 @@ import { useMemo } from 'react';
 import { formatCurrency, numberShortener } from '@/utils';
 import { CustomTooltip } from './CustomTooltip';
 import { GraphValues } from '@/types/types';
-import dayjs from 'dayjs';
 
 interface Props {
   chartData: GraphValues[];
@@ -27,8 +26,8 @@ export const Chart = ({ chartData, transactionType }: Props) => {
       return defaultXAxis.map((day) => ({ name: day, value: 0 }));
     }
     return chartData.map((item) => ({
-      name: dayjs(item.day_of_week).format('ddd'),
-      value: item.amount,
+      name: item.name,
+      value: item.value,
     }));
   }, [chartData]);
 

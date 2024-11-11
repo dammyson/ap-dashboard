@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import clsx from 'clsx';
 import { useUser } from '@/context/AppContext';
-import { useManageSurvey, useSurvey } from '@/api/surveys/surveys';
+import { useSurvey } from '@/api/surveys/surveys';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spinner } from '@/components/svg/spinner/Spinner';
 import { SurveyType } from '@/types/types';
