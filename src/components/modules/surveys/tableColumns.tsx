@@ -7,12 +7,13 @@ import { Space } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 
-export type ModalStateSetter = (value: boolean) => void;
+export type ModalStateSetter = React.Dispatch<React.SetStateAction<boolean>>;
 export const useSurveyColumn = (
   setSurveyModal: ModalStateSetter,
-  setisPublished: (value: boolean) => void,
+  setisPublished: React.Dispatch<React.SetStateAction<boolean | undefined>>,
   setViewDelete: ModalStateSetter,
-  setSurveyId: (id: number) => void,
+  setSurveyId: React.Dispatch<React.SetStateAction<number | undefined>>,
+  setIsActive: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   const navigate = useNavigate();
   const tableColumns = useMemo(() => {
@@ -93,23 +94,22 @@ export const useSurveyColumn = (
                 buttonText={record.is_published ? 'Unpublish' : 'Publish'}
                 onClick={() => {
                   if (record.is_active && record.is_published) {
-                    console.log('results will not be collated');
-                  } else {
-                    setisPublished(record?.is_published);
-                    setSurveyModal(true);
-                  }
-
+                    setIsActive(record?.is_active);
+                  } else setIsActive(false);
+                  setisPublished(record?.is_published);
                   setSurveyId(record?.id);
-
-                  console.log(record);
+                  setSurveyModal(true);
                 }}
                 className='!bg-[#C7C7CC] min-w-[105px] !px-0 hover:!bg-[#bababe]'
               />
               <Button
                 buttonText='Delete'
                 onClick={() => {
-                  setViewDelete(true);
+                  if (record.is_active && record.is_published) {
+                    setIsActive(record?.is_active);
+                  } else setIsActive(false);
                   setSurveyId(record?.id);
+                  setViewDelete(true);
                 }}
                 className='!bg-[#C7C7CC] min-w-[105px] !px-0 hover:!bg-[#bababe]'
               />

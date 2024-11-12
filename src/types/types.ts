@@ -23,27 +23,31 @@ export interface ViewParticipants {
 }
 
 export interface TotalUsersRegistered {
-  userID: string;
-  name: string;
+  id: string;
+  user_first_name: string;
+  user_last_name: string;
   email: string;
-  dateRegistered: string;
+  date_registered: string;
   tier: string;
   status: string;
-  lastLogin: string;
-  totalBookedFlights: number;
-  milesAccumulated: string;
+  last_login: string;
+  total_booked_flight: number;
+  miles_accumulated: string;
 }
 
 export interface TicketsPurchasedViaApp {
-  transactionID: string;
-  userID: string;
-  name: string;
-  email: string;
-  dateOfPurchase: string;
-  itemPurchased: string;
+  id: string;
+  user_id: string;
+  created_at: string;
+  ticket_type: string;
   amount: number;
   paymentMethod: string;
   status: string;
+  user: {
+    email: string;
+    first_name: string;
+    last_name: string;
+  };
 }
 
 export interface TotalRevenue {
@@ -190,6 +194,7 @@ export interface CreateSurvey {
   duration_of_survey: number;
   points_awarded: number;
   is_active: boolean;
+  is_published: boolean;
   questions: SurveyQuestion[];
 }
 
@@ -209,4 +214,12 @@ export interface ResetPassword {
   newPassword: string;
   confirmNewPassword: string;
   otp: string;
+}
+
+export interface OverViewType {
+  title: string;
+  period: string;
+  value: number;
+  variance: number;
+  state: string;
 }

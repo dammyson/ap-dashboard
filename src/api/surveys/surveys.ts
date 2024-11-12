@@ -13,6 +13,8 @@ import { toast } from 'sonner';
 
 export const useSurvey = () => {
   const { token } = useUser();
+  const { setisDeactivating, isDeactivating, deactivateSurvey } =
+    useManageSurvey();
   const [surveys, setSurveys] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -22,6 +24,7 @@ export const useSurvey = () => {
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [isSucess, setIsSucess] = useState(false);
   const [viewDelete, setViewDelete] = useState(false);
+  const [endActiveSurvey, setEndActiveSurvey] = useState(false);
   const getSurvey = async (value: FilterSurveyTable) => {
     try {
       setIsLoading(true);
@@ -60,7 +63,9 @@ export const useSurvey = () => {
 
   const tooglePublish = async (id: number) => {
     try {
-      setLoading(true);
+      if (endActiveSurvey) {
+        setisDeactivating(true);
+      } else setLoading(true);
       const data = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${id}/toogle-publish-survey`,
         {
@@ -74,8 +79,14 @@ export const useSurvey = () => {
       const res = await data.json();
       setLoading(false);
       if (res?.error) {
+        if (res.message.includes('active')) {
+          setSurveyModal(false);
+          setEndActiveSurvey(true);
+        }
       } else {
         setSurveyModal(false);
+        setEndActiveSurvey(false);
+        setisDeactivating(false);
         await getSurvey({});
         toast.success(res.message);
       }
@@ -130,6 +141,12 @@ export const useSurvey = () => {
     viewDelete,
     setViewDelete,
     deleteSurvey,
+    endActiveSurvey,
+    setEndActiveSurvey,
+    isDeactivating,
+    deactivateSurvey,
+
+    surveyInfo: {},
   };
 };
 
@@ -142,11 +159,12 @@ export const useManageSurvey = () => {
   const [imageLoading, setImageLoading] = useState(false);
   const [editLoading, setEditLoading] = useState(false);
   const [isDraftLoading, setIsDraftLoading] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [endActiveSurvey, setEndActiveSurvey] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [questionId, setQuestionId] = useState<number>();
   const [optionId, setOptionId] = useState<number>();
+  const [isDeactivating, setisDeactivating] = useState(false);
   const {
     surveyTitle,
     setSurveyTitle,
@@ -174,6 +192,8 @@ export const useManageSurvey = () => {
     try {
       if (!value.is_active) {
         setIsDraftLoading(true);
+      } else if (endActiveSurvey) {
+        setisDeactivating(true);
       } else setLoading(true);
 
       const data = await fetch(
@@ -185,25 +205,36 @@ export const useManageSurvey = () => {
             'content-type': 'application/json',
             Accept: 'application/json',
           },
-          body: JSON.stringify({
-            title: value.title,
-            image_url: value.image_url,
-            duration_of_survey: value.duration_of_survey,
-            points_awarded: value.points_awarded,
-            is_active: value.is_active,
-            questions: value.questions.map((x) => x),
-          }),
+          body: value.image_url
+            ? JSON.stringify({
+                title: value.title,
+                image_url: value.image_url,
+                duration_of_survey: value.duration_of_survey,
+                points_awarded: value.points_awarded,
+                is_active: value.is_active,
+                is_published: value.is_published,
+                questions: value.questions.map((x) => x),
+              })
+            : JSON.stringify({
+                title: value.title,
+                duration_of_survey: value.duration_of_survey,
+                points_awarded: value.points_awarded,
+                is_active: value.is_active,
+                is_published: value.is_published,
+                questions: value.questions.map((x) => x),
+              }),
         },
       );
       const res = await data.json();
       setLoading(false);
       setIsDraftLoading(false);
+      setisDeactivating(false);
       if (res?.errors) {
         toast.error(res.message);
       }
       if (res?.error) {
         if (res.message.includes('active')) {
-          setIsModalOpen(true);
+          setEndActiveSurvey(true);
         }
       } else {
         toast.success(res.message);
@@ -277,7 +308,11 @@ export const useManageSurvey = () => {
 
   const editSurvey = async (id: number, value: CreateSurvey) => {
     try {
-      setEditLoading(true);
+      if (!value.is_active) {
+        setIsDraftLoading(true);
+      } else if (endActiveSurvey) {
+        setisDeactivating(true);
+      } else setEditLoading(true);
       const data = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${id}/edit`,
         {
@@ -287,21 +322,36 @@ export const useManageSurvey = () => {
             'content-type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({
-            title: value.title,
-            image_url: value.image_url,
-            duration_of_survey: value.duration_of_survey,
-            points_awarded: value.points_awarded,
-            questions: value.questions.map((x) => x),
-          }),
+          body: value.image_url
+            ? JSON.stringify({
+                title: value.title,
+                image_url: value.image_url,
+                duration_of_survey: value.duration_of_survey,
+                points_awarded: value.points_awarded,
+                is_active: value.is_active,
+                is_published: value.is_published,
+                questions: value.questions.map((x) => x),
+              })
+            : JSON.stringify({
+                title: value.title,
+                duration_of_survey: value.duration_of_survey,
+                points_awarded: value.points_awarded,
+                is_active: value.is_active,
+                is_published: value.is_published,
+                questions: value.questions.map((x) => x),
+              }),
         },
       );
 
       const res = await data.json();
       setEditLoading(false);
+      setIsDraftLoading(false);
+      setisDeactivating(false);
 
       if (res?.error) {
-        toast.error(res.message);
+        if (res.message.includes('active')) {
+          setEndActiveSurvey(true);
+        }
       } else {
         toast.success('Edited survey successfully!');
         navigate('/surveys');
@@ -313,7 +363,7 @@ export const useManageSurvey = () => {
 
   const deactivateSurvey = async () => {
     try {
-      setLoading(true);
+      setisDeactivating(true);
       const data = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}admin/surveys/deactivate-survey`,
         {
@@ -325,7 +375,7 @@ export const useManageSurvey = () => {
         },
       );
       const res = await data.json();
-      setLoading(false);
+      setisDeactivating(false);
       if (res?.error) {
         toast.error(res.message);
       } else {
@@ -420,10 +470,11 @@ export const useManageSurvey = () => {
     uploadSurveyBanner,
     editSurvey,
     editLoading,
+    setEditLoading,
     imageLoading,
     isDraftLoading,
-    isModalOpen,
-    setIsModalOpen,
+    endActiveSurvey,
+    setEndActiveSurvey,
     deactivateSurvey,
     questionId,
     setQuestionId,
@@ -434,5 +485,7 @@ export const useManageSurvey = () => {
     optionId,
     setOptionId,
     deleteOption,
+    isDeactivating,
+    setisDeactivating,
   };
 };
