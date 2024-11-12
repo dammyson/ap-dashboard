@@ -216,7 +216,7 @@ export interface ResetPassword {
   otp: string;
 }
 
-export interface OverViewType {
+export interface WeeklyAnalysisType {
   title: string;
   period: string;
   value: number;

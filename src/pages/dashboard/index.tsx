@@ -19,12 +19,9 @@ import { chartData, devices, RecentActivities } from './constants';
 import { Chart } from '@/components/chart/Chart';
 import { HorizontalBarChart } from '@/components/chart/HorizontalBarChart';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
-<<<<<<< HEAD
-=======
-import { useUser } from '@/context/AppContext';
 import { useManageDashboard } from '@/api/dashboard/dashboard';
-import { OverView } from '@/components/dashboardOverView/overViewCards';
->>>>>>> 7b028d127dc0596e230f9dc14d4687fce3b70afc
+import { WeeklyAnalysis } from '@/components/dashboardAnalytics/weeklyAnalysis';
+import { SkeletonChartData } from '@/components/skeletonLoader/skeletonChartData';
 
 const tabs = [
   { name: 'Ticket sales', value: 2000 },
@@ -36,9 +33,6 @@ function Dashboard() {
   const [activeStat, setActiveStat] = useState<string>('');
   const currentTab = tabs[0];
   const [activeTab, setActiveTab] = useState(currentTab);
-<<<<<<< HEAD
-=======
-  const { user } = useUser();
   const {
     isLoading,
     registeredUsers,
@@ -68,7 +62,6 @@ function Dashboard() {
   //     getAncilaryRevenue();
   //   } else getTotalRevenue();
   // }, [activeTab]);
->>>>>>> 7b028d127dc0596e230f9dc14d4687fce3b70afc
 
   return (
     <AppLayout logo=''>
@@ -88,7 +81,7 @@ function Dashboard() {
           </div>
           <div className='hidden-scrollbar overflow-x-auto'>
             <div className='min-w-fit'>
-              <OverView
+              <WeeklyAnalysis
                 activeStat={activeStat}
                 setActiveStat={setActiveStat}
                 registeredUsers={registeredUsers}
@@ -104,39 +97,43 @@ function Dashboard() {
           {activeStat !== 'active' && (
             <div className='mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>
               <div className='col-span-12 1240:col-span-8 relative'>
-                <Card
-                  hasBadge
-                  hasHeader
-                  trailingIcon1={<Filter />}
-                  title='Revenue via app'
-                  mainClass='relative grid justify-items-between h-[513px]'
-                  titleClass='text-lg'
-                >
-                  <div className='flex items-center gap-1.5 480:gap-5 mb-6 560:mb-12'>
-                    {tabs.map((tab, index) => {
-                      return (
-                        <div
-                          onClick={() => setActiveTab(tab)}
-                          key={index}
-                          className={clsx(
-                            activeTab === tab
-                              ? 'border-b-4 border-b-light-blue-main sky-blue-gradient-bg'
-                              : 'border-b border-b-[#E9E7FD]',
-                            'p-2 pb-3.5 cursor-pointer',
-                          )}
-                        >
-                          <h3 className='text-primary-black text-[16px] 480:text-lg 560:text-xl font-bold mb-2'>
-                            {numberShortener(tab.value)}
-                          </h3>
-                          <p className='text-sm font-medium text-light-grey-400'>
-                            {tab.name}
-                          </p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <Chart chartData={chartData} transactionType='all' />
-                </Card>
+                {isLoading ? (
+                  <SkeletonChartData />
+                ) : (
+                  <Card
+                    hasBadge
+                    hasHeader
+                    trailingIcon1={<Filter />}
+                    title='Revenue via app'
+                    mainClass='relative grid justify-items-between h-[513px]'
+                    titleClass='text-lg'
+                  >
+                    <div className='flex items-center gap-1.5 480:gap-5 mb-6 560:mb-12'>
+                      {tabs.map((tab, index) => {
+                        return (
+                          <div
+                            onClick={() => setActiveTab(tab)}
+                            key={index}
+                            className={clsx(
+                              activeTab === tab
+                                ? 'border-b-4 border-b-light-blue-main sky-blue-gradient-bg'
+                                : 'border-b border-b-[#E9E7FD]',
+                              'p-2 pb-3.5 cursor-pointer',
+                            )}
+                          >
+                            <h3 className='text-primary-black text-[16px] 480:text-lg 560:text-xl font-bold mb-2'>
+                              {numberShortener(tab.value)}
+                            </h3>
+                            <p className='text-sm font-medium text-light-grey-400'>
+                              {tab.name}
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <Chart chartData={chartData} transactionType='all' />
+                  </Card>
+                )}
               </div>
               <div className='col-span-12 1240:col-span-4 '>
                 <Card

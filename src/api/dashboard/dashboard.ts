@@ -26,7 +26,7 @@ export const useManageDashboard = () => {
   const [isChartLoading, setIsChartLoading] = useState(false);
   const [chartData, setChartData] = useState<GraphValues[]>([]);
 
-  const getOverViewData = async () => {
+  const getWeeklyAnalysisData = async () => {
     try {
       setIsLoading(true);
       const data = await fetch(
@@ -185,7 +185,7 @@ export const useManageDashboard = () => {
   };
 
   const getDashboardAnalytics = async () => {
-    getOverViewData();
+    getWeeklyAnalysisData();
     getRegisteredUsersTable();
     getPurchasedTicketTable();
   };
@@ -202,7 +202,7 @@ export const useManageDashboard = () => {
     ticketsPurchasedData,
     isChartLoading,
     chartData,
-    getOverViewData,
+    getWeeklyAnalysisData,
     getRegisteredUsersTable,
     getPurchasedTicketTable,
     getDashboardAnalytics,
