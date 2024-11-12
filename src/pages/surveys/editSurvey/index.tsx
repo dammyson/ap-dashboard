@@ -22,6 +22,7 @@ import { CustomDropdown } from '@/components/Dropdown/customDropdown';
 import ListBox from '@/components/Dropdown/listBox';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
+import { DeactivateSurvey } from '@/components/modal/deactivateSurvey';
 
 function EditSurvey({}) {
   const { titleId, surveyId } = useParams();
@@ -55,6 +56,11 @@ function EditSurvey({}) {
     optionId,
     setOptionId,
     deleteOption,
+    isDraftLoading,
+    endActiveSurvey,
+    setEndActiveSurvey,
+    isDeactivating,
+    deactivateSurvey,
   } = useManageSurvey();
 
   const id = Number(surveyId);
@@ -62,13 +68,18 @@ function EditSurvey({}) {
     id && showSurvey(id);
   }, []);
 
-  const handleEditsurvey = (id: number) => {
+  const handleEditsurvey = (
+    id: number,
+    isActive: boolean,
+    isPublished: boolean,
+  ) => {
     editSurvey(id, {
       title: surveyTitle,
       image_url: surveyBanner,
       duration_of_survey: convertToMinutes(duration?.value as string),
       points_awarded: Number(points) || 0,
-      is_active: true, // will modifly later
+      is_active: isActive,
+      is_published: isPublished,
       questions: surveyQuestions,
     });
   };
@@ -79,6 +90,11 @@ function EditSurvey({}) {
       setOptionId(undefined);
     }
   }, [deleteModal]);
+
+  const handleDeactivate = async () => {
+    await deactivateSurvey();
+    handleEditsurvey(id, true, true);
+  };
 
   return (
     <AppLayout logo=''>
@@ -204,9 +220,14 @@ function EditSurvey({}) {
                       <Button
                         size={ButtonSize.Large}
                         radius={BorderRadius.Large}
-                        trailingIcon={<DropDownArrow color='#23539F' />}
-                        buttonText='Schedule for later'
-                        onClick={() => {}}
+                        buttonText={
+                          isDraftLoading ? (
+                            <Spinner className='text-light-blue-main w-5 h-5 768:w-7 768:h-7' />
+                          ) : (
+                            'Save as Draft'
+                          )
+                        }
+                        onClick={() => handleEditsurvey(id, false, false)}
                         className='!min-h-[55px] 960:!min-h-[66px]'
                       />
                       <Button
@@ -220,7 +241,7 @@ function EditSurvey({}) {
                             'Save and publish'
                           )
                         }
-                        onClick={() => handleEditsurvey(id)}
+                        onClick={() => handleEditsurvey(id, true, true)}
                         className='!min-h-[55px] 960:!min-h-[66px]'
                       />
                     </div>
@@ -269,6 +290,13 @@ function EditSurvey({}) {
             />
           </div>
         </Modal>
+      )}
+      {endActiveSurvey && (
+        <DeactivateSurvey
+          isDeactivating={isDeactivating}
+          setEndActiveSurvey={setEndActiveSurvey}
+          handleDeactivate={handleDeactivate}
+        />
       )}
     </AppLayout>
   );

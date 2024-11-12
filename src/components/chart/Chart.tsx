@@ -8,7 +8,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { useMemo } from 'react';
-import { formatToDollar, numberShortener } from '@/utils';
+import { formatCurrency, numberShortener } from '@/utils';
 import { CustomTooltip } from './CustomTooltip';
 import { GraphValues } from '@/types/types';
 
@@ -21,15 +21,7 @@ export const Chart = ({ chartData, transactionType }: Props) => {
   const defaultYAxis = [0, 500000, 1000000, 1500000, 2000000, 2500000, 3000000];
 
   const data = useMemo(() => {
-    const defaultXAxis = [
-      'SUNDAY',
-      'MONDAY',
-      'TUESDAY',
-      'WEDNESDAY',
-      'THURSDAY',
-      'FRIDAY',
-      'SATURDAY',
-    ];
+    const defaultXAxis = ['SUN', 'MON', 'TUE', 'WED', 'THUR', 'FRI', 'SAT'];
     if (chartData.length === 0) {
       return defaultXAxis.map((day) => ({ name: day, value: 0 }));
     }
@@ -57,7 +49,7 @@ export const Chart = ({ chartData, transactionType }: Props) => {
             <CustomTooltip
               yAxisAccessor={'value'}
               formatter={(value) => {
-                return `${formatToDollar(parseInt(value))}`;
+                return `${formatCurrency(Number(value))}`;
               }}
             />
           }

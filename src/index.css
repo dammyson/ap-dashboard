@@ -117,6 +117,44 @@ tr > th.ant-table-cell.ant-table-cell-scrollbar {
   color: #f2f2f7;
 }
 
+/* DASHBOARD */
+
+.registered-users-table .name,
+.registered-users-table .user-id {
+  min-width: 90px;
+}
+
+.registered-users-table .email {
+  max-width: 140px;
+}
+
+.registered-users-table .date-registered,
+.registered-users-table .tier,
+.registered-users-table .status,
+.registered-users-table .last-login,
+.registered-users-table .total-booked-flight,
+.registered-users-table .miles-accumulated {
+  min-width: 140px;
+}
+
+.tickets-purchased-table .email {
+  max-width: 130px;
+}
+
+.tickets-purchased-table .user-id {
+  min-width: 95px;
+}
+
+.tickets-purchased-table .transaction-id,
+.tickets-purchased-table .name,
+.tickets-purchased-table .date-of-purchase,
+.tickets-purchased-table .tickets-purchased,
+.tickets-purchased-table .amount,
+.tickets-purchased-table .payment-method,
+.tickets-purchased-table .status {
+  min-width: 135px;
+}
+
 /* .ant-table-container {
   min-width: 1000px !important;
 } */

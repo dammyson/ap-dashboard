@@ -18,6 +18,7 @@ import { Spinner } from '@/components/svg/spinner/Spinner';
 import { SurveyType } from '@/types/types';
 import dayjs from 'dayjs';
 import { FilterModal } from '@/components/modal/filterModal';
+import { DeactivateSurvey } from '@/components/modal/deactivateSurvey';
 
 function Surveys() {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ function Surveys() {
   const [surveyId, setSurveyId] = useState<number>();
   const [filterTable, setFilterTable] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
+  const [isActive, setIsActive] = useState(false);
   const {
     getSurvey,
     surveys,
@@ -44,13 +46,23 @@ function Surveys() {
     viewDelete,
     setViewDelete,
     deleteSurvey,
+    endActiveSurvey,
+    setEndActiveSurvey,
+    isDeactivating,
+    deactivateSurvey,
   } = useSurvey();
+
+  const handleDeactivate = async () => {
+    await deactivateSurvey();
+    surveyId && tooglePublish(surveyId);
+  };
 
   const { tableColumns } = useSurveyColumn(
     setSurveyModal,
     setisPublished,
     setViewDelete,
     setSurveyId,
+    setIsActive,
   );
 
   const sortedSurveys = (surveys ?? []).sort((a: SurveyType, b: SurveyType) => {
@@ -154,14 +166,23 @@ function Surveys() {
           onClick={() => setSurveyModal(false)}
         >
           <p className='font-semibold text-lg 880:text-[22px] mb-2 560:mb-4 mt-2 560:mt-4 880:mt-8 text-light-primary-deep_black'>
-            {!isPublished
-              ? 'Are you sure you want to publish this survey?'
-              : 'Are you sure you want to unpublish this survey?'}
+            {isActive && isPublished ? (
+              <>
+                This survey is currently active, <br />
+                are you sure you want to unpublish this survey?
+              </>
+            ) : !isPublished ? (
+              'Are you sure you want to publish this survey?'
+            ) : (
+              'Are you sure you want to unpublish this survey?'
+            )}
           </p>
           <p className=' pb-7 880:pb-11 text-[15px] 880:text-[17px] text-light-primary-deep_black'>
-            {!isPublished
-              ? 'This will make the survey available for participants'
-              : 'This will make the survey unavailable for participants'}
+            {isActive && isPublished
+              ? 'This will make the survey, incomplete and unavailable for participants'
+              : !isPublished
+                ? 'This will make the survey available for participants'
+                : 'This will make the survey unavailable for participants'}
           </p>
           <div className='w-full max-w-[300px] 880:max-w-[380px]'>
             <Button
@@ -198,10 +219,19 @@ function Surveys() {
           onClick={() => setViewDelete(false)}
         >
           <p className='font-semibold text-lg 880:text-[22px] mb-2 560:mb-4 mt-2 560:mt-4 880:mt-8 text-light-primary-deep_black'>
-            Are you sure you want to delete this survey?
+            {isActive ? (
+              <>
+                This survey is currently active, <br /> are you sure you want to
+                delete this survey?
+              </>
+            ) : (
+              'Are you sure you want to delete this survey?'
+            )}
           </p>
           <p className='pb-7 880:pb-11 text-[15px] 880:text-[17px] text-light-primary-deep_black'>
-            This action cannot be undone
+            {isActive
+              ? 'All responses and results will be permanently lost, and this action cannot be undone.'
+              : ' This action cannot be undone'}
           </p>
           <div className='w-full max-w-[300px] 880:max-w-[380px]'>
             <Button
@@ -242,6 +272,13 @@ function Surveys() {
           onChange={(e) => setSurveyTitle(e.target.value)}
           onclick={() => setFilterTable(false)}
           handleFilter={handleFilter}
+        />
+      )}
+      {endActiveSurvey && (
+        <DeactivateSurvey
+          isDeactivating={isDeactivating}
+          setEndActiveSurvey={setEndActiveSurvey}
+          handleDeactivate={handleDeactivate}
         />
       )}
     </AppLayout>
