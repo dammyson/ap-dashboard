@@ -5,23 +5,25 @@ import { TicketsPurchased } from '@/components/dashboardTables/ticketsPurchased'
 import { TotalRevenue } from '@/components/dashboardTables/totalRevenue';
 import { ActiveUsers } from '@/components/dashboardTables/activeUsers';
 import { useEffect, useState } from 'react';
-import { formatToDollar, numberShortener } from '@/utils';
+import { numberShortener } from '@/utils';
 import {
   ArrowRight,
-  Dot,
   OptionsVertical,
 } from '@/components/svg/dashboard/Dashboard';
 import clsx from 'clsx';
 import { Card } from '@/components/card';
 import { Filter } from '@/components/svg/surveys/Surveys';
-import { PieChart } from 'react-minimal-pie-chart';
-import { chartData, devices, RecentActivities } from './constants';
+import { chartData, RecentActivities } from './constants';
 import { Chart } from '@/components/chart/Chart';
 import { HorizontalBarChart } from '@/components/chart/HorizontalBarChart';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { useManageDashboard } from '@/api/dashboard/dashboard';
 import { WeeklyAnalysis } from '@/components/dashboardAnalytics/weeklyAnalysis';
 import { SkeletonChartData } from '@/components/skeletonLoader/skeletonChartData';
+import { SkeletonByDevices } from '@/components/skeletonLoader/skeletonByDevices';
+import { PieChartData } from '@/components/chart/PieChart';
+import { SkeletonByScreen } from '@/components/skeletonLoader/skeletonByScreen';
+import { SkeletonActivities } from '@/components/skeletonLoader/skeletonActivities';
 
 const tabs = [
   { name: 'Ticket sales', value: 2000 },
@@ -136,64 +138,20 @@ function Dashboard() {
                 )}
               </div>
               <div className='col-span-12 1240:col-span-4 '>
-                <Card
-                  hasHeader
-                  trailingIcon1={<Filter />}
-                  title='Users by devices'
-                  className='!pb-0.5'
-                  mainClass='1240:h-full max-h-[513px]'
-                  titleClass='text-lg'
-                >
-                  <p className='text-light-grey-700 text-sm font-normal'>
-                    Last 7 days
-                  </p>
-                  <div>
-                    <PieChart
-                      lineWidth={53}
-                      radius={28}
-                      data={devices}
-                      segmentsStyle={(index) => ({
-                        strokeWidth: index == 1 ? '18' : '',
-                        cursor: 'pointer',
-                      })}
-                      animate
-                      startAngle={90}
-                      labelStyle={{
-                        fontSize: 5,
-                        fill: '#fff',
-                        fontWeight: 600,
-                      }}
-                      labelPosition={70}
-                      className='max-h-[300px] 1240:max-h-inherit'
-                      totalValue={100}
-                      label={({ dataEntry }) => `${dataEntry.value}%`}
-                    />
-                  </div>
-                  <div className='grid gap-2 pb-2 560:pb-0'>
-                    {devices.map((device, index) => {
-                      return (
-                        <div key={index} className='flex items-center gap-2'>
-                          <Dot
-                            className={
-                              index === 0
-                                ? 'text-light-secondary-bright_blue'
-                                : 'text-light-secondary-dark_pink'
-                            }
-                          />
-                          <p className='text-light-grey-300 text-sm min-w-[60px]'>
-                            {device.label}
-                          </p>
-                          <p className='text-[#1C2A53] text-sm min-w-[60px]'>
-                            {formatToDollar(device.amount)}
-                          </p>
-                          <p className='text-light-grey-300 text-sm min-w-[60px] ml-2'>
-                            {device.value}%
-                          </p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </Card>
+                {isLoading ? (
+                  <SkeletonByDevices />
+                ) : (
+                  <Card
+                    hasHeader
+                    trailingIcon1={<Filter />}
+                    title='Users by devices'
+                    className='!pb-0.5'
+                    mainClass='1240:h-full max-h-[513px]'
+                    titleClass='text-lg'
+                  >
+                    <PieChartData />
+                  </Card>
+                )}
               </div>
             </div>
           )}
@@ -215,46 +173,54 @@ function Dashboard() {
             <>
               <div className='mt-2 560:mt-8 1240:mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>
                 <div className='col-span-12 1240:col-span-8 relative'>
-                  <Card
-                    hasHeader
-                    hasBadge
-                    title='Users by screen resolution'
-                    trailingIcon1={<Filter />}
-                    titleClass='text-lg'
-                  >
-                    <HorizontalBarChart />
-                  </Card>
+                  {!isLoading ? (
+                    <SkeletonByScreen />
+                  ) : (
+                    <Card
+                      hasHeader
+                      hasBadge
+                      title='Users by screen resolution'
+                      trailingIcon1={<Filter />}
+                      titleClass='text-lg'
+                    >
+                      <HorizontalBarChart />
+                    </Card>
+                  )}
                 </div>
                 <div className='col-span-12 1240:col-span-4'>
-                  <Card
-                    hasHeader
-                    title='Recent activities'
-                    titleClass='text-lg'
-                  >
-                    <div className='flex flex-col gap-3 h-[390px] overflow-y-auto hidden-scrollbar mb-4 560:mb-12'>
-                      {RecentActivities.map((activity, index) => (
-                        <div
-                          key={index}
-                          className=' bg-[#E9EEF5] rounded-tr-[10px] rounded-tl-[10px] rounded-bl-[10px] px-4 py-3'
-                        >
-                          <div className='flex items-center gap-2 justify-between'>
-                            <p className='text-[16px] text-light-blue-main font-medium'>
-                              {activity.label}
-                            </p>
-                            <OptionsVertical className='cursor-pointer' />
+                  {isLoading ? (
+                    <SkeletonActivities />
+                  ) : (
+                    <Card
+                      hasHeader
+                      title='Recent activities'
+                      titleClass='text-lg'
+                    >
+                      <div className='flex flex-col gap-3 h-[390px] overflow-y-auto hidden-scrollbar mb-4 560:mb-12'>
+                        {RecentActivities.map((activity, index) => (
+                          <div
+                            key={index}
+                            className=' bg-[#E9EEF5] rounded-tr-[10px] rounded-tl-[10px] rounded-bl-[10px] px-4 py-3'
+                          >
+                            <div className='flex items-center gap-2 justify-between'>
+                              <p className='text-[16px] text-light-blue-main font-medium'>
+                                {activity.label}
+                              </p>
+                              <OptionsVertical className='cursor-pointer' />
+                            </div>
+                            <div className='flex items-center justify-between gap-6'>
+                              <p className='text-[13px] text-light-grey-600 truncate max-w-[221px]'>
+                                {activity.description}
+                              </p>
+                              <span className='text-light-grey-600 text-[10px] min-w-[60px]'>
+                                12 mins ago
+                              </span>
+                            </div>
                           </div>
-                          <div className='flex items-center justify-between gap-6'>
-                            <p className='text-[13px] text-light-grey-600 truncate max-w-[221px]'>
-                              {activity.description}
-                            </p>
-                            <span className='text-light-grey-600 text-[10px] min-w-[60px]'>
-                              12 mins ago
-                            </span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </Card>
+                        ))}
+                      </div>
+                    </Card>
+                  )}
                 </div>
               </div>
             </>
