@@ -5,8 +5,13 @@ import { useUser } from '@/context/AppContext';
 import { Avatar } from '../avatar/Avatar';
 import { useGetColorByChar } from '@/hooks/useGetColorByChar';
 import { getInitials } from '@/utils';
+import WelcomeMessage from '../welcomeMessage';
 
-export const Header = () => {
+interface Props {
+  hasWelcomeMessage?: boolean;
+}
+
+export const Header = ({ hasWelcomeMessage = false }: Props) => {
   const navigate = useNavigate();
   const { user } = useUser();
   const { getColor } = useGetColorByChar();
@@ -14,13 +19,22 @@ export const Header = () => {
   return (
     <div className='flex w-full h-20 gap-5 560:gap-10 items-center justify-between px-2 mb-6 768:px-4'>
       <div className='flex-grow max-w-[480px] 560:min-w-[255px]'>
-        <Input
-          placeHolder='Search'
-          inputSize='small'
-          trailingIcon={<Search />}
-          className='placeholder:text-light-grey-900'
-          hasBorder
-        />
+        {hasWelcomeMessage ? (
+          <div className='mt-5'>
+            <WelcomeMessage
+              username={user?.user_name.split(' ')[1]}
+              description="Let's review today's insights"
+            />
+          </div>
+        ) : (
+          <Input
+            placeHolder='Search'
+            inputSize='small'
+            trailingIcon={<Search />}
+            className='placeholder:text-light-grey-900'
+            hasBorder
+          />
+        )}
       </div>
       <div className='flex items-center 560:gap-7'>
         {user?.image_url_link &&
@@ -41,7 +55,7 @@ export const Header = () => {
               user?.user_name ? getInitials(user?.user_name) : undefined
             }
             onClick={() => navigate('/settings')}
-            className='hidden 560:flex'
+            className='hidden 560:flex cursor-pointer'
             textClassName='560:text-lg 960:text-xl'
           />
         )}

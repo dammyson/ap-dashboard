@@ -1,5 +1,4 @@
 import { Header } from '../../components/header';
-import WelcomeMessage from '../../components/welcomeMessage';
 import { AppLayout } from '../../components/layout/AppLayout';
 import { UsersRegistered } from '@/components/dashboardTables/usersRegistered';
 import { TicketsPurchased } from '@/components/dashboardTables/ticketsPurchased';
@@ -24,7 +23,6 @@ import { chartData, devices, RecentActivities, stats } from './constants';
 import { Chart } from '@/components/chart/Chart';
 import { HorizontalBarChart } from '@/components/chart/HorizontalBarChart';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
-import { useUser } from '@/context/AppContext';
 
 const tabs = [
   { name: 'Ticket sales', value: 2000 },
@@ -36,7 +34,6 @@ function Dashboard() {
   const [activeStat, setActiveStat] = useState<string>('');
   const currentTab = tabs[0];
   const [activeTab, setActiveTab] = useState(currentTab);
-  const { user } = useUser();
 
   return (
     <AppLayout logo=''>
@@ -46,15 +43,8 @@ function Dashboard() {
           'py-7 px-5 1240:pl-14 1240:pr-10',
         )}
       >
-        <Header />
         <div className='1240:pr-12'>
-          <div>
-            <WelcomeMessage
-              username={user?.user_name.split(' ')[1]}
-              description="Let's review today's insights"
-            />
-          </div>
-
+          <Header hasWelcomeMessage />
           <div className='flex items-center justify-end gap-1 mt-5 480:mt-0'>
             <p className='text-gradient text-[16px] 560:text-lg font-medium'>
               Swipe
