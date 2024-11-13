@@ -11,6 +11,7 @@ export interface SurveyType {
   created_at: string;
   is_published: boolean;
   is_active: boolean;
+  is_completed: boolean;
 }
 
 export interface ViewParticipants {
