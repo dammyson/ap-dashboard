@@ -26,44 +26,26 @@ import { SkeletonByScreen } from '@/components/skeletonLoader/skeletonByScreen';
 import { SkeletonActivities } from '@/components/skeletonLoader/skeletonActivities';
 
 function Dashboard() {
+  const { loaders, actions, revenueChart, analysis, table } =
+    useManageDashboard();
   const [activeStat, setActiveStat] = useState<string>('');
-  const {
-    isLoading,
-    registeredUsers,
-    registeredPercentChange,
-    ticketsPurchased,
-    ticketsPercentChange,
-    totalRevenue,
-    revenuePrecentChange,
-    registeredUsersData,
-    ticketsPurchasedData,
-    chartData,
-    ticketSales,
-    ancillary,
-    revenue,
-    setChartData,
-    // setPeriod,
-    isChartLoading,
-    getDashboardAnalytics,
-  } = useManageDashboard();
-
   const tabs = [
-    { name: 'Ticket sales', value: ticketSales.amount },
-    { name: 'Ancillary sales', value: ancillary.amount },
-    { name: 'Total revenue', value: revenue.amount },
+    { name: 'Ticket sales', value: revenueChart.ticketSales.amount },
+    { name: 'Ancillary sales', value: revenueChart.ancillary.amount },
+    { name: 'Total revenue', value: revenueChart.revenue.amount },
   ];
   const [activeTab, setActiveTab] = useState(tabs[0]);
 
   useEffect(() => {
-    getDashboardAnalytics();
+    actions.getDashboardAnalytics();
   }, []);
 
   useEffect(() => {
     if (activeTab.name === 'Ticket sales') {
-      setChartData(ticketSales.data);
+      revenueChart.setChartData(revenueChart.ticketSales.data);
     } else if (activeTab.name === 'Ancillary sales') {
-      setChartData(ancillary.data);
-    } else setChartData(revenue.data);
+      revenueChart.setChartData(revenueChart.ancillary.data);
+    } else revenueChart.setChartData(revenueChart.revenue.data);
   }, [activeTab]);
 
   return (
@@ -87,20 +69,20 @@ function Dashboard() {
               <WeeklyAnalysis
                 activeStat={activeStat}
                 setActiveStat={setActiveStat}
-                registeredUsers={registeredUsers}
-                registeredPercentChange={registeredPercentChange}
-                ticketsPurchased={ticketsPurchased}
-                ticketsPercentChange={ticketsPercentChange}
-                totalRevenue={totalRevenue}
-                revenuePrecentChange={revenuePrecentChange}
-                isLoading={isLoading}
+                registeredUsers={analysis.registeredUsers}
+                registeredPercentChange={analysis.registeredPercentChange}
+                ticketsPurchased={analysis.ticketsPurchased}
+                ticketsPercentChange={analysis.ticketsPercentChange}
+                totalRevenue={analysis.totalRevenue}
+                revenuePrecentChange={analysis.revenuePrecentChange}
+                isLoading={loaders.isLoading}
               />
             </div>
           </div>
           {activeStat !== 'active' && (
             <div className='mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>
               <div className='col-span-12 1240:col-span-8 relative'>
-                {isChartLoading ? (
+                {loaders.isChartLoading ? (
                   <SkeletonChartData />
                 ) : (
                   <Card
@@ -134,12 +116,15 @@ function Dashboard() {
                         );
                       })}
                     </div>
-                    <Chart chartData={chartData} transactionType='all' />
+                    <Chart
+                      chartData={revenueChart.chartData}
+                      transactionType='all'
+                    />
                   </Card>
                 )}
               </div>
               <div className='col-span-12 1240:col-span-4 '>
-                {isLoading ? (
+                {loaders.isLoading ? (
                   <SkeletonByDevices />
                 ) : (
                   <Card
@@ -158,13 +143,13 @@ function Dashboard() {
           )}
           {activeStat === 'registered' ? (
             <UsersRegistered
-              isLoading={isLoading}
-              registeredUsersData={registeredUsersData}
+              isLoading={loaders.isLoading}
+              registeredUsersData={table.registeredUsersData}
             />
           ) : activeStat === 'tickets' ? (
             <TicketsPurchased
-              isLoading={isLoading}
-              ticketsPurchasedData={ticketsPurchasedData}
+              isLoading={loaders.isLoading}
+              ticketsPurchasedData={table.ticketsPurchasedData}
             />
           ) : activeStat === 'revenue' ? (
             <TotalRevenue />
@@ -174,7 +159,7 @@ function Dashboard() {
             <>
               <div className='mt-2 560:mt-8 1240:mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>
                 <div className='col-span-12 1240:col-span-8 relative'>
-                  {isLoading ? (
+                  {loaders.isLoading ? (
                     <SkeletonByScreen />
                   ) : (
                     <Card
@@ -189,7 +174,7 @@ function Dashboard() {
                   )}
                 </div>
                 <div className='col-span-12 1240:col-span-4'>
-                  {isLoading ? (
+                  {loaders.isLoading ? (
                     <SkeletonActivities />
                   ) : (
                     <Card

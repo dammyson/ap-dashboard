@@ -36,7 +36,6 @@ export const useManageDashboard = () => {
     amount: 0,
     data: [],
   });
-  const [period, setPeriod] = useState('weekly');
   const [chartData, setChartData] = useState<GraphValues[]>([]);
 
   const getWeeklyAnalysisData = async () => {
@@ -163,29 +162,38 @@ export const useManageDashboard = () => {
     getWeeklyAnalysisData();
     getRegisteredUsersTable();
     getPurchasedTicketTable();
-    getAreaChart(period);
+    getAreaChart('weekly');
   };
 
   return {
-    isLoading,
-    registeredUsers,
-    registeredPercentChange,
-    ticketsPurchased,
-    ticketsPercentChange,
-    totalRevenue,
-    revenuePrecentChange,
-    registeredUsersData,
-    ticketsPurchasedData,
-    isChartLoading,
-    chartData,
-    ticketSales,
-    ancillary,
-    revenue,
-    setChartData,
-    setPeriod,
-    getWeeklyAnalysisData,
-    getRegisteredUsersTable,
-    getPurchasedTicketTable,
-    getDashboardAnalytics,
+    loaders: {
+      isLoading,
+      isChartLoading,
+    },
+    actions: {
+      getWeeklyAnalysisData,
+      getRegisteredUsersTable,
+      getPurchasedTicketTable,
+      getDashboardAnalytics,
+    },
+    revenueChart: {
+      ticketSales,
+      ancillary,
+      revenue,
+      setChartData,
+      chartData,
+    },
+    analysis: {
+      registeredUsers,
+      registeredPercentChange,
+      ticketsPurchased,
+      ticketsPercentChange,
+      totalRevenue,
+      revenuePrecentChange,
+    },
+    table: {
+      registeredUsersData,
+      ticketsPurchasedData,
+    },
   };
 };

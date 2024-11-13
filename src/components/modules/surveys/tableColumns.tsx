@@ -113,7 +113,6 @@ export const useSurveyColumn = (
                   } else setIsActive(false);
                   setSurveyId(record?.id);
                   setViewDelete(true);
-                  console.log(record);
                 }}
                 className='!bg-[#C7C7CC] min-w-[105px] !px-0 hover:!bg-[#bababe]'
               />
