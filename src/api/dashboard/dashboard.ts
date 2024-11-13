@@ -24,6 +24,19 @@ export const useManageDashboard = () => {
     TicketsPurchasedViaApp[]
   >([]);
   const [isChartLoading, setIsChartLoading] = useState(false);
+  const [ticketSales, setTicketSales] = useState({
+    amount: 0,
+    data: [],
+  });
+  const [ancillary, setAncillary] = useState({
+    amount: 0,
+    data: [],
+  });
+  const [revenue, setRevenue] = useState({
+    amount: 0,
+    data: [],
+  });
+  const [period, setPeriod] = useState('weekly');
   const [chartData, setChartData] = useState<GraphValues[]>([]);
 
   const getWeeklyAnalysisData = async () => {
@@ -108,11 +121,11 @@ export const useManageDashboard = () => {
       toast.error((error as MutationErrorPayload)?.data?.message);
     }
   };
-  const getTicketSalesRevenue = async () => {
+  const getAreaChart = async (period: string) => {
     try {
       setIsChartLoading(true);
       const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/ticket-via-app`,
+        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/revenue-graph/${period}`,
         {
           method: 'GET',
           headers: {
@@ -127,57 +140,19 @@ export const useManageDashboard = () => {
       if (res?.error) {
         toast.error(res.message);
       } else {
-        setChartData(res.tickets);
-      }
-    } catch (error) {
-      toast.error((error as MutationErrorPayload)?.data?.message);
-    }
-  };
-  const getAncilaryRevenue = async () => {
-    try {
-      setIsChartLoading(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/ancillary-via-app`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      const res = await data.json();
-      setIsChartLoading(false);
-      if (res?.error) {
-        toast.error(res.message);
-      } else {
-        setChartData(res.ancillary_tickets);
-      }
-    } catch (error) {
-      toast.error((error as MutationErrorPayload)?.data?.message);
-    }
-  };
-  const getTotalRevenue = async () => {
-    try {
-      setIsChartLoading(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/total-revenue-via-app`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      const res = await data.json();
-      setIsChartLoading(false);
-      if (res?.error) {
-        toast.error(res.message);
-      } else {
-        setChartData(res.total_revenue);
+        setTicketSales({
+          amount: res.ticket.ticket_amount,
+          data: res.ticket.ticket_data,
+        });
+        setAncillary({
+          amount: res.ancillary.ancillary_amount,
+          data: res.ancillary.ancillary_data,
+        });
+        setRevenue({
+          amount: res.revenue.revenue_amount,
+          data: res.revenue.revenue_data,
+        });
+        setChartData(res.ticket.ticket_data);
       }
     } catch (error) {
       toast.error((error as MutationErrorPayload)?.data?.message);
@@ -188,6 +163,7 @@ export const useManageDashboard = () => {
     getWeeklyAnalysisData();
     getRegisteredUsersTable();
     getPurchasedTicketTable();
+    getAreaChart(period);
   };
 
   return {
@@ -202,12 +178,14 @@ export const useManageDashboard = () => {
     ticketsPurchasedData,
     isChartLoading,
     chartData,
+    ticketSales,
+    ancillary,
+    revenue,
+    setChartData,
+    setPeriod,
     getWeeklyAnalysisData,
     getRegisteredUsersTable,
     getPurchasedTicketTable,
     getDashboardAnalytics,
-    getTicketSalesRevenue,
-    getAncilaryRevenue,
-    getTotalRevenue,
   };
 };

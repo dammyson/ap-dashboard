@@ -13,7 +13,7 @@ import {
 import clsx from 'clsx';
 import { Card } from '@/components/card';
 import { Filter } from '@/components/svg/surveys/Surveys';
-import { chartData, RecentActivities } from './constants';
+import { RecentActivities } from './constants';
 import { Chart } from '@/components/chart/Chart';
 import { HorizontalBarChart } from '@/components/chart/HorizontalBarChart';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
@@ -25,16 +25,8 @@ import { PieChartData } from '@/components/chart/PieChart';
 import { SkeletonByScreen } from '@/components/skeletonLoader/skeletonByScreen';
 import { SkeletonActivities } from '@/components/skeletonLoader/skeletonActivities';
 
-const tabs = [
-  { name: 'Ticket sales', value: 2000 },
-  { name: 'Ancillary sales', value: 10000 },
-  { name: 'Total revenue', value: 300000 },
-];
-
 function Dashboard() {
   const [activeStat, setActiveStat] = useState<string>('');
-  const currentTab = tabs[0];
-  const [activeTab, setActiveTab] = useState(currentTab);
   const {
     isLoading,
     registeredUsers,
@@ -45,25 +37,34 @@ function Dashboard() {
     revenuePrecentChange,
     registeredUsersData,
     ticketsPurchasedData,
-    // chartData,
-    // isChartLoading,
+    chartData,
+    ticketSales,
+    ancillary,
+    revenue,
+    setChartData,
+    // setPeriod,
+    isChartLoading,
     getDashboardAnalytics,
-    // getTicketSalesRevenue,
-    // getAncilaryRevenue,
-    // getTotalRevenue,
   } = useManageDashboard();
+
+  const tabs = [
+    { name: 'Ticket sales', value: ticketSales.amount },
+    { name: 'Ancillary sales', value: ancillary.amount },
+    { name: 'Total revenue', value: revenue.amount },
+  ];
+  const [activeTab, setActiveTab] = useState(tabs[0]);
 
   useEffect(() => {
     getDashboardAnalytics();
   }, []);
 
-  // useEffect(() => {
-  //   if (activeTab.name === 'Ticket sales') {
-  //     getTicketSalesRevenue();
-  //   } else if (activeTab.name === 'Ancillary sales') {
-  //     getAncilaryRevenue();
-  //   } else getTotalRevenue();
-  // }, [activeTab]);
+  useEffect(() => {
+    if (activeTab.name === 'Ticket sales') {
+      setChartData(ticketSales.data);
+    } else if (activeTab.name === 'Ancillary sales') {
+      setChartData(ancillary.data);
+    } else setChartData(revenue.data);
+  }, [activeTab]);
 
   return (
     <AppLayout logo=''>
@@ -99,7 +100,7 @@ function Dashboard() {
           {activeStat !== 'active' && (
             <div className='mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>
               <div className='col-span-12 1240:col-span-8 relative'>
-                {isLoading ? (
+                {isChartLoading ? (
                   <SkeletonChartData />
                 ) : (
                   <Card
@@ -117,7 +118,7 @@ function Dashboard() {
                             onClick={() => setActiveTab(tab)}
                             key={index}
                             className={clsx(
-                              activeTab === tab
+                              activeTab.name === tab.name
                                 ? 'border-b-4 border-b-light-blue-main sky-blue-gradient-bg'
                                 : 'border-b border-b-[#E9E7FD]',
                               'p-2 pb-3.5 cursor-pointer',
@@ -173,7 +174,7 @@ function Dashboard() {
             <>
               <div className='mt-2 560:mt-8 1240:mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>
                 <div className='col-span-12 1240:col-span-8 relative'>
-                  {!isLoading ? (
+                  {isLoading ? (
                     <SkeletonByScreen />
                   ) : (
                     <Card
