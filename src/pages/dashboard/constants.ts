@@ -36,32 +36,32 @@ export const devices = [
 
 export const chartData = [
   {
-    name: 'Mon',
-    value: 240000,
+    day_of_week: 'Mon',
+    total_amount: 240000,
   },
   {
-    name: 'Tue',
-    value: 221000,
+    day_of_week: 'Tue',
+    total_amount: 221000,
   },
   {
-    name: 'Wed',
-    value: 2290,
+    day_of_week: 'Wed',
+    total_amount: 2290,
   },
   {
-    name: 'Thu',
-    value: 2000,
+    day_of_week: 'Thu',
+    total_amount: 2000,
   },
   {
-    name: 'Fri',
-    value: 2181,
+    day_of_week: 'Fri',
+    total_amount: 2181,
   },
   {
-    name: 'Sat',
-    value: 25000,
+    day_of_week: 'Sat',
+    total_amount: 25000,
   },
   {
-    name: 'Sun',
-    value: 210000,
+    day_of_week: 'Sun',
+    total_amount: 210000,
   },
 ];
 
