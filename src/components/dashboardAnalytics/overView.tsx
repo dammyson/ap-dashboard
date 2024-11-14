@@ -39,8 +39,9 @@ export const OverView = ({
     },
     {
       title: 'Active users',
-      value: overView?.total_revenue.total7daysRevenue,
-      variance: overView?.total_revenue.percentageChange,
+      value:
+        overView?.total_registered_users.total_registered_users_last_seven_days,
+      variance: overView?.total_registered_users.percentage,
       state: 'active',
     },
   ];
@@ -51,7 +52,7 @@ export const OverView = ({
         const isLast = index === stats.length - 1;
         return (
           <>
-            {!isLoading ? (
+            {isLoading ? (
               <SkeletonOverView />
             ) : (
               <div

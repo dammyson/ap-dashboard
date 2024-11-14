@@ -1,9 +1,10 @@
-import { initialOverview } from '@/constants/constants';
+import { initailAreaChart, initialOverview } from '@/constants/constants';
 import { useUser } from '@/context/AppContext';
 import {
   GraphValues,
   MutationErrorPayload,
   OverViewType,
+  RevenueGraph,
   TicketsPurchasedViaApp,
   TotalUsersRegistered,
 } from '@/types/types';
@@ -21,18 +22,9 @@ export const useManageDashboard = () => {
     TicketsPurchasedViaApp[]
   >([]);
   const [isChartLoading, setIsChartLoading] = useState(false);
-  const [ticketSales, setTicketSales] = useState({
-    amount: 0,
-    data: [],
-  });
-  const [ancillary, setAncillary] = useState({
-    amount: 0,
-    data: [],
-  });
-  const [revenue, setRevenue] = useState({
-    amount: 0,
-    data: [],
-  });
+  const [revenueGraph, setRevenueGraph] =
+    useState<RevenueGraph>(initailAreaChart);
+
   const [chartData, setChartData] = useState<GraphValues[]>([]);
 
   const getOverViewData = async () => {
@@ -54,7 +46,6 @@ export const useManageDashboard = () => {
         toast.error(res.message);
       } else {
         setOverView(res);
-        console.log(res);
       }
     } catch (error) {
       toast.error((error as MutationErrorPayload)?.data?.message);
@@ -129,18 +120,8 @@ export const useManageDashboard = () => {
       if (res?.error) {
         toast.error(res.message);
       } else {
-        setTicketSales({
-          amount: res.ticket.ticket_amount,
-          data: res.ticket.ticket_data,
-        });
-        setAncillary({
-          amount: res.ancillary.ancillary_amount,
-          data: res.ancillary.ancillary_data,
-        });
-        setRevenue({
-          amount: res.revenue.revenue_amount,
-          data: res.revenue.revenue_data,
-        });
+        setRevenueGraph(res);
+
         setChartData(res.ticket.ticket_data);
       }
     } catch (error) {
@@ -156,6 +137,10 @@ export const useManageDashboard = () => {
   };
 
   return {
+    revenueGraph,
+    setChartData,
+    chartData,
+    overView,
     loaders: {
       isLoading,
       isChartLoading,
@@ -166,14 +151,6 @@ export const useManageDashboard = () => {
       getPurchasedTicketTable,
       getDashboardAnalytics,
     },
-    revenueChart: {
-      ticketSales,
-      ancillary,
-      revenue,
-      setChartData,
-      chartData,
-    },
-    overView,
     table: {
       registeredUsersData,
       ticketsPurchasedData,

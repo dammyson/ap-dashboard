@@ -26,13 +26,23 @@ import { SkeletonByScreen } from '@/components/skeletonLoader/skeletonByScreen';
 import { SkeletonActivities } from '@/components/skeletonLoader/skeletonActivities';
 
 function Dashboard() {
-  const { loaders, actions, revenueChart, overView, table } =
-    useManageDashboard();
+  const {
+    loaders,
+    actions,
+    revenueGraph,
+    chartData,
+    setChartData,
+    overView,
+    table,
+  } = useManageDashboard();
   const [activeStat, setActiveStat] = useState<string>('');
   const tabs = [
-    { name: 'Ticket sales', value: revenueChart.ticketSales.amount },
-    { name: 'Ancillary sales', value: revenueChart.ancillary.amount },
-    { name: 'Total revenue', value: revenueChart.revenue.amount },
+    { name: 'Ticket sales', value: revenueGraph?.ticket.ticket_amount },
+    {
+      name: 'Ancillary sales',
+      value: revenueGraph?.ancillary.ancillary_amount,
+    },
+    { name: 'Total revenue', value: revenueGraph?.revenue.revenue_amount },
   ];
   const [activeTab, setActiveTab] = useState(tabs[0]);
 
@@ -42,10 +52,10 @@ function Dashboard() {
 
   useEffect(() => {
     if (activeTab.name === 'Ticket sales') {
-      revenueChart.setChartData(revenueChart.ticketSales.data);
+      setChartData(revenueGraph?.ticket.ticket_data);
     } else if (activeTab.name === 'Ancillary sales') {
-      revenueChart.setChartData(revenueChart.ancillary.data);
-    } else revenueChart.setChartData(revenueChart.revenue.data);
+      setChartData(revenueGraph?.ancillary.ancillary_data);
+    } else setChartData(revenueGraph?.revenue.revenue_data);
   }, [activeTab]);
 
   return (
@@ -111,10 +121,7 @@ function Dashboard() {
                         );
                       })}
                     </div>
-                    <Chart
-                      chartData={revenueChart.chartData}
-                      transactionType='all'
-                    />
+                    <Chart chartData={chartData} transactionType='all' />
                   </Card>
                 )}
               </div>

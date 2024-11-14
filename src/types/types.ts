@@ -238,3 +238,18 @@ export interface OverViewType {
     percentageChange: number;
   };
 }
+
+export interface RevenueGraph {
+  ticket: {
+    ticket_amount: number;
+    ticket_data: GraphValues[];
+  };
+  ancillary: {
+    ancillary_amount: number;
+    ancillary_data: GraphValues[];
+  };
+  revenue: {
+    revenue_amount: number;
+    revenue_data: GraphValues[];
+  };
+}
