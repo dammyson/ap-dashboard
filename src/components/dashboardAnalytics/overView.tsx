@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { ArrowDown, ArrowUp, Fall, Rise } from '../svg/dashboard/Dashboard';
 import { numberShortener } from '@/utils';
 import { OverViewType, OverViewCardsType } from '@/types/types';
-import { SkeletonOverView } from '../skeletonLoader/skeletonWeekAnalysis';
+import { SkeletonLoader } from '@/components/customSkeletonLoader/skeletonLoader';
 
 interface Props {
   activeStat: string;
@@ -53,7 +53,7 @@ export const OverView = ({
         return (
           <>
             {isLoading ? (
-              <SkeletonOverView />
+              <SkeletonLoader hasOverview />
             ) : (
               <div
                 onClick={() => {

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { Shimmer } from './animatSkeleton';
+import { Shimmer } from './shimmer';
 
 interface SkeletonProps {
   type: string;

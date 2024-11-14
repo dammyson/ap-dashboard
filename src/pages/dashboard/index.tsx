@@ -19,11 +19,8 @@ import { HorizontalBarChart } from '@/components/chart/HorizontalBarChart';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { useManageDashboard } from '@/api/dashboard/dashboard';
 import { OverView } from '@/components/dashboardAnalytics/overView';
-import { SkeletonChartData } from '@/components/skeletonLoader/skeletonChartData';
-import { SkeletonByDevices } from '@/components/skeletonLoader/skeletonByDevices';
 import { PieChartData } from '@/components/chart/PieChart';
-import { SkeletonByScreen } from '@/components/skeletonLoader/skeletonByScreen';
-import { SkeletonActivities } from '@/components/skeletonLoader/skeletonActivities';
+import { SkeletonLoader } from '@/components/customSkeletonLoader/skeletonLoader';
 
 function Dashboard() {
   const {
@@ -88,7 +85,7 @@ function Dashboard() {
             <div className='mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>
               <div className='col-span-12 1240:col-span-8 relative'>
                 {loaders.isChartLoading ? (
-                  <SkeletonChartData />
+                  <SkeletonLoader hasChartData />
                 ) : (
                   <Card
                     hasBadge
@@ -127,7 +124,7 @@ function Dashboard() {
               </div>
               <div className='col-span-12 1240:col-span-4 '>
                 {loaders.isLoading ? (
-                  <SkeletonByDevices />
+                  <SkeletonLoader hasByDevice />
                 ) : (
                   <Card
                     hasHeader
@@ -162,7 +159,7 @@ function Dashboard() {
               <div className='mt-2 560:mt-8 1240:mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>
                 <div className='col-span-12 1240:col-span-8 relative'>
                   {loaders.isLoading ? (
-                    <SkeletonByScreen />
+                    <SkeletonLoader hasByScreen />
                   ) : (
                     <Card
                       hasHeader
@@ -177,7 +174,7 @@ function Dashboard() {
                 </div>
                 <div className='col-span-12 1240:col-span-4'>
                   {loaders.isLoading ? (
-                    <SkeletonActivities />
+                    <SkeletonLoader hasByActivities />
                   ) : (
                     <Card
                       hasHeader
