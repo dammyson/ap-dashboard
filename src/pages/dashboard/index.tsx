@@ -18,7 +18,7 @@ import { Chart } from '@/components/chart/Chart';
 import { HorizontalBarChart } from '@/components/chart/HorizontalBarChart';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { useManageDashboard } from '@/api/dashboard/dashboard';
-import { WeeklyAnalysis } from '@/components/dashboardAnalytics/weeklyAnalysis';
+import { OverView } from '@/components/dashboardAnalytics/overView';
 import { SkeletonChartData } from '@/components/skeletonLoader/skeletonChartData';
 import { SkeletonByDevices } from '@/components/skeletonLoader/skeletonByDevices';
 import { PieChartData } from '@/components/chart/PieChart';
@@ -26,7 +26,7 @@ import { SkeletonByScreen } from '@/components/skeletonLoader/skeletonByScreen';
 import { SkeletonActivities } from '@/components/skeletonLoader/skeletonActivities';
 
 function Dashboard() {
-  const { loaders, actions, revenueChart, analysis, table } =
+  const { loaders, actions, revenueChart, overView, table } =
     useManageDashboard();
   const [activeStat, setActiveStat] = useState<string>('');
   const tabs = [
@@ -66,15 +66,10 @@ function Dashboard() {
           </div>
           <div className='hidden-scrollbar overflow-x-auto'>
             <div className='min-w-fit'>
-              <WeeklyAnalysis
+              <OverView
                 activeStat={activeStat}
                 setActiveStat={setActiveStat}
-                registeredUsers={analysis.registeredUsers}
-                registeredPercentChange={analysis.registeredPercentChange}
-                ticketsPurchased={analysis.ticketsPurchased}
-                ticketsPercentChange={analysis.ticketsPercentChange}
-                totalRevenue={analysis.totalRevenue}
-                revenuePrecentChange={analysis.revenuePrecentChange}
+                overView={overView}
                 isLoading={loaders.isLoading}
               />
             </div>

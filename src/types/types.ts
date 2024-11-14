@@ -217,10 +217,24 @@ export interface ResetPassword {
   otp: string;
 }
 
-export interface WeeklyAnalysisType {
+export interface OverViewCardsType {
   title: string;
-  period: string;
   value: number;
   variance: number;
   state: string;
+}
+
+export interface OverViewType {
+  total_registered_users: {
+    total_registered_users_last_seven_days: number;
+    percentage: number;
+  };
+  total_purchased_ticket: {
+    ticket7DaysAgo: number;
+    percentageChange: number;
+  };
+  total_revenue: {
+    total7daysRevenue: number;
+    percentageChange: number;
+  };
 }

@@ -1,6 +1,6 @@
 import { Skeleton } from './skeleton';
 
-export const SkeletonWeeklyAnalysis = () => {
+export const SkeletonOverView = () => {
   return (
     <div className='relative bg-[#f2f2f2] py-5 px-4 rounded-[20px] w-[410px] max-h-[200px] overflow-hidden'>
       <div>

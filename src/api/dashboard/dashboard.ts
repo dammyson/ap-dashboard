@@ -1,7 +1,9 @@
+import { initialOverview } from '@/constants/constants';
 import { useUser } from '@/context/AppContext';
 import {
   GraphValues,
   MutationErrorPayload,
+  OverViewType,
   TicketsPurchasedViaApp,
   TotalUsersRegistered,
 } from '@/types/types';
@@ -11,12 +13,7 @@ import { toast } from 'sonner';
 export const useManageDashboard = () => {
   const { token } = useUser();
   const [isLoading, setIsLoading] = useState(false);
-  const [registeredUsers, setRegisteredUsers] = useState(0);
-  const [registeredPercentChange, setRegisteredPercentChange] = useState(0);
-  const [ticketsPurchased, setTicketPurchased] = useState(0);
-  const [ticketsPercentChange, setTicketsPercentChange] = useState(0);
-  const [totalRevenue, setTotalRevenue] = useState(0);
-  const [revenuePrecentChange, setRevenuePercentChange] = useState(0);
+  const [overView, setOverView] = useState<OverViewType>(initialOverview);
   const [registeredUsersData, setRegisteredUsersData] = useState<
     TotalUsersRegistered[]
   >([]);
@@ -38,7 +35,7 @@ export const useManageDashboard = () => {
   });
   const [chartData, setChartData] = useState<GraphValues[]>([]);
 
-  const getWeeklyAnalysisData = async () => {
+  const getOverViewData = async () => {
     try {
       setIsLoading(true);
       const data = await fetch(
@@ -56,15 +53,8 @@ export const useManageDashboard = () => {
       if (res?.error) {
         toast.error(res.message);
       } else {
-        const users = res.total_registered_users;
-        const tickets = res.total_purchased_ticket;
-        const revenue = res.total_revenue;
-        setRegisteredUsers(users.total_registered_users_last_seven_days);
-        setRegisteredPercentChange(users.percentage);
-        setTicketPurchased(tickets.ticket7DaysAgo);
-        setTicketsPercentChange(tickets.percentageChange);
-        setTotalRevenue(revenue.total7daysRevenue);
-        setRevenuePercentChange(revenue.percentageChange);
+        setOverView(res);
+        console.log(res);
       }
     } catch (error) {
       toast.error((error as MutationErrorPayload)?.data?.message);
@@ -159,7 +149,7 @@ export const useManageDashboard = () => {
   };
 
   const getDashboardAnalytics = async () => {
-    getWeeklyAnalysisData();
+    getOverViewData();
     getRegisteredUsersTable();
     getPurchasedTicketTable();
     getAreaChart('weekly');
@@ -171,7 +161,7 @@ export const useManageDashboard = () => {
       isChartLoading,
     },
     actions: {
-      getWeeklyAnalysisData,
+      getOverViewData,
       getRegisteredUsersTable,
       getPurchasedTicketTable,
       getDashboardAnalytics,
@@ -183,14 +173,7 @@ export const useManageDashboard = () => {
       setChartData,
       chartData,
     },
-    analysis: {
-      registeredUsers,
-      registeredPercentChange,
-      ticketsPurchased,
-      ticketsPercentChange,
-      totalRevenue,
-      revenuePrecentChange,
-    },
+    overView,
     table: {
       registeredUsersData,
       ticketsPurchasedData,

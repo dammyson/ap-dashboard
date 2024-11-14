@@ -1,59 +1,46 @@
 import clsx from 'clsx';
 import { ArrowDown, ArrowUp, Fall, Rise } from '../svg/dashboard/Dashboard';
 import { numberShortener } from '@/utils';
-import { WeeklyAnalysisType } from '@/types/types';
-import { SkeletonWeeklyAnalysis } from '../skeletonLoader/skeletonWeekAnalysis';
+import { OverViewType, OverViewCardsType } from '@/types/types';
+import { SkeletonOverView } from '../skeletonLoader/skeletonWeekAnalysis';
 
 interface Props {
   activeStat: string;
   setActiveStat: React.Dispatch<React.SetStateAction<string>>;
-  registeredUsers: number;
-  registeredPercentChange: number;
-  ticketsPurchased: number;
-  ticketsPercentChange: number;
-  totalRevenue: number;
-  revenuePrecentChange: number;
+  overView: OverViewType;
   isLoading: boolean;
 }
 
-export const WeeklyAnalysis = ({
+export const OverView = ({
   activeStat,
   setActiveStat,
-  registeredUsers,
-  registeredPercentChange,
-  ticketsPurchased,
-  ticketsPercentChange,
-  totalRevenue,
-  revenuePrecentChange,
+  overView,
   isLoading,
 }: Props) => {
-  const stats: WeeklyAnalysisType[] = [
+  const stats: OverViewCardsType[] = [
     {
       title: 'Total users registered',
-      period: 'Last 7 days',
-      value: registeredUsers,
-      variance: registeredPercentChange,
+      value:
+        overView?.total_registered_users.total_registered_users_last_seven_days,
+      variance: overView?.total_registered_users.percentage,
       state: 'registered',
     },
     {
       title: 'Tickets purchased via app',
-      period: 'Last 7 days',
-      value: ticketsPurchased,
-      variance: ticketsPercentChange,
+      value: overView?.total_purchased_ticket.ticket7DaysAgo,
+      variance: overView?.total_purchased_ticket.percentageChange,
       state: 'tickets',
     },
     {
       title: 'Total revenue',
-      period: 'Last 7 days',
-      value: totalRevenue,
-      variance: revenuePrecentChange,
+      value: overView?.total_revenue.total7daysRevenue,
+      variance: overView?.total_revenue.percentageChange,
       state: 'revenue',
     },
     {
       title: 'Active users',
-      period: 'Last 7 days',
-      value: registeredUsers,
-      variance: registeredPercentChange,
+      value: overView?.total_revenue.total7daysRevenue,
+      variance: overView?.total_revenue.percentageChange,
       state: 'active',
     },
   ];
@@ -64,8 +51,8 @@ export const WeeklyAnalysis = ({
         const isLast = index === stats.length - 1;
         return (
           <>
-            {isLoading ? (
-              <SkeletonWeeklyAnalysis />
+            {!isLoading ? (
+              <SkeletonOverView />
             ) : (
               <div
                 onClick={() => {
@@ -87,7 +74,7 @@ export const WeeklyAnalysis = ({
                     {stat.title}
                   </p>
                   <p className='text-light-grey-700 text-sm font-normal'>
-                    {stat.period}
+                    Last 7 days
                   </p>
                 </div>
                 <div className='flex items-center gap-3 justify-between'>
