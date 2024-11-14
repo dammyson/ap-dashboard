@@ -1,4 +1,8 @@
-import { initailAreaChart, initialOverview } from '@/constants/constants';
+import {
+  baseURL,
+  initailAreaChart,
+  initialOverview,
+} from '@/constants/constants';
 import { useUser } from '@/context/AppContext';
 import {
   GraphValues,
@@ -30,16 +34,13 @@ export const useManageDashboard = () => {
   const getOverViewData = async () => {
     try {
       setIsLoading(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/weekly-analysis`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
+      const data = await fetch(`${baseURL}admin/dashboard/weekly-analysis`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
       const res = await data.json();
       setIsLoading(false);
       if (res?.error) {
@@ -55,7 +56,7 @@ export const useManageDashboard = () => {
     try {
       setIsLoading(true);
       const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/total-registered-users-table`,
+        `${baseURL}admin/dashboard/total-registered-users-table`,
         {
           method: 'GET',
           headers: {
@@ -80,7 +81,7 @@ export const useManageDashboard = () => {
     try {
       setIsLoading(true);
       const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/total-purchased-tickets-table`,
+        `${baseURL}admin/dashboard/total-purchased-tickets-table`,
         {
           method: 'GET',
           headers: {
@@ -105,7 +106,7 @@ export const useManageDashboard = () => {
     try {
       setIsChartLoading(true);
       const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/revenue-graph/${period}`,
+        `${baseURL}admin/dashboard/revenue-graph/${period}`,
         {
           method: 'GET',
           headers: {

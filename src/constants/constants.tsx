@@ -1,5 +1,7 @@
 import { OverViewType, RevenueGraph } from '@/types/types';
 
+export const baseURL = import.meta.env.VITE_API_BASE_URL;
+
 export const initialOverview: OverViewType = {
   total_registered_users: {
     total_registered_users_last_seven_days: 0,

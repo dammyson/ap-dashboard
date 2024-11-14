@@ -1,3 +1,4 @@
+import { baseURL } from '@/constants/constants';
 import { useUser } from '@/context/AppContext';
 import { RoleOption } from '@/pages/settings/profile';
 import { roleOptions } from '@/pages/settings/teamMembers/addMembers';
@@ -21,16 +22,13 @@ export const useTeamMembers = () => {
   const getTeamMembers = async () => {
     setIsLoading(true);
     try {
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/settings/team-members`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: 'application/json',
-          },
+      const data = await fetch(`${baseURL}admin/settings/team-members`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
         },
-      );
+      });
       const res = await data.json();
       setIsLoading(false);
       if (res?.error) {
@@ -44,21 +42,18 @@ export const useTeamMembers = () => {
   const changeAdminRole = async (values: changeAdminRole) => {
     try {
       setLoading(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/settings/change-admin-role`,
-        {
-          method: 'PATCH',
-          headers: {
-            'content-type': 'application/json',
-            Accept: 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            email: values.email,
-            new_role: values.new_role,
-          }),
+      const data = await fetch(`${baseURL}admin/settings/change-admin-role`, {
+        method: 'PATCH',
+        headers: {
+          'content-type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
         },
-      );
+        body: JSON.stringify({
+          email: values.email,
+          new_role: values.new_role,
+        }),
+      });
       const res = await data.json();
       setLoading(false);
       if (res?.error) {
@@ -104,22 +99,19 @@ export const useAddMembers = () => {
   const handleAddMembers = async (values: AddAdmins) => {
     try {
       setisLoading(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/admin-register`,
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'content-type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify({
-            user_name: values.userName,
-            email: values.email,
-            role: values.selectedRole,
-          }),
+      const data = await fetch(`${baseURL}admin/admin-register`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'content-type': 'application/json',
+          Accept: 'application/json',
         },
-      );
+        body: JSON.stringify({
+          user_name: values.userName,
+          email: values.email,
+          role: values.selectedRole,
+        }),
+      });
 
       const response = await data.json();
       setisLoading(false);
