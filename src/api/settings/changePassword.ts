@@ -1,3 +1,4 @@
+import { baseURL } from '@/constants/constants';
 import { ChangePassword, MutationErrorPayload } from '@/types/types';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -28,7 +29,7 @@ export const useChangePassword = () => {
     try {
       setLoading(true);
       const patchData = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/settings/profile/change-password`,
+        `${baseURL}admin/settings/profile/change-password`,
         {
           method: 'PATCH',
           headers: {

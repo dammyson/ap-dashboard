@@ -2,21 +2,19 @@ import { useUser } from '@/context/AppContext';
 import { MutationErrorPayload } from '@/types/types';
 import { toast } from 'sonner';
 import { useState } from 'react';
+import { baseURL } from '@/constants/constants';
 
 export const useGetProfile = () => {
   const { setUser } = useUser();
   const getProfile = async (token: string) => {
     try {
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/settings/profile`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: 'application/json',
-          },
+      const data = await fetch(`${baseURL}admin/settings/profile`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
         },
-      );
+      });
       const res = await data.json();
       if (res?.error) {
         toast.error(res?.message);
@@ -42,20 +40,17 @@ export const useEditProfile = () => {
   const editProfile = async (value: string | null) => {
     try {
       setLoading(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/settings/profile/edit`,
-        {
-          method: 'PUT',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'content-type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify({
-            phone_number: value,
-          }),
+      const data = await fetch(`${baseURL}admin/settings/profile/edit`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'content-type': 'application/json',
+          Accept: 'application/json',
         },
-      );
+        body: JSON.stringify({
+          phone_number: value,
+        }),
+      });
 
       const res = await data.json();
       setLoading(false);
@@ -77,7 +72,7 @@ export const useEditProfile = () => {
     try {
       setImageLoading(true);
       const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/settings/profile/change-profile-image`,
+        `${baseURL}admin/settings/profile/change-profile-image`,
         {
           method: 'POST',
           headers: {
@@ -97,7 +92,9 @@ export const useEditProfile = () => {
         token && (await getProfile(token));
         toast.success(res.message);
       }
-    } catch (error) {}
+    } catch (error) {
+      toast.error((error as MutationErrorPayload)?.data?.message);
+    }
   };
 
   return {

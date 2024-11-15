@@ -1,3 +1,4 @@
+import { baseURL } from '@/constants/constants';
 import { useUser } from '@/context/AppContext';
 import { useSurveyQuestions } from '@/context/surveyContext';
 import { surveyDuration } from '@/pages/surveys/constants';
@@ -28,22 +29,19 @@ export const useSurvey = () => {
   const getSurvey = async (value: FilterSurveyTable) => {
     try {
       setIsLoading(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/survey-table`,
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            title: value.title,
-            from_date: value.startDate,
-            to_date: value.endDate,
-          }),
+      const data = await fetch(`${baseURL}admin/surveys/survey-table`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
-      );
+        body: JSON.stringify({
+          title: value.title,
+          from_date: value.startDate,
+          to_date: value.endDate,
+        }),
+      });
       const res = await data.json();
       setIsLoading(false);
       if (res?.error) {
@@ -67,7 +65,7 @@ export const useSurvey = () => {
         setisDeactivating(true);
       } else setLoading(true);
       const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${id}/toogle-publish-survey`,
+        `${baseURL}admin/surveys/${id}/toogle-publish-survey`,
         {
           method: 'PATCH',
           headers: {
@@ -98,17 +96,14 @@ export const useSurvey = () => {
   const deleteSurvey = async (id: number) => {
     try {
       setLoading(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${id}/delete`,
-        {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: 'application/json',
-            'content-type': 'application/json',
-          },
+      const data = await fetch(`${baseURL}admin/surveys/${id}/delete`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          'content-type': 'application/json',
         },
-      );
+      });
       const res = await data.json();
       setLoading(false);
       if (res?.error) {
@@ -196,35 +191,32 @@ export const useManageSurvey = () => {
         setisDeactivating(true);
       } else setLoading(true);
 
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/create-survey`,
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'content-type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: value.image_url
-            ? JSON.stringify({
-                title: value.title,
-                image_url: value.image_url,
-                duration_of_survey: value.duration_of_survey,
-                points_awarded: value.points_awarded,
-                is_active: value.is_active,
-                is_published: value.is_published,
-                questions: value.questions.map((x) => x),
-              })
-            : JSON.stringify({
-                title: value.title,
-                duration_of_survey: value.duration_of_survey,
-                points_awarded: value.points_awarded,
-                is_active: value.is_active,
-                is_published: value.is_published,
-                questions: value.questions.map((x) => x),
-              }),
+      const data = await fetch(`${baseURL}admin/surveys/create-survey`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'content-type': 'application/json',
+          Accept: 'application/json',
         },
-      );
+        body: value.image_url
+          ? JSON.stringify({
+              title: value.title,
+              image_url: value.image_url,
+              duration_of_survey: value.duration_of_survey,
+              points_awarded: value.points_awarded,
+              is_active: value.is_active,
+              is_published: value.is_published,
+              questions: value.questions.map((x) => x),
+            })
+          : JSON.stringify({
+              title: value.title,
+              duration_of_survey: value.duration_of_survey,
+              points_awarded: value.points_awarded,
+              is_active: value.is_active,
+              is_published: value.is_published,
+              questions: value.questions.map((x) => x),
+            }),
+      });
       const res = await data.json();
       setLoading(false);
       setIsDraftLoading(false);
@@ -248,16 +240,13 @@ export const useManageSurvey = () => {
   const showSurvey = async (id: number) => {
     try {
       setShowLoading(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${id}`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
+      const data = await fetch(`${baseURL}admin/surveys/${id}`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
       const res = await data.json();
       setShowLoading(false);
 
@@ -282,17 +271,14 @@ export const useManageSurvey = () => {
     bannerImage.append('image_url', image);
     try {
       setImageLoading(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/create-survey-banner`,
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: 'application/json',
-          },
-          body: bannerImage,
+      const data = await fetch(`${baseURL}admin/surveys/create-survey-banner`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
         },
-      );
+        body: bannerImage,
+      });
       const res = await data.json();
       setImageLoading(false);
       if (res?.error) {
@@ -313,35 +299,32 @@ export const useManageSurvey = () => {
       } else if (endActiveSurvey) {
         setisDeactivating(true);
       } else setEditLoading(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${id}/edit`,
-        {
-          method: 'PUT',
-          headers: {
-            Accept: 'application/json',
-            'content-type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: value.image_url
-            ? JSON.stringify({
-                title: value.title,
-                image_url: value.image_url,
-                duration_of_survey: value.duration_of_survey,
-                points_awarded: value.points_awarded,
-                is_active: value.is_active,
-                is_published: value.is_published,
-                questions: value.questions.map((x) => x),
-              })
-            : JSON.stringify({
-                title: value.title,
-                duration_of_survey: value.duration_of_survey,
-                points_awarded: value.points_awarded,
-                is_active: value.is_active,
-                is_published: value.is_published,
-                questions: value.questions.map((x) => x),
-              }),
+      const data = await fetch(`${baseURL}admin/surveys/${id}/edit`, {
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'content-type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
-      );
+        body: value.image_url
+          ? JSON.stringify({
+              title: value.title,
+              image_url: value.image_url,
+              duration_of_survey: value.duration_of_survey,
+              points_awarded: value.points_awarded,
+              is_active: value.is_active,
+              is_published: value.is_published,
+              questions: value.questions.map((x) => x),
+            })
+          : JSON.stringify({
+              title: value.title,
+              duration_of_survey: value.duration_of_survey,
+              points_awarded: value.points_awarded,
+              is_active: value.is_active,
+              is_published: value.is_published,
+              questions: value.questions.map((x) => x),
+            }),
+      });
 
       const res = await data.json();
       setEditLoading(false);
@@ -364,16 +347,13 @@ export const useManageSurvey = () => {
   const deactivateSurvey = async () => {
     try {
       setisDeactivating(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/deactivate-survey`,
-        {
-          method: 'PATCH',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: 'application/json',
-          },
+      const data = await fetch(`${baseURL}admin/surveys/deactivate-survey`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
         },
-      );
+      });
       const res = await data.json();
       setisDeactivating(false);
       if (res?.error) {
@@ -390,7 +370,7 @@ export const useManageSurvey = () => {
     try {
       setIsDeleting(true);
       const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${surveyId}/questions/${questionId}`,
+        `${baseURL}admin/surveys/${surveyId}/questions/${questionId}`,
         {
           method: 'DELETE',
           headers: {
@@ -422,7 +402,7 @@ export const useManageSurvey = () => {
     try {
       setIsDeleting(true);
       const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${surveyId}/questions/${questionId}/options/${optionId}`,
+        `${baseURL}admin/surveys/${surveyId}/questions/${questionId}/options/${optionId}`,
         {
           method: 'DELETE',
           headers: {

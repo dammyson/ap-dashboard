@@ -11,6 +11,7 @@ export interface SurveyType {
   created_at: string;
   is_published: boolean;
   is_active: boolean;
+  is_completed: boolean;
 }
 
 export interface ViewParticipants {
@@ -89,8 +90,8 @@ export interface Args<T> {
 }
 
 export interface GraphValues {
-  name: string;
-  value: number;
+  day_of_week: string;
+  total_amount: number;
 }
 
 export interface CustomerInfomation {
@@ -218,10 +219,39 @@ export interface ResetPassword {
   otp: string;
 }
 
-export interface OverViewType {
+export interface OverViewCardsType {
   title: string;
-  period: string;
   value: number;
   variance: number;
   state: string;
+}
+
+export interface OverViewType {
+  total_registered_users: {
+    total_registered_users_last_seven_days: number;
+    percentage: number;
+  };
+  total_purchased_ticket: {
+    ticket7DaysAgo: number;
+    percentageChange: number;
+  };
+  total_revenue: {
+    total7daysRevenue: number;
+    percentageChange: number;
+  };
+}
+
+export interface RevenueGraph {
+  ticket: {
+    ticket_amount: number;
+    ticket_data: GraphValues[];
+  };
+  ancillary: {
+    ancillary_amount: number;
+    ancillary_data: GraphValues[];
+  };
+  revenue: {
+    revenue_amount: number;
+    revenue_data: GraphValues[];
+  };
 }

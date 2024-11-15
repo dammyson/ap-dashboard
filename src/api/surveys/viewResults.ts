@@ -1,3 +1,4 @@
+import { baseURL } from '@/constants/constants';
 import { useUser } from '@/context/AppContext';
 import { MutationErrorPayload, ViewResult } from '@/types/types';
 import { useState } from 'react';
@@ -12,16 +13,13 @@ export const useViewSurveyResult = () => {
   const getSurveyParticipants = async (id: number) => {
     setLoading(true);
     try {
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${id}/participants`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
+      const data = await fetch(`${baseURL}admin/surveys/${id}/participants`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
       const res = await data.json();
       setLoading(false);
       if (res?.error) {
@@ -37,16 +35,13 @@ export const useViewSurveyResult = () => {
   const getSurveyResults = async (id: number) => {
     try {
       setIsLoading(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/surveys/${id}/survey-result`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
+      const data = await fetch(`${baseURL}admin/surveys/${id}/survey-result`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
       const res = await data.json();
       setIsLoading(false);
       if (res?.error) {
