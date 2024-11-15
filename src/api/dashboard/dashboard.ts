@@ -1,7 +1,14 @@
+import {
+  baseURL,
+  initailAreaChart,
+  initialOverview,
+} from '@/constants/constants';
 import { useUser } from '@/context/AppContext';
 import {
   GraphValues,
   MutationErrorPayload,
+  OverViewType,
+  RevenueGraph,
   TicketsPurchasedViaApp,
   TotalUsersRegistered,
 } from '@/types/types';
@@ -11,12 +18,7 @@ import { toast } from 'sonner';
 export const useManageDashboard = () => {
   const { token } = useUser();
   const [isLoading, setIsLoading] = useState(false);
-  const [registeredUsers, setRegisteredUsers] = useState(0);
-  const [registeredPercentChange, setRegisteredPercentChange] = useState(0);
-  const [ticketsPurchased, setTicketPurchased] = useState(0);
-  const [ticketsPercentChange, setTicketsPercentChange] = useState(0);
-  const [totalRevenue, setTotalRevenue] = useState(0);
-  const [revenuePrecentChange, setRevenuePercentChange] = useState(0);
+  const [overView, setOverView] = useState<OverViewType>(initialOverview);
   const [registeredUsersData, setRegisteredUsersData] = useState<
     TotalUsersRegistered[]
   >([]);
@@ -24,35 +26,27 @@ export const useManageDashboard = () => {
     TicketsPurchasedViaApp[]
   >([]);
   const [isChartLoading, setIsChartLoading] = useState(false);
+  const [revenueGraph, setRevenueGraph] =
+    useState<RevenueGraph>(initailAreaChart);
+
   const [chartData, setChartData] = useState<GraphValues[]>([]);
 
   const getOverViewData = async () => {
     try {
       setIsLoading(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/weekly-analysis`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
+      const data = await fetch(`${baseURL}admin/dashboard/weekly-analysis`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
       const res = await data.json();
       setIsLoading(false);
       if (res?.error) {
         toast.error(res.message);
       } else {
-        const users = res.total_registered_users;
-        const tickets = res.total_purchased_ticket;
-        const revenue = res.total_revenue;
-        setRegisteredUsers(users.total_registered_users_last_seven_days);
-        setRegisteredPercentChange(users.percentage);
-        setTicketPurchased(tickets.ticket7DaysAgo);
-        setTicketsPercentChange(tickets.percentageChange);
-        setTotalRevenue(revenue.total7daysRevenue);
-        setRevenuePercentChange(revenue.percentageChange);
+        setOverView(res);
       }
     } catch (error) {
       toast.error((error as MutationErrorPayload)?.data?.message);
@@ -62,7 +56,7 @@ export const useManageDashboard = () => {
     try {
       setIsLoading(true);
       const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/total-registered-users-table`,
+        `${baseURL}admin/dashboard/total-registered-users-table`,
         {
           method: 'GET',
           headers: {
@@ -87,7 +81,7 @@ export const useManageDashboard = () => {
     try {
       setIsLoading(true);
       const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/total-purchased-tickets-table`,
+        `${baseURL}admin/dashboard/total-purchased-tickets-table`,
         {
           method: 'GET',
           headers: {
@@ -108,11 +102,11 @@ export const useManageDashboard = () => {
       toast.error((error as MutationErrorPayload)?.data?.message);
     }
   };
-  const getTicketSalesRevenue = async () => {
+  const getAreaChart = async (period: string) => {
     try {
       setIsChartLoading(true);
       const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/ticket-via-app`,
+        `${baseURL}admin/dashboard/revenue-graph/${period}`,
         {
           method: 'GET',
           headers: {
@@ -127,57 +121,9 @@ export const useManageDashboard = () => {
       if (res?.error) {
         toast.error(res.message);
       } else {
-        setChartData(res.tickets);
-      }
-    } catch (error) {
-      toast.error((error as MutationErrorPayload)?.data?.message);
-    }
-  };
-  const getAncilaryRevenue = async () => {
-    try {
-      setIsChartLoading(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/ancillary-via-app`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      const res = await data.json();
-      setIsChartLoading(false);
-      if (res?.error) {
-        toast.error(res.message);
-      } else {
-        setChartData(res.ancillary_tickets);
-      }
-    } catch (error) {
-      toast.error((error as MutationErrorPayload)?.data?.message);
-    }
-  };
-  const getTotalRevenue = async () => {
-    try {
-      setIsChartLoading(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/dashboard/total-revenue-via-app`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      const res = await data.json();
-      setIsChartLoading(false);
-      if (res?.error) {
-        toast.error(res.message);
-      } else {
-        setChartData(res.total_revenue);
+        setRevenueGraph(res);
+
+        setChartData(res.ticket.ticket_data);
       }
     } catch (error) {
       toast.error((error as MutationErrorPayload)?.data?.message);
@@ -188,26 +134,27 @@ export const useManageDashboard = () => {
     getOverViewData();
     getRegisteredUsersTable();
     getPurchasedTicketTable();
+    getAreaChart('weekly');
   };
 
   return {
-    isLoading,
-    registeredUsers,
-    registeredPercentChange,
-    ticketsPurchased,
-    ticketsPercentChange,
-    totalRevenue,
-    revenuePrecentChange,
-    registeredUsersData,
-    ticketsPurchasedData,
-    isChartLoading,
+    revenueGraph,
+    setChartData,
     chartData,
-    getOverViewData,
-    getRegisteredUsersTable,
-    getPurchasedTicketTable,
-    getDashboardAnalytics,
-    getTicketSalesRevenue,
-    getAncilaryRevenue,
-    getTotalRevenue,
+    overView,
+    loaders: {
+      isLoading,
+      isChartLoading,
+    },
+    actions: {
+      getOverViewData,
+      getRegisteredUsersTable,
+      getPurchasedTicketTable,
+      getDashboardAnalytics,
+    },
+    table: {
+      registeredUsersData,
+      ticketsPurchasedData,
+    },
   };
 };

@@ -50,20 +50,23 @@ export const useSurveyColumn = (
               {record && (
                 <span>{record.is_published ? 'Published' : 'Draft'}</span>
               )}
-              {record.is_active ? (
-                <span
-                  className={clsx(
-                    record.is_active
-                      ? 'text-light-blue-main'
-                      : !record.is_active
-                        ? 'text-light-secondary-mint_green'
-                        : '',
-                    'ml-3',
-                  )}
-                >
-                  {record.is_active ? 'Active' : 'Completed'}
-                </span>
-              ) : null}
+
+              <span
+                className={clsx(
+                  record.is_active
+                    ? 'text-light-blue-main'
+                    : record.is_completed
+                      ? 'text-light-secondary-mint_green'
+                      : '',
+                  'ml-3',
+                )}
+              >
+                {record.is_active
+                  ? 'Active'
+                  : record.is_completed
+                    ? 'Completed'
+                    : ''}
+              </span>
             </div>
           );
         },

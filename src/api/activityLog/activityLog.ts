@@ -1,3 +1,4 @@
+import { baseURL } from '@/constants/constants';
 import { useUser } from '@/context/AppContext';
 import {
   FilterActivityLog,
@@ -19,7 +20,7 @@ export const useActivityLog = () => {
     try {
       setLoading(true);
       const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/activity-log/activity-log-table-data`,
+        `${baseURL}admin/activity-log/activity-log-table-data`,
         {
           method: 'GET',
           headers: {
@@ -45,7 +46,7 @@ export const useActivityLog = () => {
     try {
       setIsLoading(true);
       const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/activity-log/filter-activity-log`,
+        `${baseURL}admin/activity-log/filter-activity-log`,
         {
           method: 'POST',
           headers: {

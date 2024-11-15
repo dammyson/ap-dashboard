@@ -66,6 +66,8 @@ function Surveys() {
   );
 
   const sortedSurveys = (surveys ?? []).sort((a: SurveyType, b: SurveyType) => {
+    if (a.is_active) return -1;
+    if (b.is_active) return 1;
     return dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf();
   });
 

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { useGetProfile } from './settings/Profile';
+import { baseURL } from '@/constants/constants';
 
 export const useLogin = () => {
   const navigate = useNavigate();
@@ -20,20 +21,17 @@ export const useLogin = () => {
   const handleLogin = async (values: Login) => {
     try {
       setLoading(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/admin-login`,
-        {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify({
-            email: values.email,
-            password: values.password,
-          }),
+      const data = await fetch(`${baseURL}admin/admin-login`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          Accept: 'application/json',
         },
-      );
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password,
+        }),
+      });
       const res = await data.json();
       setLoading(false);
       if (res.error) {
@@ -55,19 +53,16 @@ export const useLogin = () => {
   const forgotPassword = async (val: string) => {
     try {
       setIsLoading(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/forgot-password`,
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: val,
-          }),
+      const data = await fetch(`${baseURL}admin/forgot-password`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
-      );
+        body: JSON.stringify({
+          email: val,
+        }),
+      });
       const res = await data.json();
       setIsLoading(false);
       if (res.error) {
@@ -84,20 +79,17 @@ export const useLogin = () => {
   const verifyOtp = async ({ email, otp }: { email: string; otp: string }) => {
     try {
       setVerifying(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/verify/otp`,
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: email,
-            otp: otp,
-          }),
+      const data = await fetch(`${baseURL}admin/verify/otp`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
-      );
+        body: JSON.stringify({
+          email: email,
+          otp: otp,
+        }),
+      });
       const res = await data.json();
       setVerifying(false);
       if (res?.errors) {
@@ -113,22 +105,19 @@ export const useLogin = () => {
   const handleResetPassword = async (val: ResetPassword) => {
     try {
       setUpdatingPassowrd(true);
-      const data = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}admin/reset/password`,
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: val.email,
-            new_password: val.newPassword,
-            new_password_confirmation: val.confirmNewPassword,
-            otp: val.otp,
-          }),
+      const data = await fetch(`${baseURL}admin/reset/password`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
-      );
+        body: JSON.stringify({
+          email: val.email,
+          new_password: val.newPassword,
+          new_password_confirmation: val.confirmNewPassword,
+          otp: val.otp,
+        }),
+      });
       const res = await data.json();
       setUpdatingPassowrd(false);
       if (res?.errors) {
