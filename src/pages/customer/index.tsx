@@ -3,10 +3,9 @@ import { Header } from '@/components/header';
 import { AppLayout } from '@/components/layout/AppLayout';
 import WelcomeMessage from '@/components/welcomeMessage';
 import { Filter } from '@/components/svg/surveys/Surveys';
-import { Table } from 'antd';
+import { Spin, Table } from 'antd';
 import { useCustomerInformation } from '@/components/modules/customer/customerInformation/tableColumns';
-import { Customerslist } from './constants';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import { BorderRadius, Button, ButtonSize } from '@/components/button';
@@ -17,17 +16,24 @@ import { useUser } from '@/context/AppContext';
 import ListBox from '@/components/Dropdown/listBox';
 import { RoleOption } from '../settings/profile';
 import { pointOptions, reasonOptions } from '../surveys/viewResult/constants';
+import { useManageCustomer } from '@/api/customer/customer';
+import { LoadingOutlined } from '@ant-design/icons';
 
 function Customer() {
   const [awardPoints, setAwardPoints] = useState<boolean>(false);
   const [selectedPointOption, setSelectedPointOption] = useState<RoleOption>(
     pointOptions[0],
   );
+  const { loading, customersData, getCustomerTable } = useManageCustomer();
   const [selectedReason, setSelectedReason] = useState<RoleOption>(
     reasonOptions[0],
   );
   const { tableColumns } = useCustomerInformation(setAwardPoints);
   const { user } = useUser();
+
+  useEffect(() => {
+    getCustomerTable();
+  }, []);
 
   return (
     <AppLayout logo=''>
@@ -56,8 +62,20 @@ function Customer() {
             <Table
               pagination={false}
               columns={tableColumns}
-              dataSource={Customerslist}
-              rootClassName='w-full overflow-x-scroll hidden-scrollbar'
+              dataSource={customersData}
+              scroll={{ y: 390, x: true }}
+              className=' customer-table custom-scrollbar hide-arrows overflow-x-scroll'
+              rootClassName='hidden-scrollbar'
+              loading={{
+                spinning: loading,
+                indicator: (
+                  <Spin
+                    indicator={
+                      <LoadingOutlined style={{ fontSize: 48 }} spin />
+                    }
+                  />
+                ),
+              }}
             />
           </Card>
           {awardPoints && (

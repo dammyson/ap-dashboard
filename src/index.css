@@ -163,7 +163,23 @@ tr > th.ant-table-cell.ant-table-cell-scrollbar {
   scrollbar-width: thin;
 }
 
-/* CUSTOMER PAGE */
+/* CUSTOMER TABLE */
+
+.customer-table .avatar,
+.customer-table .title {
+  min-width: 80px;
+}
+
+.customer-table .name,
+.customer-table .email,
+.customer-table .nationality,
+.customer-table .peaceID,
+.customer-table .action {
+  min-width: 200px;
+}
+
+/* INDIVIDUAL CUSTOMER PAGE */
+
 .customer .date,
 .customer .activityType,
 .customer .description {

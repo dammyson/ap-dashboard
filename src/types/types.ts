@@ -94,12 +94,14 @@ export interface GraphValues {
 }
 
 export interface CustomerInfomation {
-  avatar: string;
+  id: number;
   title: string;
-  name: string;
+  image_url_link: string;
+  user_first_name: string;
+  user_last_name: string;
   email: string;
   nationality: string;
-  airpeaceID: number;
+  peace_id: number;
 }
 
 export interface CustomerActivityLog {
