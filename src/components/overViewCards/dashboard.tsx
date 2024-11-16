@@ -11,7 +11,7 @@ interface Props {
   isLoading: boolean;
 }
 
-export const OverView = ({
+export const DashboardOverView = ({
   activeStat,
   setActiveStat,
   overView,

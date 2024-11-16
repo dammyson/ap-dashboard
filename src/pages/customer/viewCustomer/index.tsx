@@ -4,15 +4,11 @@ import { AppLayout } from '@/components/layout/AppLayout';
 import { useCustomerActivityLog } from '@/components/modules/customer/activityLog/tableColumns';
 import {
   Flight,
-  GoldTrophy,
-  Miles,
-  Plane,
   SmallDropDown,
   UsageTime,
-  UserReferral,
 } from '@/components/svg/customer/Customer';
 import { Filter } from '@/components/svg/surveys/Surveys';
-import { formatNumber, numberShortener } from '@/utils';
+import { numberShortener } from '@/utils';
 import { Table } from 'antd';
 import clsx from 'clsx';
 import { useNavigate, useParams } from 'react-router';
@@ -23,10 +19,12 @@ import { Chart } from '@/components/chart/Chart';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { useManageCustomer } from '@/api/customer/customer';
 import { SkeletonLoader } from '@/components/customSkeletonLoader/skeletonLoader';
+import { CustomerOverView } from '@/components/overViewCards/customer';
 
 function ViewCustomer() {
-  const { id, titleId, nameId } = useParams();
   const navigate = useNavigate();
+  const isWindowSize604 = useWindowSize(604);
+  const { id, titleId, nameId } = useParams();
   const { tableColumns } = useCustomerActivityLog();
   const {
     chartData,
@@ -35,8 +33,6 @@ function ViewCustomer() {
     customerRevenue,
     getCustomerRevenue,
   } = useManageCustomer();
-
-  const windowSize = useWindowSize(604);
 
   const tabs = [
     { name: 'Flight bookings', value: customerRevenue?.total_flight_amount },
@@ -62,39 +58,6 @@ function ViewCustomer() {
       setChartData(customerRevenue?.app_purchase); // will modify later
     } else setChartData(customerRevenue?.total_revenue);
   }, [activeTab]);
-
-  const userStats = [
-    {
-      title: 'Active loyal points',
-      value: 10000,
-      icon: <GoldTrophy />,
-      iconName: 'trophy',
-    },
-    {
-      title: 'Total loyal points',
-      value: 20000,
-      icon: <GoldTrophy />,
-      iconName: 'trophy',
-    },
-    {
-      title: 'Total flights flown',
-      value: 45,
-      icon: <Plane />,
-      iconName: 'plane',
-    },
-    {
-      title: 'Referrals',
-      value: 100,
-      icon: <UserReferral />,
-      iconName: 'userReferral',
-    },
-    {
-      title: 'Frequent flyer miles',
-      value: 250000,
-      icon: <Miles />,
-      iconName: 'miles',
-    },
-  ];
 
   return (
     <AppLayout logo=''>
@@ -136,43 +99,7 @@ function ViewCustomer() {
             </div>
           </div>
           <div className='hidden-scrollbar overflow-x-auto pb-4 pl-4'>
-            <div className='flex items-center gap-4 w-fit'>
-              {userStats.map((stats, index) => {
-                const lastCard = index === userStats.length - 1;
-                return (
-                  <Card
-                    key={index}
-                    mainClass={clsx(
-                      lastCard && 'mr-5',
-                      'w-[210px] 640:w-[235px] !p-6',
-                    )}
-                  >
-                    <div
-                      className={clsx(
-                        stats.iconName === 'trophy'
-                          ? 'bg-[#F7CB454D]'
-                          : stats.iconName === 'plane'
-                            ? 'bg-[#5CC8BE4D]'
-                            : stats.iconName === 'userReferral'
-                              ? 'bg-[#BD38264D]'
-                              : stats.iconName === 'miles'
-                                ? 'bg-inherit'
-                                : '',
-                        'flex items-center justify-center rounded-full w-14 h-14',
-                      )}
-                    >
-                      {stats.icon}
-                    </div>
-                    <div className='text-light-grey-700 font-medium text-[17px] 640:text-xl mt-8'>
-                      {stats.title}
-                    </div>
-                    <div className='text-2xl 640:text-[28px] 1240:text-[32px] text-light-primary-black font-bold mb-2'>
-                      {formatNumber(stats.value)}
-                    </div>
-                  </Card>
-                );
-              })}
-            </div>
+            <CustomerOverView />
           </div>
           <div className='mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>
             <div className='col-span-12 1240:col-span-8 relative'>
@@ -196,7 +123,7 @@ function ViewCustomer() {
                             ? 'border-b-4 border-b-light-blue-main sky-blue-gradient-bg'
                             : 'border-b border-b-[#E9E7FD]',
                           'p-2 pb-3.5 cursor-pointer w-fit max-h-[87px] 640:h-[78px]',
-                          windowSize
+                          isWindowSize604
                             ? tab.name.includes('Gamification') && 'h-[87px]'
                             : '',
                         )}
@@ -236,7 +163,6 @@ function ViewCustomer() {
                         12mins 45secs
                       </span>
                     </p>
-
                     {usageStats.map((stats, index) => (
                       <div key={index} className='flex items-center mt-2'>
                         <span className='560:max-w-3 560:max-h-3 min-w-[10px] min-h-[10px] rounded-full bg-light-blue-50 mr-3'></span>
