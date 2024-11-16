@@ -1,11 +1,14 @@
 import { RoleOption } from '@/components/Dropdown/listBox';
 
-export const pointOptions: RoleOption[] = [
-  { label: '2000', value: 2000 },
-  { label: '3000', value: 3000 },
-  { label: '4000', value: 4000 },
+export const point: RoleOption[] = [
+  { label: '10', value: 10 },
+  { label: '20', value: 20 },
+  { label: '30', value: 30 },
+  { label: '40', value: 40 },
+  { label: '50', value: 50 },
 ];
-export const reasonOptions: RoleOption[] = [
+
+export const reason: RoleOption[] = [
   {
     label: 'Loyalty and repeat business',
     value: 'loyalty and repeat business',
@@ -13,5 +16,9 @@ export const reasonOptions: RoleOption[] = [
   {
     label: 'Repeat business',
     value: 'repeat business',
+  },
+  {
+    label: 'Booked 3 flight in 2 days',
+    value: 'booked 3 flight in 2 days',
   },
 ];

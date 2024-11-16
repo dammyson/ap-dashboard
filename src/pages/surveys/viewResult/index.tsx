@@ -15,7 +15,7 @@ import { Cancel } from '@/components/svg/modal/Modal';
 import clsx from 'clsx';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { useUser } from '@/context/AppContext';
-import { pointOptions, reasonOptions } from './constants';
+import { point, reason } from './constants';
 import { useViewSurveyResult } from '@/api/surveys/viewResults';
 import { LoadingOutlined } from '@ant-design/icons';
 import ListBox, { RoleOption } from '@/components/Dropdown/listBox';
@@ -53,12 +53,8 @@ function ViewResult() {
   ];
 
   const [awardPoints, setAwardPoints] = useState<boolean>(false);
-  const [selectedPointOption, setSelectedPointOption] = useState<RoleOption>(
-    pointOptions[0],
-  );
-  const [selectedReason, setSelectedReason] = useState<RoleOption>(
-    reasonOptions[0],
-  );
+  const [selectedPoint, setSelectedPoint] = useState<RoleOption>(point[0]);
+  const [selectedReason, setSelectedReason] = useState<RoleOption>(reason[0]);
   const [currentTab, setCurrentTab] = useState(navigationItems[0]);
   const { user } = useUser();
 
@@ -158,9 +154,9 @@ function ViewResult() {
                   </p>
                   <ListBox
                     trailingIcon={<DropDownArrow />}
-                    selected={selectedPointOption}
-                    options={pointOptions}
-                    onSelect={(point) => setSelectedPointOption(point)}
+                    selected={selectedPoint}
+                    options={point}
+                    onSelect={(point) => setSelectedPoint(point)}
                     isCurved
                     className=' placeholder:!text-light-primary-deep_black placeholder:!text-xl font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
                   />
@@ -172,7 +168,7 @@ function ViewResult() {
                   <ListBox
                     trailingIcon={<DropDownArrow />}
                     selected={selectedReason}
-                    options={reasonOptions}
+                    options={reason}
                     onSelect={(reason) => setSelectedReason(reason)}
                     isCurved
                     className=' placeholder:!text-light-primary-deep_black placeholder:!text-xl font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'

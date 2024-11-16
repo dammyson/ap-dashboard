@@ -264,3 +264,8 @@ export interface CustomerGraphValues {
   total_revenue_amount: number;
   total_revenue: GraphValues[];
 }
+
+export interface AllocatePonit {
+  points: number;
+  reason: string;
+}

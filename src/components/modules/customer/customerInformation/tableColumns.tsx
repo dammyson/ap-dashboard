@@ -9,7 +9,10 @@ import { convertToUrlString, getInitials } from '@/utils';
 import { Avatar } from '@/components/avatar/Avatar';
 import { useGetColorByChar } from '@/hooks/useGetColorByChar';
 
-export const useCustomerInformation = (setAwardPoints: ModalStateSetter) => {
+export const useCustomerInformation = (
+  setIsModalOpen: ModalStateSetter,
+  setUserId: React.Dispatch<React.SetStateAction<number | null>>,
+) => {
   const navigate = useNavigate();
   const { getColor } = useGetColorByChar();
   const tableColumns = useMemo(() => {
@@ -97,7 +100,7 @@ export const useCustomerInformation = (setAwardPoints: ModalStateSetter) => {
         render: (_, { id, title, user_first_name, user_last_name }) => {
           const userName = `${user_first_name} ${user_last_name}`;
           return (
-            <div className='flex gap-2 items-center'>
+            <div className='flex gap-3 items-center'>
               <span
                 className='cursor-pointer'
                 onClick={() => {
@@ -113,7 +116,8 @@ export const useCustomerInformation = (setAwardPoints: ModalStateSetter) => {
               <span
                 className='cursor-pointer'
                 onClick={() => {
-                  setAwardPoints(true);
+                  setUserId(id);
+                  setIsModalOpen(true);
                 }}
               >
                 {<Trophy />}

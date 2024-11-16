@@ -1,6 +1,7 @@
 import { baseURL, initialCustomerRevenue } from '@/constants/constants';
 import { useUser } from '@/context/AppContext';
 import {
+  AllocatePonit,
   CustomerGraphValues,
   CustomerInfomation,
   GraphValues,
@@ -18,6 +19,8 @@ export const useManageCustomer = () => {
     initialCustomerRevenue,
   );
   const [isChartLoading, setIsChartLoading] = useState(false);
+  const [isPointLoading, setIsPontLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const getCustomerTable = async () => {
     try {
       setIsLoading(true);
@@ -71,13 +74,48 @@ export const useManageCustomer = () => {
     }
   };
 
+  const allocatePonit = async (id: number, value: AllocatePonit) => {
+    try {
+      setIsPontLoading(true);
+      const data = await fetch(
+        `${baseURL}admin/customer/award-point-manually/${id}`,
+        {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            points: value.points,
+            reason: value.reason,
+          }),
+        },
+      );
+      const res = await data.json();
+      setIsPontLoading(false);
+      if (res?.error) {
+        toast.error(res.message);
+      } else {
+        setIsModalOpen(false);
+        toast.success(res.message);
+      }
+    } catch (error) {
+      toast.error((error as MutationErrorPayload)?.data?.message);
+    }
+  };
+
   return {
     loading,
     customersData,
     chartData,
     setChartData,
     isChartLoading,
+    isPointLoading,
+    allocatePonit,
     customerRevenue,
+    isModalOpen,
+    setIsModalOpen,
     getCustomerTable,
     getCustomerRevenue,
   };

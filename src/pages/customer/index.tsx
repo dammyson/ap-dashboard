@@ -15,21 +15,33 @@ import clsx from 'clsx';
 import { useUser } from '@/context/AppContext';
 import ListBox from '@/components/Dropdown/listBox';
 import { RoleOption } from '../settings/profile';
-import { pointOptions, reasonOptions } from '../surveys/viewResult/constants';
+import { point, reason } from '../surveys/viewResult/constants';
 import { useManageCustomer } from '@/api/customer/customer';
 import { LoadingOutlined } from '@ant-design/icons';
+import { Spinner } from '@/components/svg/spinner/Spinner';
 
 function Customer() {
-  const [awardPoints, setAwardPoints] = useState<boolean>(false);
-  const [selectedPointOption, setSelectedPointOption] = useState<RoleOption>(
-    pointOptions[0],
-  );
-  const { loading, customersData, getCustomerTable } = useManageCustomer();
-  const [selectedReason, setSelectedReason] = useState<RoleOption>(
-    reasonOptions[0],
-  );
-  const { tableColumns } = useCustomerInformation(setAwardPoints);
   const { user } = useUser();
+  const [selectedPoint, setSelectedPoint] = useState<RoleOption>(point[0]);
+  const [selectedReason, setSelectedReason] = useState<RoleOption>(reason[0]);
+  const [userId, setUserId] = useState<number | null>(null);
+  const {
+    loading,
+    customersData,
+    getCustomerTable,
+    isPointLoading,
+    allocatePonit,
+    isModalOpen,
+    setIsModalOpen,
+  } = useManageCustomer();
+  const { tableColumns } = useCustomerInformation(setIsModalOpen, setUserId);
+
+  const handleAllocatePoint = (id: number) => {
+    allocatePonit(id, {
+      points: selectedPoint.value as number,
+      reason: selectedReason.value as string,
+    });
+  };
 
   useEffect(() => {
     getCustomerTable();
@@ -78,13 +90,13 @@ function Customer() {
               }}
             />
           </Card>
-          {awardPoints && (
+          {isModalOpen && (
             <Modal
               isBackground
               isCentered
               size={SizeType.LARGE}
               cancelIcon={<Cancel />}
-              onClick={() => setAwardPoints(false)}
+              onClick={() => setIsModalOpen(false)}
             >
               <div className='flex flex-col items-center justify-center w-full 768:w-4/5 960:w-[68%] 1240:py-5'>
                 <h3 className='text-light-primary-deep_black text-lg 560:text-xl 768:text-2xl 960:text-[28px] 1240:text-[32px] font-medium mb-4 768:mb-6 1400:mb-10 pt-5 960:pt-0'>
@@ -97,9 +109,9 @@ function Customer() {
                     </p>
                     <ListBox
                       trailingIcon={<DropDownArrow />}
-                      selected={selectedPointOption}
-                      options={pointOptions}
-                      onSelect={(point) => setSelectedPointOption(point)}
+                      selected={selectedPoint}
+                      options={point}
+                      onSelect={(point) => setSelectedPoint(point)}
                       isCurved
                       className=' placeholder:!text-light-primary-deep_black placeholder:!text-xl font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
                     />
@@ -111,7 +123,7 @@ function Customer() {
                     <ListBox
                       trailingIcon={<DropDownArrow />}
                       selected={selectedReason}
-                      options={reasonOptions}
+                      options={reason}
                       onSelect={(reason) => setSelectedReason(reason)}
                       isCurved
                       className=' placeholder:!text-light-primary-deep_black placeholder:!text-xl font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
@@ -134,8 +146,14 @@ function Customer() {
                   <Button
                     size={ButtonSize.Large}
                     radius={BorderRadius.Large}
-                    buttonText='Award points'
-                    onClick={() => {}}
+                    buttonText={
+                      isPointLoading ? (
+                        <Spinner className='text-light-blue-main w-5 h-5 768:w-7 768:h-7' />
+                      ) : (
+                        'Award points'
+                      )
+                    }
+                    onClick={() => userId && handleAllocatePoint(userId)}
                     className='!font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[65px]'
                   />
                   <Button
@@ -143,7 +161,7 @@ function Customer() {
                     radius={BorderRadius.Large}
                     mode='outlined'
                     buttonText='Cancel'
-                    onClick={() => setAwardPoints(false)}
+                    onClick={() => setIsModalOpen(false)}
                     className='!font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[65px]'
                   />
                 </div>
