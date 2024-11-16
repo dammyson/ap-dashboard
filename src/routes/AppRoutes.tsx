@@ -31,7 +31,7 @@ const AppRoutes = () => {
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/customer' element={<Customer />} />
         <Route
-          path='/customer-view/:titleId/:nameId'
+          path='/customer-view/:id/:titleId/:nameId'
           element={<ViewCustomer />}
         />
         <Route path='/activity-log' element={<ActivityLog />} />

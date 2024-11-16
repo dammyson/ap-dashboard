@@ -104,8 +104,8 @@ export const SkeletonLoader = ({
         <>
           <Skeleton type='title' className='mb-8' />
           <div className=' h-[300px] mt-10 w-full'>
-            {activities.map((activitiy) => (
-              <Skeleton key={activitiy} type='thubmnail' className='h-[67px]' />
+            {activities.map((_, index) => (
+              <Skeleton key={index} type='thubmnail' className='h-[67px]' />
             ))}
           </div>
         </>

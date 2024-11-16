@@ -90,7 +90,7 @@ export interface Args<T> {
 }
 
 export interface GraphValues {
-  day_of_week: string;
+  name: string;
   total_amount: number;
 }
 
@@ -254,4 +254,13 @@ export interface RevenueGraph {
     revenue_amount: number;
     revenue_data: GraphValues[];
   };
+}
+
+export interface CustomerGraphValues {
+  total_flight_amount: number;
+  flight_booking: GraphValues[];
+  app_purchase_amount: number;
+  app_purchase: GraphValues[];
+  total_revenue_amount: number;
+  total_revenue: GraphValues[];
 }

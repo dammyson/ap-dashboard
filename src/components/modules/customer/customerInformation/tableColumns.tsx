@@ -5,7 +5,7 @@ import { Trophy } from '@/components/svg/surveys/Surveys';
 import { Eye } from '@/components/svg/customer/Customer';
 import { ModalStateSetter } from '../../surveys/tableColumns';
 import { useNavigate } from 'react-router';
-import { getInitials } from '@/utils';
+import { convertToUrlString, getInitials } from '@/utils';
 import { Avatar } from '@/components/avatar/Avatar';
 import { useGetColorByChar } from '@/hooks/useGetColorByChar';
 
@@ -20,7 +20,6 @@ export const useCustomerInformation = (setAwardPoints: ModalStateSetter) => {
         className: 'avatar',
         render: (_, record) => {
           const userName = `${record.user_first_name} ${record.user_last_name}`;
-          console.log(userName);
           return (
             <>
               {record.image_url_link &&
@@ -95,28 +94,33 @@ export const useCustomerInformation = (setAwardPoints: ModalStateSetter) => {
         dataIndex: '',
         key: '',
         className: 'action',
-        render: (_, record) => (
-          <div className='flex gap-2 items-center'>
-            <span
-              className='cursor-pointer'
-              onClick={() =>
-                navigate(
-                  `/customer-view/${record.title}/${`${record.user_first_name} ${record.user_last_name}`}`,
-                )
-              }
-            >
-              {<Eye />}
-            </span>
-            <span
-              className='cursor-pointer'
-              onClick={() => {
-                setAwardPoints(true);
-              }}
-            >
-              {<Trophy />}
-            </span>
-          </div>
-        ),
+        render: (_, { id, title, user_first_name, user_last_name }) => {
+          const userName = `${user_first_name} ${user_last_name}`;
+          return (
+            <div className='flex gap-2 items-center'>
+              <span
+                className='cursor-pointer'
+                onClick={() => {
+                  if (id) {
+                    navigate(
+                      `/customer-view/${id}/${title}/${convertToUrlString(userName)}`,
+                    );
+                  }
+                }}
+              >
+                {<Eye />}
+              </span>
+              <span
+                className='cursor-pointer'
+                onClick={() => {
+                  setAwardPoints(true);
+                }}
+              >
+                {<Trophy />}
+              </span>
+            </div>
+          );
+        },
       },
     ] as ColumnType<CustomerInfomation>[];
   }, []);

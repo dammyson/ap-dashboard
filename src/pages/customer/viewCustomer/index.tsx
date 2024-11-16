@@ -18,25 +18,51 @@ import clsx from 'clsx';
 import { useNavigate, useParams } from 'react-router';
 import { ActivityList, usageStats, UserFlightDetails } from './constants';
 import { Button } from '@/components/button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Chart } from '@/components/chart/Chart';
-import { chartData } from '@/pages/dashboard/constants';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
-
-const tabs = [
-  { name: 'Flight bookings', value: 10000 },
-  { name: 'In-app purchases', value: 1000 },
-  { name: 'Gamification', value: 1500 },
-  { name: 'Total revenue', value: 25000 },
-];
+import { useManageCustomer } from '@/api/customer/customer';
+import { SkeletonLoader } from '@/components/customSkeletonLoader/skeletonLoader';
 
 function ViewCustomer() {
-  const { titleId, nameId } = useParams();
-  const { tableColumns } = useCustomerActivityLog();
+  const { id, titleId, nameId } = useParams();
   const navigate = useNavigate();
+  const { tableColumns } = useCustomerActivityLog();
+  const {
+    chartData,
+    setChartData,
+    isChartLoading,
+    customerRevenue,
+    getCustomerRevenue,
+  } = useManageCustomer();
 
+  const windowSize = useWindowSize(604);
+
+  const tabs = [
+    { name: 'Flight bookings', value: customerRevenue?.total_flight_amount },
+    { name: 'In-app purchases', value: customerRevenue?.app_purchase_amount },
+    { name: 'Gamification', value: customerRevenue?.app_purchase_amount },
+    { name: 'Total revenue', value: customerRevenue?.total_revenue_amount },
+  ];
   const currentTab = tabs[0];
   const [activeTab, setActiveTab] = useState(currentTab);
+
+  useEffect(() => {
+    if (id) {
+      getCustomerRevenue(id);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (activeTab.name === 'Flight bookings') {
+      setChartData(customerRevenue?.flight_booking);
+    } else if (activeTab.name === 'In-app purchases') {
+      setChartData(customerRevenue?.app_purchase);
+    } else if (activeTab.name === 'Gamification') {
+      setChartData(customerRevenue?.app_purchase); // will modify later
+    } else setChartData(customerRevenue?.total_revenue);
+  }, [activeTab]);
+
   const userStats = [
     {
       title: 'Active loyal points',
@@ -79,7 +105,6 @@ function ViewCustomer() {
         )}
       >
         <Header />
-
         <div className='1240:pr-12'>
           <div className='flex 640:flex-col-reverse 1024:flex-row justify-between items-center gap-2 1024:gap-4 pb-4 border-b border-b-light-blue-50'>
             <div className='w-full flex items-center '>
@@ -151,46 +176,50 @@ function ViewCustomer() {
           </div>
           <div className='mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>
             <div className='col-span-12 1240:col-span-8 relative'>
-              <Card
-                hasBadge
-                hasHeader
-                title='Revenue sources'
-                trailingIcon1={<Filter />}
-                mainClass='h-full max-h-[513px]'
-              >
-                <div className='flex items-center gap-1 640:gap-2 mb-12 overflow-x-auto hidden-scrollbar'>
-                  {tabs.map((tab, index) => (
-                    <div
-                      onClick={() => setActiveTab(tab)}
-                      key={index}
-                      className={clsx(
-                        activeTab === tab
-                          ? 'border-b-4 border-b-light-blue-main sky-blue-gradient-bg'
-                          : 'border-b border-b-[#E9E7FD]',
-                        'p-2 pb-3.5 cursor-pointer w-fit max-h-[87px] 640:h-[78px]',
-                        useWindowSize(604)
-                          ? tab.name.includes('Gamification') && 'h-[87px]'
-                          : '',
-                      )}
-                    >
-                      <h3
+              {isChartLoading ? (
+                <SkeletonLoader hasChartData />
+              ) : (
+                <Card
+                  hasBadge
+                  hasHeader
+                  title='Revenue sources'
+                  trailingIcon1={<Filter />}
+                  mainClass='h-full max-h-[513px]'
+                >
+                  <div className='flex items-center gap-1 640:gap-2 mb-12 overflow-x-auto hidden-scrollbar'>
+                    {tabs.map((tab, index) => (
+                      <div
+                        onClick={() => setActiveTab(tab)}
+                        key={index}
                         className={clsx(
-                          tab.name === 'Total revenue'
-                            ? 'text-light-secondary-mint_green'
-                            : 'text-primary-black',
-                          'text-[17px] 640:text-xl font-bold mb-2',
+                          activeTab.name === tab.name
+                            ? 'border-b-4 border-b-light-blue-main sky-blue-gradient-bg'
+                            : 'border-b border-b-[#E9E7FD]',
+                          'p-2 pb-3.5 cursor-pointer w-fit max-h-[87px] 640:h-[78px]',
+                          windowSize
+                            ? tab.name.includes('Gamification') && 'h-[87px]'
+                            : '',
                         )}
                       >
-                        ${numberShortener(tab.value)}
-                      </h3>
-                      <p className='text-xs font-medium text-light-grey-400'>
-                        {tab.name}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-                <Chart chartData={chartData} transactionType='all' />
-              </Card>
+                        <h3
+                          className={clsx(
+                            tab.name === 'Total revenue'
+                              ? 'text-light-secondary-mint_green'
+                              : 'text-primary-black',
+                            'text-[17px] 640:text-xl font-bold mb-2',
+                          )}
+                        >
+                          {numberShortener(tab.value)}
+                        </h3>
+                        <p className='text-xs font-medium text-light-grey-400'>
+                          {tab.name}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                  <Chart chartData={chartData} transactionType='all' />
+                </Card>
+              )}
             </div>
             <div className='col-span-12 1240:col-span-4 relative '>
               <Card
