@@ -53,7 +53,7 @@ export const useCustomerInformation = (
         dataIndex: 'title',
         key: 'title',
         className: 'title',
-        render: (_, record) => <div>{record.title ? record.title : 'Mr'}</div>, // did a check here
+        render: (_, record) => <div>{record.title ? record.title : '---'}</div>,
       },
       {
         title: 'NAME',
@@ -73,8 +73,8 @@ export const useCustomerInformation = (
         render: (_, { nationality }) => {
           return (
             <span className='font-semibold'>
-              {nationality ? nationality : 'Nigerian'}
-            </span> // did a check here
+              {nationality ? nationality : '---'}
+            </span>
           );
         },
       },
@@ -86,7 +86,7 @@ export const useCustomerInformation = (
         render: (_, { peace_id }) => {
           return (
             <span className='text-light-blue-main font-semibold'>
-              {peace_id}
+              {peace_id ? peace_id : '---'}
             </span>
           );
         },

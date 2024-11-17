@@ -71,16 +71,16 @@ function ViewCustomer() {
         <div className='1240:pr-12'>
           <div className='flex 640:flex-col-reverse 1024:flex-row justify-between items-center gap-2 1024:gap-4 pb-4 border-b border-b-light-blue-50'>
             <div className='w-full flex items-center '>
-              <div className=' font-medium text-xl 768:text-2xl 960:text-[28px] 1300:text-3xl flex items-center justify-center gap-2 768:gap-4'>
-                <p className='text-light-blue-main flex items-center'>
+              <div className=' font-medium text-xl 768:text-2xl 960:text-[26px] 1240:text-[24px] 1400:text-[28px] flex items-center justify-center gap-2 768:gap-4'>
+                <p className='text-light-blue-main flex items-center text-nowrap'>
                   <span className='inline-block min-w-2 min-h-2 1300:w-3 1300:h-3 rounded-full bg-light-blue-main mr-[6px] 768:mr-3'></span>
-                  {titleId} {nameId}
+                  {titleId !== 'null' ? titleId : '---'} {nameId}
                 </p>
                 <p className='text-light-blue-main hidden 640:flex items-center  '>
                   <span className='inline-block min-w-2 min-h-2 1300:w-3 1300:h-3 rounded-full bg-light-blue-main mr-[6px] 768:mr-3'></span>
                   09013426578
                 </p>
-                <p className='text-light-grey-600 hidden 640:flex  items-center'>
+                <p className='text-light-grey-600 hidden 640:flex  items-center text-nowrap'>
                   <span className='inline-block min-w-2 min-h-2 1300:w-3 1300:h-3 rounded-full bg-light-blue-main mr-[6px] 768:mr-3'></span>
                   Loyalty tier -
                   <span className='text-light-secondary-orange'> GOLD</span>
@@ -91,7 +91,7 @@ function ViewCustomer() {
             <div className='w-fit 640:w-full 1024:w-fit flex items-center justify-end 1024:justify-center '>
               <span className='inline-block min-w-2 min-h-2 1300:w-3 1300:h-3 rounded-full bg-light-primary-black mr-[6px] 768:mr-3'></span>
               <p
-                className='text-light-primary-black font-medium text-xl 768:text-2xl 960:text-[28px] 1300:text-3xl cursor-pointer'
+                className='text-light-primary-black font-medium text-xl 768:text-2xl 960:text-[28px] 1240:text-[24px] 1400:text-[28px] cursor-pointer'
                 onClick={() => navigate('/customer')}
               >
                 LTV

@@ -88,6 +88,9 @@ export const UseTicketsPurchased = () => {
         dataIndex: 'paymentMethod',
         key: 'paymentMethod',
         className: 'payment-method',
+        render: (_, { paymentMethod }) => {
+          return <div>{paymentMethod ? paymentMethod : '---'}</div>;
+        },
       },
       {
         title: 'STATUS',
@@ -108,7 +111,7 @@ export const UseTicketsPurchased = () => {
                 'font-medium',
               )}
             >
-              {status}
+              {status ? status : '---'}
             </div>
           );
         },
