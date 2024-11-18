@@ -1,6 +1,6 @@
 import { Field } from '@headlessui/react';
 import clsx from 'clsx';
-import { ReactNode, useEffect, useState, useRef } from 'react';
+import { ReactNode, useState, useRef } from 'react';
 import { RoleOption } from '@/pages/settings/profile';
 import { useClickOutside } from '../hooks/useClickOutside';
 interface SelectProps {
