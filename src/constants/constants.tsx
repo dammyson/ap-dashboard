@@ -1,4 +1,4 @@
-import { OverViewType, RevenueGraph } from '@/types/types';
+import { CustomerGraphValues, OverViewType, RevenueGraph } from '@/types/types';
 
 export const baseURL = import.meta.env.VITE_API_BASE_URL;
 
@@ -30,4 +30,13 @@ export const initailAreaChart: RevenueGraph = {
     revenue_amount: 0,
     revenue_data: [],
   },
+};
+
+export const initialCustomerRevenue: CustomerGraphValues = {
+  total_flight_amount: 0,
+  flight_booking: [],
+  app_purchase_amount: 0,
+  app_purchase: [],
+  total_revenue_amount: 0,
+  total_revenue: [],
 };

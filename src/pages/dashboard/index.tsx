@@ -18,7 +18,7 @@ import { Chart } from '@/components/chart/Chart';
 import { HorizontalBarChart } from '@/components/chart/HorizontalBarChart';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { useManageDashboard } from '@/api/dashboard/dashboard';
-import { OverView } from '@/components/dashboardAnalytics/overView';
+import { DashboardOverView } from '@/components/overViewCards/dashboard';
 import { PieChartData } from '@/components/chart/PieChart';
 import { SkeletonLoader } from '@/components/customSkeletonLoader/skeletonLoader';
 
@@ -73,7 +73,7 @@ function Dashboard() {
           </div>
           <div className='hidden-scrollbar overflow-x-auto'>
             <div className='min-w-fit'>
-              <OverView
+              <DashboardOverView
                 activeStat={activeStat}
                 setActiveStat={setActiveStat}
                 overView={overView}

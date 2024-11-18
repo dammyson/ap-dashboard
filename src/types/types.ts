@@ -90,17 +90,19 @@ export interface Args<T> {
 }
 
 export interface GraphValues {
-  day_of_week: string;
+  name: string;
   total_amount: number;
 }
 
 export interface CustomerInfomation {
-  avatar: string;
+  id: number;
   title: string;
-  name: string;
+  image_url_link: string;
+  user_first_name: string;
+  user_last_name: string;
   email: string;
   nationality: string;
-  airpeaceID: number;
+  peace_id: number;
 }
 
 export interface CustomerActivityLog {
@@ -252,4 +254,18 @@ export interface RevenueGraph {
     revenue_amount: number;
     revenue_data: GraphValues[];
   };
+}
+
+export interface CustomerGraphValues {
+  total_flight_amount: number;
+  flight_booking: GraphValues[];
+  app_purchase_amount: number;
+  app_purchase: GraphValues[];
+  total_revenue_amount: number;
+  total_revenue: GraphValues[];
+}
+
+export interface AllocatePonit {
+  points: number;
+  reason: string;
 }

@@ -55,7 +55,7 @@ export const UseUserRegistered = () => {
                 'font-semibold',
               )}
             >
-              {tier}
+              {tier !== 'null' ? tier : '---'}
             </div>
           );
         },
@@ -77,7 +77,7 @@ export const UseUserRegistered = () => {
                 'font-semibold',
               )}
             >
-              {status}
+              {status !== 'null' ? status : '---'}
             </div>
           );
         },
@@ -87,6 +87,9 @@ export const UseUserRegistered = () => {
         dataIndex: 'last_login',
         key: 'last_login',
         className: 'last-login',
+        render: (_, { last_login }) => {
+          return <div>{last_login !== 'null' ? last_login : '---'}</div>;
+        },
       },
       {
         title: 'TOTAL FLIGHTS BOOKED',
@@ -99,6 +102,13 @@ export const UseUserRegistered = () => {
         dataIndex: 'miles_accumulated',
         key: 'miles_accumulated',
         className: 'miles-accumulated',
+        render: (_, { miles_accumulated }) => {
+          return (
+            <div>
+              {miles_accumulated !== 'null' ? miles_accumulated : '---'}
+            </div>
+          );
+        },
       },
     ] as ColumnType<TotalUsersRegistered>[];
   }, []);

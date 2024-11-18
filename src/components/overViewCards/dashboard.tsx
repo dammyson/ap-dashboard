@@ -11,7 +11,7 @@ interface Props {
   isLoading: boolean;
 }
 
-export const OverView = ({
+export const DashboardOverView = ({
   activeStat,
   setActiveStat,
   overView,
@@ -51,7 +51,7 @@ export const OverView = ({
       {stats.map((stat, index) => {
         const isLast = index === stats.length - 1;
         return (
-          <>
+          <div key={index}>
             {isLoading ? (
               <SkeletonLoader hasOverview />
             ) : (
@@ -63,7 +63,6 @@ export const OverView = ({
                     );
                   }
                 }}
-                key={index}
                 className={clsx(
                   isLast && 'mr-6',
                   'min-h-[200px] py-5 px-4 cursor-pointer w-[410px] shadow-sm bg-primary-white rounded-[20px] flex flex-col justify-between',
@@ -105,7 +104,7 @@ export const OverView = ({
                 </div>
               </div>
             )}
-          </>
+          </div>
         );
       })}
     </div>

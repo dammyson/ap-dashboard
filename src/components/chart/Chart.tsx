@@ -26,7 +26,7 @@ export const Chart = ({ chartData, transactionType }: Props) => {
       return defaultXAxis.map((day) => ({ name: day, value: 0 }));
     }
     return chartData.map((item) => ({
-      name: item.day_of_week,
+      name: item.name.slice(0, 3),
       value: item.total_amount,
     }));
   }, [chartData]);
