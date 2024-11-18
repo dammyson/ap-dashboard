@@ -33,9 +33,8 @@ export const useManageDashboard = () => {
   const [isChartLoading, setIsChartLoading] = useState(false);
   const [revenueGraph, setRevenueGraph] =
     useState<RevenueGraph>(initailAreaChart);
+
   const [chartData, setChartData] = useState<GraphValues[]>([]);
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [isSucess, setIsSucess] = useState(false);
 
   const getOverViewData = async () => {
     try {
@@ -126,10 +125,9 @@ export const useManageDashboard = () => {
       setIsChartLoading(false);
       if (res?.error) {
         toast.error(res.message);
-        setIsSucess(false);
       } else {
-        setIsSucess(true);
         setRevenueGraph(res);
+
         setChartData(res.ticket.ticket_data);
       }
     } catch (error) {
@@ -173,9 +171,6 @@ export const useManageDashboard = () => {
     chartData,
     overView,
     userByDevice,
-    showDropdown,
-    setShowDropdown,
-    isSucess,
     loaders: {
       isLoading,
       isChartLoading,
@@ -186,7 +181,6 @@ export const useManageDashboard = () => {
       getRegisteredUsersTable,
       getPurchasedTicketTable,
       getDashboardAnalytics,
-      getAreaChart,
     },
     table: {
       registeredUsersData,

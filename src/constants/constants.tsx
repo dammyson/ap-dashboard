@@ -52,8 +52,3 @@ export const initialUsersByDevice: UsersByDevice = {
   android_revenue: 0,
   ios_revenue: 0,
 };
-
-export const graphOptions = [
-  { key: 'Weekly', value: 'weekly' },
-  { key: 'Yearly', value: 'yearly' },
-];

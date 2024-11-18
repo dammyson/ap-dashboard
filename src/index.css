@@ -390,17 +390,3 @@ tr > th.ant-table-cell.ant-table-cell-scrollbar {
     transform: translateX(140%);
   }
 }
-
-.active {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-  transition: 250ms ease-in;
-}
-
-.inactive {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: 250ms ease-out;
-}
