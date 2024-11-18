@@ -1,3 +1,70 @@
+export const stats = [
+  {
+    title: 'Total users registered',
+    period: 'Last 7 days',
+    value: 24500,
+    variance: 6,
+    state: 'registered',
+  },
+  {
+    title: 'Tickets purchased via app',
+    period: 'Last 7 days',
+    value: 16500,
+    variance: -3,
+    state: 'tickets',
+  },
+  {
+    title: 'Total revenue',
+    period: 'Last 7 days',
+    value: 16500,
+    variance: -3,
+    state: 'revenue',
+  },
+  {
+    title: 'Active users',
+    period: 'Last 7 days',
+    value: 1200,
+    variance: 6,
+    state: 'active',
+  },
+];
+
+export const devices = [
+  { label: 'Andriod', value: 68, color: '#5856D6', amount: 830.03 },
+  { label: 'IOS', value: 32, color: '#EA3354', amount: 500.75 },
+];
+
+export const chartData = [
+  {
+    day_of_week: 'Mon',
+    total_amount: 240000,
+  },
+  {
+    day_of_week: 'Tue',
+    total_amount: 221000,
+  },
+  {
+    day_of_week: 'Wed',
+    total_amount: 2290,
+  },
+  {
+    day_of_week: 'Thu',
+    total_amount: 2000,
+  },
+  {
+    day_of_week: 'Fri',
+    total_amount: 2181,
+  },
+  {
+    day_of_week: 'Sat',
+    total_amount: 25000,
+  },
+  {
+    day_of_week: 'Sun',
+    total_amount: 210000,
+  },
+];
+
 export const barChartData = [
   { resolution: '1920x1080', percentage: 5.52, colors: '#357AF6' },
   { resolution: '1536x864', percentage: 20.8, colors: '#F09436' },

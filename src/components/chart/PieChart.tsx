@@ -1,26 +1,9 @@
+import { devices } from '@/pages/dashboard/constants';
 import { Dot } from '../svg/dashboard/Dashboard';
 import { PieChart } from 'react-minimal-pie-chart';
 import { formatToDollar } from '@/utils';
-import { UsersByDevice } from '@/types/types';
 
-interface Props {
-  userByDevice: UsersByDevice;
-}
-export const PieChartData = ({ userByDevice }: Props) => {
-  const devices = [
-    {
-      label: 'Andriod',
-      value: userByDevice.android_percent,
-      color: '#5856D6',
-      amount: 830.03,
-    },
-    {
-      label: 'IOS',
-      value: userByDevice.ios_percent,
-      color: '#EA3354',
-      amount: 500.75,
-    },
-  ];
+export const PieChartData = () => {
   return (
     <>
       <p className='text-light-grey-700 text-sm font-normal'>Last 7 days</p>
@@ -60,10 +43,10 @@ export const PieChartData = ({ userByDevice }: Props) => {
               <p className='text-light-grey-300 text-sm min-w-[60px]'>
                 {device.label}
               </p>
-              {/* <p className='text-[#1C2A53] text-sm min-w-[60px]'>
+              <p className='text-[#1C2A53] text-sm min-w-[60px]'>
                 {formatToDollar(device.amount)}
-              </p> */}
-              <p className='text-light-grey-300 text-sm min-w-[60px]'>
+              </p>
+              <p className='text-light-grey-300 text-sm min-w-[60px] ml-2'>
                 {device.value}%
               </p>
             </div>

@@ -2,7 +2,6 @@ import {
   baseURL,
   initailAreaChart,
   initialOverview,
-  initialUsersByDevice,
 } from '@/constants/constants';
 import { useUser } from '@/context/AppContext';
 import {
@@ -12,7 +11,6 @@ import {
   RevenueGraph,
   TicketsPurchasedViaApp,
   TotalUsersRegistered,
-  UsersByDevice,
 } from '@/types/types';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -21,9 +19,6 @@ export const useManageDashboard = () => {
   const { token } = useUser();
   const [isLoading, setIsLoading] = useState(false);
   const [overView, setOverView] = useState<OverViewType>(initialOverview);
-  const [userByDevice, setUserByDevice] =
-    useState<UsersByDevice>(initialUsersByDevice);
-  const [usersLoading, setUsersLoading] = useState(false);
   const [registeredUsersData, setRegisteredUsersData] = useState<
     TotalUsersRegistered[]
   >([]);
@@ -134,35 +129,12 @@ export const useManageDashboard = () => {
       toast.error((error as MutationErrorPayload)?.data?.message);
     }
   };
-  const getUsersByDevice = async () => {
-    try {
-      setUsersLoading(true);
-      const data = await fetch(`${baseURL}admin/dashboard/user-by-device`, {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const res = await data.json();
-      setUsersLoading(false);
-      if (res?.error) {
-        toast.error(res.message);
-      } else {
-        setUserByDevice(res);
-      }
-    } catch (error) {
-      toast.error((error as MutationErrorPayload)?.data?.message);
-    }
-  };
 
   const getDashboardAnalytics = async () => {
     getOverViewData();
     getRegisteredUsersTable();
     getPurchasedTicketTable();
     getAreaChart('weekly');
-    getUsersByDevice();
   };
 
   return {
@@ -170,11 +142,9 @@ export const useManageDashboard = () => {
     setChartData,
     chartData,
     overView,
-    userByDevice,
     loaders: {
       isLoading,
       isChartLoading,
-      usersLoading,
     },
     actions: {
       getOverViewData,
