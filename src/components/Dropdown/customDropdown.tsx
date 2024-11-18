@@ -2,6 +2,7 @@ import { Field } from '@headlessui/react';
 import clsx from 'clsx';
 import { ReactNode, useEffect, useState, useRef } from 'react';
 import { RoleOption } from '@/pages/settings/profile';
+import { useClickOutside } from '../hooks/useClickOutside';
 interface SelectProps {
   className?: string;
   hasBorder?: Boolean;
@@ -26,16 +27,9 @@ export function CustomDropdown({
 }: SelectProps) {
   const [isActive, setIsActive] = useState<boolean>(false);
   let divRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    let handler = (e: MouseEvent) => {
-      if (isActive && !divRef.current?.contains(e.target as Node))
-        setIsActive(false);
-    };
-    document.addEventListener('click', handler);
-    return () => {
-      document.removeEventListener('click', handler);
-    };
-  });
+
+  useClickOutside(divRef, () => setIsActive(false), isActive);
+
   const handleClick = () => {
     setIsActive(!isActive);
   };
