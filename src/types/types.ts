@@ -269,3 +269,9 @@ export interface AllocatePonit {
   points: number;
   reason: string;
 }
+export interface UsersByDevice {
+  android_percent: number;
+  ios_percent: number;
+  android_revenue: number;
+  ios_revenue: number;
+}

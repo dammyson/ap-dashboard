@@ -31,6 +31,7 @@ function Dashboard() {
     setChartData,
     overView,
     table,
+    userByDevice,
   } = useManageDashboard();
   const [activeStat, setActiveStat] = useState<string>('');
   const tabs = [
@@ -123,7 +124,7 @@ function Dashboard() {
                 )}
               </div>
               <div className='col-span-12 1240:col-span-4 '>
-                {loaders.isLoading ? (
+                {loaders.usersLoading ? (
                   <SkeletonLoader hasByDevice />
                 ) : (
                   <Card
@@ -134,7 +135,7 @@ function Dashboard() {
                     mainClass='1240:h-full max-h-[513px]'
                     titleClass='text-lg'
                   >
-                    <PieChartData />
+                    <PieChartData userByDevice={userByDevice} />
                   </Card>
                 )}
               </div>
