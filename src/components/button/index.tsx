@@ -48,6 +48,7 @@ export function Button({
         className={clsx(
           disabled &&
             '!border-light-grey-200 hover:border-light-grey-200, !cursor-auto !bg-primary-white',
+          disabled && mode === 'solid' && '!border-2 !border-solid',
           radius === BorderRadius.Large
             ? 'rounded-[50px]'
             : radius === BorderRadius.Medium
