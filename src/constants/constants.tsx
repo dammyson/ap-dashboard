@@ -1,4 +1,9 @@
-import { CustomerGraphValues, OverViewType, RevenueGraph } from '@/types/types';
+import {
+  CustomerGraphValues,
+  OverViewType,
+  RevenueGraph,
+  UsersByDevice,
+} from '@/types/types';
 
 export const baseURL = import.meta.env.VITE_API_BASE_URL;
 
@@ -40,3 +45,15 @@ export const initialCustomerRevenue: CustomerGraphValues = {
   total_revenue_amount: 0,
   total_revenue: [],
 };
+
+export const initialUsersByDevice: UsersByDevice = {
+  android_percent: 0,
+  ios_percent: 0,
+  android_revenue: 0,
+  ios_revenue: 0,
+};
+
+export const graphOptions = [
+  { key: 'Weekly', value: 'weekly' },
+  { key: 'Yearly', value: 'yearly' },
+];

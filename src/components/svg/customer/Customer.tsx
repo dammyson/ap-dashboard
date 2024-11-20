@@ -27,32 +27,32 @@ export const GoldTrophy = () => {
       <path
         d='M10.4871 4.07129C9.07902 4.07129 7.9375 5.21281 7.9375 6.62093V13.42C7.9375 17.871 11.5457 21.4792 15.9967 21.4792C20.4477 21.4792 24.0559 17.871 24.0559 13.42V6.62093C24.0559 5.21281 22.9144 4.07129 21.5062 4.07129H10.4871Z'
         stroke='#F7CB45'
-        stroke-width='1.10526'
+        strokeWidth='1.10526'
       />
       <path
         d='M15.9961 22.4463V23.7358'
         stroke='#F7CB45'
-        stroke-width='1.10526'
+        strokeWidth='1.10526'
         strokeLinecap='round'
       />
       <path
         d='M19.8643 24.7031H12.1275C11.2373 24.7031 10.5156 25.4248 10.5156 26.315C10.5156 27.2052 11.2373 27.9268 12.1275 27.9268H19.8643C20.7545 27.9268 21.4762 27.2052 21.4762 26.315C21.4762 25.4248 20.7545 24.7031 19.8643 24.7031Z'
         stroke='#F7CB45'
-        stroke-width='1.10526'
+        strokeWidth='1.10526'
       />
       <path
         d='M7.61431 6.97266C5.83392 6.97266 4.39062 8.41595 4.39062 10.1963V10.6198C4.39062 11.5871 4.77488 12.5148 5.45886 13.1988L8.25905 15.999'
         stroke='#F7CB45'
-        stroke-width='1.10526'
+        strokeWidth='1.10526'
         strokeLinecap='round'
-        stroke-linejoin='round'
+        strokeLinejoin='round'
       />
       <path
         d='M24.3791 6.97266C26.1595 6.97266 27.6028 8.41595 27.6028 10.1963V10.6198C27.6028 11.5871 27.2185 12.5148 26.5346 13.1988L23.7344 15.999'
         stroke='#F7CB45'
-        stroke-width='1.10526'
+        strokeWidth='1.10526'
         strokeLinecap='round'
-        stroke-linejoin='round'
+        strokeLinejoin='round'
       />
     </svg>
   );
@@ -95,12 +95,12 @@ export const UserReferral = () => {
       <path
         d='M12.0002 12.0626C14.7617 12.0626 17.0003 9.87997 17.0003 7.18755C17.0003 4.49514 14.7617 2.3125 12.0002 2.3125C9.23865 2.3125 7 4.49514 7 7.18755C7 9.87997 9.23865 12.0626 12.0002 12.0626Z'
         stroke='#BD3826'
-        stroke-width='2.81256'
+        strokeWidth='2.81256'
       />
       <path
         d='M21.9982 21.8145C22.0007 21.6146 22.0007 21.4111 22.0007 21.2051C22.0007 18.1765 17.523 15.7207 12.0003 15.7207C6.47765 15.7207 2 18.1765 2 21.2051C2 24.2338 2 26.6896 12.0003 26.6896C14.7892 26.6896 16.8005 26.4982 18.2505 26.157'
         stroke='#BD3826'
-        stroke-width='2.81256'
+        strokeWidth='2.81256'
         strokeLinecap='round'
       />
     </svg>
@@ -188,8 +188,8 @@ export const Miles = () => {
           y2='33.5'
           gradientUnits='userSpaceOnUse'
         >
-          <stop stop-color='#2B539F' />
-          <stop offset='1' stop-color='#BD3826' />
+          <stop stopColor='#2B539F' />
+          <stop offset='1' stopColor='#BD3826' />
         </linearGradient>
         <clipPath id='clip0_3168_17869'>
           <rect width='67' height='67' fill='white' />

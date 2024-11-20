@@ -69,10 +69,10 @@ function CreateSurvey() {
   const allTrue = [surveyTitle, surveyQuestions].every((field) => {
     if (typeof field === 'string') return field.trim() !== '';
     if (Array.isArray(field)) {
-      return field.map(
+      return field.every(
         (question) =>
           question.question_text.trim() !== '' &&
-          question.options.map((option) => option.option_text.trim() !== ''),
+          question.options.every((option) => option.option_text.trim() !== ''),
       );
     }
     return false;
@@ -199,6 +199,7 @@ function CreateSurvey() {
               <div className='flex items-center justify-center mt-16 mb-8'>
                 <div className='grid w-full max-w-[330px] 880:max-w-[400px] gap-4 '>
                   <Button
+                    disabled={allTrue ? false : true}
                     size={ButtonSize.Large}
                     radius={BorderRadius.Large}
                     buttonText={
