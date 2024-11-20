@@ -66,8 +66,8 @@ export const ArrowRight = ({ className }: { className?: string }) => {
           y2='12'
           gradientUnits='userSpaceOnUse'
         >
-          <stop stop-color='#2B539F' />
-          <stop offset='1' stop-color='#BD3826' />
+          <stop stopColor='#2B539F' />
+          <stop offset='1' stopColor='#BD3826' />
         </linearGradient>
       </defs>
     </svg>
@@ -243,7 +243,7 @@ export const Fall = () => {
       <path
         d='M159 55.0441C152.566 32.5237 126.574 11.0348 92.5113 31.0938C21.3756 72.984 7.79185 11.0757 0.999996 1'
         stroke='#D02626'
-        stroke-width='1.42986'
+        strokeWidth='1.42986'
         strokeLinecap='round'
       />
       <defs>
@@ -255,8 +255,8 @@ export const Fall = () => {
           y2='76.4253'
           gradientUnits='userSpaceOnUse'
         >
-          <stop stop-color='#D02626' stop-opacity='0.08' />
-          <stop offset='1' stop-color='#D02626' stop-opacity='0' />
+          <stop stopColor='#D02626' stop-opacity='0.08' />
+          <stop offset='1' stopColor='#D02626' stop-opacity='0' />
         </linearGradient>
       </defs>
     </svg>
@@ -279,7 +279,7 @@ export const Rise = () => {
       <path
         d='M1 76.9515C7.31222 45.3022 32.8099 15.1026 66.2262 43.2928C136.011 102.164 149.337 15.1601 156 1'
         stroke='#1EB564'
-        stroke-width='2'
+        strokeWidth='2'
         strokeLinecap='round'
       />
       <defs>
@@ -291,8 +291,8 @@ export const Rise = () => {
           y2='111'
           gradientUnits='userSpaceOnUse'
         >
-          <stop stop-color='#1EB564' stop-opacity='0.08' />
-          <stop offset='1' stop-color='#1EB564' stop-opacity='0' />
+          <stop stopColor='#1EB564' stop-opacity='0.08' />
+          <stop offset='1' stopColor='#1EB564' stop-opacity='0' />
         </linearGradient>
       </defs>
     </svg>

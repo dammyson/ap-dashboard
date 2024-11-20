@@ -61,23 +61,23 @@ export const Photo = ({ className }: { className?: string }) => {
       <path
         d='M6.67188 19.9993C6.67188 16.4631 8.07663 13.0717 10.5771 10.5713C13.0776 8.07077 16.469 6.66602 20.0052 6.66602H60.0052C63.5414 6.66602 66.9328 8.07077 69.4333 10.5713C71.9338 13.0717 73.3385 16.4631 73.3385 19.9993V59.9994C73.3385 63.5356 71.9338 66.927 69.4333 69.4274C66.9328 71.9279 63.5414 73.3327 60.0052 73.3327H20.0052C16.469 73.3327 13.0776 71.9279 10.5771 69.4274C8.07663 66.927 6.67188 63.5356 6.67188 59.9994V19.9993Z'
         stroke='#BBCAE1'
-        stroke-width='6.4'
+        strokeWidth='6.4'
         strokeLinecap='round'
-        stroke-linejoin='round'
+        strokeLinejoin='round'
       />
       <path
         d='M28.3411 36.6647C32.9435 36.6647 36.6745 32.9338 36.6745 28.3314C36.6745 23.729 32.9435 19.998 28.3411 19.998C23.7388 19.998 20.0078 23.729 20.0078 28.3314C20.0078 32.9338 23.7388 36.6647 28.3411 36.6647Z'
         stroke='#BBCAE1'
-        stroke-width='6.4'
+        strokeWidth='6.4'
         strokeLinecap='round'
-        stroke-linejoin='round'
+        strokeLinejoin='round'
       />
       <path
         d='M48.4278 42.0703L20.0078 73.3337H60.4511C63.8698 73.3337 67.1484 71.9756 69.5658 69.5583C71.9831 67.1409 73.3411 63.8623 73.3411 60.4437V60.0003C73.3411 58.447 72.7578 57.8503 71.7078 56.7003L58.2745 42.0503C57.6484 41.3674 56.8868 40.8224 56.0384 40.4502C55.1899 40.0781 54.2732 39.8868 53.3467 39.8887C52.4202 39.8906 51.5043 40.0855 50.6574 40.4612C49.8105 40.8368 49.0511 41.3849 48.4278 42.0703Z'
         stroke='#BBCAE1'
-        stroke-width='6.4'
+        strokeWidth='6.4'
         strokeLinecap='round'
-        stroke-linejoin='round'
+        strokeLinejoin='round'
       />
     </svg>
   );
@@ -100,23 +100,23 @@ export const CircledPlus = ({
       <path
         d='M16 30C23.732 30 30 23.732 30 16C30 8.26801 23.732 2 16 2C8.26801 2 2 8.26801 2 16C2 23.732 8.26801 30 16 30Z'
         stroke={color}
-        stroke-width='2'
+        strokeWidth='2'
         strokeLinecap='round'
-        stroke-linejoin='round'
+        strokeLinejoin='round'
       />
       <path
         d='M10 16H22'
         stroke={color}
-        stroke-width='2'
+        strokeWidth='2'
         strokeLinecap='round'
-        stroke-linejoin='round'
+        strokeLinejoin='round'
       />
       <path
         d='M16 9.99999V22'
         stroke={color}
-        stroke-width='2'
+        strokeWidth='2'
         strokeLinecap='round'
-        stroke-linejoin='round'
+        strokeLinejoin='round'
       />
     </svg>
   );
@@ -153,7 +153,7 @@ export const RadioSelect = () => {
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
     >
-      <circle cx='16' cy='16' r='15' stroke='#8E8E93' stroke-width='2' />
+      <circle cx='16' cy='16' r='15' stroke='#8E8E93' strokeWidth='2' />
       <circle cx='16' cy='16' r='10' fill='#D9D9D9' />
     </svg>
   );
@@ -196,7 +196,7 @@ export const CheckBoxSelect = () => {
         height='30'
         rx='3'
         stroke='#C7C7CC'
-        stroke-width='2'
+        strokeWidth='2'
       />
       <path
         d='M20.456 11.4557C20.6673 11.2545 20.9485 11.1433 21.2402 11.1455C21.5319 11.1477 21.8114 11.2632 22.0196 11.4675C22.2279 11.6719 22.3486 11.9491 22.3563 12.2408C22.364 12.5324 22.2581 12.8157 22.061 13.0307L16.076 20.5157C15.9731 20.6266 15.8488 20.7155 15.7108 20.7773C15.5727 20.839 15.4236 20.8723 15.2723 20.8751C15.1211 20.8779 14.9709 20.8502 14.8306 20.7936C14.6903 20.737 14.5629 20.6527 14.456 20.5457L10.487 16.5767C10.3764 16.4737 10.2878 16.3495 10.2263 16.2115C10.1648 16.0735 10.1317 15.9246 10.1291 15.7735C10.1264 15.6224 10.1542 15.4724 10.2108 15.3323C10.2674 15.1922 10.3516 15.065 10.4584 14.9582C10.5652 14.8513 10.6925 14.7671 10.8326 14.7105C10.9727 14.6539 11.1227 14.6262 11.2738 14.6288C11.4248 14.6315 11.5738 14.6646 11.7118 14.726C11.8498 14.7875 11.974 14.8762 12.077 14.9867L15.218 18.1262L20.4275 11.4887L20.456 11.4557Z'
@@ -222,7 +222,7 @@ export const EmptyBoxSelect = () => {
         height='30'
         rx='3'
         stroke='#C7C7CC'
-        stroke-width='2'
+        strokeWidth='2'
       />
     </svg>
   );
@@ -253,7 +253,7 @@ export const EmptyCircle = () => {
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
     >
-      <circle cx='16' cy='16' r='15' stroke='#8E8E93' stroke-width='2' />
+      <circle cx='16' cy='16' r='15' stroke='#8E8E93' strokeWidth='2' />
     </svg>
   );
 };
