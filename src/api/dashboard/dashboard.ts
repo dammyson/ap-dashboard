@@ -2,6 +2,7 @@ import {
   baseURL,
   initailAreaChart,
   initialOverview,
+  initialUsersByDevice,
 } from '@/constants/constants';
 import { useUser } from '@/context/AppContext';
 import {
@@ -11,6 +12,7 @@ import {
   RevenueGraph,
   TicketsPurchasedViaApp,
   TotalUsersRegistered,
+  UsersByDevice,
 } from '@/types/types';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -28,7 +30,11 @@ export const useManageDashboard = () => {
   const [isChartLoading, setIsChartLoading] = useState(false);
   const [revenueGraph, setRevenueGraph] =
     useState<RevenueGraph>(initailAreaChart);
-
+  const [usersLoading, setUsersLoading] = useState(false);
+  const [usersByDevice, setUsersByDevice] =
+    useState<UsersByDevice>(initialUsersByDevice);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [isSucess, setIsSucess] = useState(false);
   const [chartData, setChartData] = useState<GraphValues[]>([]);
 
   const getOverViewData = async () => {
@@ -120,10 +126,36 @@ export const useManageDashboard = () => {
       setIsChartLoading(false);
       if (res?.error) {
         toast.error(res.message);
+        setIsSucess(false);
       } else {
+        setShowDropdown(false);
+        setIsSucess(true);
         setRevenueGraph(res);
 
         setChartData(res.ticket.ticket_data);
+      }
+    } catch (error) {
+      toast.error((error as MutationErrorPayload)?.data?.message);
+    }
+  };
+
+  const getUsersByDevice = async () => {
+    try {
+      setUsersLoading(true);
+      const data = await fetch(`${baseURL}admin/dashboard/user-by-device`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const res = await data.json();
+      setUsersLoading(false);
+      if (res?.error) {
+        toast.error(res.message);
+      } else {
+        setUsersByDevice(res);
       }
     } catch (error) {
       toast.error((error as MutationErrorPayload)?.data?.message);
@@ -135,6 +167,7 @@ export const useManageDashboard = () => {
     getRegisteredUsersTable();
     getPurchasedTicketTable();
     getAreaChart('weekly');
+    getUsersByDevice();
   };
 
   return {
@@ -142,15 +175,22 @@ export const useManageDashboard = () => {
     setChartData,
     chartData,
     overView,
+    usersByDevice,
+    isSucess,
+    showDropdown,
+    setShowDropdown,
     loaders: {
       isLoading,
       isChartLoading,
+      usersLoading,
     },
     actions: {
       getOverViewData,
       getRegisteredUsersTable,
       getPurchasedTicketTable,
       getDashboardAnalytics,
+      getUsersByDevice,
+      getAreaChart,
     },
     table: {
       registeredUsersData,

@@ -93,7 +93,7 @@ const SurveyQuestionCard = ({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 handleQuestionText(e, item.id)
               }
-              placeHolder='Enter title of the survey'
+              placeHolder='Input Question'
               isCurved
               hasBorder
               className='!border-light-blue-50 !drop-shadow-none placeholder:text-light-primary-deep_black !h-[55px] 960:!min-h-[70px]'

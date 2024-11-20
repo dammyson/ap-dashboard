@@ -4,7 +4,7 @@ import { UsersRegistered } from '@/components/dashboardTables/usersRegistered';
 import { TicketsPurchased } from '@/components/dashboardTables/ticketsPurchased';
 import { TotalRevenue } from '@/components/dashboardTables/totalRevenue';
 import { ActiveUsers } from '@/components/dashboardTables/activeUsers';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { numberShortener } from '@/utils';
 import {
   ArrowRight,
@@ -21,6 +21,8 @@ import { useManageDashboard } from '@/api/dashboard/dashboard';
 import { DashboardOverView } from '@/components/overViewCards/dashboard';
 import { PieChartData } from '@/components/chart/PieChart';
 import { SkeletonLoader } from '@/components/customSkeletonLoader/skeletonLoader';
+import { graphOptions } from '@/constants/constants';
+import { useClickOutside } from '@/components/hooks/useClickOutside';
 
 function Dashboard() {
   const {
@@ -31,8 +33,16 @@ function Dashboard() {
     setChartData,
     overView,
     table,
+    usersByDevice,
+    showDropdown,
+    isSucess,
+    setShowDropdown,
   } = useManageDashboard();
+  const filterRef = useRef<HTMLDivElement | null>(null);
   const [activeStat, setActiveStat] = useState<string>('');
+  const [isgraphfiltered, setIsGraphFiltered] = useState(false);
+  const [activeFilterTab, setActiveFilterTab] = useState(graphOptions[0]);
+  useClickOutside(filterRef, () => setShowDropdown(false), showDropdown);
   const tabs = [
     { name: 'Ticket sales', value: revenueGraph?.ticket.ticket_amount },
     {
@@ -45,6 +55,7 @@ function Dashboard() {
 
   useEffect(() => {
     actions.getDashboardAnalytics();
+    setIsGraphFiltered(false);
   }, []);
 
   useEffect(() => {
@@ -54,6 +65,11 @@ function Dashboard() {
       setChartData(revenueGraph?.ancillary.ancillary_data);
     } else setChartData(revenueGraph?.revenue.revenue_data);
   }, [activeTab]);
+
+  const filterGraph = async (val: string) => {
+    await actions.getAreaChart(val);
+    setIsGraphFiltered(isSucess);
+  };
 
   return (
     <AppLayout logo=''>
@@ -88,9 +104,47 @@ function Dashboard() {
                   <SkeletonLoader hasChartData />
                 ) : (
                   <Card
+                    isFiltered={isgraphfiltered}
                     hasBadge
                     hasHeader
-                    trailingIcon1={<Filter />}
+                    trailingIcon1={
+                      <div ref={filterRef} className='relative '>
+                        <div onClick={() => setShowDropdown(!showDropdown)}>
+                          <Filter />
+                        </div>
+                        <div
+                          className={clsx(
+                            showDropdown ? 'active' : 'inactive',
+                            'absolute top-[35px] right-[-1px] w-[120px] text-center bg-primary-white shadow-default rounded-md p-2 text-light-primary-black',
+                          )}
+                        >
+                          {graphOptions.map((option, i) => {
+                            const lastOpt = i === graphOptions.length - 1;
+                            return (
+                              <p
+                                key={i}
+                                className={clsx(
+                                  activeFilterTab.key === option.key &&
+                                    'bg-[#f1f1f1] text-light-grey-100',
+                                  !lastOpt && 'border-b',
+                                  `py-1 hover:bg-[#f1f1f1] rounded`,
+                                )}
+                                onClick={() => {
+                                  if (option === activeFilterTab) {
+                                    return;
+                                  } else {
+                                    setActiveFilterTab(option);
+                                    filterGraph(option.value);
+                                  }
+                                }}
+                              >
+                                {option.key}
+                              </p>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    }
                     title='Revenue via app'
                     mainClass='relative grid justify-items-between h-[513px]'
                     titleClass='text-lg'
@@ -123,7 +177,7 @@ function Dashboard() {
                 )}
               </div>
               <div className='col-span-12 1240:col-span-4 '>
-                {loaders.isLoading ? (
+                {loaders.usersLoading ? (
                   <SkeletonLoader hasByDevice />
                 ) : (
                   <Card
@@ -134,7 +188,7 @@ function Dashboard() {
                     mainClass='1240:h-full max-h-[513px]'
                     titleClass='text-lg'
                   >
-                    <PieChartData />
+                    <PieChartData usersByDevice={usersByDevice} />
                   </Card>
                 )}
               </div>
