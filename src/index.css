@@ -353,12 +353,6 @@ tr > th.ant-table-cell.ant-table-cell-scrollbar {
   cursor: pointer;
 }
 
-@media (min-width: 1240px) and (max-height: 650px) {
-  .md-height {
-    margin-top: 60px !important;
-  }
-}
-
 .shimmer-wrapper {
   position: absolute;
   top: 0;
@@ -391,6 +385,8 @@ tr > th.ant-table-cell.ant-table-cell-scrollbar {
   }
 }
 
+/* DaSHBORAD GRAPH FILTER */
+
 .active {
   opacity: 1;
   visibility: visible;
@@ -403,4 +399,13 @@ tr > th.ant-table-cell.ant-table-cell-scrollbar {
   visibility: hidden;
   transform: translateY(-10px);
   transition: 250ms ease-out;
+}
+
+@media (min-width: 1240px) and (max-width: 1400px) {
+  .greeting > h1 {
+    @apply text-[1.3rem];
+  }
+  .greeting > p {
+    @apply text-base;
+  }
 }

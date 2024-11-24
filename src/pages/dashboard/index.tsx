@@ -98,7 +98,7 @@ function Dashboard() {
             </div>
           </div>
           {activeStat !== 'active' && (
-            <div className='mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>
+            <div className='mt-2 grid grid-cols-12 gap-4 1240:gap-8 pb-2'>
               <div className='col-span-12 1240:col-span-8 relative'>
                 {loaders.isChartLoading ? (
                   <SkeletonLoader hasChartData />
@@ -147,7 +147,6 @@ function Dashboard() {
                     }
                     title='Revenue via app'
                     mainClass='relative grid justify-items-between h-[513px]'
-                    titleClass='text-lg'
                   >
                     <div className='flex items-center gap-1.5 480:gap-5 mb-6 560:mb-12'>
                       {tabs.map((tab, index) => {
@@ -162,10 +161,10 @@ function Dashboard() {
                               'p-2 pb-3.5 cursor-pointer',
                             )}
                           >
-                            <h3 className='text-primary-black text-[16px] 480:text-lg 560:text-xl font-bold mb-2'>
+                            <h3 className='text-primary-black text-[16px] 560:text-lg 1400:text-xl font-bold mb-2'>
                               {numberShortener(tab.value)}
                             </h3>
-                            <p className='text-sm font-medium text-light-grey-400'>
+                            <p className=' text-[12px] 560:text-sm font-medium text-light-grey-400'>
                               {tab.name}
                             </p>
                           </div>

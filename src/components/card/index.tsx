@@ -58,7 +58,7 @@ export const Card = ({
               {title && (
                 <span
                   className={clsx(
-                    'font-medium 560:text-xl text-light-grey-700 ',
+                    'font-medium text-base 560:text-lg 1400:text-xl text-light-grey-700 ',
                     titleClass,
                   )}
                 >
