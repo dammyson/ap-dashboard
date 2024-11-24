@@ -37,6 +37,7 @@ function Dashboard() {
     showDropdown,
     isSucess,
     setShowDropdown,
+    screenData,
   } = useManageDashboard();
   const filterRef = useRef<HTMLDivElement | null>(null);
   const [activeStat, setActiveStat] = useState<string>('');
@@ -222,7 +223,7 @@ function Dashboard() {
                       trailingIcon1={<Filter />}
                       titleClass='text-lg'
                     >
-                      <HorizontalBarChart />
+                      <HorizontalBarChart data={screenData} />
                     </Card>
                   )}
                 </div>

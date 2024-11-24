@@ -1,11 +1,13 @@
 import {
   baseURL,
   initailAreaChart,
+  initailResolution,
   initialOverview,
   initialUsersByDevice,
 } from '@/constants/constants';
 import { useUser } from '@/context/AppContext';
 import {
+  ByScreenResolution,
   GraphValues,
   MutationErrorPayload,
   OverViewType,
@@ -36,6 +38,8 @@ export const useManageDashboard = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [isSucess, setIsSucess] = useState(false);
   const [chartData, setChartData] = useState<GraphValues[]>([]);
+  const [isScreenLoading, setIsScreenLoading] = useState(false);
+  const [screenData, setScreenData] = useState<ByScreenResolution[]>([]);
 
   const getOverViewData = async () => {
     try {
@@ -162,12 +166,36 @@ export const useManageDashboard = () => {
     }
   };
 
+  const getUsersByScreenResolution = async () => {
+    try {
+      setIsScreenLoading(true);
+      const data = await fetch(`${baseURL}admin/dashboard/screen-resolution`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const res = await data.json();
+      setIsScreenLoading(false);
+      if (res?.error) {
+        toast.error(res.message);
+      } else {
+        setScreenData(res.users_and_screenResolution);
+      }
+    } catch (error) {
+      toast.error((error as MutationErrorPayload)?.data?.message);
+    }
+  };
+
   const getDashboardAnalytics = async () => {
     getOverViewData();
     getRegisteredUsersTable();
     getPurchasedTicketTable();
     getAreaChart('weekly');
     getUsersByDevice();
+    getUsersByScreenResolution();
   };
 
   return {
@@ -179,10 +207,12 @@ export const useManageDashboard = () => {
     isSucess,
     showDropdown,
     setShowDropdown,
+    screenData,
     loaders: {
       isLoading,
       isChartLoading,
       usersLoading,
+      isScreenLoading,
     },
     actions: {
       getOverViewData,

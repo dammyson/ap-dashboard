@@ -1,4 +1,5 @@
 import {
+  ByScreenResolution,
   CustomerGraphValues,
   OverViewType,
   RevenueGraph,
@@ -57,3 +58,9 @@ export const graphOptions = [
   { key: 'Weekly', value: 'weekly' },
   { key: 'Yearly', value: 'yearly' },
 ];
+
+export const initailResolution: ByScreenResolution = {
+  screen_resolution: '',
+  percentage: 0,
+  count: 0,
+};
