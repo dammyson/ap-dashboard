@@ -1,5 +1,4 @@
 import {
-  ByScreenResolution,
   CustomerGraphValues,
   OverViewType,
   RevenueGraph,

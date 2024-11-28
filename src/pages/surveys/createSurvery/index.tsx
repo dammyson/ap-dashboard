@@ -210,7 +210,10 @@ function CreateSurvey() {
                       )
                     }
                     onClick={() => handleCreateSurvey(false, false)}
-                    className='!min-h-[55px] 960:!min-h-[66px]'
+                    className={clsx(
+                      !allTrue && '!border-2 !border-solid',
+                      '!min-h-[55px] 960:!min-h-[66px]',
+                    )}
                   />
                   <Button
                     disabled={allTrue ? false : true}
