@@ -46,8 +46,7 @@ export function Button({
         disabled={disabled}
         onClick={onClick}
         className={clsx(
-          disabled &&
-            '!border-light-grey-200 hover:border-light-grey-200, !cursor-auto !bg-primary-white',
+          disabled && '!cursor-not-allowed !bg-opacity-60 text-opacity-60',
           radius === BorderRadius.Large
             ? 'rounded-[50px]'
             : radius === BorderRadius.Medium
