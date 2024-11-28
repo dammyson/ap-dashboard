@@ -79,7 +79,7 @@ export const DashboardOverView = ({
                 </div>
                 <div className='flex items-center gap-3 justify-between'>
                   <div>
-                    <h3 className='text-primary-black font-bold text-xl 560:text-2xl mb-4'>
+                    <h3 className='text-primary-black font-bold text-lg 1400:text-2xl mb-4'>
                       {numberShortener(stat.value)}
                     </h3>
                     <div className='flex items-center gap-1'>
