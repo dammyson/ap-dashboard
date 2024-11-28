@@ -1,4 +1,3 @@
-import { barChartData } from '@/pages/dashboard/constants';
 import { ByScreenResolution } from '@/types/types';
 import {
   BarChart,
@@ -6,7 +5,6 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
   Legend,
   ResponsiveContainer,
   Cell,
@@ -23,18 +21,20 @@ interface Props {
 }
 
 export const HorizontalBarChart = ({ data }: Props) => {
-  // const barChartData = [
-  //   {
-  //     resolution: data.screen_resolution,
-  //     percentage: data.percentage,
-  //     colors: '#357AF6',
-  //   },
-  //   // { resolution: '1536x864', percentage: 20.8, colors: '#F09436' },
-  //   // { resolution: '1366x766', percentage: 15.95, colors: '#5CC8BE' },
-  //   // { resolution: '393x873', percentage: 25.28, colors: '#5856D6' },
-  //   // { resolution: '390x844', percentage: 18.96, colors: '#AF52DE' },
-  //   // { resolution: '360x800', percentage: 13.46, colors: '#EA3354' },
-  // ];
+  const chartColors = [
+    '#357AF6',
+    '#F09436',
+    '#5CC8BE',
+    '#5856D6',
+    '#AF52DE',
+    '#EA3354',
+  ];
+
+  const sortedData = data.sort(
+    (a, b) =>
+      Number(b.screen_resolution.split('x')[0]) -
+      Number(a.screen_resolution.split('x')[0]),
+  );
 
   const customLabel = ({ x, y, width, value }: CustomLabelProps) => {
     return (
@@ -59,7 +59,9 @@ export const HorizontalBarChart = ({ data }: Props) => {
             className='w-full 640:min-w-[107px] flex flex-row gap-1.5 1240:gap-3 items-start 640:items-center justify-start'
           >
             <div
-              style={{ backgroundColor: 'red' }}
+              style={{
+                backgroundColor: chartColors[index % chartColors.length],
+              }}
               className='w-[15px] h-[15px] 1240:w-[30px] 1240:h-[30px]'
             ></div>
             <span className='font-medium text-xs 768:text-[14px] text-light-grey-600'>
@@ -76,7 +78,7 @@ export const HorizontalBarChart = ({ data }: Props) => {
       <BarChart
         width={400}
         height={400}
-        data={data}
+        data={sortedData}
         layout='vertical'
         margin={{
           top: 20,
@@ -94,7 +96,7 @@ export const HorizontalBarChart = ({ data }: Props) => {
         />
         <XAxis
           type='number'
-          ticks={[0, 2, 4, 6, 8, 10]}
+          ticks={[0, 20, 40, 60, 80, 100]}
           axisLine={false}
           tickLine={false}
           width={20}
@@ -107,10 +109,12 @@ export const HorizontalBarChart = ({ data }: Props) => {
           tick={{ fill: '#989898' }}
         />
         <Legend content={customLegend} />
-        <Tooltip cursor={{ fill: 'transparent' }} />
         <Bar dataKey='percentage' label={customLabel} barSize={25}>
-          {barChartData.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={entry.colors} />
+          {data.map((_, index) => (
+            <Cell
+              key={`cell-${index}`}
+              fill={chartColors[index % chartColors.length]}
+            />
           ))}
         </Bar>
       </BarChart>

@@ -1,7 +1,6 @@
 import {
   baseURL,
   initailAreaChart,
-  initailResolution,
   initialOverview,
   initialUsersByDevice,
 } from '@/constants/constants';
