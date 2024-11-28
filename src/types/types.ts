@@ -276,3 +276,9 @@ export interface UsersByDevice {
   android_revenue: number;
   ios_revenue: number;
 }
+
+export interface ByScreenResolution {
+  screen_resolution: string;
+  count: number;
+  percentage: number;
+}
