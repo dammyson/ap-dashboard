@@ -11,8 +11,9 @@ interface SelectProps {
   selected: string | number;
   options: RoleOption[];
   placeholder?: string;
-  onSelect?: (val: number) => void;
+  onSelect?: (val: number | string) => void;
   onChange?: (value: number | string) => void;
+  acceptLetters?: boolean;
 }
 export function CustomDropdown({
   className,
@@ -24,6 +25,7 @@ export function CustomDropdown({
   options,
   onSelect,
   onChange,
+  acceptLetters = false,
 }: SelectProps) {
   const [isActive, setIsActive] = useState<boolean>(false);
   let divRef = useRef<HTMLInputElement>(null);
@@ -36,7 +38,9 @@ export function CustomDropdown({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    onChange?.(!isNaN(Number(value)) ? Number(value) : '');
+    if (!acceptLetters) {
+      onChange?.(!isNaN(Number(value)) ? Number(value) : '');
+    } else onChange?.(value);
   };
   return (
     <Field className='relative'>
@@ -76,7 +80,11 @@ export function CustomDropdown({
                 onClick={() =>
                   onSelect && typeof option.value === 'number'
                     ? onSelect(option.value)
-                    : null
+                    : onSelect &&
+                        acceptLetters &&
+                        typeof option.value === 'string'
+                      ? onSelect(option.label)
+                      : null
                 }
               >
                 {option.label}
