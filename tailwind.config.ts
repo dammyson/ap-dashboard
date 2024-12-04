@@ -139,7 +139,7 @@ const config: Config = {
       },
     },
     backgroundImage: {
-      'auth-bg': "url('/src/assets/auth/dash_auth_bg.png')",
+      'auth-bg': "url('/src/assets/auth/dash_auth_bg_2.png')",
     },
   },
   plugins: [require('@tailwindcss/forms')],
