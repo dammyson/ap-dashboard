@@ -35,6 +35,9 @@ export function CustomDropdown({
   const handleClick = () => {
     setIsActive(!isActive);
   };
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && selected) setIsActive(false);
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -49,6 +52,7 @@ export function CustomDropdown({
           type=''
           value={selected ? selected : ''}
           ref={divRef}
+          onKeyUp={handleKeyDown}
           onClick={handleClick}
           placeholder={placeholder}
           onChange={handleInputChange}
