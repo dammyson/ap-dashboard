@@ -8,16 +8,20 @@ interface Props {
 }
 
 export const PieChartData = ({ usersByDevice }: Props) => {
+  const roundPercent = (value: number): number => {
+    return value % 1 !== 0 ? parseFloat(value.toFixed(2)) : value;
+  };
+
   const devices = [
     {
       label: 'Andriod',
-      value: usersByDevice.android_percent,
+      value: roundPercent(usersByDevice.android_percent),
       color: '#5856D6',
       amount: 830.03,
     },
     {
       label: 'IOS',
-      value: usersByDevice.ios_percent,
+      value: roundPercent(usersByDevice.ios_percent),
       color: '#EA3354',
       amount: 500.75,
     },

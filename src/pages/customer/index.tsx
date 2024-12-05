@@ -13,17 +13,16 @@ import { DropDownArrow } from '@/components/svg/settings/Settings';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import clsx from 'clsx';
 import { useUser } from '@/context/AppContext';
-import ListBox from '@/components/Dropdown/listBox';
-import { RoleOption } from '../settings/profile';
 import { point, reason } from '../surveys/viewResult/constants';
 import { useManageCustomer } from '@/api/customer/customer';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spinner } from '@/components/svg/spinner/Spinner';
+import { CustomDropdown } from '@/components/Dropdown/customDropdown';
 
 function Customer() {
   const { user } = useUser();
-  const [selectedPoint, setSelectedPoint] = useState<RoleOption>(point[0]);
-  const [selectedReason, setSelectedReason] = useState<RoleOption>(reason[0]);
+  const [selectedPoint, setSelectedPoint] = useState<number | string>('');
+  const [selectedReason, setSelectedReason] = useState<number | string>('');
   const [userId, setUserId] = useState<number | null>(null);
   const {
     loading,
@@ -38,8 +37,8 @@ function Customer() {
 
   const handleAllocatePoint = (id: number) => {
     allocatePonit(id, {
-      points: selectedPoint.value as number,
-      reason: selectedReason.value as string,
+      points: (selectedPoint as number) || 0,
+      reason: selectedReason as string,
     });
   };
 
@@ -107,26 +106,32 @@ function Customer() {
                     <p className='text-left text-base 768:text-lg 960:text-xl font-medium 960:pb-2 1400:pb-4'>
                       Points to award
                     </p>
-                    <ListBox
+
+                    <CustomDropdown
+                      isCurved
                       trailingIcon={<DropDownArrow />}
                       selected={selectedPoint}
                       options={point}
+                      placeholder='Enter or select'
                       onSelect={(point) => setSelectedPoint(point)}
-                      isCurved
-                      className=' placeholder:!text-light-primary-deep_black placeholder:!text-xl font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
+                      onChange={(point) => setSelectedPoint(point)}
+                      className=' placeholder:!text-light-primary-deep_black placeholder:1400:!text-xl 1024:!text-lg font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
                     />
                   </div>
                   <div className='768:mb-5 text-light-grey-600'>
                     <p className='text-left text-base 768:text-lg 960:text-xl font-medium 960:pb-2 1400:pb-4'>
                       Reason for awarding points
                     </p>
-                    <ListBox
+                    <CustomDropdown
+                      acceptLetters
+                      isCurved
                       trailingIcon={<DropDownArrow />}
                       selected={selectedReason}
                       options={reason}
+                      placeholder='Enter or select'
                       onSelect={(reason) => setSelectedReason(reason)}
-                      isCurved
-                      className=' placeholder:!text-light-primary-deep_black placeholder:!text-xl font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
+                      onChange={(reason) => setSelectedReason(reason)}
+                      className=' placeholder:!text-light-primary-deep_black placeholder:1400:!text-xl 1024:!text-lg font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
                     />
                   </div>
                 </div>
