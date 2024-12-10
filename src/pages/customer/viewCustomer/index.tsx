@@ -52,9 +52,6 @@ function ViewCustomer() {
     }
   }, []);
 
-  console.log('dad', UserFlightDetails);
-  console.log(customer);
-
   return (
     <AppLayout logo=''>
       <div
