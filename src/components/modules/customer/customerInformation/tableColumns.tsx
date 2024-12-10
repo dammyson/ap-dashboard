@@ -5,7 +5,7 @@ import { Trophy } from '@/components/svg/surveys/Surveys';
 import { Eye } from '@/components/svg/customer/Customer';
 import { ModalStateSetter } from '../../surveys/tableColumns';
 import { useNavigate } from 'react-router';
-import { convertToUrlString, getInitials } from '@/utils';
+import { getInitials } from '@/utils';
 import { Avatar } from '@/components/avatar/Avatar';
 import { useGetColorByChar } from '@/hooks/useGetColorByChar';
 
@@ -97,17 +97,14 @@ export const useCustomerInformation = (
         dataIndex: '',
         key: '',
         className: 'action',
-        render: (_, { id, title, user_first_name, user_last_name }) => {
-          const userName = `${user_first_name} ${user_last_name}`;
+        render: (_, { id }) => {
           return (
             <div className='flex gap-3 items-center'>
               <span
                 className='cursor-pointer'
                 onClick={() => {
                   if (id) {
-                    navigate(
-                      `/customer-view/${id}/${title}/${convertToUrlString(userName)}`,
-                    );
+                    navigate(`/customer-view/${id}`);
                   }
                 }}
               >

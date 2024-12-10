@@ -105,6 +105,73 @@ export interface CustomerInfomation {
   peace_id: number;
 }
 
+export interface CustomerChart {
+  ancillary: {
+    ancillary_amount: number;
+    ancillary_data: GraphValues[];
+  };
+  revenue: {
+    revenue_amount: number;
+    revenue_data: GraphValues[];
+  };
+  ticket: {
+    ticket_amount: number;
+    ticket_data: GraphValues[];
+  };
+}
+
+export interface ICustomer {
+  user_image_url_link: string;
+  user_firstname: string;
+  user_lastname: string;
+  user_phonenumber: string;
+  user_refferal_Count: number;
+  user_total_flight_flown: number;
+  user_date_of_reg: string;
+  last_flight: {
+    amount: string;
+    arrival_time: string;
+    booking_id: string;
+    created_at: string;
+    departure_time: string;
+    destination: string;
+    destination_city: string;
+    flight_distance: number;
+    flight_duration: string;
+    flight_number: string;
+    id: number;
+    origin: string;
+    origin_city: string;
+    passenger_name: string;
+    passenger_type: string;
+    peace_id: string;
+    ticket_type: string;
+    trip_type: string;
+    updated_at: string;
+  };
+    upcoming_flight: {
+    amount: string;
+    arrival_time: string;
+    booking_id: string;
+    created_at: string;
+    departure_time: string;
+    destination: string;
+    destination_city: string;
+    flight_distance: number;
+    flight_duration: string;
+    flight_number: string;
+    id: number;
+    origin: string;
+    origin_city: string;
+    passenger_name: string;
+    passenger_type: string;
+    peace_id: string;
+    ticket_type: string;
+    trip_type: string;
+    updated_at: string;
+  };
+}
+
 export interface CustomerActivityLog {
   date: string;
   activityType: string;

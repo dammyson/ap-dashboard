@@ -1,10 +1,10 @@
-import { baseURL, initialCustomerRevenue } from '@/constants/constants';
+import { baseURL } from '@/constants/constants';
 import { useUser } from '@/context/AppContext';
 import {
   AllocatePonit,
-  CustomerGraphValues,
+  CustomerChart,
   CustomerInfomation,
-  GraphValues,
+  ICustomer,
   MutationErrorPayload,
 } from '@/types/types';
 import { useState } from 'react';
@@ -14,13 +14,13 @@ export const useManageCustomer = () => {
   const { token } = useUser();
   const [customersData, setCustomersData] = useState<CustomerInfomation[]>([]);
   const [loading, setIsLoading] = useState(false);
-  const [chartData, setChartData] = useState<GraphValues[]>([]);
-  const [customerRevenue, setCustomerRevenue] = useState<CustomerGraphValues>(
-    initialCustomerRevenue,
-  );
+  const [chartData, setChartData] = useState<CustomerChart | null>(null);
   const [isChartLoading, setIsChartLoading] = useState(false);
   const [isPointLoading, setIsPontLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [fetching, setFetching] = useState(false);
+  const [customer, setCustomer] = useState<ICustomer | null>(null);
+
   const getCustomerTable = async () => {
     try {
       setIsLoading(true);
@@ -51,7 +51,7 @@ export const useManageCustomer = () => {
     try {
       setIsChartLoading(true);
       const data = await fetch(
-        `${baseURL}admin/customer/revenue-sources/charts/${id}`,
+        `${baseURL}admin/customer/${id}/user-revenue/charts/weekly`,
         {
           method: 'GET',
           headers: {
@@ -66,10 +66,36 @@ export const useManageCustomer = () => {
       if (res?.error) {
         toast.error(res.message);
       } else {
-        setCustomerRevenue(res);
-        setChartData(res.flight_booking);
+        setChartData(res);
       }
     } catch (error) {
+      toast.error((error as MutationErrorPayload)?.data?.message);
+    }
+  };
+
+    const getCustomerById = async (id: string) => {
+    try {
+      setFetching(true);
+      const data = await fetch(
+        `${baseURL}admin/customer/${id}/users-information`,
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const res = await data.json();
+      setFetching(false);
+      if (res?.error) {
+        toast.error(res.message);
+      } else {
+        setCustomer(res);
+      }
+    } catch (error) {
+      setFetching(false)
       toast.error((error as MutationErrorPayload)?.data?.message);
     }
   };
@@ -113,10 +139,12 @@ export const useManageCustomer = () => {
     isChartLoading,
     isPointLoading,
     allocatePonit,
-    customerRevenue,
     isModalOpen,
     setIsModalOpen,
     getCustomerTable,
     getCustomerRevenue,
+    getCustomerById,
+    customer,
+    fetching,
   };
 };

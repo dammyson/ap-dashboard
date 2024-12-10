@@ -2,13 +2,21 @@ import clsx from 'clsx';
 import { Card } from '../card';
 import {
   GoldTrophy,
-  Miles,
+  // Miles,
   Plane,
   UserReferral,
 } from '../svg/customer/Customer';
 import { formatNumber } from '@/utils';
 
-export const CustomerOverView = () => {
+interface Props {
+  user_referral_Count: number;
+  user_total_flight_flown: number;
+}
+
+export const CustomerOverView = ({
+  user_referral_Count,
+  user_total_flight_flown,
+}: Props) => {
   const userStats = [
     {
       title: 'Active loyal points',
@@ -24,22 +32,22 @@ export const CustomerOverView = () => {
     },
     {
       title: 'Total flights flown',
-      value: 45,
+      value: user_total_flight_flown,
       icon: <Plane />,
       iconName: 'plane',
     },
     {
       title: 'Referrals',
-      value: 100,
+      value: user_referral_Count,
       icon: <UserReferral />,
       iconName: 'userReferral',
     },
-    {
-      title: 'Frequent flyer miles',
-      value: 250000,
-      icon: <Miles />,
-      iconName: 'miles',
-    },
+    // {
+    //   title: 'Frequent flyer miles',
+    //   value: 250000,
+    //   icon: <Miles />,
+    //   iconName: 'miles',
+    // },
   ];
 
   return (

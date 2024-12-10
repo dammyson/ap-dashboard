@@ -7,6 +7,7 @@ interface Props {
   hasByScreen?: boolean;
   hasByDevice?: boolean;
   hasByActivities?: boolean;
+  singleLoader?: boolean;
 }
 
 export const SkeletonLoader = ({
@@ -15,6 +16,7 @@ export const SkeletonLoader = ({
   hasByScreen,
   hasChartData,
   hasOverview,
+  singleLoader,
 }: Props) => {
   const activities = new Array(5).fill(0);
   return (
@@ -30,6 +32,11 @@ export const SkeletonLoader = ({
         'relative bg-[#f2f2f2] rounded-[20px] ',
       )}
     >
+      {singleLoader && (
+        <div className=' h-[200px] mt-10 w-full'>
+          <Skeleton type='thubmnail' className='h-full' />
+        </div>
+      )}
       {hasOverview && (
         <>
           <div>
