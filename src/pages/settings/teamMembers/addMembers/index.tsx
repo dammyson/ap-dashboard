@@ -84,7 +84,7 @@ function AddMembers() {
                 hasBorder
                 required
                 className='drop-shadow-none text-lg !border-[#BBCAE1] !h-[50px] 960:!min-h-[66px]'
-                onChange={(e) => setFirstName(e.target.value)}
+                onChange={(e) => setFirstName(e.target.value.trim())}
               />
             </div>
             <div className='text-light-grey-200 font-medium text-base max-w-[569px] '>
@@ -95,7 +95,7 @@ function AddMembers() {
                 required
                 hasBorder
                 className='drop-shadow-none text-lg !border-[#BBCAE1] !h-[50px] 960:!min-h-[66px]'
-                onChange={(e) => setLastName(e.target.value)}
+                onChange={(e) => setLastName(e.target.value.trim())}
               />
             </div>
             <div className='text-light-grey-200 font-medium text-base max-w-[569px] '>

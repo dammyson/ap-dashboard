@@ -58,7 +58,7 @@ function Customer() {
         <div className='1240:pr-12'>
           <div>
             <WelcomeMessage
-              username={user?.user_name.split(' ')[1]}
+              username={user?.user_name.split(' ')[0]}
               description="Let's review today's insights"
             />
           </div>

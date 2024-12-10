@@ -101,7 +101,7 @@ function ActivityLog() {
         <Header />
         <div className='flex flex-col gap-2 560:block'>
           <WelcomeMessage
-            username={user?.user_name.split(' ')[1]}
+            username={user?.user_name.split(' ')[0]}
             description="Let's review today's insights"
           />
           <div>
