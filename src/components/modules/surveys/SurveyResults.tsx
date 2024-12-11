@@ -73,9 +73,7 @@ export const SurveyResults = ({ results, isloading }: props) => {
                         fill: '#010101',
                         fontWeight: '500',
                       }}
-                    >
-                      30%
-                    </text>
+                    ></text>
                   </PieChart>
                 </div>
               </div>

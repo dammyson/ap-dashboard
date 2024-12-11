@@ -73,7 +73,7 @@ export const useManageCustomer = () => {
     }
   };
 
-    const getCustomerById = async (id: string) => {
+  const getCustomerById = async (id: string) => {
     try {
       setFetching(true);
       const data = await fetch(
@@ -95,7 +95,7 @@ export const useManageCustomer = () => {
         setCustomer(res);
       }
     } catch (error) {
-      setFetching(false)
+      setFetching(false);
       toast.error((error as MutationErrorPayload)?.data?.message);
     }
   };
@@ -104,7 +104,7 @@ export const useManageCustomer = () => {
     try {
       setIsPontLoading(true);
       const data = await fetch(
-        `${baseURL}admin/customer/award-point-manually/${id}`,
+        `${baseURL}admin/customer/${id}/award-point-manually`,
         {
           method: 'PUT',
           headers: {
