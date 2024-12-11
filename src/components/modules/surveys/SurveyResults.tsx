@@ -51,8 +51,10 @@ export const SurveyResults = ({ results, isloading }: props) => {
                   <PieChart
                     lineWidth={53}
                     radius={40}
-                    data={result.options.map((opt) => ({
-                      value: opt.percentage,
+                    data={result?.options.map((_) => ({
+                      value: parseFloat(
+                        (100 / result?.options.length).toFixed(1),
+                      ),
                       color: getRandomColor(),
                     }))}
                     segmentsStyle={{ cursor: 'pointer' }}

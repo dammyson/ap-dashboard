@@ -20,6 +20,8 @@ export const useManageCustomer = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [fetching, setFetching] = useState(false);
   const [customer, setCustomer] = useState<ICustomer | null>(null);
+  const [selectedPoint, setSelectedPoint] = useState<number | string>('');
+  const [selectedReason, setSelectedReason] = useState<number | string>('');
 
   const getCustomerTable = async () => {
     try {
@@ -124,6 +126,8 @@ export const useManageCustomer = () => {
         toast.error(res.message);
       } else {
         setIsModalOpen(false);
+        setSelectedPoint('');
+        setSelectedReason('');
         toast.success(res.message);
       }
     } catch (error) {
@@ -146,5 +150,9 @@ export const useManageCustomer = () => {
     getCustomerById,
     customer,
     fetching,
+    selectedPoint,
+    setSelectedPoint,
+    selectedReason,
+    setSelectedReason,
   };
 };

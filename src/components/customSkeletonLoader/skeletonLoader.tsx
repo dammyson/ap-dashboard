@@ -8,6 +8,7 @@ interface Props {
   hasByDevice?: boolean;
   hasByActivities?: boolean;
   singleLoader?: boolean;
+  hasCustomerOverView?: boolean;
 }
 
 export const SkeletonLoader = ({
@@ -17,6 +18,7 @@ export const SkeletonLoader = ({
   hasChartData,
   hasOverview,
   singleLoader,
+  hasCustomerOverView,
 }: Props) => {
   const activities = new Array(5).fill(0);
   return (
@@ -24,7 +26,7 @@ export const SkeletonLoader = ({
       className={clsx(
         hasOverview
           ? 'py-5 px-4 w-[410px] max-h-[200px] '
-          : 'py-[10px] px-4 mt-8 560:p-7 1240:p-9',
+          : 'py-[10px] px-4 mt-8 560:p-7 1240:p-9 ',
         hasChartData && 'h-[513px]',
         hasByScreen && 'h-[548px]',
         hasByDevice && '1240:h-full max-h-[513px]',
@@ -35,6 +37,17 @@ export const SkeletonLoader = ({
       {singleLoader && (
         <div className=' h-[200px] mt-10 w-full'>
           <Skeleton type='thubmnail' className='h-full' />
+        </div>
+      )}
+      {hasCustomerOverView && (
+        <div className='w-[175px] 640:w-[190px]'>
+          <div>
+            <Skeleton type='thubmnail' className='!h-14 w-14' />
+          </div>
+          <div className='mt-[32px]'>
+            <Skeleton type='text' className='!w-9/12' />
+            <Skeleton type='title' className='!h-7 !w-1/2 !mb-0' />
+          </div>
         </div>
       )}
       {hasOverview && (

@@ -92,12 +92,11 @@ function ViewCustomer() {
             </div>
           </div>
           <div className='hidden-scrollbar overflow-x-auto pb-4 pl-4'>
-            {customer && (
-              <CustomerOverView
-                user_referral_Count={customer?.user_refferal_Count}
-                user_total_flight_flown={customer?.user_total_flight_flown}
-              />
-            )}
+            <CustomerOverView
+              fetching={fetching}
+              user_referral_Count={customer?.user_refferal_Count}
+              user_total_flight_flown={customer?.user_total_flight_flown}
+            />
           </div>
           <>
             <div className='mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>

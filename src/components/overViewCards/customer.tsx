@@ -7,15 +7,18 @@ import {
   UserReferral,
 } from '../svg/customer/Customer';
 import { formatNumber } from '@/utils';
+import { SkeletonLoader } from '../customSkeletonLoader/skeletonLoader';
 
 interface Props {
-  user_referral_Count: number;
-  user_total_flight_flown: number;
+  fetching: boolean;
+  user_referral_Count: number | undefined;
+  user_total_flight_flown: number | undefined;
 }
 
 export const CustomerOverView = ({
   user_referral_Count,
   user_total_flight_flown,
+  fetching,
 }: Props) => {
   const userStats = [
     {
@@ -32,13 +35,13 @@ export const CustomerOverView = ({
     },
     {
       title: 'Total flights flown',
-      value: user_total_flight_flown,
+      value: user_total_flight_flown ?? 0,
       icon: <Plane />,
       iconName: 'plane',
     },
     {
       title: 'Referrals',
-      value: user_referral_Count,
+      value: user_referral_Count ?? 0,
       icon: <UserReferral />,
       iconName: 'userReferral',
     },
@@ -55,33 +58,42 @@ export const CustomerOverView = ({
       {userStats.map((stats, index) => {
         const lastCard = index === userStats.length - 1;
         return (
-          <Card
-            key={index}
-            mainClass={clsx(lastCard && 'mr-5', 'w-[210px] 640:w-[235px] !p-6')}
-          >
-            <div
-              className={clsx(
-                stats.iconName === 'trophy'
-                  ? 'bg-[#F7CB454D]'
-                  : stats.iconName === 'plane'
-                    ? 'bg-[#5CC8BE4D]'
-                    : stats.iconName === 'userReferral'
-                      ? 'bg-[#BD38264D]'
-                      : stats.iconName === 'miles'
-                        ? 'bg-inherit'
-                        : '',
-                'flex items-center justify-center rounded-full w-14 h-14',
-              )}
-            >
-              {stats.icon}
-            </div>
-            <div className='text-light-grey-700 font-medium text-[17px] 640:text-xl mt-8'>
-              {stats.title}
-            </div>
-            <div className='text-2xl 640:text-[28px] 1240:text-[32px] text-light-primary-black font-bold mb-2'>
-              {formatNumber(stats.value)}
-            </div>
-          </Card>
+          <>
+            {fetching ? (
+              <SkeletonLoader hasCustomerOverView />
+            ) : (
+              <Card
+                key={index}
+                mainClass={clsx(
+                  lastCard && 'mr-5',
+                  'w-[210px] 640:w-[235px] !p-6',
+                )}
+              >
+                <div
+                  className={clsx(
+                    stats.iconName === 'trophy'
+                      ? 'bg-[#F7CB454D]'
+                      : stats.iconName === 'plane'
+                        ? 'bg-[#5CC8BE4D]'
+                        : stats.iconName === 'userReferral'
+                          ? 'bg-[#BD38264D]'
+                          : stats.iconName === 'miles'
+                            ? 'bg-inherit'
+                            : '',
+                    'flex items-center justify-center rounded-full w-14 h-14',
+                  )}
+                >
+                  {stats.icon}
+                </div>
+                <div className='text-light-grey-700 font-medium text-[17px] 640:text-xl mt-8'>
+                  {stats.title}
+                </div>
+                <div className='text-2xl 640:text-[28px] 1240:text-[32px] text-light-primary-black font-bold mb-2'>
+                  {formatNumber(stats.value)}
+                </div>
+              </Card>
+            )}
+          </>
         );
       })}
     </div>

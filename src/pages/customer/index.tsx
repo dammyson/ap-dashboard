@@ -21,8 +21,6 @@ import { CustomDropdown } from '@/components/Dropdown/customDropdown';
 
 function Customer() {
   const { user } = useUser();
-  const [selectedPoint, setSelectedPoint] = useState<number | string>('');
-  const [selectedReason, setSelectedReason] = useState<number | string>('');
   const [userId, setUserId] = useState<number | null>(null);
   const {
     loading,
@@ -32,6 +30,10 @@ function Customer() {
     allocatePonit,
     isModalOpen,
     setIsModalOpen,
+    selectedPoint,
+    setSelectedPoint,
+    selectedReason,
+    setSelectedReason,
   } = useManageCustomer();
   const { tableColumns } = useCustomerInformation(setIsModalOpen, setUserId);
 
