@@ -9,7 +9,7 @@ interface Props {
 
 export const PieChartData = ({ usersByDevice }: Props) => {
   const roundPercent = (value: number): number => {
-    return value % 1 !== 0 ? parseFloat(value.toFixed(2)) : value;
+    return value % 1 !== 0 ? parseFloat(value.toFixed(1)) : value;
   };
 
   const devices = [
@@ -42,7 +42,7 @@ export const PieChartData = ({ usersByDevice }: Props) => {
           animate
           startAngle={90}
           labelStyle={{
-            fontSize: 5,
+            fontSize: 3.5,
             fill: '#fff',
             fontWeight: 600,
           }}

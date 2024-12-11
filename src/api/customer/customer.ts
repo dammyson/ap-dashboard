@@ -20,6 +20,8 @@ export const useManageCustomer = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [fetching, setFetching] = useState(false);
   const [customer, setCustomer] = useState<ICustomer | null>(null);
+  const [selectedPoint, setSelectedPoint] = useState<number | string>('');
+  const [selectedReason, setSelectedReason] = useState<number | string>('');
 
   const getCustomerTable = async () => {
     try {
@@ -73,7 +75,7 @@ export const useManageCustomer = () => {
     }
   };
 
-    const getCustomerById = async (id: string) => {
+  const getCustomerById = async (id: string) => {
     try {
       setFetching(true);
       const data = await fetch(
@@ -95,7 +97,7 @@ export const useManageCustomer = () => {
         setCustomer(res);
       }
     } catch (error) {
-      setFetching(false)
+      setFetching(false);
       toast.error((error as MutationErrorPayload)?.data?.message);
     }
   };
@@ -104,7 +106,7 @@ export const useManageCustomer = () => {
     try {
       setIsPontLoading(true);
       const data = await fetch(
-        `${baseURL}admin/customer/award-point-manually/${id}`,
+        `${baseURL}admin/customer/${id}/award-point-manually`,
         {
           method: 'PUT',
           headers: {
@@ -124,6 +126,8 @@ export const useManageCustomer = () => {
         toast.error(res.message);
       } else {
         setIsModalOpen(false);
+        setSelectedPoint('');
+        setSelectedReason('');
         toast.success(res.message);
       }
     } catch (error) {
@@ -146,5 +150,9 @@ export const useManageCustomer = () => {
     getCustomerById,
     customer,
     fetching,
+    selectedPoint,
+    setSelectedPoint,
+    selectedReason,
+    setSelectedReason,
   };
 };
