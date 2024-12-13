@@ -2,13 +2,10 @@ import { Card } from '@/components/card';
 import { Header } from '@/components/header';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { SmallDropDown, UsageTime } from '@/components/svg/customer/Customer';
-import { Filter } from '@/components/svg/surveys/Surveys';
-import { numberShortener } from '@/utils';
 import clsx from 'clsx';
 import { useNavigate, useParams } from 'react-router';
 import { usageStats } from './constants';
-import { useEffect, useRef, useState } from 'react';
-import { Chart } from '@/components/chart/Chart';
+import { useEffect, useState } from 'react';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { useManageCustomer } from '@/api/customer/customer';
 import { SkeletonLoader } from '@/components/customSkeletonLoader/skeletonLoader';
@@ -17,13 +14,12 @@ import dayjs from 'dayjs';
 import { Button } from '@/components/button';
 import { Table } from 'antd';
 import { useCustomerActivityLog } from '@/components/modules/customer/activityLog/tableColumns';
-import { graphOptions } from '@/constants/constants';
-import { useClickOutside } from '@/components/hooks/useClickOutside';
 import { FlightInfo } from '@/components/modules/customer/flightInformation/flightInformation';
+import { CustomerRevenueChart } from '@/components/modules/customer/revenueChart/revenueChart';
+import { graphOptions } from '@/constants/constants';
 
 function ViewCustomer() {
   const navigate = useNavigate();
-  const isWindowSize604 = useWindowSize(604);
   const { id } = useParams();
   const { tableColumns } = useCustomerActivityLog();
   const {
@@ -37,19 +33,8 @@ function ViewCustomer() {
     isSucess,
     setShowDropdown,
   } = useManageCustomer();
-  const filterRef = useRef<HTMLDivElement | null>(null);
   const [isgraphfiltered, setIsGraphFiltered] = useState(false);
   const [activeFilterTab, setActiveFilterTab] = useState(graphOptions[0]);
-  useClickOutside(filterRef, () => setShowDropdown(false), showDropdown);
-
-  const tabs = [
-    { name: 'Flight bookings', value: chartData?.ticket.ticket_amount },
-    { name: 'In-app purchases', value: chartData?.ancillary.ancillary_amount },
-    // { name: 'Gamification', value: customerRevenue?.app_purchase_amount },
-    { name: 'Total revenue', value: chartData?.revenue.revenue_amount },
-  ];
-  const currentTab = tabs[0];
-  const [activeTab, setActiveTab] = useState(currentTab);
 
   useEffect(() => {
     if (id) {
@@ -120,100 +105,20 @@ function ViewCustomer() {
                 {isChartLoading ? (
                   <SkeletonLoader hasChartData />
                 ) : (
-                  chartData && (
-                    <Card
-                      hasBadge
-                      hasHeader
-                      title='Revenue sources'
-                      isFiltered={isgraphfiltered}
-                      trailingIcon1={
-                        <div ref={filterRef} className='relative '>
-                          <div onClick={() => setShowDropdown(!showDropdown)}>
-                            <Filter />
-                          </div>
-                          <div
-                            className={clsx(
-                              showDropdown ? 'active' : 'inactive',
-                              'absolute top-[35px] right-[-1px] w-[120px] text-center bg-primary-white shadow-default rounded-md p-2 text-light-primary-black',
-                            )}
-                          >
-                            {graphOptions.map((option, i) => {
-                              const lastOpt = i === graphOptions.length - 1;
-                              return (
-                                <p
-                                  key={i}
-                                  className={clsx(
-                                    activeFilterTab.key === option.key &&
-                                      'bg-[#f1f1f1] text-light-grey-100',
-                                    !lastOpt && 'border-b',
-                                    `py-1 hover:bg-[#f1f1f1] rounded`,
-                                  )}
-                                  onClick={() => {
-                                    if (option === activeFilterTab) {
-                                      return;
-                                    } else {
-                                      if (id) {
-                                        setActiveFilterTab(option);
-                                        filterGraph(id, option.value);
-                                      }
-                                    }
-                                  }}
-                                >
-                                  {option.key}
-                                </p>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      }
-                      mainClass='h-full max-h-[513px]'
-                    >
-                      <div className='flex items-center gap-1 640:gap-2 mb-12 overflow-x-auto hidden-scrollbar'>
-                        {tabs?.map((tab, index) => (
-                          <div
-                            onClick={() => setActiveTab(tab)}
-                            key={index}
-                            className={clsx(
-                              activeTab.name === tab.name
-                                ? 'border-b-4 border-b-light-blue-main sky-blue-gradient-bg'
-                                : 'border-b border-b-[#E9E7FD]',
-                              'p-2 pb-3.5 cursor-pointer w-fit max-h-[87px] 640:h-[78px]',
-                              isWindowSize604
-                                ? tab.name.includes('Gamification') &&
-                                    'h-[87px]'
-                                : '',
-                            )}
-                          >
-                            <h3
-                              className={clsx(
-                                tab.name === 'Total revenue'
-                                  ? 'text-light-secondary-mint_green'
-                                  : 'text-primary-black',
-                                'text-[17px] 640:text-xl font-bold mb-2',
-                              )}
-                            >
-                              {tab?.value
-                                ? numberShortener(tab.value)
-                                : tab.value}
-                            </h3>
-                            <p className='text-xs font-medium text-light-grey-400'>
-                              {tab.name}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                      <Chart
-                        chartData={
-                          activeTab.name === 'Flight bookings'
-                            ? chartData?.ticket.ticket_data
-                            : activeTab.name === 'In-app purchases'
-                              ? chartData?.ancillary.ancillary_data
-                              : chartData?.revenue.revenue_data
-                        }
-                        transactionType='all'
+                  <>
+                    {id && (
+                      <CustomerRevenueChart
+                        id={id}
+                        chartData={chartData}
+                        isgraphfiltered={isgraphfiltered}
+                        showDropdown={showDropdown}
+                        setShowDropdown={setShowDropdown}
+                        filterGraph={filterGraph}
+                        setActiveFilterTab={setActiveFilterTab}
+                        activeFilterTab={activeFilterTab}
                       />
-                    </Card>
-                  )
+                    )}
+                  </>
                 )}
               </div>
               <div className='col-span-12 1240:col-span-4 relative '>
