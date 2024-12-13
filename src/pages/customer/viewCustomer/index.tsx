@@ -44,9 +44,11 @@ function ViewCustomer() {
     }
   }, []);
 
-  const filterGraph = async (id: string, val: string) => {
-    await getCustomerRevenue(id, val);
-    setIsGraphFiltered(isSucess);
+  const filterGraph = async (val: string, id?: string) => {
+    if (id) {
+      await getCustomerRevenue(id, val);
+      setIsGraphFiltered(isSucess);
+    }
   };
 
   const sortedActivity = customer?.user_activity.sort((a, b) => {

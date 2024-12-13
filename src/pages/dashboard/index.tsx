@@ -23,6 +23,7 @@ import { PieChartData } from '@/components/chart/PieChart';
 import { SkeletonLoader } from '@/components/customSkeletonLoader/skeletonLoader';
 import { graphOptions } from '@/constants/constants';
 import { useClickOutside } from '@/components/hooks/useClickOutside';
+import { CustomFilter } from '@/components/filter/filter';
 
 function Dashboard() {
   const {
@@ -113,37 +114,13 @@ function Dashboard() {
                         <div onClick={() => setShowDropdown(!showDropdown)}>
                           <Filter />
                         </div>
-                        <div
-                          className={clsx(
-                            showDropdown ? 'active' : 'inactive',
-                            'absolute top-[35px] right-[-1px] w-[120px] text-center bg-primary-white shadow-default rounded-md p-2 text-light-primary-black',
-                          )}
-                        >
-                          {graphOptions.map((option, i) => {
-                            const lastOpt = i === graphOptions.length - 1;
-                            return (
-                              <p
-                                key={i}
-                                className={clsx(
-                                  activeFilterTab.key === option.key &&
-                                    'bg-[#f1f1f1] text-light-grey-100',
-                                  !lastOpt && 'border-b',
-                                  `py-1 hover:bg-[#f1f1f1] rounded`,
-                                )}
-                                onClick={() => {
-                                  if (option === activeFilterTab) {
-                                    return;
-                                  } else {
-                                    setActiveFilterTab(option);
-                                    filterGraph(option.value);
-                                  }
-                                }}
-                              >
-                                {option.key}
-                              </p>
-                            );
-                          })}
-                        </div>
+                        <CustomFilter
+                          showDropdown={showDropdown}
+                          activeFilterTab={activeFilterTab}
+                          setActiveFilterTab={setActiveFilterTab}
+                          filterGraph={filterGraph}
+                          graphOptions={graphOptions}
+                        />
                       </div>
                     }
                     title='Revenue via app'

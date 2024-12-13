@@ -1,5 +1,6 @@
 import { Card } from '@/components/card';
 import { Chart } from '@/components/chart/Chart';
+import { CustomFilter } from '@/components/filter/filter';
 import { useClickOutside } from '@/components/hooks/useClickOutside';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { Filter } from '@/components/svg/surveys/Surveys';
@@ -19,7 +20,7 @@ export interface ChartProps {
     React.SetStateAction<{ key: string; value: string }>
   >;
   setShowDropdown: (value: React.SetStateAction<boolean>) => void;
-  filterGraph: (id: string, val: string) => Promise<void>;
+  filterGraph: (val: string, id?: string) => Promise<void>;
 }
 
 export const CustomerRevenueChart = ({
@@ -58,35 +59,14 @@ export const CustomerRevenueChart = ({
               <div onClick={() => setShowDropdown(!showDropdown)}>
                 <Filter />
               </div>
-              <div
-                className={clsx(
-                  showDropdown ? 'active' : 'inactive',
-                  'absolute top-[35px] right-[-1px] w-[120px] text-center bg-primary-white shadow-default rounded-md p-2 text-light-primary-black',
-                )}
-              >
-                {graphOptions.map((option, i) => {
-                  const lastOpt = i === graphOptions.length - 1;
-                  return (
-                    <p
-                      key={i}
-                      className={clsx(
-                        activeFilterTab.key === option.key &&
-                          'bg-[#f1f1f1] text-light-grey-100',
-                        !lastOpt && 'border-b',
-                        `py-1 hover:bg-[#f1f1f1] rounded`,
-                      )}
-                      onClick={() => {
-                        if (option !== activeFilterTab) {
-                          setActiveFilterTab(option);
-                          filterGraph(id, option.value);
-                        }
-                      }}
-                    >
-                      {option.key}
-                    </p>
-                  );
-                })}
-              </div>
+              <CustomFilter
+                id={id}
+                showDropdown={showDropdown}
+                activeFilterTab={activeFilterTab}
+                setActiveFilterTab={setActiveFilterTab}
+                filterGraph={filterGraph}
+                graphOptions={graphOptions}
+              />
             </div>
           }
           mainClass='h-full max-h-[513px]'
