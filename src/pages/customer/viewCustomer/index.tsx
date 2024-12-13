@@ -1,18 +1,11 @@
 import { Card } from '@/components/card';
 import { Header } from '@/components/header';
 import { AppLayout } from '@/components/layout/AppLayout';
-import {
-  Flight,
-  SmallDropDown,
-  UsageTime,
-} from '@/components/svg/customer/Customer';
-import { Filter } from '@/components/svg/surveys/Surveys';
-import { numberShortener } from '@/utils';
+import { SmallDropDown, UsageTime } from '@/components/svg/customer/Customer';
 import clsx from 'clsx';
 import { useNavigate, useParams } from 'react-router';
-import { usageStats, UserFlightDetails } from './constants';
+import { usageStats } from './constants';
 import { useEffect, useState } from 'react';
-import { Chart } from '@/components/chart/Chart';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { useManageCustomer } from '@/api/customer/customer';
 import { SkeletonLoader } from '@/components/customSkeletonLoader/skeletonLoader';
@@ -21,10 +14,12 @@ import dayjs from 'dayjs';
 import { Button } from '@/components/button';
 import { Table } from 'antd';
 import { useCustomerActivityLog } from '@/components/modules/customer/activityLog/tableColumns';
+import { FlightInfo } from '@/components/modules/customer/flightInformation/flightInformation';
+import { CustomerRevenueChart } from '@/components/modules/customer/revenueChart/revenueChart';
+import { graphOptions } from '@/constants/constants';
 
 function ViewCustomer() {
   const navigate = useNavigate();
-  const isWindowSize604 = useWindowSize(604);
   const { id } = useParams();
   const { tableColumns } = useCustomerActivityLog();
   const {
@@ -34,23 +29,27 @@ function ViewCustomer() {
     getCustomerById,
     customer,
     fetching,
+    showDropdown,
+    isSucess,
+    setShowDropdown,
   } = useManageCustomer();
-
-  const tabs = [
-    { name: 'Flight bookings', value: chartData?.ticket.ticket_amount },
-    { name: 'In-app purchases', value: chartData?.ancillary.ancillary_amount },
-    // { name: 'Gamification', value: customerRevenue?.app_purchase_amount },
-    { name: 'Total revenue', value: chartData?.revenue.revenue_amount },
-  ];
-  const currentTab = tabs[0];
-  const [activeTab, setActiveTab] = useState(currentTab);
+  const [isgraphfiltered, setIsGraphFiltered] = useState(false);
+  const [activeFilterTab, setActiveFilterTab] = useState(graphOptions[0]);
 
   useEffect(() => {
     if (id) {
-      getCustomerRevenue(id);
+      getCustomerRevenue(id, 'weekly');
       getCustomerById(id);
+      setIsGraphFiltered(false);
     }
   }, []);
+
+  const filterGraph = async (val: string, id?: string) => {
+    if (id) {
+      await getCustomerRevenue(id, val);
+      setIsGraphFiltered(isSucess);
+    }
+  };
 
   const sortedActivity = customer?.user_activity.sort((a, b) => {
     return dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf();
@@ -108,60 +107,20 @@ function ViewCustomer() {
                 {isChartLoading ? (
                   <SkeletonLoader hasChartData />
                 ) : (
-                  chartData && (
-                    <Card
-                      hasBadge
-                      hasHeader
-                      title='Revenue sources'
-                      trailingIcon1={<Filter />}
-                      mainClass='h-full max-h-[513px]'
-                    >
-                      <div className='flex items-center gap-1 640:gap-2 mb-12 overflow-x-auto hidden-scrollbar'>
-                        {tabs?.map((tab, index) => (
-                          <div
-                            onClick={() => setActiveTab(tab)}
-                            key={index}
-                            className={clsx(
-                              activeTab.name === tab.name
-                                ? 'border-b-4 border-b-light-blue-main sky-blue-gradient-bg'
-                                : 'border-b border-b-[#E9E7FD]',
-                              'p-2 pb-3.5 cursor-pointer w-fit max-h-[87px] 640:h-[78px]',
-                              isWindowSize604
-                                ? tab.name.includes('Gamification') &&
-                                    'h-[87px]'
-                                : '',
-                            )}
-                          >
-                            <h3
-                              className={clsx(
-                                tab.name === 'Total revenue'
-                                  ? 'text-light-secondary-mint_green'
-                                  : 'text-primary-black',
-                                'text-[17px] 640:text-xl font-bold mb-2',
-                              )}
-                            >
-                              {tab?.value
-                                ? numberShortener(tab.value)
-                                : tab.value}
-                            </h3>
-                            <p className='text-xs font-medium text-light-grey-400'>
-                              {tab.name}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                      <Chart
-                        chartData={
-                          activeTab.name === 'Flight bookings'
-                            ? chartData?.ticket.ticket_data
-                            : activeTab.name === 'In-app purchases'
-                              ? chartData?.ancillary.ancillary_data
-                              : chartData?.revenue.revenue_data
-                        }
-                        transactionType='all'
+                  <>
+                    {id && (
+                      <CustomerRevenueChart
+                        id={id}
+                        chartData={chartData}
+                        isgraphfiltered={isgraphfiltered}
+                        showDropdown={showDropdown}
+                        setShowDropdown={setShowDropdown}
+                        filterGraph={filterGraph}
+                        setActiveFilterTab={setActiveFilterTab}
+                        activeFilterTab={activeFilterTab}
                       />
-                    </Card>
-                  )
+                    )}
+                  </>
                 )}
               </div>
               <div className='col-span-12 1240:col-span-4 relative '>
@@ -203,90 +162,7 @@ function ViewCustomer() {
             {fetching ? (
               <SkeletonLoader singleLoader />
             ) : (
-              <Card>
-                <div className='grid grid-cols-1 768:grid-cols-2 1024:flex 1024:items-start justify-items-center 1024:justify-between gap-3'>
-                  {UserFlightDetails.map((user, index) => (
-                    <div key={index}>
-                      <div className='text-center 1024:text-start'>
-                        <p className='text-light-grey-700 text-[16px] 768:text-xl 1240:text-lg 1400:text-x 1024:h-[56px] font-medium'>
-                          {user.title}
-                        </p>
-                        <p className='text-light-primary-black font-bold text-xl 768:text-2xl 880:text-[26px] 1240:text-[28px] 1400:text-[30px]'>
-                          {user.title === 'Travel preferences'
-                            ? 'Window Seat'
-                            : user.title === 'Last flight'
-                              ? `${dayjs(
-                                  customer?.last_flight.departure_time,
-                                ).format('YYYY-MM-DD')}`
-                              : user?.title === 'Upcoming flight'
-                                ? `${dayjs(
-                                    customer?.upcoming_flight.departure_time,
-                                  ).format('YYYY-MM-DD')}`
-                                : dayjs(customer?.user_date_of_reg).format(
-                                    'YYYY-MM-DD',
-                                  )}
-                        </p>
-                      </div>
-                      {user.title.includes('flight') && (
-                        <div
-                          className={clsx(
-                            user.title.includes('Last')
-                              ? 'text-light-blue-main flex items-center'
-                              : user.title.includes('Upcoming')
-                                ? 'text-light-secondary-orange'
-                                : '',
-                            'flex gap-1 360:gap-3',
-                          )}
-                        >
-                          <div>
-                            <p className='font-medium text-xl 360:text-2xl 480:text-[26px] 1240:text-[26px] 1400:text-[30px] '>
-                              {user.title === 'Last flight'
-                                ? customer?.last_flight.origin_city != ''
-                                  ? customer?.last_flight.origin_city
-                                  : customer?.last_flight.origin
-                                : customer?.upcoming_flight.origin_city != ''
-                                  ? customer?.upcoming_flight.origin_city
-                                  : customer?.upcoming_flight.origin}
-                            </p>
-                            <p className='text-[10px] 360:text-sm 480:text-[16px]'>
-                              {customer?.last_flight.origin}
-                            </p>
-                          </div>
-                          <div className='pt-[10px]'>
-                            <Flight
-                              color={clsx(
-                                user.title.includes('Last')
-                                  ? '#23539F'
-                                  : user.title.includes('Upcoming')
-                                    ? '#F09436'
-                                    : '',
-                              )}
-                              className='max-w-[130px] w-full'
-                            />
-                          </div>
-                          <div>
-                            <p className='font-medium text-xl 360:text-2xl 480:text-[26px] 1240:text-[26px] 1400:text-[30px] '>
-                              {user.title === 'Last flight'
-                                ? customer?.last_flight.destination_city != ''
-                                  ? customer?.last_flight.destination_city
-                                  : customer?.last_flight.destination
-                                : customer?.upcoming_flight.destination_city !=
-                                    ''
-                                  ? customer?.upcoming_flight.destination_city
-                                  : customer?.upcoming_flight.destination}
-                            </p>
-                            <p className='float-end text-[10px] 360:text-sm 480:text-[16px]'>
-                              {user.title === 'Last flight'
-                                ? customer?.last_flight.destination
-                                : customer?.upcoming_flight.destination}
-                            </p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </Card>
+              <FlightInfo customer={customer} />
             )}
             {fetching ? (
               <SkeletonLoader singleLoader />
@@ -312,7 +188,7 @@ function ViewCustomer() {
                   pagination={false}
                   dataSource={sortedActivity}
                   columns={tableColumns}
-                  scroll={{ y: 216, x: true }}
+                  scroll={{ y: 210, x: true }}
                   className='customer w-full custom-scrollbar hide-arrows overflow-x-scroll'
                   rootClassName='hidden-scrollbar'
                 />
