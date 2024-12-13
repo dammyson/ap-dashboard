@@ -41,7 +41,7 @@ export const useCustomerActivityLog = () => {
         render: (_, { description }) => {
           return (
             <div className='font-semibold text-light-primary-deep_black'>
-              {description}
+              {capitalizeFirstLetter(description)}
             </div>
           );
         },
