@@ -115,3 +115,7 @@ export const maskedEmail = (val: string) => {
   const maskedMail = name.length > 3 ? slicedName + '***' + domain : val;
   return maskedMail;
 };
+
+export const capitalizeFirstLetter = (val: string) => {
+  return val.charAt(0).toUpperCase() + val.slice(1).toLowerCase();
+};

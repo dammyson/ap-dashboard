@@ -1,19 +1,16 @@
 import { Card } from '@/components/card';
 import { Header } from '@/components/header';
 import { AppLayout } from '@/components/layout/AppLayout';
-// import { useCustomerActivityLog } from '@/components/modules/customer/activityLog/tableColumns';
 import {
   Flight,
-  // SmallDropDown,
+  SmallDropDown,
   UsageTime,
 } from '@/components/svg/customer/Customer';
 import { Filter } from '@/components/svg/surveys/Surveys';
 import { numberShortener } from '@/utils';
-// import { Table } from 'antd';
 import clsx from 'clsx';
 import { useNavigate, useParams } from 'react-router';
 import { usageStats, UserFlightDetails } from './constants';
-// import { Button } from '@/components/button';
 import { useEffect, useState } from 'react';
 import { Chart } from '@/components/chart/Chart';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
@@ -21,12 +18,15 @@ import { useManageCustomer } from '@/api/customer/customer';
 import { SkeletonLoader } from '@/components/customSkeletonLoader/skeletonLoader';
 import { CustomerOverView } from '@/components/overViewCards/customer';
 import dayjs from 'dayjs';
+import { Button } from '@/components/button';
+import { Table } from 'antd';
+import { useCustomerActivityLog } from '@/components/modules/customer/activityLog/tableColumns';
 
 function ViewCustomer() {
   const navigate = useNavigate();
   const isWindowSize604 = useWindowSize(604);
   const { id } = useParams();
-  // const { tableColumns } = useCustomerActivityLog();
+  const { tableColumns } = useCustomerActivityLog();
   const {
     chartData,
     isChartLoading,
@@ -51,6 +51,10 @@ function ViewCustomer() {
       getCustomerById(id);
     }
   }, []);
+
+  const sortedActivity = customer?.user_activity.sort((a, b) => {
+    return dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf();
+  });
 
   return (
     <AppLayout logo=''>
@@ -284,31 +288,36 @@ function ViewCustomer() {
                 </div>
               </Card>
             )}
-            {/* <Card
-              hasBadge
-              hasHeader
-              hasBorder
-              title='Activity log'
-              titleClass='!text-light-blue-main 1300:!text-[32px]'
-              className=' pb-5 mb-5'
-              hasButton={
-                <Button
-                  mode='text'
-                  buttonText='View more'
-                  trailingIcon={<SmallDropDown />}
-                  className='!text-[#979797] font-medium text-xs !items-end !w-fit'
-                  onClick={() => {}}
+            {fetching ? (
+              <SkeletonLoader singleLoader />
+            ) : (
+              <Card
+                hasBadge
+                hasHeader
+                hasBorder
+                title='Activity log'
+                titleClass='!text-light-blue-main 1300:!text-[32px]'
+                className=' pb-5 mb-5'
+                hasButton={
+                  <Button
+                    mode='text'
+                    buttonText='View more'
+                    trailingIcon={<SmallDropDown />}
+                    className='!text-[#979797] font-medium text-xs !items-end !w-fit'
+                    onClick={() => {}}
+                  />
+                }
+              >
+                <Table
+                  pagination={false}
+                  dataSource={sortedActivity}
+                  columns={tableColumns}
+                  scroll={{ y: 216, x: true }}
+                  className='customer w-full custom-scrollbar hide-arrows overflow-x-scroll'
+                  rootClassName='hidden-scrollbar'
                 />
-              }
-            >
-              <Table
-                pagination={false}
-                dataSource={ActivityList}
-                columns={tableColumns}
-                className='customer'
-                rootClassName='w-full overflow-x-scroll hidden-scrollbar'
-              />
-            </Card> */}
+              </Card>
+            )}
           </>
         </div>
       </div>
