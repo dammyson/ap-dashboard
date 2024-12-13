@@ -149,7 +149,7 @@ export interface ICustomer {
     trip_type: string;
     updated_at: string;
   };
-    upcoming_flight: {
+  upcoming_flight: {
     amount: string;
     arrival_time: string;
     booking_id: string;
@@ -170,12 +170,13 @@ export interface ICustomer {
     trip_type: string;
     updated_at: string;
   };
+  user_activity: CustomerActivityLog[];
 }
 
 export interface CustomerActivityLog {
-  date: string;
-  activityType: string;
+  activity_type: string;
   description: string;
+  created_at: string;
 }
 
 export interface typeActivityLog {

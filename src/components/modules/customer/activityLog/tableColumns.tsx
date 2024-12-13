@@ -1,5 +1,7 @@
 import { CustomerActivityLog } from '@/types/types';
+import { capitalizeFirstLetter } from '@/utils';
 import { ColumnType } from 'antd/es/table';
+import dayjs from 'dayjs';
 import { useMemo } from 'react';
 
 export const useCustomerActivityLog = () => {
@@ -7,26 +9,26 @@ export const useCustomerActivityLog = () => {
     return [
       {
         title: 'DATE',
-        dataIndex: 'date',
-        key: 'date',
+        dataIndex: 'created_at',
+        key: 'created_at',
         className: 'date',
-        render: (_, { date }) => {
+        render: (_, { created_at }) => {
           return (
             <div className='font-semibold text-light-primary-deep_black'>
-              {date}
+              {dayjs(created_at).format('YYYY-MM-DD')}
             </div>
           );
         },
       },
       {
         title: 'ACTIVITY TYPE',
-        dataIndex: 'activityType',
-        key: 'activityType',
+        dataIndex: 'activity_type',
+        key: 'activity_type',
         className: 'activityType',
-        render: (_, { activityType }) => {
+        render: (_, { activity_type }) => {
           return (
             <div className='font-semibold text-light-primary-deep_black'>
-              {activityType}
+              {capitalizeFirstLetter(activity_type)}
             </div>
           );
         },
