@@ -22,6 +22,8 @@ export const useManageCustomer = () => {
   const [customer, setCustomer] = useState<ICustomer | null>(null);
   const [selectedPoint, setSelectedPoint] = useState<number | string>('');
   const [selectedReason, setSelectedReason] = useState<number | string>('');
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [isSucess, setIsSucess] = useState(false);
 
   const getCustomerTable = async () => {
     try {
@@ -49,11 +51,11 @@ export const useManageCustomer = () => {
     }
   };
 
-  const getCustomerRevenue = async (id: string) => {
+  const getCustomerRevenue = async (id: string, period: string) => {
     try {
       setIsChartLoading(true);
       const data = await fetch(
-        `${baseURL}admin/customer/${id}/user-revenue/charts/weekly`,
+        `${baseURL}admin/customer/${id}/user-revenue/charts/${period}`,
         {
           method: 'GET',
           headers: {
@@ -67,7 +69,10 @@ export const useManageCustomer = () => {
       setIsChartLoading(false);
       if (res?.error) {
         toast.error(res.message);
+        setIsSucess(false);
       } else {
+        setShowDropdown(false);
+        setIsSucess(true);
         setChartData(res);
       }
     } catch (error) {
@@ -154,5 +159,8 @@ export const useManageCustomer = () => {
     setSelectedPoint,
     selectedReason,
     setSelectedReason,
+    showDropdown,
+    isSucess,
+    setShowDropdown,
   };
 };

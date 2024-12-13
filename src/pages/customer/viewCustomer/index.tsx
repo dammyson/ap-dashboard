@@ -11,7 +11,7 @@ import { numberShortener } from '@/utils';
 import clsx from 'clsx';
 import { useNavigate, useParams } from 'react-router';
 import { usageStats, UserFlightDetails } from './constants';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Chart } from '@/components/chart/Chart';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import { useManageCustomer } from '@/api/customer/customer';
@@ -21,6 +21,8 @@ import dayjs from 'dayjs';
 import { Button } from '@/components/button';
 import { Table } from 'antd';
 import { useCustomerActivityLog } from '@/components/modules/customer/activityLog/tableColumns';
+import { graphOptions } from '@/constants/constants';
+import { useClickOutside } from '@/components/hooks/useClickOutside';
 
 function ViewCustomer() {
   const navigate = useNavigate();
@@ -34,7 +36,14 @@ function ViewCustomer() {
     getCustomerById,
     customer,
     fetching,
+    showDropdown,
+    isSucess,
+    setShowDropdown,
   } = useManageCustomer();
+  const filterRef = useRef<HTMLDivElement | null>(null);
+  const [isgraphfiltered, setIsGraphFiltered] = useState(false);
+  const [activeFilterTab, setActiveFilterTab] = useState(graphOptions[0]);
+  useClickOutside(filterRef, () => setShowDropdown(false), showDropdown);
 
   const tabs = [
     { name: 'Flight bookings', value: chartData?.ticket.ticket_amount },
@@ -47,10 +56,16 @@ function ViewCustomer() {
 
   useEffect(() => {
     if (id) {
-      getCustomerRevenue(id);
+      getCustomerRevenue(id, 'weekly');
       getCustomerById(id);
+      setIsGraphFiltered(false);
     }
   }, []);
+
+  const filterGraph = async (id: string, val: string) => {
+    await getCustomerRevenue(id, val);
+    setIsGraphFiltered(isSucess);
+  };
 
   const sortedActivity = customer?.user_activity.sort((a, b) => {
     return dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf();
@@ -113,7 +128,47 @@ function ViewCustomer() {
                       hasBadge
                       hasHeader
                       title='Revenue sources'
-                      trailingIcon1={<Filter />}
+                      isFiltered={isgraphfiltered}
+                      trailingIcon1={
+                        <div ref={filterRef} className='relative '>
+                          <div onClick={() => setShowDropdown(!showDropdown)}>
+                            <Filter />
+                          </div>
+                          <div
+                            className={clsx(
+                              showDropdown ? 'active' : 'inactive',
+                              'absolute top-[35px] right-[-1px] w-[120px] text-center bg-primary-white shadow-default rounded-md p-2 text-light-primary-black',
+                            )}
+                          >
+                            {graphOptions.map((option, i) => {
+                              const lastOpt = i === graphOptions.length - 1;
+                              return (
+                                <p
+                                  key={i}
+                                  className={clsx(
+                                    activeFilterTab.key === option.key &&
+                                      'bg-[#f1f1f1] text-light-grey-100',
+                                    !lastOpt && 'border-b',
+                                    `py-1 hover:bg-[#f1f1f1] rounded`,
+                                  )}
+                                  onClick={() => {
+                                    if (option === activeFilterTab) {
+                                      return;
+                                    } else {
+                                      if (id) {
+                                        setActiveFilterTab(option);
+                                        filterGraph(id, option.value);
+                                      }
+                                    }
+                                  }}
+                                >
+                                  {option.key}
+                                </p>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      }
                       mainClass='h-full max-h-[513px]'
                     >
                       <div className='flex items-center gap-1 640:gap-2 mb-12 overflow-x-auto hidden-scrollbar'>
@@ -312,7 +367,7 @@ function ViewCustomer() {
                   pagination={false}
                   dataSource={sortedActivity}
                   columns={tableColumns}
-                  scroll={{ y: 216, x: true }}
+                  scroll={{ y: 210, x: true }}
                   className='customer w-full custom-scrollbar hide-arrows overflow-x-scroll'
                   rootClassName='hidden-scrollbar'
                 />
