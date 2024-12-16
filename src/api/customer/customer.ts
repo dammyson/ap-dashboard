@@ -44,7 +44,7 @@ export const useManageCustomer = () => {
       if (res?.error) {
         toast.error(res.message);
       } else {
-        setCustomersData(res.users_table_data);
+        setCustomersData(res.users_table_data.reverse());
       }
     } catch (error) {
       toast.error((error as MutationErrorPayload)?.data?.message);

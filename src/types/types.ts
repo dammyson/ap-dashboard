@@ -128,6 +128,14 @@ export interface ICustomer {
   user_refferal_Count: number;
   user_total_flight_flown: number;
   user_date_of_reg: string;
+  user_point: number;
+  user_all_time_point: number;
+  tier_information: {
+    tier_description: string;
+    tier_name: string;
+    tier_rank: number;
+    user_point: number;
+  }
   last_flight: {
     amount: string;
     arrival_time: string;

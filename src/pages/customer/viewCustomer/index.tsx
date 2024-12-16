@@ -78,8 +78,11 @@ function ViewCustomer() {
                 </p>
                 <p className='text-light-grey-600 hidden 640:flex  items-center text-nowrap'>
                   <span className='inline-block min-w-2 min-h-2 1300:w-3 1300:h-3 rounded-full bg-light-blue-main mr-[6px] 768:mr-3'></span>
-                  Loyalty tier -
-                  <span className='text-light-secondary-orange'> GOLD</span>
+                  Loyalty tier -{' '}
+                  <span className='text-light-secondary-orange uppercase'>
+                    {' '}
+                    {customer?.tier_information.tier_name}
+                  </span>
                 </p>
               </div>
             </div>
@@ -95,11 +98,15 @@ function ViewCustomer() {
             </div>
           </div>
           <div className='hidden-scrollbar overflow-x-auto pb-4 pl-4'>
-            <CustomerOverView
-              fetching={fetching}
-              user_referral_Count={customer?.user_refferal_Count}
-              user_total_flight_flown={customer?.user_total_flight_flown}
-            />
+            {customer && (
+              <CustomerOverView
+                fetching={fetching}
+                user_referral_Count={customer?.user_refferal_Count}
+                user_total_flight_flown={customer?.user_total_flight_flown}
+                user_point={customer?.user_point}
+                user_all_time_point={customer?.user_all_time_point}
+              />
+            )}
           </div>
           <>
             <div className='mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>
