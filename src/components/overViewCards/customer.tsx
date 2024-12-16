@@ -11,25 +11,29 @@ import { SkeletonLoader } from '../customSkeletonLoader/skeletonLoader';
 
 interface Props {
   fetching: boolean;
-  user_referral_Count: number | undefined;
-  user_total_flight_flown: number | undefined;
+  user_referral_Count: number;
+  user_total_flight_flown: number;
+  user_point: number;
+  user_all_time_point: number;
 }
 
 export const CustomerOverView = ({
   user_referral_Count,
   user_total_flight_flown,
+  user_all_time_point,
+  user_point,
   fetching,
 }: Props) => {
   const userStats = [
     {
       title: 'Active loyal points',
-      value: 10000,
+      value: user_point ?? 0,
       icon: <GoldTrophy />,
       iconName: 'trophy',
     },
     {
       title: 'Total loyal points',
-      value: 20000,
+      value: user_all_time_point ?? 0,
       icon: <GoldTrophy />,
       iconName: 'trophy',
     },
