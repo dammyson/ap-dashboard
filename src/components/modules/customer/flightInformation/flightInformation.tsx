@@ -58,7 +58,9 @@ export const FlightInfo = ({ customer }: UsageProp) => {
                           : customer?.upcoming_flight.origin}
                     </p>
                     <p className='text-[10px] 360:text-sm 480:text-[16px]'>
-                      {customer?.last_flight.origin}
+                      {user.title === 'Last flight'
+                        ? customer?.last_flight.origin
+                        : customer?.upcoming_flight.origin}
                     </p>
                   </div>
                   <div className='pt-[10px]'>

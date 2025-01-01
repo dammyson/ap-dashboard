@@ -196,7 +196,7 @@ function ViewCustomer() {
                   dataSource={sortedActivity}
                   columns={tableColumns}
                   scroll={{ y: 210, x: true }}
-                  className='customer w-full custom-scrollbar hide-arrows overflow-x-scroll'
+                  className='customer custom-scrollbar hide-arrows overflow-x-scroll'
                   rootClassName='hidden-scrollbar'
                 />
               </Card>

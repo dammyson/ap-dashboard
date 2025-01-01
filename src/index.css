@@ -181,9 +181,13 @@ tr > th.ant-table-cell.ant-table-cell-scrollbar {
 /* INDIVIDUAL CUSTOMER PAGE */
 
 .customer .date,
-.customer .activityType,
-.customer .description {
+.customer .activityType {
+  min-width: 200px;
   max-width: 392px;
+}
+
+.customer .description {
+  min-width: 392px;
 }
 
 @media (min-width: 1240px) {
