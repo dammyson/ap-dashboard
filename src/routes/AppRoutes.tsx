@@ -14,6 +14,7 @@ import Settings from '@/pages/settings';
 import { useUser } from '@/context/AppContext';
 import ProtectedRoutes from './PrivateRoutes';
 import ViewResult from '@/pages/surveys/viewResult';
+import { Notfound } from '@/pages/not-found';
 
 const AppRoutes = () => {
   const { token } = useUser();
@@ -44,6 +45,10 @@ const AppRoutes = () => {
         <Route path='/surveys-create/:id' element={<CreateSurvey />} />
         <Route path='/settings' element={<Settings />} />
       </Route>
+      <Route
+        path='*'
+        element={<Notfound isAuthenticated={token ? true : false} />}
+      />
     </Routes>
   );
 };
