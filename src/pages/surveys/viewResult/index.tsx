@@ -115,8 +115,8 @@ function ViewResult() {
                     pagination={false}
                     columns={tableColumns}
                     dataSource={participants}
-                    className='survey-participants'
-                    rootClassName='overflow-x-scroll hidden-scrollbar'
+                    className='survey-participants custom-scrollbar hide-arrows overflow-x-scroll'
+                    rootClassName=' hidden-scrollbar'
                     loading={{
                       spinning: Loading,
                       indicator: (

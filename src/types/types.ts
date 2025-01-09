@@ -16,9 +16,10 @@ export interface SurveyType {
 
 export interface ViewParticipants {
   title: string;
-  name: string;
+  first_name: string;
+  last_name: string;
   email: string;
-  airpeaceID: number;
+  peace_id: number;
   gender: string;
   nationality: string;
 }
@@ -135,7 +136,7 @@ export interface ICustomer {
     tier_name: string;
     tier_rank: number;
     user_point: number;
-  }
+  };
   last_flight: {
     amount: string;
     arrival_time: string;
