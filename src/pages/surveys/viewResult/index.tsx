@@ -18,13 +18,27 @@ import { useUser } from '@/context/AppContext';
 import { point, reason } from './constants';
 import { useViewSurveyResult } from '@/api/surveys/viewResults';
 import { LoadingOutlined } from '@ant-design/icons';
-import ListBox, { RoleOption } from '@/components/Dropdown/listBox';
+import { CustomDropdown } from '@/components/Dropdown/customDropdown';
+import { useManageCustomer } from '@/api/customer/customer';
+import { Spinner } from '@/components/svg/spinner/Spinner';
 
 function ViewResult() {
   const navigate = useNavigate();
   const { titleId, surveyId } = useParams();
   const id = Number(surveyId);
+  const { user } = useUser();
+  const {
+    isPointLoading,
+    allocatePonit,
+    isModalOpen,
+    setIsModalOpen,
+    selectedPoint,
+    setSelectedPoint,
+    selectedReason,
+    setSelectedReason,
+  } = useManageCustomer();
 
+  const { tableColumns } = useViewResultColumn(setIsModalOpen);
   const {
     getSurveyParticipants,
     participants,
@@ -52,13 +66,14 @@ function ViewResult() {
     },
   ];
 
-  const [awardPoints, setAwardPoints] = useState<boolean>(false);
-  const [selectedPoint, setSelectedPoint] = useState<RoleOption>(point[0]);
-  const [selectedReason, setSelectedReason] = useState<RoleOption>(reason[0]);
   const [currentTab, setCurrentTab] = useState(navigationItems[0]);
-  const { user } = useUser();
 
-  const { tableColumns } = useViewResultColumn(setAwardPoints);
+  const handleAllocatePoint = (id: number) => {
+    allocatePonit(id, {
+      points: (selectedPoint as number) || 0,
+      reason: selectedReason as string,
+    });
+  };
 
   return (
     <AppLayout logo=''>
@@ -135,13 +150,13 @@ function ViewResult() {
             </Panel>
           </Card>
         </div>
-        {awardPoints && (
+        {isModalOpen && (
           <Modal
             isBackground
             isCentered
             size={SizeType.LARGE}
             cancelIcon={<Cancel />}
-            onClick={() => setAwardPoints(false)}
+            onClick={() => setIsModalOpen(false)}
           >
             <div className='flex  flex-col items-center justify-center max-w-[633px] w-full py-5'>
               <h3 className='text-light-primary-deep_black text-[32px] font-medium mb-10'>
@@ -152,26 +167,31 @@ function ViewResult() {
                   <p className='text-left text-xl font-medium pb-4'>
                     Points to award
                   </p>
-                  <ListBox
+                  <CustomDropdown
+                    isCurved
                     trailingIcon={<DropDownArrow />}
                     selected={selectedPoint}
                     options={point}
+                    placeholder='Enter or select'
                     onSelect={(point) => setSelectedPoint(point)}
-                    isCurved
-                    className=' placeholder:!text-light-primary-deep_black placeholder:!text-xl font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
+                    onChange={(point) => setSelectedPoint(point)}
+                    className=' placeholder:!text-light-primary-deep_black placeholder:1400:!text-xl 1024:!text-lg font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
                   />
                 </div>
                 <div className='mb-5 text-light-grey-600'>
                   <p className='text-left text-xl  font-medium pb-4'>
                     Reason for awarding points
                   </p>
-                  <ListBox
+                  <CustomDropdown
+                    acceptLetters
+                    isCurved
                     trailingIcon={<DropDownArrow />}
                     selected={selectedReason}
                     options={reason}
+                    placeholder='Enter or select'
                     onSelect={(reason) => setSelectedReason(reason)}
-                    isCurved
-                    className=' placeholder:!text-light-primary-deep_black placeholder:!text-xl font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
+                    onChange={(reason) => setSelectedReason(reason)}
+                    className=' placeholder:!text-light-primary-deep_black placeholder:1400:!text-xl 1024:!text-lg font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
                   />
                 </div>
               </div>
@@ -189,10 +209,17 @@ function ViewResult() {
 
               <div className='grid gap-4 w-11/12'>
                 <Button
+                  disabled={selectedPoint && selectedReason ? false : true}
                   size={ButtonSize.Large}
                   radius={BorderRadius.Large}
-                  buttonText='Award points'
-                  onClick={() => {}}
+                  buttonText={
+                    isPointLoading ? (
+                      <Spinner className='text-light-blue-main w-5 h-5 768:w-7 768:h-7' />
+                    ) : (
+                      'Award points'
+                    )
+                  }
+                  onClick={() => id && handleAllocatePoint(id)}
                   className='!font-semibold !text-2xl'
                 />
                 <Button
@@ -200,7 +227,7 @@ function ViewResult() {
                   radius={BorderRadius.Large}
                   mode='outlined'
                   buttonText='Cancel'
-                  onClick={() => setAwardPoints(false)}
+                  onClick={() => setIsModalOpen(false)}
                   className='!font-semibold !text-2xl'
                 />
               </div>

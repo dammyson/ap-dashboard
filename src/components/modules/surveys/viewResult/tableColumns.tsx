@@ -4,7 +4,7 @@ import { ViewParticipants } from '@/types/types';
 import { Trophy } from '@/components/svg/surveys/Surveys';
 import { ModalStateSetter } from '../tableColumns';
 
-export const useViewResultColumn = (setAwardPoints: ModalStateSetter) => {
+export const useViewResultColumn = (setIsModalOpen: ModalStateSetter) => {
   const tableColumns = useMemo(() => {
     return [
       {
@@ -76,7 +76,7 @@ export const useViewResultColumn = (setAwardPoints: ModalStateSetter) => {
         dataIndex: '',
         key: '',
         render: (_) => (
-          <span className='cursor-pointer' onClick={() => setAwardPoints(true)}>
+          <span className='cursor-pointer' onClick={() => setIsModalOpen(true)}>
             {<Trophy />}
           </span>
         ),
