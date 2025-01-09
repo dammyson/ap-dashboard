@@ -18,13 +18,27 @@ import { useUser } from '@/context/AppContext';
 import { point, reason } from './constants';
 import { useViewSurveyResult } from '@/api/surveys/viewResults';
 import { LoadingOutlined } from '@ant-design/icons';
-import ListBox, { RoleOption } from '@/components/Dropdown/listBox';
+import { CustomDropdown } from '@/components/Dropdown/customDropdown';
+import { useManageCustomer } from '@/api/customer/customer';
+import { Spinner } from '@/components/svg/spinner/Spinner';
 
 function ViewResult() {
   const navigate = useNavigate();
   const { titleId, surveyId } = useParams();
   const id = Number(surveyId);
+  const { user } = useUser();
+  const {
+    isPointLoading,
+    allocatePonit,
+    isModalOpen,
+    setIsModalOpen,
+    selectedPoint,
+    setSelectedPoint,
+    selectedReason,
+    setSelectedReason,
+  } = useManageCustomer();
 
+  const { tableColumns } = useViewResultColumn(setIsModalOpen);
   const {
     getSurveyParticipants,
     participants,
@@ -52,13 +66,14 @@ function ViewResult() {
     },
   ];
 
-  const [awardPoints, setAwardPoints] = useState<boolean>(false);
-  const [selectedPoint, setSelectedPoint] = useState<RoleOption>(point[0]);
-  const [selectedReason, setSelectedReason] = useState<RoleOption>(reason[0]);
   const [currentTab, setCurrentTab] = useState(navigationItems[0]);
-  const { user } = useUser();
 
-  const { tableColumns } = useViewResultColumn(setAwardPoints);
+  const handleAllocatePoint = (id: number) => {
+    allocatePonit(id, {
+      points: (selectedPoint as number) || 0,
+      reason: selectedReason as string,
+    });
+  };
 
   return (
     <AppLayout logo=''>
@@ -115,8 +130,8 @@ function ViewResult() {
                     pagination={false}
                     columns={tableColumns}
                     dataSource={participants}
-                    className='survey-participants'
-                    rootClassName='overflow-x-scroll hidden-scrollbar'
+                    className='survey-participants custom-scrollbar hide-arrows overflow-x-scroll'
+                    rootClassName=' hidden-scrollbar'
                     loading={{
                       spinning: Loading,
                       indicator: (
@@ -135,53 +150,59 @@ function ViewResult() {
             </Panel>
           </Card>
         </div>
-        {awardPoints && (
+        {isModalOpen && (
           <Modal
             isBackground
             isCentered
             size={SizeType.LARGE}
             cancelIcon={<Cancel />}
-            onClick={() => setAwardPoints(false)}
+            onClick={() => setIsModalOpen(false)}
           >
-            <div className='flex  flex-col items-center justify-center max-w-[633px] w-full py-5'>
-              <h3 className='text-light-primary-deep_black text-[32px] font-medium mb-10'>
+            <div className='flex flex-col items-center justify-center w-full 768:w-4/5 960:w-[68%] 1240:py-5'>
+              <h3 className='text-light-primary-deep_black text-lg 560:text-xl 768:text-2xl 960:text-[28px] 1240:text-[32px] font-medium mb-4 768:mb-6 1400:mb-10 pt-5 960:pt-0'>
                 Manually award points to user
               </h3>
-              <div className='w-11/12'>
-                <div className='mb-10 text-light-grey-600'>
-                  <p className='text-left text-xl font-medium pb-4'>
+              <div className='w-full'>
+                <div className='mb-3 768:mb-5 1400:mb-10 text-light-grey-600'>
+                  <p className='text-left text-base 768:text-lg 960:text-xl font-medium 960:pb-2 1400:pb-4'>
                     Points to award
                   </p>
-                  <ListBox
+
+                  <CustomDropdown
+                    isCurved
                     trailingIcon={<DropDownArrow />}
                     selected={selectedPoint}
                     options={point}
+                    placeholder='Enter or select'
                     onSelect={(point) => setSelectedPoint(point)}
-                    isCurved
-                    className=' placeholder:!text-light-primary-deep_black placeholder:!text-xl font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
+                    onChange={(point) => setSelectedPoint(point)}
+                    className=' placeholder:!text-light-primary-deep_black placeholder:1400:!text-xl 1024:!text-lg font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
                   />
                 </div>
-                <div className='mb-5 text-light-grey-600'>
-                  <p className='text-left text-xl  font-medium pb-4'>
+                <div className='768:mb-5 text-light-grey-600'>
+                  <p className='text-left text-base 768:text-lg 960:text-xl font-medium 960:pb-2 1400:pb-4'>
                     Reason for awarding points
                   </p>
-                  <ListBox
+                  <CustomDropdown
+                    acceptLetters
+                    isCurved
                     trailingIcon={<DropDownArrow />}
                     selected={selectedReason}
                     options={reason}
+                    placeholder='Enter or select'
                     onSelect={(reason) => setSelectedReason(reason)}
-                    isCurved
-                    className=' placeholder:!text-light-primary-deep_black placeholder:!text-xl font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
+                    onChange={(reason) => setSelectedReason(reason)}
+                    className=' placeholder:!text-light-primary-deep_black placeholder:1400:!text-xl 1024:!text-lg font-medium text-light-primary-deep_black !!h-[50px] 1024:!h-[57px] 1300:!min-h-[65px]'
                   />
                 </div>
               </div>
 
-              <ul className='w-full list-disc list-inside text-left pt-2 pb-20'>
-                <li className='text-[16px] text-light-grey-600'>
+              <ul className='w-[96%] list-disc list-outside text-left pt-2 pb-8 1240:pb-10 1400:pb-20 '>
+                <li className='text-xs 1024:text-base text-light-grey-600'>
                   <span className='font-medium'>Note:</span> Manually awarded
                   points will be reflected in the user's account immediately.
                 </li>
-                <li className='text-[16px] text-light-grey-600'>
+                <li className='text-xs 1024:text-base text-light-grey-600'>
                   Please ensure the points amount is accurate and the reason is
                   clear.
                 </li>
@@ -189,19 +210,26 @@ function ViewResult() {
 
               <div className='grid gap-4 w-11/12'>
                 <Button
+                  disabled={selectedPoint && selectedReason ? false : true}
                   size={ButtonSize.Large}
                   radius={BorderRadius.Large}
-                  buttonText='Award points'
-                  onClick={() => {}}
-                  className='!font-semibold !text-2xl'
+                  buttonText={
+                    isPointLoading ? (
+                      <Spinner className='text-light-blue-main w-5 h-5 768:w-7 768:h-7' />
+                    ) : (
+                      'Award points'
+                    )
+                  }
+                  onClick={() => id && handleAllocatePoint(id)}
+                  className='!font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[65px]'
                 />
                 <Button
                   size={ButtonSize.Large}
                   radius={BorderRadius.Large}
                   mode='outlined'
                   buttonText='Cancel'
-                  onClick={() => setAwardPoints(false)}
-                  className='!font-semibold !text-2xl'
+                  onClick={() => setIsModalOpen(false)}
+                  className='!font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[65px]'
                 />
               </div>
             </div>

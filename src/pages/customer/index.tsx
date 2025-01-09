@@ -151,6 +151,7 @@ function Customer() {
 
                 <div className='grid gap-4 w-11/12'>
                   <Button
+                    disabled={selectedPoint && selectedReason ? false : true}
                     size={ButtonSize.Large}
                     radius={BorderRadius.Large}
                     buttonText={

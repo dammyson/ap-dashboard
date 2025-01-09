@@ -239,12 +239,22 @@ tr > th.ant-table-cell.ant-table-cell-scrollbar {
 }
 
 /* SURVEY PARTICIPANTS */
-@media (max-width: 1180px) {
-  .survey-participants .table-name-column {
-    max-width: 150px !important;
-  }
+
+.survey-participants .name,
+.survey-participants .peaceId,
+.survey-participants .nationality {
+  min-width: 190px !important;
 }
 
+.survey-participants .gender {
+  min-width: 120px !important;
+}
+.survey-participants .title {
+  min-width: 75px !important;
+}
+.survey-participants .email {
+  min-width: 250px !important;
+}
 /* CUSTOMER-FEEDBCK */
 
 .ant-table-cell.name-column {
