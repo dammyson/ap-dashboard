@@ -1,5 +1,6 @@
 import {
   CustomerGraphValues,
+  NotificationsType,
   OverViewType,
   RevenueGraph,
   UsersByDevice,
@@ -56,4 +57,95 @@ export const initialUsersByDevice: UsersByDevice = {
 export const graphOptions = [
   { key: 'Weekly', value: 'weekly' },
   { key: 'Yearly', value: 'yearly' },
+];
+
+export const notificationOptions: NotificationsType[] = [
+  {
+    id: 1,
+    key: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, temporibus cum ea tempora illo harum aliquid dolor reprehenderit obcaecati iusto, nemo ipsa et? Vero beatae fuga harum asperiores?',
+    time: '10 mins ago',
+    isRead: false,
+    value:
+      '  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, temporibus cum ea tempora illo harum aliquid dolor reprehenderit nemo ipsa et? Vero beatae fuga harum asperiores?',
+  },
+  {
+    id: 2,
+    key: 'temporibus sum dolor sit, amet consectetur adipisicing elit. Tempore,  cum ea tempora illo harum aliquid dolor reprehenderit nemo ipsa et? Vero beatae fuga harum velit similique asperiores?',
+    time: '10 mins ago',
+    isRead: false,
+    value:
+      'temporibus sum dolor sit, amet consectetur adipisicing elit. Tempore,  cum ea tempora illo harum aliquid dolor reprehenderit obcaecati iusto, nemo ipsa et? Vero beatae fuga harum velit similique asperiores?',
+  },
+  {
+    id: 3,
+    key: 'fuga harum Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo ipsa et? Vero beatae velit similique asperiores?',
+    time: '10 mins ago',
+    isRead: false,
+    value:
+      'fuga harum Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo ipsa et? Vero beatae velit similique asperiores?',
+  },
+  {
+    id: 4,
+    key: 'Tempore, temporibus cum ea tempora illo harum aliquid dolor reprehenderit obcaecati iusto, nemo ipsa et? Vero beatae fuga harum velit similique asperiores?',
+    time: '10 mins ago',
+    isRead: false,
+    value:
+      '  Tempore, temporibus cum ea tempora illo harum aliquid dolor reprehenderit obcaecati iusto, nemo ipsa et? Vero beatae fuga harum velit similique asperiores?',
+  },
+  {
+    id: 5,
+    key: 'Lorem ipsum dolor sit, obcaecati iusto consectetur adipisicing elit. Tempore, temporibus cum ea tempora illo harum aliquid dolor reprehenderit  nemo ipsa et? ',
+    time: '10 mins ago',
+    isRead: false,
+    value:
+      '  Lorem ipsum dolor sit, obcaecati iusto consectetur adipisicing elit. Tempore, temporibus cum ea tempora illo harum aliquid dolor reprehenderit , nemo ipsa et?',
+  },
+  {
+    id: 6,
+    key: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, temporibus cum ea tempora illo harum aliquid dolor reprehenderit obcaecati iusto, nemo ipsa et? ',
+    time: '10 mins ago',
+    isRead: false,
+    value:
+      '  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, temporibus cum ea tempora illo harum aliquid dolor reprehenderit obcaecati iusto, nemo ipsa et?',
+  },
+  {
+    id: 7,
+    key: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, temporibus cum ea tempora illo harum aliquid dolor reprehenderit obcaecati iusto, nemo ipsa et? ',
+    time: '10 mins ago',
+    isRead: false,
+    value:
+      '  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, temporibus cum ea tempora illo harum aliquid dolor reprehenderit obcaecati iusto, nemo ipsa et?',
+  },
+  {
+    id: 8,
+    key: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, temporibus cum ea tempora illo harum aliquid dolor reprehenderit obcaecati iusto, nemo ipsa et? ',
+    time: '10 mins ago',
+    isRead: false,
+    value:
+      '  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, temporibus cum ea tempora illo harum aliquid dolor reprehenderit obcaecati iusto, nemo ipsa et?',
+  },
+  {
+    id: 9,
+    key: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, temporibus cum ea tempora illo harum aliquid dolor reprehenderit obcaecati iusto, nemo ipsa et? ',
+    time: '10 mins ago',
+    isRead: false,
+    value:
+      '  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, temporibus cum ea tempora illo harum aliquid dolor reprehenderit obcaecati iusto, nemo ipsa et?',
+  },
+  {
+    id: 10,
+    key: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, temporibus cum ea tempora illo harum aliquid dolor reprehenderit obcaecati iusto, nemo ipsa et? ',
+    time: '10 mins ago',
+    isRead: false,
+    value:
+      '  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, temporibus cum ea tempora illo harum aliquid dolor reprehenderit obcaecati iusto, nemo ipsa et?',
+  },
+  {
+    id: 11,
+    key: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, temporibus cum ea tempora illo harum aliquid dolor reprehenderit obcaecati iusto, nemo ipsa et? Vero beatae fuga harum velit similique asperiores?',
+    time: '10 mins ago',
+    isRead: false,
+    value:
+      '  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, temporibus cum ea tempora illo harum aliquid dolor reprehenderit obcaecati iusto, nemo ipsa et? Vero beatae fuga harum velit similique asperiores?',
+  },
 ];

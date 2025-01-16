@@ -55,10 +55,10 @@ function Dashboard() {
   ];
   const [activeTab, setActiveTab] = useState(tabs[0]);
 
-  useEffect(() => {
-    actions.getDashboardAnalytics();
-    setIsGraphFiltered(false);
-  }, []);
+  // useEffect(() => {
+  //   actions.getDashboardAnalytics();
+  //   setIsGraphFiltered(false);
+  // }, []);
 
   useEffect(() => {
     if (activeTab.name === 'Ticket sales') {

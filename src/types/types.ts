@@ -359,3 +359,11 @@ export interface ByScreenResolution {
   count: number;
   percentage: number;
 }
+
+export interface NotificationsType {
+  id: number;
+  key: string;
+  value: string;
+  time: string;
+  isRead: boolean;
+}
