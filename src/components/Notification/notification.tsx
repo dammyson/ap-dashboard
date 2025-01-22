@@ -6,6 +6,7 @@ import { Bin, Cancel } from '../svg/modal/Modal';
 import { BorderRadius, Button, ButtonSize } from '../button';
 import { Modal, SizeType } from '../modal';
 import { Dot } from '../svg/dashboard/Dashboard';
+import { useWindowSize } from '../hooks/useWindowSize';
 
 interface Props {
   showUi: boolean;
@@ -17,6 +18,7 @@ interface Props {
 const NotificationUi = ({ showUi, setShowUi, message, setMessage }: Props) => {
   const [selected, setSelected] = useState<NotificationsType | null>(null);
   const [viewMessage, setViewMessage] = useState(false);
+  const isWindowSize = useWindowSize(640);
   const openModal = (record: NotificationsType) => {
     setSelected(record);
     setViewMessage(true);
@@ -43,7 +45,7 @@ const NotificationUi = ({ showUi, setShowUi, message, setMessage }: Props) => {
         )}
       >
         <div className='flex flex-col items-center justify-center'>
-          <h3 className='text-light-primary-deep_black text-xl 768:text-2xl 960:text-[28px] 1240:text-[32px] font-semibold mb-4 768:mb-6 1400:mb-10  pt-5 960:pt-0'>
+          <h3 className='text-light-primary-deep_black text-xl 768:text-2xl 960:text-[28px] 1240:text-[32px] font-semibold mb-4 768:mb-6 1400:mb-10 pt-5 960:pt-0'>
             Notifications
           </h3>
           <span
@@ -56,7 +58,7 @@ const NotificationUi = ({ showUi, setShowUi, message, setMessage }: Props) => {
           >
             <Cancel />
           </span>
-          <div className='h-full max-h-[75dvh] w-full  overflow-y-scroll custom-scrollbar hide-arrows pb-4 '>
+          <div className='h-full max-h-[75dvh] w-full  overflow-y-scroll custom-scrollbar hide-arrows pb-4 px-3 425:px-0 '>
             {message.map((option, i) => {
               return (
                 <div className='flex items-center justify-center gap-2 1024:gap-4'>
@@ -71,7 +73,7 @@ const NotificationUi = ({ showUi, setShowUi, message, setMessage }: Props) => {
                   <div
                     onClick={() => handleOpenMessage(i, option)}
                     className={clsx(
-                      'mt-6 bg-primary-white shadow-default rounded-[20px] p-3 640:p-6 flex items-center justify-center gap-4 w-full max-w-[80%] hover:bg-[#f2f2f2] hover:transition-all hover:duration-500 cursor-pointer',
+                      'mt-6 bg-primary-white shadow-default rounded-[20px] p-3 880:p-6 flex items-center justify-center gap-4 w-full max-w-[80%] hover:bg-[#f2f2f2] hover:transition-all hover:duration-500 cursor-pointer',
                     )}
                   >
                     <div className='w-14'>
@@ -81,10 +83,13 @@ const NotificationUi = ({ showUi, setShowUi, message, setMessage }: Props) => {
                       key={i}
                       className={clsx(
                         option.isRead && 'font-normal',
-                        ' text-light-primary-deep_black font-medium p-4 hover:bg-[#f2f2f2] hover:transition-all hover:duration-500 w-full max-w-[90%]',
+                        ' text-light-primary-deep_black font-medium 640:p-4 hover:bg-[#f2f2f2] hover:transition-all hover:duration-500 w-full max-w-[90%]',
                       )}
                     >
-                      {`${option.key.slice(0, 100).trim()}...`}
+                      {isWindowSize
+                        ? `${option.key.trim().slice(0, 60)}...`
+                        : `${option.key.trim().slice(0, 100)}...`}
+
                       <span
                         className={clsx(
                           option.isRead && 'font-normal',
@@ -116,7 +121,7 @@ const NotificationUi = ({ showUi, setShowUi, message, setMessage }: Props) => {
             })}
           </div>
         </div>
-        <div className='flex justify-center items-center mt-4 '>
+        <div className='flex justify-center items-center mt-4 px-5 '>
           <div className='w-full max-w-[447px]'>
             <Button
               buttonText='Delete all'
