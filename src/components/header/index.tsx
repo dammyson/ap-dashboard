@@ -6,6 +6,10 @@ import { Avatar } from '../avatar/Avatar';
 import { useGetColorByChar } from '@/hooks/useGetColorByChar';
 import { getInitials } from '@/utils';
 import WelcomeMessage from '../welcomeMessage';
+import { useState } from 'react';
+import NotificationUi from '../Notification/notification';
+import { NotificationsType } from '@/types/types';
+import { notificationOptions } from '@/constants/constants';
 
 interface Props {
   hasWelcomeMessage?: boolean;
@@ -15,6 +19,13 @@ export const Header = ({ hasWelcomeMessage = false }: Props) => {
   const navigate = useNavigate();
   const { user } = useUser();
   const { getColor } = useGetColorByChar();
+  const [showUi, setShowUi] = useState(false);
+  const [message, setMessage] =
+    useState<NotificationsType[]>(notificationOptions);
+
+  const getLength = (messages: NotificationsType[]) => {
+    return messages.filter((unreadMessages) => !unreadMessages.isRead).length;
+  };
 
   return (
     <div className='flex w-full h-20 gap-5 560:gap-10 items-center justify-between px-2 mb-6 768:px-4'>
@@ -59,7 +70,16 @@ export const Header = ({ hasWelcomeMessage = false }: Props) => {
             textClassName='560:text-lg 960:text-xl'
           />
         )}
-        <NotificationBell notification={1} />
+        <NotificationBell
+          onClick={() => setShowUi(true)}
+          notification={getLength(message)}
+        />
+        <NotificationUi
+          message={message}
+          setMessage={setMessage}
+          showUi={showUi}
+          setShowUi={setShowUi}
+        />
       </div>
     </div>
   );
@@ -67,19 +87,27 @@ export const Header = ({ hasWelcomeMessage = false }: Props) => {
 
 interface NotificationBellProps {
   notification: number;
+  onClick: () => void;
 }
 
-export const NotificationBell = ({ notification }: NotificationBellProps) => {
+export const NotificationBell = ({
+  notification,
+  onClick,
+}: NotificationBellProps) => {
   return (
-    <div className='relative cursor-pointer'>
-      {notification > 0 ? (
-        <span className='bg-light-secondary-red text-primary-white text-[10px] flex items-center justify-center rounded-full w-3 h-3 absolute top-[-3px] right-0'>
+    <div className='relative cursor-pointer' onClick={onClick}>
+      <Bell />
+      {notification > 0 && notification <= 50 ? (
+        <span className='bg-light-secondary-red text-primary-white text-[10px] flex items-center justify-center rounded-full w-4 h-4 absolute top-[-3px] right-0'>
           <span className='h-[13px]'>{notification}</span>
+        </span>
+      ) : notification > 50 ? (
+        <span className='bg-light-secondary-red text-primary-white text-[9px] flex items-center justify-center rounded-full w-5 h-5 absolute top-[-7px] right-[-5px]'>
+          <span className='h-[14px]'>50+</span>
         </span>
       ) : (
         <></>
       )}
-      <Bell />
     </div>
   );
 };

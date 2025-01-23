@@ -4,12 +4,18 @@ export const useClickOutside = (
   ref: React.RefObject<HTMLElement | null>,
   callback: () => void,
   condition: boolean,
+  optionalRef?: React.RefObject<HTMLElement | null>,
 ) => {
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       if (!condition) return;
 
-      if (ref && !ref.current?.contains(e.target as Node)) callback();
+      if (optionalRef && optionalRef?.current?.contains(e.target as Node))
+        return;
+
+      if (ref && !ref.current?.contains(e.target as Node)) {
+        console.log('cliked'), callback();
+      }
     };
 
     document.addEventListener('click', handleClick);
@@ -17,5 +23,5 @@ export const useClickOutside = (
     return () => {
       document.removeEventListener('click', handleClick);
     };
-  }, [ref, callback, condition]);
+  }, [ref, callback, condition, optionalRef]);
 };
