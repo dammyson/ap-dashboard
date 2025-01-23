@@ -6,14 +6,10 @@ import { TotalRevenue } from '@/components/dashboardTables/totalRevenue';
 import { ActiveUsers } from '@/components/dashboardTables/activeUsers';
 import { useEffect, useRef, useState } from 'react';
 import { numberShortener } from '@/utils';
-import {
-  ArrowRight,
-  OptionsVertical,
-} from '@/components/svg/dashboard/Dashboard';
+import { ArrowRight } from '@/components/svg/dashboard/Dashboard';
 import clsx from 'clsx';
 import { Card } from '@/components/card';
 import { Filter } from '@/components/svg/surveys/Surveys';
-import { RecentActivities } from './constants';
 import { Chart } from '@/components/chart/Chart';
 import { HorizontalBarChart } from '@/components/chart/HorizontalBarChart';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
@@ -24,6 +20,8 @@ import { SkeletonLoader } from '@/components/customSkeletonLoader/skeletonLoader
 import { graphOptions } from '@/constants/constants';
 import { useClickOutside } from '@/components/hooks/useClickOutside';
 import { CustomFilter } from '@/components/filter/filter';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 function Dashboard() {
   const {
@@ -39,12 +37,15 @@ function Dashboard() {
     isSucess,
     setShowDropdown,
     screenData,
+    RecentActivities,
   } = useManageDashboard();
   const filterRef = useRef<HTMLDivElement | null>(null);
   const [activeStat, setActiveStat] = useState<string>('');
   const [isgraphfiltered, setIsGraphFiltered] = useState(false);
   const [activeFilterTab, setActiveFilterTab] = useState(graphOptions[0]);
   useClickOutside(filterRef, () => setShowDropdown(false), showDropdown);
+  dayjs.extend(relativeTime);
+
   const tabs = [
     { name: 'Ticket sales', value: revenueGraph?.ticket.ticket_amount },
     {
@@ -220,16 +221,16 @@ function Dashboard() {
                           >
                             <div className='flex items-center gap-2 justify-between'>
                               <p className='text-[16px] text-light-blue-main font-medium'>
-                                {activity.label}
+                                {activity.title}
                               </p>
-                              <OptionsVertical className='cursor-pointer' />
+                              {/* <OptionsVertical className='cursor-pointer' /> */}
                             </div>
                             <div className='flex items-center justify-between gap-6'>
                               <p className='text-[13px] text-light-grey-600 truncate max-w-[221px]'>
-                                {activity.description}
+                                {activity.details.description}
                               </p>
                               <span className='text-light-grey-600 text-[10px] min-w-[60px]'>
-                                12 mins ago
+                                {dayjs().to(activity.details.created_at)}
                               </span>
                             </div>
                           </div>

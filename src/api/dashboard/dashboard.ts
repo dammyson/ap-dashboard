@@ -10,6 +10,7 @@ import {
   GraphValues,
   MutationErrorPayload,
   OverViewType,
+  RecentActivity,
   RevenueGraph,
   TicketsPurchasedViaApp,
   TotalUsersRegistered,
@@ -39,6 +40,10 @@ export const useManageDashboard = () => {
   const [chartData, setChartData] = useState<GraphValues[]>([]);
   const [isScreenLoading, setIsScreenLoading] = useState(false);
   const [screenData, setScreenData] = useState<ByScreenResolution[]>([]);
+  const [loadingRecent, setLoadingRecent] = useState(false);
+  const [RecentActivities, setRecentActivities] = useState<RecentActivity[]>(
+    [],
+  );
 
   const getOverViewData = async () => {
     try {
@@ -188,6 +193,28 @@ export const useManageDashboard = () => {
     }
   };
 
+  const getRecentActivities = async () => {
+    try {
+      setLoadingRecent(true);
+      const data = await fetch(`${baseURL}admin/dashboard/recent-table`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const res = await data.json();
+      setLoadingRecent(false);
+      if (res?.error) {
+        toast.error(res.message);
+      } else {
+        setRecentActivities(res.recent_activities);
+      }
+    } catch (error) {
+      toast.error((error as MutationErrorPayload)?.data?.message);
+    }
+  };
+
   const getDashboardAnalytics = async () => {
     getOverViewData();
     getRegisteredUsersTable();
@@ -195,6 +222,7 @@ export const useManageDashboard = () => {
     getAreaChart('weekly');
     getUsersByDevice();
     getUsersByScreenResolution();
+    getRecentActivities();
   };
 
   return {
@@ -207,11 +235,13 @@ export const useManageDashboard = () => {
     showDropdown,
     setShowDropdown,
     screenData,
+    RecentActivities,
     loaders: {
       isLoading,
       isChartLoading,
       usersLoading,
       isScreenLoading,
+      loadingRecent,
     },
     actions: {
       getOverViewData,

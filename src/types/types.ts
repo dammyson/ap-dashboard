@@ -367,3 +367,11 @@ export interface NotificationsType {
   time: string;
   isRead: boolean;
 }
+
+export interface RecentActivity {
+  title: string;
+  details: {
+    description: string;
+    created_at: string;
+  };
+}
