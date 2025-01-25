@@ -61,7 +61,10 @@ const NotificationUi = ({ showUi, setShowUi, message, setMessage }: Props) => {
           <div className='h-full max-h-[75dvh] w-full  overflow-y-scroll custom-scrollbar hide-arrows pb-4 px-3 425:px-0 '>
             {message.map((option, i) => {
               return (
-                <div className='flex items-center justify-center gap-2 1024:gap-4'>
+                <div
+                  key={i}
+                  className='flex items-center justify-center gap-2 1024:gap-4'
+                >
                   <span className='w-3 h-3'>
                     <Dot
                       className={clsx(

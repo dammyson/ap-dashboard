@@ -30,7 +30,6 @@ export const Panel = ({
                 <p
                   onClick={() => {
                     setCurrentTab(item);
-                    console.log(item.title);
                   }}
                   className={clsx(
                     currentTab.id === item.id

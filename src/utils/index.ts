@@ -1,3 +1,4 @@
+import { Permission, UserRole } from '@/context/permissionContext';
 import { Args } from '@/types/types';
 
 export function convertToUrlString(val: string) {
@@ -118,4 +119,17 @@ export const maskedEmail = (val: string) => {
 
 export const capitalizeFirstLetter = (val: string) => {
   return val.charAt(0).toUpperCase() + val.slice(1).toLowerCase();
+};
+
+export const hasStaticPermission = (role: UserRole, permission: Permission) => {
+  const rolePermissions: Record<UserRole, Permission[]> = {
+    [UserRole.ADMIN]: [
+      Permission.ADD_ADMIN,
+      Permission.REMOVE_ADMIN,
+      Permission.SHARE_POINTS,
+      Permission.VIEW_TEAM_MEMBERS,
+    ],
+    [UserRole.SUB_ADMIN]: [],
+  };
+  return rolePermissions[role]?.includes(permission) ?? false;
 };
