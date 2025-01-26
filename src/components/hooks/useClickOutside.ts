@@ -14,7 +14,7 @@ export const useClickOutside = (
         return;
 
       if (ref && !ref.current?.contains(e.target as Node)) {
-        console.log('cliked'), callback();
+        callback();
       }
     };
 

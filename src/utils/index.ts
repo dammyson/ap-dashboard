@@ -119,3 +119,10 @@ export const maskedEmail = (val: string) => {
 export const capitalizeFirstLetter = (val: string) => {
   return val.charAt(0).toUpperCase() + val.slice(1).toLowerCase();
 };
+
+export const renderValue = (val: any) => {
+  if (val === 0) {
+    return 0;
+  }
+  return !val || val === 'null' ? '---' : val;
+};

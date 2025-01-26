@@ -1,5 +1,5 @@
 import { TicketsPurchasedViaApp } from '@/types/types';
-import { formatCurrency } from '@/utils';
+import { formatCurrency, renderValue } from '@/utils';
 import { ColumnType } from 'antd/es/table';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
@@ -14,7 +14,7 @@ export const UseTicketsPurchased = () => {
         key: 'id',
         className: 'transaction-id',
         render: (_, { id }) => {
-          return <div className='font-semibold'>{id}</div>;
+          return <div className='font-semibold'>{renderValue(id)}</div>;
         },
       },
       {
@@ -23,7 +23,7 @@ export const UseTicketsPurchased = () => {
         key: 'user_id',
         className: 'user-id',
         render: (_, { user_id }) => {
-          return <div className='font-semibold'>{user_id}</div>;
+          return <div className='font-semibold'>{renderValue(user_id)}</div>;
         },
       },
       {
@@ -33,7 +33,11 @@ export const UseTicketsPurchased = () => {
         className: 'name',
         render: (_, record) => {
           return (
-            <div>{`${record.user.first_name} ${record.user.last_name}`}</div>
+            <div>
+              {record.user
+                ? ` ${record.user.first_name} ${record.user.last_name}`
+                : '---'}
+            </div>
           );
         },
       },
@@ -43,7 +47,7 @@ export const UseTicketsPurchased = () => {
         key: '',
         className: 'email',
         render: (_, { user }) => {
-          return <div>{`${user.email}`}</div>;
+          return <div>{user ? user.email : '---'}</div>;
         },
       },
       {
@@ -54,7 +58,7 @@ export const UseTicketsPurchased = () => {
         render: (_, { created_at }) => {
           return (
             <div className='text-[#595959]'>
-              {dayjs(created_at).format('DD-MM-YYYY')}
+              {created_at ? dayjs(created_at).format('DD-MM-YYYY') : '---'}
             </div>
           );
         },
@@ -66,7 +70,9 @@ export const UseTicketsPurchased = () => {
         className: 'tickets-purchased',
         render: (_, { ticket_type }) => {
           return (
-            <div className='font-semibold text-[#595959]'>{ticket_type}</div>
+            <div className='font-semibold text-[#595959]'>
+              {renderValue(ticket_type)}
+            </div>
           );
         },
       },
@@ -78,7 +84,7 @@ export const UseTicketsPurchased = () => {
         render: (_, { amount }) => {
           return (
             <div className='font-semibold text-[#595959]'>
-              {formatCurrency(Number(amount))}
+              {amount ? formatCurrency(Number(amount)) : '---'}
             </div>
           );
         },
@@ -89,7 +95,7 @@ export const UseTicketsPurchased = () => {
         key: 'paymentMethod',
         className: 'payment-method',
         render: (_, { paymentMethod }) => {
-          return <div>{paymentMethod ? paymentMethod : '---'}</div>;
+          return <div>{renderValue(paymentMethod)}</div>;
         },
       },
       {
@@ -111,7 +117,7 @@ export const UseTicketsPurchased = () => {
                 'font-medium',
               )}
             >
-              {status ? status : '---'}
+              {renderValue(status)}
             </div>
           );
         },

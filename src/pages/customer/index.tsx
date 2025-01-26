@@ -44,6 +44,12 @@ function Customer() {
     });
   };
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedPoint('');
+    setSelectedReason('');
+  };
+
   useEffect(() => {
     getCustomerTable();
   }, []);
@@ -97,7 +103,7 @@ function Customer() {
               isCentered
               size={SizeType.LARGE}
               cancelIcon={<Cancel />}
-              onClick={() => setIsModalOpen(false)}
+              onClick={handleCloseModal}
             >
               <div className='flex flex-col items-center justify-center w-full 768:w-4/5 960:w-[68%] 1240:py-5'>
                 <h3 className='text-light-primary-deep_black text-lg 560:text-xl 768:text-2xl 960:text-[28px] 1240:text-[32px] font-medium mb-4 768:mb-6 1400:mb-10 pt-5 960:pt-0'>
@@ -169,7 +175,7 @@ function Customer() {
                     radius={BorderRadius.Large}
                     mode='outlined'
                     buttonText='Cancel'
-                    onClick={() => setIsModalOpen(false)}
+                    onClick={handleCloseModal}
                     className='!font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[65px]'
                   />
                 </div>

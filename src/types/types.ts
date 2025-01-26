@@ -39,7 +39,7 @@ export interface TotalUsersRegistered {
 
 export interface TicketsPurchasedViaApp {
   id: string;
-  user_id: string;
+  user_id: number;
   created_at: string;
   ticket_type: string;
   amount: number;
@@ -366,4 +366,10 @@ export interface NotificationsType {
   value: string;
   time: string;
   isRead: boolean;
+}
+
+export interface RecentActivity {
+  title: string;
+  details: string;
+  created_at: string;
 }
