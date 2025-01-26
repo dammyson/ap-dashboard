@@ -6,7 +6,7 @@ import { TotalRevenue } from '@/components/dashboardTables/totalRevenue';
 import { ActiveUsers } from '@/components/dashboardTables/activeUsers';
 import { useEffect, useRef, useState } from 'react';
 import { numberShortener } from '@/utils';
-import { ArrowRight } from '@/components/svg/dashboard/Dashboard';
+import { ArrowRight, NoActivity } from '@/components/svg/dashboard/Dashboard';
 import clsx from 'clsx';
 import { Card } from '@/components/card';
 import { Filter } from '@/components/svg/surveys/Surveys';
@@ -22,6 +22,7 @@ import { useClickOutside } from '@/components/hooks/useClickOutside';
 import { CustomFilter } from '@/components/filter/filter';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import updateLocale from 'dayjs/plugin/updateLocale';
 
 function Dashboard() {
   const {
@@ -45,6 +46,24 @@ function Dashboard() {
   const [activeFilterTab, setActiveFilterTab] = useState(graphOptions[0]);
   useClickOutside(filterRef, () => setShowDropdown(false), showDropdown);
   dayjs.extend(relativeTime);
+  dayjs.extend(updateLocale);
+  dayjs.updateLocale('en', {
+    relativeTime: {
+      future: 'in %s',
+      past: '%s ago',
+      s: 'few secs',
+      m: 'a min',
+      mm: '%d mins',
+      h: 'an hour',
+      hh: '%d hours',
+      d: 'a day',
+      dd: '%d days',
+      M: 'a month',
+      MM: '%d months',
+      y: 'a year',
+      yy: '%d years',
+    },
+  });
 
   const tabs = [
     { name: 'Ticket sales', value: revenueGraph?.ticket.ticket_amount },
@@ -214,27 +233,40 @@ function Dashboard() {
                       titleClass='text-lg'
                     >
                       <div className='flex flex-col gap-3 h-[390px] overflow-y-auto hidden-scrollbar mb-4 560:mb-12'>
-                        {RecentActivities.map((activity, index) => (
-                          <div
-                            key={index}
-                            className=' bg-[#E9EEF5] rounded-tr-[10px] rounded-tl-[10px] rounded-bl-[10px] px-4 py-3'
-                          >
-                            <div className='flex items-center gap-2 justify-between'>
-                              <p className='text-[16px] text-light-blue-main font-medium'>
-                                {activity.title}
-                              </p>
-                              {/* <OptionsVertical className='cursor-pointer' /> */}
+                        {RecentActivities.length === 0 ? (
+                          <div className='h-full min-h-[300px] flex items-center justify-center flex-col'>
+                            <div className=' 1240:max-h-inherit '>
+                              <NoActivity />
                             </div>
-                            <div className='flex items-center justify-between gap-6'>
-                              <p className='text-[13px] text-light-grey-600 truncate max-w-[221px]'>
-                                {activity.details.description}
-                              </p>
-                              <span className='text-light-grey-600 text-[10px] min-w-[60px]'>
-                                {dayjs().to(activity.details.created_at)}
-                              </span>
-                            </div>
+                            <p className='text-light-grey-300 text-lg font-semibold text-center w-full min-w-[60px] mt-8'>
+                              No Recent Activity
+                            </p>
                           </div>
-                        ))}
+                        ) : (
+                          <>
+                            {RecentActivities.map((activity, index) => (
+                              <div
+                                key={index}
+                                className=' bg-[#E9EEF5] rounded-tr-[10px] rounded-tl-[10px] rounded-bl-[10px] px-4 py-3'
+                              >
+                                <div className='flex items-center gap-2 justify-between'>
+                                  <p className='text-[16px] text-light-blue-main font-medium'>
+                                    {activity.title}
+                                  </p>
+                                  {/* <OptionsVertical className='cursor-pointer' /> */}
+                                </div>
+                                <div className='flex items-center justify-between gap-6'>
+                                  <p className='text-[13px] text-light-grey-600 truncate max-w-[300px]'>
+                                    {activity.details}
+                                  </p>
+                                  <span className='text-light-grey-600 text-[10px] min-w-[60px]'>
+                                    {dayjs().to(activity.created_at)}
+                                  </span>
+                                </div>
+                              </div>
+                            ))}
+                          </>
+                        )}
                       </div>
                     </Card>
                   )}

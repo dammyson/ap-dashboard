@@ -1,4 +1,5 @@
 import { TotalUsersRegistered } from '@/types/types';
+import { renderValue } from '@/utils';
 import { ColumnType } from 'antd/es/table';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
@@ -13,7 +14,7 @@ export const UseUserRegistered = () => {
         key: 'id',
         className: 'user-id',
         render: (_, { id }) => {
-          return <div className='font-semibold'>{id}</div>;
+          return <div className='font-semibold'>{renderValue(id)}</div>;
         },
       },
       {
@@ -23,7 +24,11 @@ export const UseUserRegistered = () => {
         className: 'name',
         render: (_, record) => {
           return (
-            <div>{`${record.user_first_name} ${record.user_last_name}`}</div>
+            <div>
+              {record.user_first_name && record.user_last_name
+                ? `${record.user_first_name} ${record.user_last_name}`
+                : '---'}
+            </div>
           );
         },
       },
@@ -32,6 +37,9 @@ export const UseUserRegistered = () => {
         dataIndex: 'email',
         key: 'email',
         className: 'email',
+        render: (_, { email }) => {
+          return <div>{renderValue(email)}</div>;
+        },
       },
       {
         title: 'DATE REGISTERED',
@@ -39,7 +47,13 @@ export const UseUserRegistered = () => {
         key: 'date_registered',
         className: 'date-registered',
         render: (_, { date_registered }) => {
-          return <div>{dayjs(date_registered).format('DD-MM-YYYY')}</div>;
+          return (
+            <div>
+              {date_registered
+                ? dayjs(date_registered).format('DD-MM-YYYY')
+                : '---'}
+            </div>
+          );
         },
       },
       {
@@ -55,7 +69,7 @@ export const UseUserRegistered = () => {
                 'font-semibold',
               )}
             >
-              {tier !== 'null' ? tier : '---'}
+              {renderValue(tier)}
             </div>
           );
         },
@@ -77,7 +91,7 @@ export const UseUserRegistered = () => {
                 'font-semibold',
               )}
             >
-              {status !== 'null' ? status : '---'}
+              {renderValue(status)}
             </div>
           );
         },
@@ -88,7 +102,7 @@ export const UseUserRegistered = () => {
         key: 'last_login',
         className: 'last-login',
         render: (_, { last_login }) => {
-          return <div>{last_login !== 'null' ? last_login : '---'}</div>;
+          return <div>{renderValue(last_login)}</div>;
         },
       },
       {
@@ -96,6 +110,9 @@ export const UseUserRegistered = () => {
         dataIndex: 'total_booked_flight',
         key: 'total_booked_flight',
         className: 'total-booked-flight',
+        render: (_, { total_booked_flight }) => {
+          return <div>{renderValue(total_booked_flight)}</div>;
+        },
       },
       {
         title: 'MILES ACCUMULATED',
@@ -103,11 +120,7 @@ export const UseUserRegistered = () => {
         key: 'miles_accumulated',
         className: 'miles-accumulated',
         render: (_, { miles_accumulated }) => {
-          return (
-            <div>
-              {miles_accumulated !== 'null' ? miles_accumulated : '---'}
-            </div>
-          );
+          return <div>{renderValue(miles_accumulated)}</div>;
         },
       },
     ] as ColumnType<TotalUsersRegistered>[];

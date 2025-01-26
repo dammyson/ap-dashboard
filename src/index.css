@@ -138,7 +138,7 @@ tr > th.ant-table-cell.ant-table-cell-scrollbar {
 }
 
 .tickets-purchased-table .email {
-  max-width: 130px;
+  min-width: 130px;
 }
 
 .tickets-purchased-table .user-id {
