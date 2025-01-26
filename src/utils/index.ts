@@ -1,4 +1,3 @@
-import { Permission, UserRole } from '@/context/permissionContext';
 import { Args } from '@/types/types';
 
 export function convertToUrlString(val: string) {
@@ -126,17 +125,4 @@ export const renderValue = (val: any) => {
     return 0;
   }
   return !val || val === 'null' ? '---' : val;
-};
-
-export const hasStaticPermission = (role: UserRole, permission: Permission) => {
-  const rolePermissions: Record<UserRole, Permission[]> = {
-    [UserRole.ADMIN]: [
-      Permission.ADD_ADMIN,
-      Permission.REMOVE_ADMIN,
-      Permission.SHARE_POINTS,
-      Permission.VIEW_TEAM_MEMBERS,
-    ],
-    [UserRole.SUB_ADMIN]: [],
-  };
-  return rolePermissions[role]?.includes(permission) ?? false;
 };

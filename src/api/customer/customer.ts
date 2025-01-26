@@ -1,5 +1,6 @@
 import { baseURL } from '@/constants/constants';
 import { useUser } from '@/context/AppContext';
+import { usePermission, UserRole } from '@/context/permissionContext';
 import {
   AllocatePonit,
   CustomerChart,
@@ -24,6 +25,7 @@ export const useManageCustomer = () => {
   const [selectedReason, setSelectedReason] = useState<number | string>('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [isSucess, setIsSucess] = useState(false);
+  const { role, setAccessDenied } = usePermission();
 
   const getCustomerTable = async () => {
     try {
@@ -108,6 +110,10 @@ export const useManageCustomer = () => {
   };
 
   const allocatePonit = async (id: number, value: AllocatePonit) => {
+    if (role === UserRole.SUB_ADMIN) {
+      setAccessDenied(true);
+      return;
+    }
     try {
       setIsPontLoading(true);
       const data = await fetch(

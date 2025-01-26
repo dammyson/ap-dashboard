@@ -8,12 +8,7 @@ import ChangePassword from './changePassword';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import clsx from 'clsx';
 import { useUser } from '@/context/AppContext';
-import {
-  Permission,
-  usePermission,
-  UserRole,
-} from '@/context/permissionContext';
-import { hasStaticPermission } from '@/utils';
+import { usePermission, UserRole } from '@/context/permissionContext';
 
 function Settings() {
   const { user } = useUser();
@@ -36,11 +31,7 @@ function Settings() {
   const { setAccessDenied } = usePermission();
 
   const handleChangeTab = (item: PanelNavigationItem) => {
-    if (
-      user?.role === UserRole.SUB_ADMIN &&
-      !hasStaticPermission(UserRole.SUB_ADMIN, Permission.VIEW_TEAM_MEMBERS) &&
-      item.id === 'team members'
-    ) {
+    if (user?.role === UserRole.SUB_ADMIN && item.id === 'team members') {
       setAccessDenied(true);
       return;
     } else setCurrentTab(item);

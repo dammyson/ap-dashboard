@@ -7,12 +7,8 @@ import clsx from 'clsx';
 import { ModalStateSetter } from '@/components/modules/surveys/tableColumns';
 import { Avatar } from '@/components/avatar/Avatar';
 import { useGetColorByChar } from '@/hooks/useGetColorByChar';
-import { getInitials, hasStaticPermission } from '@/utils';
-import {
-  Permission,
-  usePermission,
-  UserRole,
-} from '@/context/permissionContext';
+import { getInitials } from '@/utils';
+import { usePermission, UserRole } from '@/context/permissionContext';
 
 export const useTeamMembersColumn = (
   setRemoveTeamMember: ModalStateSetter,
@@ -68,6 +64,10 @@ export const useTeamMembersColumn = (
           <Button
             buttonText='Remove'
             onClick={() => {
+              if (role === UserRole.SUB_ADMIN) {
+                setAccessDenied(true);
+                return;
+              }
               setRemoveTeamMember(true);
             }}
             mode='text'
@@ -83,10 +83,7 @@ export const useTeamMembersColumn = (
           <Button
             buttonText='Update'
             onClick={() => {
-              if (
-                role === UserRole.SUB_ADMIN &&
-                !hasStaticPermission(UserRole.SUB_ADMIN, Permission.ADD_ADMIN)
-              ) {
+              if (role === UserRole.SUB_ADMIN) {
                 setAccessDenied(true);
                 return;
               }
