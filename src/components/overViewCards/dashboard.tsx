@@ -58,13 +58,16 @@ export const DashboardOverView = ({
               <div
                 onClick={() => {
                   if (!isLoading) {
-                    setActiveStat((prevState) =>
-                      prevState === stat.state ? '' : stat.state,
-                    );
+                    setActiveStat((prevState) => {
+                      if (stat.state === 'active') {
+                        return '';
+                      }
+                      return prevState === stat.state ? '' : stat.state;
+                    });
                   }
                 }}
                 className={clsx(
-                  isLast && 'mr-6',
+                  isLast && 'mr-6 !cursor-default',
                   'min-h-[200px] py-5 px-4 cursor-pointer w-[410px] shadow-sm bg-primary-white rounded-[20px] flex flex-col justify-between',
                   activeStat === stat.state && '!bg-[#E9EEF5]',
                 )}
