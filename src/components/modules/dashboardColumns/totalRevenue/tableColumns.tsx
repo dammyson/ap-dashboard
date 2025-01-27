@@ -49,7 +49,7 @@ export const UseTotalRevenue = () => {
         className: 'amount',
         render: (_, { amount }) => {
           return (
-            <div className='font-semibold text-[#595959]'>
+            <div className='text-[#595959]'>
               {amount ? ` ${formatCurrency(Number(amount))}` : '---'}
             </div>
           );
