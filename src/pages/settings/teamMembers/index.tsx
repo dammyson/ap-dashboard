@@ -14,7 +14,7 @@ import { Spinner } from '@/components/svg/spinner/Spinner';
 
 function TeamMembers() {
   const [addMembers, setAddMembers] = useState(false);
-  const [removeMemberModal, setRemoveMemberModal] = useState(false);
+  const [id, setId] = useState<number | null>(null);
   const {
     getTeamMembers,
     teamMembers,
@@ -27,6 +27,10 @@ function TeamMembers() {
     email,
     setNewRole,
     setEmail,
+    deleteAdmin,
+    setRemoveMemberModal,
+    isDeleting,
+    removeMemberModal,
   } = useTeamMembers();
 
   const { tableColumns } = useTeamMembersColumn(
@@ -34,6 +38,7 @@ function TeamMembers() {
     setUpdateMemberModal,
     setNewRole,
     setEmail,
+    setId,
   );
 
   useEffect(() => {
@@ -94,7 +99,10 @@ function TeamMembers() {
           cancelIcon={<Cancel />}
           isBackground
           size={SizeType.SMALL}
-          onClick={() => setRemoveMemberModal(false)}
+          onClick={() => {
+            setId(null);
+            setRemoveMemberModal(false);
+          }}
         >
           <Bin />
           <div className='font-normal text-lg 768:text-[22px] mt-2 768::mt-4 mb-5 768:mb-9 text-light-primary-deep_black'>
@@ -104,8 +112,14 @@ function TeamMembers() {
             <Button
               size={ButtonSize.Large}
               radius={BorderRadius.Large}
-              buttonText='Delete'
-              onClick={() => {}}
+              onClick={() => id && deleteAdmin(id)}
+              buttonText={
+                isDeleting ? (
+                  <Spinner className='text-white w-5 h-5 768:w-7 768:h-7' />
+                ) : (
+                  'Delete'
+                )
+              }
               className='!font-semibold 768:!text-xl 1240:!text-2xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[65px]'
             />
           </div>

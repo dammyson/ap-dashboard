@@ -3,6 +3,7 @@ export interface TeamMembers {
   user_name: string;
   role: string;
   email: string;
+  id: number;
 }
 
 export interface SurveyType {
