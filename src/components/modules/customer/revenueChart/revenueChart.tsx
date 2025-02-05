@@ -38,17 +38,20 @@ export const CustomerRevenueChart = ({
   useClickOutside(filterRef, () => setShowDropdown(false), showDropdown);
 
   const tabs = [
-    { name: 'Flight bookings', value: chartData?.ticket.ticket_amount },
-    { name: 'In-app purchases', value: chartData?.ancillary.ancillary_amount },
+    { name: 'Flight bookings', value: chartData?.ticket.ticket_amount ?? 0 },
+    {
+      name: 'In-app purchases',
+      value: chartData?.ancillary.ancillary_amount ?? 0,
+    },
     // { name: 'Gamification', value: customerRevenue?.app_purchase_amount },
-    { name: 'Total revenue', value: chartData?.revenue.revenue_amount },
+    { name: 'Total revenue', value: chartData?.revenue.revenue_amount ?? 0 },
   ];
 
   const currentTab = tabs[0];
   const [activeTab, setActiveTab] = useState(currentTab);
   return (
     <>
-      {chartData && (
+      {
         <Card
           hasBadge
           hasHeader
@@ -104,16 +107,18 @@ export const CustomerRevenueChart = ({
           </div>
           <Chart
             chartData={
-              activeTab.name === 'Flight bookings'
-                ? chartData?.ticket.ticket_data
-                : activeTab.name === 'In-app purchases'
-                  ? chartData?.ancillary.ancillary_data
-                  : chartData?.revenue.revenue_data
+              chartData
+                ? activeTab.name === 'Flight bookings'
+                  ? chartData?.ticket.ticket_data
+                  : activeTab.name === 'In-app purchases'
+                    ? chartData?.ancillary.ancillary_data
+                    : chartData?.revenue.revenue_data
+                : []
             }
             transactionType='all'
           />
         </Card>
-      )}
+      }
     </>
   );
 };

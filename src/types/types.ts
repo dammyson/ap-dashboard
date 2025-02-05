@@ -52,16 +52,16 @@ export interface TicketsPurchasedViaApp {
   };
 }
 
-export interface TotalRevenue {
-  revenueID: string;
-  date: string;
-  source: string;
+export interface TotalRevenueType {
+  id: string;
+  created_at: string;
+  transaction_type: string;
   amount: number;
-  paymentMethod: string;
+  payment_method: string;
   channel: string;
   country: string;
   currency: string;
-  transactionCount: number;
+  // transactionCount: number;
 }
 
 interface CountryPopulation {

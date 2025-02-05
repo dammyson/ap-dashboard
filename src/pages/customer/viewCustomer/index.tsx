@@ -1,7 +1,7 @@
 import { Card } from '@/components/card';
 import { Header } from '@/components/header';
 import { AppLayout } from '@/components/layout/AppLayout';
-import { SmallDropDown, UsageTime } from '@/components/svg/customer/Customer';
+import { UsageTime } from '@/components/svg/customer/Customer';
 import clsx from 'clsx';
 import { useNavigate, useParams } from 'react-router';
 import { usageStats } from './constants';
@@ -11,7 +11,6 @@ import { useManageCustomer } from '@/api/customer/customer';
 import { SkeletonLoader } from '@/components/customSkeletonLoader/skeletonLoader';
 import { CustomerOverView } from '@/components/overViewCards/customer';
 import dayjs from 'dayjs';
-import { Button } from '@/components/button';
 import { Table } from 'antd';
 import { useCustomerActivityLog } from '@/components/modules/customer/activityLog/tableColumns';
 import { FlightInfo } from '@/components/modules/customer/flightInformation/flightInformation';
@@ -181,15 +180,15 @@ function ViewCustomer() {
                 title='Activity log'
                 titleClass='!text-light-blue-main 1300:!text-[32px]'
                 className=' pb-5 mb-5'
-                hasButton={
-                  <Button
-                    mode='text'
-                    buttonText='View more'
-                    trailingIcon={<SmallDropDown />}
-                    className='!text-[#979797] font-medium text-xs !items-end !w-fit'
-                    onClick={() => {}}
-                  />
-                }
+                // hasButton={
+                //   <Button
+                //     mode='text'
+                //     buttonText='View more'
+                //     trailingIcon={<SmallDropDown />}
+                //     className='!text-[#979797] font-medium text-xs !items-end !w-fit'
+                //     onClick={() => {}}
+                //   />
+                // }
               >
                 <Table
                   pagination={false}

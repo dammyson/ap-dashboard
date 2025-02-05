@@ -3,7 +3,6 @@ import { AppLayout } from '../../components/layout/AppLayout';
 import { UsersRegistered } from '@/components/dashboardTables/usersRegistered';
 import { TicketsPurchased } from '@/components/dashboardTables/ticketsPurchased';
 import { TotalRevenue } from '@/components/dashboardTables/totalRevenue';
-import { ActiveUsers } from '@/components/dashboardTables/activeUsers';
 import { useEffect, useRef, useState } from 'react';
 import { numberShortener } from '@/utils';
 import { ArrowRight, NoActivity } from '@/components/svg/dashboard/Dashboard';
@@ -202,10 +201,14 @@ function Dashboard() {
               ticketsPurchasedData={table.ticketsPurchasedData}
             />
           ) : activeStat === 'revenue' ? (
-            <TotalRevenue />
-          ) : activeStat === 'active' ? (
-            <ActiveUsers />
+            <TotalRevenue
+              isLoading={loaders.isLoading}
+              totalRevenueData={table.totalRevenue}
+            />
           ) : (
+            // : activeStat === 'active' ? (
+            //   <ActiveUsers />
+            // )
             <>
               <div className='mt-2 560:mt-8 1240:mt-2 grid grid-cols-12 gap-4 1240:gap-10 pb-2'>
                 <div className='col-span-12 1240:col-span-8 relative'>

@@ -13,6 +13,7 @@ import {
   RecentActivity,
   RevenueGraph,
   TicketsPurchasedViaApp,
+  TotalRevenueType,
   TotalUsersRegistered,
   UsersByDevice,
 } from '@/types/types';
@@ -29,6 +30,7 @@ export const useManageDashboard = () => {
   const [ticketsPurchasedData, setTicketsPurchasedData] = useState<
     TicketsPurchasedViaApp[]
   >([]);
+  const [totalRevenue, setTotalRevenue] = useState<TotalRevenueType[]>([]);
   const [isChartLoading, setIsChartLoading] = useState(false);
   const [revenueGraph, setRevenueGraph] =
     useState<RevenueGraph>(initailAreaChart);
@@ -111,6 +113,32 @@ export const useManageDashboard = () => {
         toast.error(res.message);
       } else {
         setTicketsPurchasedData(res.tickets_info);
+      }
+    } catch (error) {
+      toast.error((error as MutationErrorPayload)?.data?.message);
+    }
+  };
+
+  const getTotalRevenueTable = async () => {
+    try {
+      setIsLoading(true);
+      const data = await fetch(
+        `${baseURL}admin/dashboard/total-revenue-tickets-table`,
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const res = await data.json();
+      setIsLoading(false);
+      if (res?.error) {
+        toast.error(res.message);
+      } else {
+        setTotalRevenue(res.revenue_purchased);
       }
     } catch (error) {
       toast.error((error as MutationErrorPayload)?.data?.message);
@@ -223,6 +251,7 @@ export const useManageDashboard = () => {
     getUsersByDevice();
     getUsersByScreenResolution();
     getRecentActivities();
+    getTotalRevenueTable();
   };
 
   return {
@@ -254,6 +283,7 @@ export const useManageDashboard = () => {
     table: {
       registeredUsersData,
       ticketsPurchasedData,
+      totalRevenue,
     },
   };
 };
