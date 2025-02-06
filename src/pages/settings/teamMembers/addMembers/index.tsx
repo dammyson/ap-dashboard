@@ -3,7 +3,6 @@ import { BorderRadius, Button, ButtonSize } from '@/components/button';
 import {
   DropDownArrow,
   SmallCheckmark,
-  Upload,
 } from '@/components/svg/settings/Settings';
 import { Input, InputState } from '@/components/input';
 import { useAddMembers } from '@/api/settings/teamMembers';
