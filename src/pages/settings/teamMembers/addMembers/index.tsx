@@ -64,17 +64,17 @@ function AddMembers() {
       <CategoryHeader
         title='Personal Information'
         className='!text-base 560:!text-[18px] text-nowrap'
-        button={
-          <Button
-            onClick={() => {}}
-            buttonText='Upload Photo'
-            mode='outlined'
-            buttonClass='hidden 560:block'
-            leadingIcon={<Upload />}
-            size={ButtonSize.Small}
-            className='text-light-grey-100 text-[16px] h-9 border-none text-nowrap'
-          />
-        }
+        // button={
+        //   <Button
+        //     onClick={() => {}}
+        //     buttonText='Upload Photo'
+        //     mode='outlined'
+        //     buttonClass='hidden 560:block'
+        //     leadingIcon={<Upload />}
+        //     size={ButtonSize.Small}
+        //     className='text-light-grey-100 text-[16px] h-9 border-none text-nowrap'
+        //   />
+        // }
       />
       <form
         onSubmit={handleAddAdmin}
