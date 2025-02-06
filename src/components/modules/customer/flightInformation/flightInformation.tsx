@@ -48,7 +48,7 @@ export const FlightInfo = ({ customer }: UsageProp) => {
           {UserFlightDetails.map((user, i) => (
             <div key={i}>
               <div className='text-center 1024:text-start'>
-                <p className='text-light-grey-700 text-[16px] 768:text-xl 1240:text-lg 1400:text-x 1024:h-[56px] font-medium'>
+                <p className='text-light-grey-700 text-[16px] 768:text-xl 1240:text-lg 1400:text-x font-medium'>
                   {user.title}
                 </p>
                 <p className='text-light-primary-black font-bold text-xl 768:text-2xl 880:text-[26px] 1240:text-[28px] 1400:text-[30px]'>
@@ -68,7 +68,7 @@ export const FlightInfo = ({ customer }: UsageProp) => {
               {user.title.includes('flight') && (
                 <>
                   {user.title === 'Last flight' && (
-                    <div className='text-light-blue-main flex gap-1 360:gap-3'>
+                    <div className='text-light-blue-main flex gap-1 360:gap-3 mt-4'>
                       <div>
                         <p className='font-medium text-xl 360:text-2xl 480:text-[26px] 1240:text-[26px] 1400:text-[30px] '>
                           {customer?.last_flight !== null
@@ -103,7 +103,7 @@ export const FlightInfo = ({ customer }: UsageProp) => {
                     </div>
                   )}
                   {user.title === 'Upcoming flight' && (
-                    <div className='text-light-secondary-orange flex gap-1 360:gap-3'>
+                    <div className='text-light-secondary-orange flex gap-1 360:gap-3 mt-4'>
                       <div>
                         <p className='font-medium text-xl 360:text-2xl 480:text-[26px] 1240:text-[26px] 1400:text-[30px] '>
                           {customer?.upcoming_flight !== null
