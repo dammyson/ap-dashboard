@@ -175,9 +175,9 @@ function EditSurvey({}) {
               >
                 <>
                   <div className='grid grid-cols-[minmax(200px,480px)] 768:grid-cols-[minmax(250px,480px)_minmax(250px,480px)] justify-between gap-5 mt-3 768:mt-0'>
-                    {OtherList.map((item) => (
+                    {OtherList.map((item, i) => (
                       <>
-                        <div className='max-w-[620px] 768:mt-10 mb-2'>
+                        <div key={i} className='max-w-[620px] 768:mt-10 mb-2'>
                           <p className='font-medium text-lg 768:text-xl 880:text-2xl 1024:text-3xl text-light-grey-200 pb-2'>
                             {item.title}
                           </p>

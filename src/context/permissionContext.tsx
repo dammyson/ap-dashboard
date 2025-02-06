@@ -63,7 +63,7 @@ export const PermissionProvider = ({
               Access Denied
             </h3>
             <p className='text-lg 880:text-xl text-light-primary-deep_black font-medium'>
-              You do not have permission to view team members. Please contact
+              You do not have permission to complete this action. Please contact
               your system administrator if you believe this is an error.
             </p>
           </Modal>
