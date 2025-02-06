@@ -15,6 +15,7 @@ export const useTeamMembersColumn = (
   setUpdateTeamMember: ModalStateSetter,
   setNewRole: (role: string) => void,
   setEmail: (email: string) => void,
+  setId: (id: number) => void,
 ) => {
   const { getColor } = useGetColorByChar();
   const { role, setAccessDenied } = usePermission();
@@ -60,7 +61,7 @@ export const useTeamMembersColumn = (
         dataIndex: 'remove',
         key: 'remove',
         className: 'remove-member',
-        render: (_) => (
+        render: (_, { id }) => (
           <Button
             buttonText='Remove'
             onClick={() => {
@@ -68,6 +69,7 @@ export const useTeamMembersColumn = (
                 setAccessDenied(true);
                 return;
               }
+              setId(id);
               setRemoveTeamMember(true);
             }}
             mode='text'

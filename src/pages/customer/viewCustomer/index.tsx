@@ -54,6 +54,8 @@ function ViewCustomer() {
     return dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf();
   });
 
+  const num = 5;
+
   return (
     <AppLayout logo=''>
       <div
@@ -69,11 +71,21 @@ function ViewCustomer() {
               <div className=' font-medium text-xl 768:text-2xl 960:text-[26px] 1240:text-[24px] 1400:text-[28px] flex items-center justify-center gap-2 768:gap-4'>
                 <p className='text-light-blue-main flex items-center text-nowrap'>
                   <span className='inline-block min-w-2 min-h-2 1300:w-3 1300:h-3 rounded-full bg-light-blue-main mr-[6px] 768:mr-3'></span>
-                  {customer?.user_firstname} {customer?.user_lastname}
+                  {customer?.user_firstname.startsWith('guest')
+                    ? customer?.user_firstname.slice(0, num)
+                    : customer?.user_firstname}{' '}
+                  {customer?.user_lastname.startsWith('guest')
+                    ? customer?.user_lastname.slice(0, num)
+                    : customer?.user_lastname}
                 </p>
                 <p className='text-light-blue-main hidden 640:flex items-center  '>
                   <span className='inline-block min-w-2 min-h-2 1300:w-3 1300:h-3 rounded-full bg-light-blue-main mr-[6px] 768:mr-3'></span>
-                  {customer?.user_phonenumber}
+                  {customer?.user_phonenumber.startsWith('guest')
+                    ? customer?.user_phonenumber.slice(
+                        6,
+                        customer?.user_phonenumber.length,
+                      )
+                    : customer?.user_phonenumber}
                 </p>
                 <p className='text-light-grey-600 hidden 640:flex  items-center text-nowrap'>
                   <span className='inline-block min-w-2 min-h-2 1300:w-3 1300:h-3 rounded-full bg-light-blue-main mr-[6px] 768:mr-3'></span>

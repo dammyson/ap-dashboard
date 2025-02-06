@@ -18,7 +18,8 @@ export const useTeamMembers = () => {
   const [loading, setLoading] = useState(false);
   const [newRole, setNewRole] = useState('');
   const [email, setEmail] = useState('');
-
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [removeMemberModal, setRemoveMemberModal] = useState(false);
   const getTeamMembers = async () => {
     setIsLoading(true);
     try {
@@ -69,6 +70,39 @@ export const useTeamMembers = () => {
     }
   };
 
+  const deleteAdmin = async (id: number) => {
+    try {
+      setIsDeleting(true);
+      const data = await fetch(
+        `${baseURL}admin/settings/team-member/${id}/delete`,
+        {
+          method: 'DELETE',
+          headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (data.status === 204) {
+        setIsDeleting(false);
+        setRemoveMemberModal(false);
+        await getTeamMembers();
+        toast.success('Admin successfully deleted');
+        return;
+      }
+
+      const res = await data.json();
+      setIsDeleting(false);
+      if (res?.error) {
+        setRemoveMemberModal(false);
+        toast.error(res?.message);
+      }
+    } catch (err) {
+      toast.error((err as MutationErrorPayload)?.data?.message);
+    }
+  };
+
   return {
     getTeamMembers,
     teamMembers,
@@ -83,6 +117,10 @@ export const useTeamMembers = () => {
     setNewRole,
     email,
     setEmail,
+    deleteAdmin,
+    isDeleting,
+    setRemoveMemberModal,
+    removeMemberModal,
   };
 };
 
