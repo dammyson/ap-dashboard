@@ -18,9 +18,3 @@ export const usageStats = [
     usageTime: '6pm - 7pm',
   },
 ];
-export const UserFlightDetails = [
-  { title: 'Date of registration' },
-  { title: 'Travel preferences' },
-  { title: 'Last flight' },
-  { title: 'Upcoming flight' },
-];
