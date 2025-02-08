@@ -243,6 +243,7 @@ export interface changeAdminRole {
 
 export interface ViewResult {
   question_text: string;
+  question_id: number;
   options: [
     {
       option_id: number;
