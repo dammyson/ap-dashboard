@@ -3,6 +3,7 @@ import { thirdOptions } from './constants';
 import { ViewResult } from '@/types/types';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
+import { NoPieData } from '@/components/chart/noData/noPieData';
 
 interface props {
   results: ViewResult[];
@@ -26,70 +27,83 @@ export const SurveyResults = ({ results, isloading }: props) => {
         </div>
       ) : (
         <div>
-          {results?.map((result, i) => (
-            <div key={i} className='mt-8'>
-              <h3 className='text-primary-black text-base 560:text-lg 880:text-xl 960:text-2xl 1300:text-[22px] font-medium'>
-                {result.question_text}
-              </h3>
-              <div className='flex flex-col 640:flex-row 768:items-center justify-between gap-4 pb-10 640:pb-24 border-b border-b-light-secondary-light_blue '>
-                <div className='768:w-1/2 560:pl-6'>
-                  {result.options.map((option, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className='flex text-primary-black items-center justify-between my-5 pb-2.5 border-b border-b-light-secondary-light_blue min-w-[200px] '
+          {results?.map((result, i) => {
+            const hasVotes = result.options.some(
+              ({ percentage }) => percentage > 0,
+            );
+            return (
+              <div key={i} className='mt-8'>
+                <h3 className='text-primary-black text-base 560:text-lg 880:text-xl 960:text-2xl 1300:text-[22px] font-medium'>
+                  {result.question_text}
+                </h3>
+                <div className='flex flex-col 640:flex-row 768:items-center justify-between gap-4 pb-10 640:pb-24 border-b border-b-light-secondary-light_blue '>
+                  <div className='768:w-1/2 560:pl-6'>
+                    {result.options.map((option, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className='flex text-primary-black items-center justify-between my-5 pb-2.5 border-b border-b-light-secondary-light_blue min-w-[200px] '
+                        >
+                          <p>
+                            Option {index + 1} - {option.option_text}
+                          </p>
+                          <p className='font-semibold'>
+                            {option.percentage.toFixed(1)}%
+                          </p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className='flex justify-center items-center 640:block'>
+                    {!hasVotes ? (
+                      <NoPieData className='!h-full !min-h-[180px] 640:!min-h-[250px] !justify-start 768:!justify-center 768:!min-w-[200px] !w-full' />
+                    ) : (
+                      <PieChart
+                        lineWidth={53}
+                        radius={40}
+                        data={result?.options.map((opt) => ({
+                          value: parseFloat(opt.percentage.toFixed(1)),
+                          color: getRandomColor(),
+                        }))}
+                        segmentsStyle={{ cursor: 'pointer' }}
+                        animate
+                        startAngle={90}
+                        labelStyle={{
+                          fontSize: 5,
+                          fill: '#fff',
+                          fontWeight: 600,
+                        }}
+                        labelPosition={70}
+                        className='max-w-[250px] 560:max-w-[300px]'
+                        label={({ dataEntry }) => `${dataEntry.value}%`}
                       >
-                        <p>
-                          Option {index + 1} - {option.option_text}
-                        </p>
-                        <p className='font-semibold'>{option.percentage}%</p>
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className='flex justify-center items-center 640:block'>
-                  <PieChart
-                    lineWidth={53}
-                    radius={40}
-                    data={result?.options.map((_) => ({
-                      value: parseFloat(
-                        (100 / result?.options.length).toFixed(1),
-                      ),
-                      color: getRandomColor(),
-                    }))}
-                    segmentsStyle={{ cursor: 'pointer' }}
-                    animate
-                    startAngle={90}
-                    labelStyle={{ fontSize: 5, fill: '#fff', fontWeight: 600 }}
-                    labelPosition={70}
-                    className='max-w-[250px] 560:max-w-[300px]'
-                    label={({ dataEntry }) => `${dataEntry.value}%`}
-                  >
-                    <text
-                      x='50%'
-                      y='50%'
-                      textAnchor='middle'
-                      dominantBaseline='middle'
-                      style={{
-                        fontSize: '12px',
-                        fill: '#010101',
-                        fontWeight: '500',
-                      }}
-                    ></text>
-                  </PieChart>
+                        <text
+                          x='50%'
+                          y='50%'
+                          textAnchor='middle'
+                          dominantBaseline='middle'
+                          style={{
+                            fontSize: '12px',
+                            fill: '#010101',
+                            fontWeight: '500',
+                          }}
+                        ></text>
+                      </PieChart>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
           <div className='mt-8'>
             <h3 className='text-primary-black text-base 560:text-lg 880:text-xl 960:text-2xl 1300:text-[22px] font-medium'>
               User by gender
             </h3>
             <div className='flex flex-col 640:flex-row 640:items-center justify-between gap-4 640:pb-10 '>
               <div className='768:w-1/2 560:pl-6'>
-                {thirdOptions.map((option) => {
+                {thirdOptions.map((option, i) => {
                   return (
-                    <div className='min-w-[200px]'>
+                    <div key={i} className='min-w-[200px]'>
                       <div className='flex text-primary-black items-center justify-between my-5 pb-2.5 border-b border-b-light-secondary-light_blue'>
                         <p className='font-semibold'>{option.label}</p>
                         <p className='font-semibold'>{option.value}%</p>
