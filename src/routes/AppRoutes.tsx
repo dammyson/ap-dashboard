@@ -15,50 +15,42 @@ import { useUser } from '@/context/AppContext';
 import ProtectedRoutes from './PrivateRoutes';
 import ViewResult from '@/pages/surveys/viewResult';
 import { Notfound } from '@/pages/not-found';
-import { PermissionProvider, UserRole } from '@/context/permissionContext';
 
 const AppRoutes = () => {
-  const { token, user } = useUser();
+  const { token } = useUser();
 
   return (
-    <PermissionProvider
-      role={(user?.role as UserRole) || UserRole.SUB_ADMIN}
-      permissions={[]}
-    >
-      <Routes>
-        <Route
-          element={<PublicRoutes isAuthenticated={token ? true : false} />}
-        >
-          <Route path='/' element={<Login />} />
-          <Route path='/forgot-password' element={<ForgotPassword />} />
-          <Route path='/reset-password' element={<ResetPassword />} />
-        </Route>
-        <Route
-          element={<ProtectedRoutes isAuthenticated={token ? true : false} />}
-        >
-          <Route path='/dashboard' element={<Dashboard />} />
+    <Routes>
+      <Route element={<PublicRoutes isAuthenticated={token ? true : false} />}>
+        <Route path='/' element={<Login />} />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
+      </Route>
+      <Route
+        element={<ProtectedRoutes isAuthenticated={token ? true : false} />}
+      >
+        <Route path='/dashboard' element={<Dashboard />} />
 
-          <Route path='/customer' element={<Customer />} />
-          <Route path='/customer-view/:id' element={<ViewCustomer />} />
-          <Route path='/activity-log' element={<ActivityLog />} />
-          <Route path='/surveys' element={<Surveys />} />
-          <Route
-            path='/surveys-view-result/:titleId/:surveyId'
-            element={<ViewResult />}
-          />
-          <Route
-            path='/surveys-edit/:titleId/:surveyId'
-            element={<EditSurvey />}
-          />
-          <Route path='/surveys-create/:id' element={<CreateSurvey />} />
-          <Route path='/settings' element={<Settings />} />
-        </Route>
+        <Route path='/customer' element={<Customer />} />
+        <Route path='/customer-view/:id' element={<ViewCustomer />} />
+        <Route path='/activity-log' element={<ActivityLog />} />
+        <Route path='/surveys' element={<Surveys />} />
         <Route
-          path='*'
-          element={<Notfound isAuthenticated={token ? true : false} />}
+          path='/surveys-view-result/:titleId/:surveyId'
+          element={<ViewResult />}
         />
-      </Routes>
-    </PermissionProvider>
+        <Route
+          path='/surveys-edit/:titleId/:surveyId'
+          element={<EditSurvey />}
+        />
+        <Route path='/surveys-create/:id' element={<CreateSurvey />} />
+        <Route path='/settings' element={<Settings />} />
+      </Route>
+      <Route
+        path='*'
+        element={<Notfound isAuthenticated={token ? true : false} />}
+      />
+    </Routes>
   );
 };
 

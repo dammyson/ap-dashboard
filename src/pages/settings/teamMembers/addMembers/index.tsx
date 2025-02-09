@@ -12,14 +12,15 @@ import { Modal, SizeType } from '@/components/modal';
 import { Cancel } from '@/components/svg/modal/Modal';
 import { RoleOption } from '../../profile';
 import ListBox from '@/components/Dropdown/listBox';
-import { usePermission, UserRole } from '@/context/permissionContext';
+import { useUser } from '@/context/AppContext';
 
 export const roleOptions: RoleOption[] = [
   { label: 'Admin', value: 'admin' },
   { label: 'Sub-admin', value: 'sub-admin' },
 ];
 function AddMembers() {
-  const { role, setAccessDenied } = usePermission();
+  const { user, setAccessDenied } = useUser();
+
   const {
     handleAddMembers,
     loading,
@@ -46,7 +47,7 @@ function AddMembers() {
 
   const handleAddAdmin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (role === UserRole.SUB_ADMIN) {
+    if (user?.role === 'sub-admin') {
       setAccessDenied(true);
       return;
     }
