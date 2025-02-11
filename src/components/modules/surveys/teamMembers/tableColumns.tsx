@@ -8,7 +8,7 @@ import { ModalStateSetter } from '@/components/modules/surveys/tableColumns';
 import { Avatar } from '@/components/avatar/Avatar';
 import { useGetColorByChar } from '@/hooks/useGetColorByChar';
 import { getInitials } from '@/utils';
-import { usePermission, UserRole } from '@/context/permissionContext';
+import { useUser } from '@/context/AppContext';
 
 export const useTeamMembersColumn = (
   setRemoveTeamMember: ModalStateSetter,
@@ -18,7 +18,7 @@ export const useTeamMembersColumn = (
   setId: (id: number) => void,
 ) => {
   const { getColor } = useGetColorByChar();
-  const { role, setAccessDenied } = usePermission();
+  const { user, setAccessDenied } = useUser();
 
   const tableColumns = useMemo(() => {
     return [
@@ -65,7 +65,7 @@ export const useTeamMembersColumn = (
           <Button
             buttonText='Remove'
             onClick={() => {
-              if (role === UserRole.SUB_ADMIN) {
+              if (user?.role === 'sub-admin') {
                 setAccessDenied(true);
                 return;
               }
@@ -85,7 +85,7 @@ export const useTeamMembersColumn = (
           <Button
             buttonText='Update'
             onClick={() => {
-              if (role === UserRole.SUB_ADMIN) {
+              if (user?.role === 'sub-admin') {
                 setAccessDenied(true);
                 return;
               }

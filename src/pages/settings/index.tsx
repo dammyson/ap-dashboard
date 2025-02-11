@@ -8,10 +8,9 @@ import ChangePassword from './changePassword';
 import { useWindowSize } from '@/components/hooks/useWindowSize';
 import clsx from 'clsx';
 import { useUser } from '@/context/AppContext';
-import { usePermission, UserRole } from '@/context/permissionContext';
 
 function Settings() {
-  const { user } = useUser();
+  const { user, setAccessDenied } = useUser();
   const navigationItems: PanelNavigationItem[] = [
     {
       title: 'Profile',
@@ -28,10 +27,9 @@ function Settings() {
   ];
 
   const [currentTab, setCurrentTab] = useState(navigationItems[0]);
-  const { setAccessDenied } = usePermission();
 
   const handleChangeTab = (item: PanelNavigationItem) => {
-    if (user?.role === UserRole.SUB_ADMIN && item.id === 'team members') {
+    if (user?.role === 'sub-admin' && item.id === 'team members') {
       setAccessDenied(true);
       return;
     } else setCurrentTab(item);
