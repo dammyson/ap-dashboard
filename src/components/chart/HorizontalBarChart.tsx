@@ -59,26 +59,22 @@ export const HorizontalBarChart = ({ data }: Props) => {
   const customLegend = () => {
     return (
       <div className='w-full max-w-[210px] 480:max-w-[395px] 1240:max-w-[450px] grid gap-1.5 1024:gap-3 items-start grid-cols-2 480:grid-cols-3 mt-5'>
-        {data.map((entry, index) => {
-          console.log(entry.screen_resolution);
-
-          return (
+        {data.map((entry, index) => (
+          <div
+            key={index}
+            className='w-full 640:min-w-[107px] flex flex-row gap-1.5 1240:gap-3 items-start 640:items-center justify-start'
+          >
             <div
-              key={index}
-              className='w-full 640:min-w-[107px] flex flex-row gap-1.5 1240:gap-3 items-start 640:items-center justify-start'
-            >
-              <div
-                style={{
-                  backgroundColor: chartColors[index % chartColors.length],
-                }}
-                className='w-[15px] h-[15px] 1240:w-[30px] 1240:h-[30px]'
-              ></div>
-              <span className='font-medium text-xs 768:text-[14px] text-light-grey-600'>
-                {formattedScreens(entry.screen_resolution)}
-              </span>
-            </div>
-          );
-        })}
+              style={{
+                backgroundColor: chartColors[index % chartColors.length],
+              }}
+              className='w-[15px] h-[15px] 1240:w-[30px] 1240:h-[30px]'
+            ></div>
+            <span className='font-medium text-xs 768:text-[14px] text-light-grey-600'>
+              {formattedScreens(entry.screen_resolution)}
+            </span>
+          </div>
+        ))}
       </div>
     );
   };
