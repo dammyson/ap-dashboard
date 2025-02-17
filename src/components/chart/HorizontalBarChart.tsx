@@ -1,4 +1,5 @@
 import { ByScreenResolution } from '@/types/types';
+import { formattedScreens } from '@/utils';
 import {
   BarChart,
   Bar,
@@ -30,11 +31,16 @@ export const HorizontalBarChart = ({ data }: Props) => {
     '#EA3354',
   ];
 
-  const sortedData = data.sort(
-    (a, b) =>
-      Number(b.screen_resolution.split('x')[0]) -
-      Number(a.screen_resolution.split('x')[0]),
-  );
+  const sortedData = data
+    .map((item) => ({
+      ...item,
+      screen_resolution: formattedScreens(item.screen_resolution),
+    }))
+    .sort(
+      (a, b) =>
+        Number(b.screen_resolution.split('x')[0]) -
+        Number(a.screen_resolution.split('x')[0]),
+    );
 
   const customLabel = ({ x, y, width, value }: CustomLabelProps) => {
     return (
@@ -65,7 +71,7 @@ export const HorizontalBarChart = ({ data }: Props) => {
               className='w-[15px] h-[15px] 1240:w-[30px] 1240:h-[30px]'
             ></div>
             <span className='font-medium text-xs 768:text-[14px] text-light-grey-600'>
-              {entry.screen_resolution}
+              {formattedScreens(entry.screen_resolution)}
             </span>
           </div>
         ))}

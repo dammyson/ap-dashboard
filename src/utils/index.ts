@@ -126,3 +126,9 @@ export const renderValue = (val: any) => {
   }
   return !val || val === 'null' ? '---' : val;
 };
+
+export const formattedScreens = (val: string) => {
+  const screens = val.split('x');
+
+  return screens.map((screen) => Math.round(parseInt(screen))).join('x');
+};
