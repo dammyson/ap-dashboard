@@ -1,5 +1,5 @@
 import { TotalRevenueType } from '@/types/types';
-import { formatCurrency, renderValue } from '@/utils';
+import { capitalizeFirstLetter, formatCurrency, renderValue } from '@/utils';
 import { ColumnType } from 'antd/es/table';
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
@@ -37,7 +37,9 @@ export const UseTotalRevenue = () => {
         render: (_, { transaction_type }) => {
           return (
             <div className='font-semibold text-[#595959]'>
-              {renderValue(transaction_type)}
+              {transaction_type
+                ? capitalizeFirstLetter(transaction_type)
+                : '---'}
             </div>
           );
         },
