@@ -11,12 +11,19 @@ interface Props {
 }
 export const TotalRevenue = ({ isLoading, totalRevenueData }: Props) => {
   const { tableColumns } = UseTotalRevenue();
+  const filteredData = [...totalRevenueData].sort(
+    (a: TotalRevenueType, b: TotalRevenueType) => {
+      return (
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+    },
+  );
   return (
     <Card hasBadge hasHeader trailingIcon1={<Filter />} title='Total Revenue'>
       <Table
         pagination={false}
         columns={tableColumns}
-        dataSource={totalRevenueData}
+        dataSource={filteredData}
         scroll={{ y: 390, x: true }}
         rootClassName=' hidden-scrollbar'
         className='total-revenue-table custom-scrollbar hide-arrows overflow-x-scroll'

@@ -1,5 +1,5 @@
 import { TotalUsersRegistered } from '@/types/types';
-import { renderValue } from '@/utils';
+import { capitalizeFirstLetter, renderValue } from '@/utils';
 import { ColumnType } from 'antd/es/table';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
@@ -83,15 +83,19 @@ export const UseUserRegistered = () => {
           return (
             <div
               className={clsx(
-                status === 'Active'
+                status === 'active'
                   ? 'text-light-blue-main'
-                  : status === 'Inactive'
+                  : status === 'inactive' || status === null
                     ? 'text-light-secondary-red'
                     : '',
                 'font-semibold',
               )}
             >
-              {renderValue(status)}
+              {status === 'active'
+                ? capitalizeFirstLetter(status)
+                : status === null
+                  ? 'Inactive'
+                  : '---'}
             </div>
           );
         },
@@ -102,7 +106,11 @@ export const UseUserRegistered = () => {
         key: 'last_login',
         className: 'last-login',
         render: (_, { last_login }) => {
-          return <div>{renderValue(last_login)}</div>;
+          return (
+            <div>
+              {last_login ? dayjs(last_login).format('DD-MM-YYYY') : '---'}
+            </div>
+          );
         },
       },
       {

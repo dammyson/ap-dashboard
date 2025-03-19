@@ -15,6 +15,14 @@ export const TicketsPurchased = ({
   isLoading,
 }: Props) => {
   const { tableColumns } = UseTicketsPurchased();
+
+  const filteredData = [...ticketsPurchasedData].sort(
+    (a: TicketsPurchasedViaApp, b: TicketsPurchasedViaApp) => {
+      return (
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+    },
+  );
   return (
     <Card
       hasBadge
@@ -25,7 +33,7 @@ export const TicketsPurchased = ({
       <Table
         pagination={false}
         columns={tableColumns}
-        dataSource={ticketsPurchasedData}
+        dataSource={filteredData}
         scroll={{ y: 390, x: true }}
         className='tickets-purchased-table custom-scrollbar hide-arrows overflow-x-scroll'
         rootClassName=' hidden-scrollbar'
