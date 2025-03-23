@@ -60,7 +60,7 @@ export const DashboardOverView = ({
                   if (!isLoading) {
                     setActiveStat((prevState) => {
                       if (stat.state === 'active') {
-                        return '';
+                        return prevState;
                       }
                       return prevState === stat.state ? '' : stat.state;
                     });

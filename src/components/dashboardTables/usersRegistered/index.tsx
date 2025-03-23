@@ -11,6 +11,15 @@ interface Props {
 }
 export const UsersRegistered = ({ registeredUsersData, isLoading }: Props) => {
   const { tableColumns } = UseUserRegistered();
+
+  const filteredData = [...registeredUsersData].sort(
+    (a: TotalUsersRegistered, b: TotalUsersRegistered) => {
+      return (
+        new Date(b.date_registered).getTime() -
+        new Date(a.date_registered).getTime()
+      );
+    },
+  );
   return (
     <Card
       hasBadge
@@ -21,7 +30,7 @@ export const UsersRegistered = ({ registeredUsersData, isLoading }: Props) => {
       <Table
         pagination={false}
         columns={tableColumns}
-        dataSource={registeredUsersData}
+        dataSource={filteredData}
         scroll={{ y: 390, x: true }}
         className='registered-users-table custom-scrollbar hide-arrows overflow-x-scroll'
         rootClassName=' hidden-scrollbar'

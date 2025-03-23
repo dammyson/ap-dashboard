@@ -69,7 +69,7 @@ function ChangePassword() {
     <Card>
       <div className='flex items-center justify-center flex-col'>
         <CategoryHeader
-          title='Change Passowrd'
+          title='Change Password'
           className='!text-base 560:!text-[18px]'
           description='Please, fill in the information below.'
           textClass='hidden 640:block'
