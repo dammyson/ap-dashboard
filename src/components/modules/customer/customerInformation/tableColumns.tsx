@@ -27,7 +27,8 @@ export const useCustomerInformation = (
             <>
               {record.image_url_link &&
               record.image_url_link !==
-                'https://srv575046.hstgr.cloud/storage/' ? (
+                'https://srv575046.hstgr.cloud/storage/' &&
+              record.image_url_link !== 'http://127.0.0.1:8000/storage/' ? (
                 <div className='w-10 h-10 rounded-full overflow-hidden aspect-square'>
                   <img
                     src={record.image_url_link}

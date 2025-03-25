@@ -49,7 +49,8 @@ export const Header = ({ hasWelcomeMessage = false }: Props) => {
       </div>
       <div className='flex items-center 560:gap-7'>
         {user?.image_url_link &&
-        user?.image_url_link !== 'https://srv575046.hstgr.cloud/storage/' ? (
+        user?.image_url_link !== 'https://srv575046.hstgr.cloud/storage/' &&
+        user?.image_url_link !== 'http://127.0.0.1:8000/storage/' ? (
           <div className='rounded-full overflow-hidden hidden 560:block  w-[45px] aspect-square'>
             <img
               onClick={() => navigate('/settings')}

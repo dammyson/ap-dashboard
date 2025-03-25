@@ -77,15 +77,15 @@ export const UseTotalRevenue = () => {
           return <div>{renderValue(channel)}</div>;
         },
       },
-      {
-        title: 'COUNTRY',
-        dataIndex: 'country',
-        key: 'country',
-        className: 'country',
-        render: (_, { country }) => {
-          return <div>{renderValue(country)}</div>;
-        },
-      },
+      // {
+      //   title: 'COUNTRY',
+      //   dataIndex: 'country',
+      //   key: 'country',
+      //   className: 'country',
+      //   render: (_, { country }) => {
+      //     return <div>{renderValue(country)}</div>;
+      //   },
+      // },
       {
         title: 'CURRENCY',
         dataIndex: 'currency',
