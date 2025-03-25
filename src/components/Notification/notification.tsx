@@ -51,7 +51,7 @@ const NotificationUi = ({ showUi, setShowUi, message, setMessage }: Props) => {
               e.stopPropagation(), setShowUi(false);
             }}
             className={clsx(
-              'right-8 top-5 960:right-11 960:top-11 absolute cursor-pointer z-10',
+              'right-8 top-10 960:right-11 960:top-5 absolute cursor-pointer z-10',
             )}
           >
             <Cancel />
