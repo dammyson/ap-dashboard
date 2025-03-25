@@ -2,11 +2,10 @@ import clsx from 'clsx';
 import { useState } from 'react';
 import { NotificationsType } from '@/types/types';
 import bird from '@/assets/logos/colored_Bird_Logo.png';
-import { Bin, Cancel } from '../svg/modal/Modal';
+import { Cancel } from '../svg/modal/Modal';
 import { BorderRadius, Button, ButtonSize } from '../button';
 import { Modal, SizeType } from '../modal';
-import { Dot } from '../svg/dashboard/Dashboard';
-import { useWindowSize } from '../hooks/useWindowSize';
+import { Dot, SlashedBell } from '../svg/dashboard/Dashboard';
 
 interface Props {
   showUi: boolean;
@@ -18,7 +17,6 @@ interface Props {
 const NotificationUi = ({ showUi, setShowUi, message, setMessage }: Props) => {
   const [selected, setSelected] = useState<NotificationsType | null>(null);
   const [viewMessage, setViewMessage] = useState(false);
-  const isWindowSize = useWindowSize(640);
   const openModal = (record: NotificationsType) => {
     setSelected(record);
     setViewMessage(true);
@@ -53,88 +51,101 @@ const NotificationUi = ({ showUi, setShowUi, message, setMessage }: Props) => {
               e.stopPropagation(), setShowUi(false);
             }}
             className={clsx(
-              'right-8 top-5 960:right-11 960:top-11 absolute cursor-pointer z-10',
+              'right-8 top-10 960:right-11 960:top-5 absolute cursor-pointer z-10',
             )}
           >
             <Cancel />
           </span>
-          <div className='h-full max-h-[75dvh] w-full  overflow-y-scroll custom-scrollbar hide-arrows pb-4 px-3 425:px-0 '>
-            {message.map((option, i) => {
-              return (
-                <div
-                  key={i}
-                  className='flex items-center justify-center gap-2 1024:gap-4'
-                >
-                  <span className='w-3 h-3'>
-                    <Dot
-                      className={clsx(
-                        option.isRead && 'hidden',
-                        'text-light-secondary-bright_blue mt-4',
-                      )}
-                    />
-                  </span>
+
+          {message.length > 1 ? (
+            <div className='h-full max-h-[85dvh] w-full  overflow-y-scroll custom-scrollbar hide-arrows pb-4 px-3 425:px-0 '>
+              {message.map((option, i) => {
+                return (
                   <div
-                    onClick={() => handleOpenMessage(i, option)}
-                    className={clsx(
-                      'mt-6 bg-primary-white shadow-default rounded-[20px] p-3 880:p-6 flex items-center justify-center gap-4 w-full max-w-[80%] hover:bg-[#f2f2f2] hover:transition-all hover:duration-500 cursor-pointer',
-                    )}
+                    key={i}
+                    className='flex items-center justify-center gap-2 1024:gap-4'
                   >
-                    <div className='w-14'>
-                      <img src={bird} alt='' />
-                    </div>
-                    <p
-                      key={i}
+                    <span className='w-3 h-3'>
+                      <Dot
+                        className={clsx(
+                          option.isRead && 'hidden',
+                          'text-light-secondary-bright_blue mt-4',
+                        )}
+                      />
+                    </span>
+                    <div
+                      onClick={() => handleOpenMessage(i, option)}
                       className={clsx(
-                        option.isRead && 'font-normal',
-                        ' text-light-primary-deep_black font-medium 640:p-4 hover:bg-[#f2f2f2] hover:transition-all hover:duration-500 w-full max-w-[90%]',
+                        'mt-6 bg-primary-white shadow-default rounded-[20px] p-3 880:p-6 flex items-center justify-center gap-4 w-full max-w-[80%] hover:bg-[#f2f2f2] hover:transition-all hover:duration-500 cursor-pointer',
                       )}
                     >
-                      {isWindowSize
-                        ? `${option.key.trim().slice(0, 60)}...`
-                        : `${option.key.trim().slice(0, 100)}...`}
-
-                      <span
+                      <div className='w-14'>
+                        <img src={bird} alt='' />
+                      </div>
+                      <div
+                        key={i}
                         className={clsx(
                           option.isRead && 'font-normal',
-                          'block 640:hidden pt-2 text-light-grey-100 font-medium italic text-nowrap',
+                          '  font-medium p-2 hover:bg-[#f2f2f2] hover:transition-all hover:duration-500 w-full max-w-[90%] ',
+                        )}
+                      >
+                        <p className=' text-light-primary-deep_black line-clamp-1 1240:line-clamp-2'>
+                          {' '}
+                          {option.key.trim()}
+                        </p>
+
+                        <span
+                          className={clsx(
+                            option.isRead && 'font-normal',
+                            'block 640:hidden  text-light-grey-100 font-medium italic text-nowrap text-sm',
+                          )}
+                        >
+                          {option.time}
+                        </span>
+                      </div>
+
+                      <p
+                        className={clsx(
+                          option.isRead && 'font-normal',
+                          'hidden 640:block text-light-grey-100 font-medium italic text-nowrap',
                         )}
                       >
                         {option.time}
-                      </span>
-                    </p>
+                      </p>
+                    </div>
 
-                    <p
-                      className={clsx(
-                        option.isRead && 'font-normal',
-                        'hidden 640:block text-light-grey-100 font-medium italic text-nowrap',
-                      )}
-                    >
-                      {option.time}
-                    </p>
+                    {/* <span onClick={() => {}} className='p-2'>
+                      <Bin
+                        fill='#e03939'
+                        className='!w-[28px] !h-[28px] cursor-pointer mt-6'
+                      />
+                    </span> */}
                   </div>
-
-                  <span onClick={() => {}} className='p-2'>
-                    <Bin
-                      fill='#e03939'
-                      className='!w-[28px] !h-[28px] cursor-pointer mt-6'
-                    />
-                  </span>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className=' text-center w-full flex flex-col justify-center items-center my-auto h-[70vh]  gap-10 1024:gap-14'>
+              <SlashedBell className='w-[130px] h-[130px] 560:w-[160px] 560:h-[160px]  960:w-[180px] 960:h-[180px] 1240:w-[200px] 1240:h-[200px] ' />
+              <h2 className='text-light-primary-deep_black text-center text-lg 560:text-2xl 960:text-3xl 1240:text-4xl my-3 font-semibold'>
+                No Notifications Yet
+              </h2>
+            </div>
+          )}
         </div>
-        <div className='flex justify-center items-center mt-4 px-5 '>
-          <div className='w-full max-w-[447px]'>
-            <Button
-              buttonText='Delete all'
-              radius={BorderRadius.Large}
-              size={ButtonSize.Large}
-              className='text-light-blue-main !font-semibold 768:!text-xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[66px]'
-              onClick={() => {}}
-            />
+        {/* {message.length >= 1 && (
+          <div className='flex justify-center items-center mt-4 px-5 '>
+            <div className='w-full max-w-[447px]'>
+              <Button
+                buttonText='Delete all'
+                radius={BorderRadius.Large}
+                size={ButtonSize.Large}
+                className='text-light-blue-main !font-semibold 768:!text-xl !min-h-[50px] 1024:!min-h-[57px] 1300:!min-h-[66px]'
+                onClick={() => {}}
+              />
+            </div>
           </div>
-        </div>
+        )} */}
       </div>
       {selected && viewMessage && (
         <Modal

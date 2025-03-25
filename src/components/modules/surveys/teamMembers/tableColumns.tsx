@@ -28,7 +28,8 @@ export const useTeamMembersColumn = (
         width: 100,
         render: (_, record) =>
           record.image_url_link &&
-          record.image_url_link !== 'https://srv575046.hstgr.cloud/storage/' ? (
+          record.image_url_link !== 'https://srv575046.hstgr.cloud/storage/' &&
+          record.image_url_link !== 'http://127.0.0.1:8000/storage/' ? (
             <img
               src={record.image_url_link}
               alt='profile image'

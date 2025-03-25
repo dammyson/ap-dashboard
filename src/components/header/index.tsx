@@ -9,7 +9,6 @@ import WelcomeMessage from '../welcomeMessage';
 import { useState } from 'react';
 import NotificationUi from '../Notification/notification';
 import { NotificationsType } from '@/types/types';
-import { notificationOptions } from '@/constants/constants';
 
 interface Props {
   hasWelcomeMessage?: boolean;
@@ -20,12 +19,11 @@ export const Header = ({ hasWelcomeMessage = false }: Props) => {
   const { user } = useUser();
   const { getColor } = useGetColorByChar();
   const [showUi, setShowUi] = useState(false);
-  const [message, setMessage] =
-    useState<NotificationsType[]>(notificationOptions);
+  const [message, setMessage] = useState<NotificationsType[] | []>([]);
 
-  const getLength = (messages: NotificationsType[]) => {
-    return messages.filter((unreadMessages) => !unreadMessages.isRead).length;
-  };
+  // const getLength = (messages: NotificationsType[]) => {
+  //   return messages.filter((unreadMessages) => !unreadMessages.isRead).length;
+  // };
 
   return (
     <div className='flex w-full h-20 gap-5 560:gap-10 items-center justify-between px-2 mb-6 768:px-4'>
@@ -49,7 +47,8 @@ export const Header = ({ hasWelcomeMessage = false }: Props) => {
       </div>
       <div className='flex items-center 560:gap-7'>
         {user?.image_url_link &&
-        user?.image_url_link !== 'https://srv575046.hstgr.cloud/storage/' ? (
+        user?.image_url_link !== 'https://srv575046.hstgr.cloud/storage/' &&
+        user?.image_url_link !== 'http://127.0.0.1:8000/storage/' ? (
           <div className='rounded-full overflow-hidden hidden 560:block  w-[45px] aspect-square'>
             <img
               onClick={() => navigate('/settings')}
@@ -70,10 +69,7 @@ export const Header = ({ hasWelcomeMessage = false }: Props) => {
             textClassName='560:text-lg 960:text-xl'
           />
         )}
-        <NotificationBell
-          onClick={() => setShowUi(true)}
-          notification={getLength(message)}
-        />
+        <NotificationBell onClick={() => setShowUi(true)} notification={0} />
         <NotificationUi
           message={message}
           setMessage={setMessage}
