@@ -31,16 +31,38 @@ export const HorizontalBarChart = ({ data }: Props) => {
     '#EA3354',
   ];
 
-  const sortedData = data
+  const majorScreenSizes = [
+    '360x640', // Common Android baseline resolution
+    '375x667', // iPhone 6/7/8, SE 2nd Gen
+    '390x844', // iPhone 12/13/14/15 (regular & Pro)
+    '414x896', // iPhone XR, 11, 11 Pro Max
+    '430x932', // iPhone 14/15 Pro Max
+    '412x915', // Modern Android phones (Pixel, Samsung Galaxy)
+  ];
+  const majorScreenSizesSet = new Set(majorScreenSizes);
+
+  const matchedSortedData = data
     .map((item) => ({
       ...item,
       screen_resolution: formattedScreens(item.screen_resolution),
     }))
+    .filter((item) => majorScreenSizesSet.has(item.screen_resolution))
     .sort(
       (a, b) =>
         Number(b.screen_resolution.split('x')[0]) -
         Number(a.screen_resolution.split('x')[0]),
     );
+
+  // const sortedData = data
+  //   .map((item) => ({
+  //     ...item,
+  //     screen_resolution: formattedScreens(item.screen_resolution),
+  //   }))
+  //   .sort(
+  //     (a, b) =>
+  //       Number(b.screen_resolution.split('x')[0]) -
+  //       Number(a.screen_resolution.split('x')[0]),
+  //   );
 
   const customLabel = ({ x, y, width, value }: CustomLabelProps) => {
     return (
@@ -59,7 +81,7 @@ export const HorizontalBarChart = ({ data }: Props) => {
   const customLegend = () => {
     return (
       <div className='w-full max-w-[210px] 480:max-w-[395px] 1240:max-w-[450px] grid gap-1.5 1024:gap-3 items-start grid-cols-2 480:grid-cols-3 mt-5'>
-        {data.map((entry, index) => (
+        {matchedSortedData.map((entry, index) => (
           <div
             key={index}
             className='w-full 640:min-w-[107px] flex flex-row gap-1.5 1240:gap-3 items-start 640:items-center justify-start'
@@ -84,7 +106,7 @@ export const HorizontalBarChart = ({ data }: Props) => {
       <BarChart
         width={400}
         height={400}
-        data={sortedData}
+        data={matchedSortedData}
         layout='vertical'
         margin={{
           top: 20,
