@@ -103,21 +103,25 @@ export const UseTicketsPurchased = () => {
         dataIndex: 'status',
         key: 'status',
         className: 'status',
-        render: (_) => {
+        render: (_, { status }) => {
           return (
             <div
               className={clsx(
-                // status === 'Completed'
-                //   ? 'text-light-blue-main'
-                //   : status === 'Pending'
-                //     ? 'text-light-secondary-orange'
-                //     : status === 'Canceled'
-                //       ? 'text-light-secondary-red'
-                //       : '',
-                'font-medium text-light-blue-main',
+                status === 'completed'
+                  ? 'text-light-blue-main'
+                  : status === 'pending'
+                    ? 'text-light-secondary-orange'
+                    : status === 'canceled'
+                      ? 'text-light-secondary-red'
+                      : 'text-light-grey-400',
+                'font-medium ',
               )}
             >
-              Completed
+              {status === 'completed'
+                ? 'Completed'
+                : status === 'pending'
+                  ? 'Pending'
+                  : 'Canceled'}
             </div>
           );
         },
