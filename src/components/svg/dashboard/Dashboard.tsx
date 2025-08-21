@@ -255,8 +255,8 @@ export const Fall = () => {
           y2='76.4253'
           gradientUnits='userSpaceOnUse'
         >
-          <stop stopColor='#D02626' stop-opacity='0.08' />
-          <stop offset='1' stopColor='#D02626' stop-opacity='0' />
+          <stop stopColor='#D02626' stopOpacity='0.08' />
+          <stop offset='1' stopColor='#D02626' stopOpacity='0' />
         </linearGradient>
       </defs>
     </svg>
@@ -291,8 +291,8 @@ export const Rise = () => {
           y2='111'
           gradientUnits='userSpaceOnUse'
         >
-          <stop stopColor='#1EB564' stop-opacity='0.08' />
-          <stop offset='1' stopColor='#1EB564' stop-opacity='0' />
+          <stop stopColor='#1EB564' stopOpacity='0.08' />
+          <stop offset='1' stopColor='#1EB564' stopOpacity='0' />
         </linearGradient>
       </defs>
     </svg>
@@ -407,13 +407,13 @@ export const NoActivity = () => {
       width='160px'
       height='160px'
       viewBox='0 0 64 64'
-      enable-background='new 0 0 64 64'
+      enableBackground='new 0 0 64 64'
     >
       <line
         fill='none'
         stroke='#8E95A9'
-        stroke-width='2'
-        stroke-miterlimit='10'
+        strokeWidth='2'
+        strokeMiterlimit='10'
         x1='25'
         y1='24'
         x2='47'
@@ -422,8 +422,8 @@ export const NoActivity = () => {
       <line
         fill='none'
         stroke='#8E95A9'
-        stroke-width='2'
-        stroke-miterlimit='10'
+        strokeWidth='2'
+        strokeMiterlimit='10'
         x1='25'
         y1='34'
         x2='47'
@@ -432,8 +432,8 @@ export const NoActivity = () => {
       <line
         fill='none'
         stroke='#8E95A9'
-        stroke-width='2'
-        stroke-miterlimit='10'
+        strokeWidth='2'
+        strokeMiterlimit='10'
         x1='25'
         y1='44'
         x2='47'
@@ -442,8 +442,8 @@ export const NoActivity = () => {
       <line
         fill='none'
         stroke='#8E95A9'
-        stroke-width='2'
-        stroke-miterlimit='10'
+        strokeWidth='2'
+        strokeMiterlimit='10'
         x1='25'
         y1='54'
         x2='47'
@@ -452,8 +452,8 @@ export const NoActivity = () => {
       <line
         fill='none'
         stroke='#8E95A9'
-        stroke-width='2'
-        stroke-miterlimit='10'
+        strokeWidth='2'
+        strokeMiterlimit='10'
         x1='21'
         y1='24'
         x2='17'
@@ -462,8 +462,8 @@ export const NoActivity = () => {
       <line
         fill='none'
         stroke='#8E95A9'
-        stroke-width='2'
-        stroke-miterlimit='10'
+        strokeWidth='2'
+        strokeMiterlimit='10'
         x1='21'
         y1='34'
         x2='17'
@@ -472,8 +472,8 @@ export const NoActivity = () => {
       <line
         fill='none'
         stroke='#8E95A9'
-        stroke-width='2'
-        stroke-miterlimit='10'
+        strokeWidth='2'
+        strokeMiterlimit='10'
         x1='21'
         y1='44'
         x2='17'
@@ -482,8 +482,8 @@ export const NoActivity = () => {
       <line
         fill='none'
         stroke='#8E95A9'
-        stroke-width='2'
-        stroke-miterlimit='10'
+        strokeWidth='2'
+        strokeMiterlimit='10'
         x1='21'
         y1='54'
         x2='17'
@@ -492,15 +492,15 @@ export const NoActivity = () => {
       <polyline
         fill='none'
         stroke='#8E95A9'
-        stroke-width='2'
-        stroke-miterlimit='10'
+        strokeWidth='2'
+        strokeMiterlimit='10'
         points='23,8 10,8 10,63 54,63 54,8 41,8 '
       />
       <polygon
         fill='none'
         stroke='#8E95A9'
-        stroke-width='2'
-        stroke-miterlimit='10'
+        strokeWidth='2'
+        strokeMiterlimit='10'
         points='36,5 36,1 28,1 28,5 24,5 22,13 42,13 40,5 
    '
       />
@@ -517,11 +517,11 @@ export const SlashedBell = ({ className }: { className?: string }) => {
       version='1.1'
       xmlns='http://www.w3.org/2000/svg'
     >
-      <g id='SVGRepo_bgCarrier' stroke-width='0'></g>
+      <g id='SVGRepo_bgCarrier' strokeWidth='0'></g>
       <g
         id='SVGRepo_tracerCarrier'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       ></g>
       <g id='SVGRepo_iconCarrier'>
         {' '}

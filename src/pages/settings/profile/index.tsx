@@ -7,7 +7,7 @@ import { Spinner } from '@/components/svg/spinner/Spinner';
 import clsx from 'clsx';
 import { Avatar } from '@/components/avatar/Avatar';
 import { useGetColorByChar } from '@/hooks/useGetColorByChar';
-import { getInitials } from '@/utils';
+import { getActualImageUrl, getInitials } from '@/utils';
 import { useEditProfile } from '@/api/settings/Profile';
 import { phoneNumberRegex } from '@/utils/regex';
 import { Spin } from 'antd';
@@ -46,6 +46,14 @@ function Profile() {
     setValidate(phoneNumberRegex.test(e.target.value));
     setPhoneNumber(e.target.value);
   };
+
+  // Function to extract actual image URL
+
+  const actualImageUrl = getActualImageUrl(image);
+  const shouldShowImage =
+    actualImageUrl &&
+    actualImageUrl !== 'https://srv575046.hstgr.cloud/storage/' &&
+    actualImageUrl !== 'http://127.0.0.1:8000/storage/';
 
   return (
     <div>
@@ -94,12 +102,10 @@ function Profile() {
       />
       <div className='bg-[#00000003] flex items-center justify-between w-full border-[1px] border-light-blue-50 rounded-[20px] py-3 560:py-4 px-6 my-6 gap-4'>
         <div className='flex gap-4 items-center w-full max-w-[300px]'>
-          {image &&
-          image !== 'https://srv575046.hstgr.cloud/storage/' &&
-          image !== 'http://127.0.0.1:8000/storage/' ? (
+          {shouldShowImage ? (
             <div className='rounded-full overflow-hidden min-w-[70px] max-w-[80px] 768:max-w-[100px] aspect-square'>
               <img
-                src={image}
+                src={actualImageUrl}
                 alt='profile image'
                 className='w-full h-full object-cover cursor-pointer'
               />

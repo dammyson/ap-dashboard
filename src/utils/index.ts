@@ -132,3 +132,14 @@ export const formattedScreens = (val: string) => {
 
   return screens.map((screen) => Math.round(parseInt(screen))).join('x');
 };
+
+export const getActualImageUrl = (imageUrl: string | null | undefined) => {
+  if (!imageUrl) return null;
+
+  // Remove the local storage prefix if present
+  if (imageUrl.startsWith('http://127.0.0.1:8000/storage/')) {
+    return imageUrl.replace('http://127.0.0.1:8000/storage/', '');
+  }
+
+  return imageUrl;
+};

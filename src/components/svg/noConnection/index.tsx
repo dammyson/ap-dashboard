@@ -13,7 +13,7 @@ export const AirplaneMode = ({ className }: { className: string }) => {
 
       <g
         id='SVGRepo_tracerCarrier'
-        stroke-linecap='round'
+        strokeLinecap='round'
         strokeLinejoin='round'
         stroke='#CCCCCC'
         strokeWidth='0.336'

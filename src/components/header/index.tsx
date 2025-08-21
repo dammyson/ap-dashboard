@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import { useUser } from '@/context/AppContext';
 import { Avatar } from '../avatar/Avatar';
 import { useGetColorByChar } from '@/hooks/useGetColorByChar';
-import { getInitials } from '@/utils';
+import { getActualImageUrl, getInitials } from '@/utils';
 import WelcomeMessage from '../welcomeMessage';
 import { useState } from 'react';
 import NotificationUi from '../Notification/notification';
@@ -24,6 +24,12 @@ export const Header = ({ hasWelcomeMessage = false }: Props) => {
   // const getLength = (messages: NotificationsType[]) => {
   //   return messages.filter((unreadMessages) => !unreadMessages.isRead).length;
   // };
+
+  const actualImageUrl = getActualImageUrl(user?.image_url_link);
+  const shouldShowImage =
+    actualImageUrl &&
+    actualImageUrl !== 'https://srv575046.hstgr.cloud/storage/' &&
+    actualImageUrl !== 'http://127.0.0.1:8000/storage/';
 
   return (
     <div className='flex w-full h-20 gap-5 560:gap-10 items-center justify-between px-2 mb-6 768:px-4'>
@@ -46,13 +52,11 @@ export const Header = ({ hasWelcomeMessage = false }: Props) => {
         )}
       </div>
       <div className='flex items-center 560:gap-7'>
-        {user?.image_url_link &&
-        user?.image_url_link !== 'https://srv575046.hstgr.cloud/storage/' &&
-        user?.image_url_link !== 'http://127.0.0.1:8000/storage/' ? (
+        {shouldShowImage ? (
           <div className='rounded-full overflow-hidden hidden 560:block  w-[45px] aspect-square'>
             <img
               onClick={() => navigate('/settings')}
-              src={user?.image_url_link}
+              src={actualImageUrl}
               alt='profile image'
               className='w-full h-full object-cover cursor-pointer'
             />

@@ -5,7 +5,7 @@ import { Trophy } from '@/components/svg/surveys/Surveys';
 import { Eye } from '@/components/svg/customer/Customer';
 import { ModalStateSetter } from '../../surveys/tableColumns';
 import { useNavigate } from 'react-router';
-import { getInitials } from '@/utils';
+import { getActualImageUrl, getInitials } from '@/utils';
 import { Avatar } from '@/components/avatar/Avatar';
 import { useGetColorByChar } from '@/hooks/useGetColorByChar';
 
@@ -23,15 +23,18 @@ export const useCustomerInformation = (
         className: 'avatar',
         render: (_, record) => {
           const userName = `${record.user_first_name} ${record.user_last_name}`;
+
+          const actualImageUrl = getActualImageUrl(record.image_url_link);
+          const shouldShowImage =
+            actualImageUrl &&
+            actualImageUrl !== 'https://srv575046.hstgr.cloud/storage/' &&
+            actualImageUrl !== 'http://127.0.0.1:8000/storage/';
           return (
             <>
-              {record.image_url_link &&
-              record.image_url_link !==
-                'https://srv575046.hstgr.cloud/storage/' &&
-              record.image_url_link !== 'http://127.0.0.1:8000/storage/' ? (
+              {record.image_url_link && shouldShowImage ? (
                 <div className='w-10 h-10 rounded-full overflow-hidden aspect-square'>
                   <img
-                    src={record.image_url_link}
+                    src={actualImageUrl}
                     alt='profile image'
                     className='w-full h-full object-cover cursor-pointer'
                   />
