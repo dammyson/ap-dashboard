@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { ModalStateSetter } from '@/components/modules/surveys/tableColumns';
 import { Avatar } from '@/components/avatar/Avatar';
 import { useGetColorByChar } from '@/hooks/useGetColorByChar';
-import { getInitials } from '@/utils';
+import { getActualImageUrl, getInitials } from '@/utils';
 import { useUser } from '@/context/AppContext';
 
 export const useTeamMembersColumn = (
@@ -26,15 +26,21 @@ export const useTeamMembersColumn = (
         dataIndex: 'image_url',
         key: 'image_url',
         width: 100,
-        render: (_, record) =>
-          record.image_url_link &&
-          record.image_url_link !== 'https://srv575046.hstgr.cloud/storage/' &&
-          record.image_url_link !== 'http://127.0.0.1:8000/storage/' ? (
-            <img
-              src={record.image_url_link}
-              alt='profile image'
-              className={clsx('w-8 h-8 rounded-full')}
-            />
+        render: (_, record) => {
+          const actualImageUrl = getActualImageUrl(record.image_url_link);
+          const shouldShowImage =
+            actualImageUrl &&
+            actualImageUrl !== 'https://srv575046.hstgr.cloud/storage/' &&
+            actualImageUrl !== 'http://127.0.0.1:8000/storage/';
+
+          return shouldShowImage ? (
+            <div className='rounded-full overflow-hidden w-8 h-8 aspect-square'>
+              <img
+                src={actualImageUrl}
+                alt='profile image'
+                className={clsx('w-full h-full object-cover')}
+              />
+            </div>
           ) : (
             <Avatar
               getBackgroundColor={getColor}
@@ -43,7 +49,8 @@ export const useTeamMembersColumn = (
                 record.user_name ? getInitials(record.user_name) : undefined
               }
             />
-          ),
+          );
+        },
       },
       {
         dataIndex: 'user_name',
