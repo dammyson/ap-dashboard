@@ -32,7 +32,7 @@ export const CustomerOverView = ({
       iconName: 'trophy',
     },
     {
-      title: 'Total loyal points',
+      title: 'Total loyalty points',
       value: user_all_time_point ?? 0,
       icon: <GoldTrophy />,
       iconName: 'trophy',
