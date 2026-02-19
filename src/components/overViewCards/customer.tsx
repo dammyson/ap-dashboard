@@ -37,6 +37,7 @@ export const CustomerOverView = ({
       icon: <GoldTrophy />,
       iconName: 'trophy',
     },
+
     {
       title: 'Total flights flown',
       value: user_total_flight_flown ?? 0,
